@@ -1,5 +1,5 @@
-import { Button, Dialog, Space } from '@oh/yee-c';
 import React, { useState } from 'react';
+import { Button, Dialog, Space } from '@oh/yee-c';
 
 export default () => {
   const [open, setOpen] = useState(false);

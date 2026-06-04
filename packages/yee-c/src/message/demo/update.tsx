@@ -6,7 +6,7 @@ const UpdateDemo = () => {
     const key = 'updatable';
 
     message.loading({
-      content: '正在加载中...',
+      content: 'Loading...',
       key,
       duration: 0,
     });
@@ -14,7 +14,7 @@ const UpdateDemo = () => {
     // Update message after 2 seconds
     setTimeout(() => {
       message.success({
-        content: '加载成功!',
+        content: 'Loaded successfully!',
         key,
         duration: 2,
       });
@@ -23,7 +23,7 @@ const UpdateDemo = () => {
 
   return (
     <Space>
-      <Button onClick={updateMessage}>更新消息</Button>
+      <Button onClick={updateMessage}>Update Message</Button>
     </Space>
   );
 };

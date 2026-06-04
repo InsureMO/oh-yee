@@ -2,8 +2,8 @@
  * title: Step Size
  * description: Set the step size for each change via the step property.
  */
-import { InputNumber, Space } from '@oh/yee-c';
 import React from 'react';
+import { InputNumber, Space } from '@oh/yee-c';
 
 export default () => {
     return (
@@ -11,18 +11,18 @@ export default () => {
             <InputNumber
                 defaultValue={0}
                 step={1}
-                placeholder="步长为1"
+                placeholder="Step size 1"
             />
             <InputNumber
                 defaultValue={0}
                 step={5}
-                placeholder="步长为5"
+                placeholder="Step size 5"
             />
             <InputNumber
                 defaultValue={0}
                 step={0.1}
                 precision={1}
-                placeholder="步长为0.1"
+                placeholder="Step size 0.1"
             />
         </Space>
     );

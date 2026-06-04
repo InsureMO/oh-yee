@@ -1,9 +1,9 @@
-import { Button, Form, Grid, Input, Select, Space, Switch } from '@oh/yee-c';
 import React from 'react';
+import { Button, Form, Grid, Input, Select, Space, Switch } from '@oh/yee-c';
 
 const UserTypeFields = () => {
 
-  // 无需第二个表单实例参数，由Form组件内部context提供
+  // No second form instance parameter needed, provided by Form component's internal context
   const type = Form.useWatch<string>('type');
 
   return (
@@ -30,10 +30,10 @@ const UserTypeFields = () => {
 export default () => {
   const [form] = Form.useForm();
 
-  // 因为该组件没有被Form表单包裹，所以无法使用Form组件内部的表单实例，因此需要在第二个参数传入form实例
+  // Since this component is not wrapped by Form, the internal form instance is not available, so pass the form instance as the second parameter
   const notify = Form.useWatch<boolean>('notify', form);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Received values:', values);
   };
 

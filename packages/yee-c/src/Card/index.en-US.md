@@ -15,6 +15,7 @@ Card is a container for displaying information in a structured and concise way.
 ## Code Demo
 
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Card"></code>
+<code src="./demo/card-group.tsx" title="Card Group" description="Using Card.Group to wrap multiple cards"></code>
 <code src="./demo/collapsible.tsx" title="Collapsible" description="Collapsible card"></code>
 <code src="./demo/extra.tsx" title="Extra Content" description="Card with extra content in header"></code>
 <code src="./demo/expandIcon.tsx" title="Custom Expand Icon" description="Card with custom expand icon"></code>

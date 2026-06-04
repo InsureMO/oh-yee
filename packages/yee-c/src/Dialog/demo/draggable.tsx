@@ -10,31 +10,31 @@ export default () => {
   return (
     <Space direction="vertical" gap={20}>
       <div>
-        <h4 style={{ marginBottom: 12 }}>基础拖拽</h4>
+        <h4 style={{ marginBottom: 12 }}>Basic Dragging</h4>
         <Space>
-          <Button onClick={() => setOpen1(true)}>限制在窗口内</Button>
+          <Button onClick={() => setOpen1(true)}>Limit to Window</Button>
           <Dialog
-            title="限制在窗口内拖拽"
+            title="Drag Limited to Window"
             open={open1}
             draggable
             onCancel={() => setOpen1(false)}
             onConfirm={() => setOpen1(false)}
           >
-            <p>拖拽此对话框,它会被限制在窗口范围内。</p>
-            <p>默认: dragLimitInWindow = true</p>
+            <p>Drag this dialog, it will be constrained within the window bounds.</p>
+            <p>Default: dragLimitInWindow = true</p>
           </Dialog>
 
-          <Button onClick={() => setOpen2(true)}>无限制拖拽</Button>
+          <Button onClick={() => setOpen2(true)}>Unlimited Dragging</Button>
           <Dialog
-            title="无限制拖拽"
+            title="Unlimited Dragging"
             open={open2}
             draggable
             dragLimitInWindow={false}
             onCancel={() => setOpen2(false)}
             onConfirm={() => setOpen2(false)}
           >
-            <p>此对话框可以被拖拽到窗口外的任意位置。</p>
-            <p>设置: dragLimitInWindow = false</p>
+            <p>This dialog can be dragged to any position outside the window.</p>
+            <p>Setting: dragLimitInWindow = false</p>
           </Dialog>
         </Space>
       </div>
@@ -42,34 +42,34 @@ export default () => {
       <Divider />
 
       <div>
-        <h4 style={{ marginBottom: 12 }}>位置重置</h4>
+        <h4 style={{ marginBottom: 12 }}>Position Reset</h4>
         <Space>
-          <Button onClick={() => setOpen3(true)}>自动重置位置</Button>
+          <Button onClick={() => setOpen3(true)}>Auto Reset Position</Button>
           <Dialog
-            title="自动重置位置"
+            title="Auto Reset Position"
             open={open3}
             draggable
             openResetLocation
             onCancel={() => setOpen3(false)}
             onConfirm={() => setOpen3(false)}
           >
-            <p>拖拽此对话框到新位置,然后关闭。</p>
-            <p>再次打开时,它会重置到屏幕中心。</p>
-            <p>默认: openResetLocation = true</p>
+            <p>Drag this dialog to a new position, then close it.</p>
+            <p>When reopened, it will reset to the center of the screen.</p>
+            <p>Default: openResetLocation = true</p>
           </Dialog>
 
-          <Button onClick={() => setOpen4(true)}>记住位置</Button>
+          <Button onClick={() => setOpen4(true)}>Remember Position</Button>
           <Dialog
-            title="记住位置"
+            title="Remember Position"
             open={open4}
             draggable
             openResetLocation={false}
             onCancel={() => setOpen4(false)}
             onConfirm={() => setOpen4(false)}
           >
-            <p>拖拽此对话框到新位置,然后关闭。</p>
-            <p>再次打开时,它会保持在之前的位置。</p>
-            <p>设置: openResetLocation = false</p>
+            <p>Drag this dialog to a new position, then close it.</p>
+            <p>When reopened, it will stay at the previous position.</p>
+            <p>Setting: openResetLocation = false</p>
           </Dialog>
         </Space>
       </div>

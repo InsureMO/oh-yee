@@ -104,9 +104,9 @@ export interface RowSelectionType {
    * Whether disabled
    * */
   disabled?:
-  | boolean
-  | Array<boolean>
-  | ((record: Record<string, unknown>, index: number) => boolean);
+    | boolean
+    | Array<boolean>
+    | ((record: Record<string, unknown>, index: number) => boolean);
   /**
    * Set Checkbox or Radio properties
    */
@@ -151,7 +151,7 @@ export interface ColumnProps {
   style?: React.CSSProperties;
   /**
    * Semantic class names
-  */
+   */
   classNames?: Partial<Record<ColumnSemanticType, string>>;
   /**
    * Semantic styles
@@ -179,7 +179,7 @@ export interface ColumnProps {
     items?: Array<Record<string, any>>;
     /**
      * Whether filtered, icon highlighted
-     * @default true
+     * @default false
      */
     filtered?: boolean;
     /**
@@ -208,29 +208,29 @@ export interface ColumnProps {
    * Sorter config
    */
   sorter?:
-  | boolean
-  | {
-    /**
-     * Sort function
-     */
-    sort?: () => number | boolean;
-    /**
-     * Whether to support multi-column sort, if set to a number, it indicates the number of sortable columns
-     */
-    multiple?: boolean | number;
-    /**
-     * Controlled sort order
-     */
-    sortOrder?: 'ascend' | 'descend' | null;
-    /**
-     * Default sort order
-     */
-    defaultSortOrder?: 'ascend' | 'descend';
-    /**
-     * Set sort icon
-     */
-    icon?: (sortOrder: 'ascend' | 'descend' | null) => React.ReactNode;
-  };
+    | boolean
+    | {
+        /**
+         * Sort function
+         */
+        sort?: () => number | boolean;
+        /**
+         * Whether to support multi-column sort, if set to a number, it indicates the number of sortable columns
+         */
+        multiple?: boolean | number;
+        /**
+         * Controlled sort order
+         */
+        sortOrder?: 'ascend' | 'descend' | null;
+        /**
+         * Default sort order
+         */
+        defaultSortOrder?: 'ascend' | 'descend';
+        /**
+         * Set sort icon
+         */
+        icon?: (sortOrder: 'ascend' | 'descend' | null) => React.ReactNode;
+      };
   /**
    * Row data index
    */
@@ -249,7 +249,7 @@ export interface ColumnProps {
   title?: React.ReactNode;
   /**
    * Set header help icon
-  */
+   */
   helper?: string | React.ReactNode;
   /**
    * Callback function for custom cell content
@@ -266,7 +266,10 @@ export interface ColumnProps {
   /**
    * Custom render cell content
    */
-  render?: (record: HeadCellProps | Record<string, unknown>, rowIndex: number) => React.ReactNode;
+  render?: (
+    record: HeadCellProps | Record<string, unknown>,
+    rowIndex: number,
+  ) => React.ReactNode;
 }
 
 export interface WrapedColumnProps
@@ -314,13 +317,13 @@ export interface HeaderProps extends SemanticProps {
    * Whether CSV data download is enabled
    */
   download?:
-  | boolean
-  | DownloadType
-  | ((obj: {
-    columns: ColumnProps[];
-    data: Array<Record<string, any>>;
-    pageData: Array<Record<string, any>>;
-  }) => DownloadType);
+    | boolean
+    | DownloadType
+    | ((obj: {
+        columns: ColumnProps[];
+        data: Array<Record<string, any>>;
+        pageData: Array<Record<string, any>>;
+      }) => DownloadType);
   /**
    * Raw data
    */
@@ -445,7 +448,8 @@ export type PaginationType = PaginationProps & {
   pageSize: number;
 };
 
-export interface TableProps extends FooterProps, Omit<HeaderProps, 'pageData'>, DataAttributeProps {
+export interface TableProps
+  extends FooterProps, Omit<HeaderProps, 'pageData'>, DataAttributeProps {
   /**
    * Custom class name prefix
    */
@@ -482,8 +486,8 @@ export interface TableProps extends FooterProps, Omit<HeaderProps, 'pageData'>, 
    * Children, set column config via Column
    */
   children?:
-  | Array<React.ReactElement<ColumnProps>>
-  | React.ReactElement<ColumnProps>;
+    | Array<React.ReactElement<ColumnProps>>
+    | React.ReactElement<ColumnProps>;
   /**
    * Locale text, including sort and empty data hints
    */

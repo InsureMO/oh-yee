@@ -8,10 +8,11 @@ import React, {
   useState,
 } from 'react';
 import { GlobalContext } from '../Config-Provider';
-import List, { ListItemProps } from '../List';
-import Trigger from '../Trigger';
 import useMergedState from '../hooks/useMergedState';
+import List, { ListItemProps } from '../List';
 import useSelectKeyboard from '../Select/hooks/useSelectKeyboard';
+import Spin from '../Spin';
+import Trigger from '../Trigger';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { SearchProps } from './interface';
 import './style/index.less';
@@ -39,6 +40,7 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
       searchOnAction = 'typing',
       suggestions,
       options,
+      loading,
       onChange,
       onSearch,
       optionRender,
@@ -56,20 +58,24 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
 
     const { focusedKey, onKeyDown } = useSelectKeyboard({
       open,
-      options: (options || suggestions) as { [key: string]: any; value: string | number; disabled?: boolean }[],
+      options: (options || suggestions) as {
+        [key: string]: any;
+        value: string | number;
+        disabled?: boolean;
+      }[],
       selectedKeys: [searchValue],
       onSelect: (value: string | number) => {
         const merged = options || suggestions;
-        const target = merged?.find((item => item.value === value));
+        const target = merged?.find((item) => item.value === value);
         onChange?.(target as ListItemProps);
       },
       onOpenChange: (open: boolean) => {
         setOpen(open);
       },
       onClose: () => {
-        setOpen(false)
-      }
-    })
+        setOpen(false);
+      },
+    });
 
     useEffect(() => {
       if (open) {
@@ -177,7 +183,12 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
     const popup = (
       <div className={`${prefixCls}-popup`} tabIndex={0}>
         {Array.isArray(options) ? (
-          <List focusedKey={focusedKey} items={options} itemRender={optionRender} onClick={onChange} />
+          <List
+            focusedKey={focusedKey}
+            items={options}
+            itemRender={optionRender}
+            onClick={onChange}
+          />
         ) : Array.isArray(suggestions) ? (
           <List
             focusedKey={focusedKey}
@@ -204,7 +215,7 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
             onChange={handleChange}
             onKeyDown={onKeyDown}
           />
-          {renderSuffix()}
+          {loading ? <Spin variant="ring" size="small" /> : renderSuffix()}
         </div>
       </Trigger>
     );

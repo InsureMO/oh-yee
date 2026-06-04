@@ -12,23 +12,23 @@ export default () => {
       }}
     >
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>全部禁用</div>
-        <RangePicker placeholder={['开始日期', '结束日期']} />
+        <div style={{ marginBottom: '8px', color: '#666' }}>Fully disabled</div>
+        <RangePicker placeholder={['Start date', 'End date']} />
       </div>
 
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>禁用开始日期</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>Start date disabled</div>
         <RangePicker
           disabled={[true, false]}
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
 
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>禁用结束日期</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>End date disabled</div>
         <RangePicker
           disabled={[false, true]}
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
     </div>

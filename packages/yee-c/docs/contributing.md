@@ -8,7 +8,7 @@
 
 如果你发现了 Bug 或有功能建议：
 
-1. 在 [GitHub Issues](https://github.com/InsureMO/oh-yee-c/issues) 搜索现有问题
+1. 在 [GitHub Issues](https://github.com/InsureMO/oh-yee/issues) 搜索现有问题
 2. 如果没有找到相关问题，创建新的 Issue
 3. 提供详细的问题描述和复现步骤
 
@@ -18,7 +18,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/InsureMO/oh-yee-c.git
+git clone https://github.com/InsureMO/oh-yee.git
 cd yee-c
 
 # 安装依赖
@@ -234,8 +234,8 @@ import { ComponentName } from 'yee-c';
 
 如有任何问题，欢迎：
 
-- 提交 [GitHub Issue](https://github.com/InsureMO/oh-yee-c/issues)
-- 发送邮件到 [yee-c@insuremo.com](mailto:yee-c@insuremo.com)
+- 提交 [GitHub Issue](https://github.com/InsureMO/oh-yee/issues)
+- 在 [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions) 中讨论
 
 ---
 

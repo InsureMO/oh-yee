@@ -4,30 +4,30 @@ import React from 'react';
 const DurationDemo: React.FC = () => {
   const showShortMessage = () => {
     message.success({
-      content: '这条消息将在1秒后消失',
+      content: 'This message will disappear in 1 second',
       duration: 1,
     });
   };
 
   const showLongMessage = () => {
     message.error({
-      content: '这条消息将在10秒后消失',
+      content: 'This message will disappear in 10 seconds',
       duration: 10,
     });
   };
 
   const showPermanentMessage = () => {
     message.info({
-      content: '这条消息不会自动消失，需要手动关闭',
+      content: 'This message will not auto-close and must be dismissed manually',
       duration: 0,
     });
   };
 
   return (
     <Space>
-      <Button onClick={showShortMessage}>1秒后消失</Button>
-      <Button onClick={showLongMessage}>10秒后消失</Button>
-      <Button onClick={showPermanentMessage}>不自动消失</Button>
+      <Button onClick={showShortMessage}>Disappear in 1s</Button>
+      <Button onClick={showLongMessage}>Disappear in 10s</Button>
+      <Button onClick={showPermanentMessage}>No Auto-Close</Button>
     </Space>
   );
 };

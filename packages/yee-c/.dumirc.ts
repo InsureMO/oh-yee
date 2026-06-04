@@ -31,7 +31,7 @@ export default defineConfig({
     },
 
     socialLinks: {
-      github: 'https://github.com/InsureMO/oh-yee-c'
+      github: 'https://github.com/InsureMO/oh-yee'
     },
   },
 

@@ -11,13 +11,13 @@ export default () => {
       fontStyle="italic"
     >
       <div style={{ height: 500, padding: 20, background: '#f5f5f5' }}>
-        <h2>自定义样式水印</h2>
-        <p>这是一个带有自定义样式的水印：</p>
+        <h2>Custom Style Watermark</h2>
+        <p>This is a watermark with custom styling:</p>
         <ul>
-          <li>字体颜色：#1890ff</li>
-          <li>字体大小：20px</li>
-          <li>字体风格：斜体</li>
-          <li>字体粗细：粗体</li>
+          <li>Font color: #1890ff</li>
+          <li>Font size: 20px</li>
+          <li>Font style: italic</li>
+          <li>Font weight: bold</li>
         </ul>
       </div>
     </Watermark>

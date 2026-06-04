@@ -37,7 +37,7 @@ export default () => {
             onClick={() => setCollapsed(!collapsed)}
           >
             {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
-            {!collapsed && '收起菜单'}
+            {!collapsed && 'Collapse Menu'}
           </Space>
         }
       />

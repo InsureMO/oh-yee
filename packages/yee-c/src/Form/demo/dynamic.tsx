@@ -1,5 +1,5 @@
-import { Button, Form, Input, Space } from '@oh/yee-c';
 import React, { useState } from 'react';
+import { Button, Form, Input, Space } from '@oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
@@ -15,7 +15,7 @@ export default () => {
     setFriends(newFriends);
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Received values:', values);
   };
 

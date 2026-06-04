@@ -6,7 +6,7 @@ export default () => {
     <Space direction="vertical">
       <Switch checkedChildren="ON" unCheckedChildren="OFF" />
 
-      <Switch checkedChildren="开" unCheckedChildren="关" />
+      <Switch checkedChildren="On" unCheckedChildren="Off" />
 
       <Switch checkedChildren="✅" unCheckedChildren="❌" />
     </Space>

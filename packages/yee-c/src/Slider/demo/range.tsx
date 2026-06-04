@@ -6,7 +6,7 @@ export default () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h3>范围选择滑动条</h3>
+      <h3>Range Slider</h3>
       <Slider
         range
         rangeValue={rangeValue}
@@ -15,7 +15,7 @@ export default () => {
           setRangeValue(val as [number, number]);
         }}
       />
-      <p>范围值: [{rangeValue[0]}, {rangeValue[1]}]</p>
+      <p>Range value: [{rangeValue[0]}, {rangeValue[1]}]</p>
     </div>
   );
 };

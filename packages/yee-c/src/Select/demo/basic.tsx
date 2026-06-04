@@ -20,7 +20,7 @@ export default () => {
   return (
     <Select
       value={value}
-      onChange={setValue as any}
+      onChange={(val) => setValue(val as string)}
       options={options}
       style={{ width: 200 }}
     />

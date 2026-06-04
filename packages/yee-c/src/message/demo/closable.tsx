@@ -5,11 +5,11 @@ const ClosableDemo = () => {
   const showClosableMessage = () => {
     const key = `message_${Date.now()}`;
     message.loading({
-      content: '这是一个可手动关闭的消息',
+      content: 'This is a manually closable message',
       duration: 0,
       key,
       onClose: () => {
-        console.log('消息已关闭');
+        console.log('Message closed');
       },
     });
 
@@ -21,18 +21,18 @@ const ClosableDemo = () => {
 
   const showCallbackMessage = () => {
     message.success({
-      content: '这条消息关闭时会有回调',
+      content: 'This message has a close callback',
       duration: 2,
       onClose: () => {
-        message.info('上一条消息已关闭');
+        message.info('Previous message closed');
       },
     });
   };
 
   return (
     <Space>
-      <Button onClick={showClosableMessage}>手动关闭消息</Button>
-      <Button onClick={showCallbackMessage}>关闭回调</Button>
+      <Button onClick={showClosableMessage}>Manual Close</Button>
+      <Button onClick={showCallbackMessage}>Close Callback</Button>
     </Space>
   );
 };

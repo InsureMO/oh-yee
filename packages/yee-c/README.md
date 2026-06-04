@@ -1,87 +1,152 @@
 # @oh/yee-c
 
-企业级 React 组件库，为现代 Web 应用提供高质量、可定制的 UI 组件。
+[![npm](https://img.shields.io/npm/v/@oh/yee-c.svg)](https://www.npmjs.com/package/@oh/yee-c) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-## 特性
+65+ foundational React UI components for building modern enterprise applications. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
 
-- **丰富组件** — 60+ 精心打造的企业级组件，覆盖表单、表格、导航、反馈等各类场景
-- **TypeScript** — 使用 TypeScript 开发，提供完整的类型定义，提升开发体验和代码质量
-- **主题定制** — 灵活的主题配置系统，支持 CSS 变量和样式定制，轻松适配品牌风格
+## Features
 
-## 安装
+- **65+ Components** — Forms, tables, navigation, feedback, data display, and more
+- **TypeScript First** — Complete type definitions for all components and props
+- **Theming** — CSS variable-based theming with 10+ built-in color presets
+- **20+ Hooks** — `useDebounceValue`, `useMergedState`, `useVirtualForm`, `useResizeObserver`, etc.
+- **Tree-shakeable** — ESM / CJS / UMD builds with proper `sideEffects` configuration
+- **Accessibility** — Keyboard navigation and ARIA attributes where applicable
+
+## Installation
 
 ```bash
-npm install @oh/yee-c
+pnpm add @oh/yee-c
 ```
 
-## 使用
+Requires `react >= 18` and `react-dom >= 18` as peer dependencies.
+
+## Usage
 
 ```tsx
-import { Button, Input, Table } from '@oh/yee-c';
+import { Button, Form, Input, Table, Card, Select, Dialog, message } from '@oh/yee-c';
 ```
 
-按需引入样式：
+Import styles:
 
-```ts
+```tsx
+// Variables and theme
 import '@oh/yee-c/variables.css';
+
+// Or a specific color theme
+import '@oh/yee-c/color.blue.css';
 ```
 
-## 组件列表
+### Quick Example
 
-### 通用
+```tsx
+import { Form, Input, Button, message } from '@oh/yee-c';
 
-Button、Divider、Space、Spin、Skeleton、Watermark、ErrorBoundary、FloatButton
+function UserForm() {
+  const [form] = Form.useForm();
+  const { messageApi, messageHolder } = message.useMessage();
 
-### 布局
+  const handleSubmit = (values: { name: string }) => {
+    messageApi.success(`Submitted: ${values.name}`);
+  };
 
-Box、Card、Carousel、Collapse、Descriptions、Grid、List、Splitter、Steps、Tabs、Timeline
+  return (
+    <>
+      {messageHolder}
+      <Form form={form} onFinish={handleSubmit}>
+        <Form.Field label="Name" name="name" rules={[{ required: true, message: 'Please enter name' }]}>
+          <Input />
+        </Form.Field>
+        <Button type="primary" htmlType="submit">Submit</Button>
+      </Form>
+    </>
+  );
+}
+```
 
-### 导航
+## Components
 
-Anchor、Breadcrumb、Dropdown、Menu、Pagination
+### General
 
-### 数据录入
+Button, Divider, Space, Spin, Skeleton, Watermark, ErrorBoundary, FloatButton
 
-AutoComplete、Cascader、Checkbox、DatePicker、Field、Form、Input、InputNumber、Radio、RangePicker、Rate、Search、Select、Selector、Slider、Switch、TextArea、Transfer、TreeSelect、Upload、VerificationCode
+### Layout
 
-### 数据展示
+Box, Card, Carousel, Collapse, Descriptions, Grid, List, Splitter, Steps, Tabs, Timeline
 
-Avatar、Badge、Ellipsis、Highlight、ImageViewer、JsonViewer、Label、Popover、Progress、QRCode、Tag、Tooltip、Tree、Table、TableSelect
+### Navigation
 
-### 反馈
+Anchor, Breadcrumb, Dropdown, Menu, Pagination
 
-Alert、Dialog、Drawer、Message、Notice、Popconfirm、Trigger
+### Data Entry
 
-### 其他
+Cascader, Checkbox, DatePicker, Form, Input, InputNumber, Radio, RangePicker, Rate, Search, Select, Slider, Switch, TextArea, Transfer, TreeSelect, Upload, VerificationCode
 
-Config-Provider、Portal、CSV
+### Data Display
+
+Avatar, Badge, Ellipsis, Highlight, ImageViewer, JsonViewer, Label, Popover, Progress, QRCode, Tag, Tooltip, Tree, Table, TableSelect
+
+### Feedback
+
+Alert, Dialog, Drawer, Message, Notice, Popconfirm, Trigger
+
+### Other
+
+ConfigProvider, Portal
 
 ## Hooks
 
-提供 20+ 常用 Hooks：
+20+ utility hooks for common React patterns:
 
-useCountdown、useDebounceFunction、useDebounceValue、useDeepCompareEffect、useDeepCompareMemo、useDeepCompareMemorize、useDelayState、useElementSize、useEsc、useEvent、useFocusManage、useKeyControl、useLatest、useLayoutEffect、useLockFocus、useMergedState、useMount、usePressDrag、usePrevious、useResizeObserver、useUpdateEffect、useVirtualForm
+| Hook | Description |
+|---|---|
+| `useDebounceFunction` | Debounced function execution |
+| `useDebounceValue` | Debounced state value |
+| `useDeepCompareEffect` | Effect with deep comparison |
+| `useDeepCompareMemo` | Memo with deep comparison |
+| `useMergedState` | Controlled/uncontrolled state |
+| `useLatest` | Always-current ref value |
+| `useMount` | Mount lifecycle hook |
+| `useUpdateEffect` | Skip-first-run effect |
+| `useResizeObserver` | Element resize observation |
+| `useElementSize` | Element dimensions tracking |
+| `useEvent` | Stable event handler |
+| `useFocusManage` | Focus management |
+| `useKeyControl` | Keyboard control |
+| `useVirtualForm` | Virtual scrolling for forms |
 
-## 开发
+## Theming
 
-```bash
-# 启动文档开发服务器
-npm run dev
+Use built-in color themes by importing the corresponding CSS file:
 
-# 构建组件库
-npm run build
-
-# 构建文档
-npm run docs:build
-
-# 代码检查
-npm run lint
+```tsx
+import '@oh/yee-c/variables.css';   // Base variables
+import '@oh/yee-c/color.blue.css';  // Blue theme
+import '@oh/yee-c/color.dark.css';  // Dark theme
 ```
 
-## 技术栈
+Available themes: `blue`, `crimson`, `dark`, `green`, `jam`, `navy`, `peach`, `pine`, `pitaya`, `pumpkin`, `ruby`.
 
-- React >= 18.0
-- TypeScript
-- Less + CSS Variables
-- Father (构建工具)
-- Dumi (文档工具)
+## Development
+
+```bash
+# Start documentation dev server
+pnpm dev
+
+# Build the library
+pnpm build
+
+# Build documentation site
+pnpm docs:build
+
+# Lint
+pnpm lint
+```
+
+## Contributing
+
+See the root [Contributing Guide](https://github.com/InsureMO/oh-yee/blob/main/CONTRIBUTING.md).
+
+## License
+
+[MIT](./LICENSE) © [InsureMO](https://github.com/InsureMO)

@@ -17,22 +17,22 @@ export default () => {
       <RangePicker
         value={value}
         onChange={(dates, dateStrings) => {
-          addLog(`onChange - 日期: ${JSON.stringify(dates)}`);
+          addLog(`onChange - dates: ${JSON.stringify(dates)}`);
           setValue(dates as [string, string]);
         }}
         onStartChange={(value, date) => {
-          addLog(`onStartChange - 开始日期: ${value}`);
+          addLog(`onStartChange - start date: ${value}`);
         }}
         onEndChange={(value, date) => {
-          addLog(`onEndChange - 结束日期: ${value}`);
+          addLog(`onEndChange - end date: ${value}`);
         }}
         onOpenChange={(open) => {
-          addLog(`onOpenChange - 面板${open ? '打开' : '关闭'}`);
+          addLog(`onOpenChange - panel ${open ? 'opened' : 'closed'}`);
         }}
         onClear={() => {
-          addLog('onClear - 已清除');
+          addLog('onClear - cleared');
         }}
-        placeholder={['开始日期', '结束日期']}
+        placeholder={['Start date', 'End date']}
       />
 
       <div
@@ -44,11 +44,11 @@ export default () => {
         }}
       >
         <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>
-          事件日志：
+          Event Log:
         </div>
         <div style={{ maxHeight: '200px', overflow: 'auto' }}>
           {logs.length === 0 ? (
-            <div style={{ color: '#999' }}>暂无事件</div>
+            <div style={{ color: '#999' }}>No events yet</div>
           ) : (
             logs.map((log, index) => (
               <div
@@ -70,7 +70,7 @@ export default () => {
               cursor: 'pointer',
             }}
           >
-            清空日志
+            Clear Log
           </button>
         )}
       </div>

@@ -1,10 +1,10 @@
-import { Button, Form, Input, Space } from '@oh/yee-c';
 import React from 'react';
+import { Button, Form, Input, Space } from '@oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Received values:', values);
     alert('Form values: ' + JSON.stringify(values, null, 2));
   };
@@ -18,13 +18,13 @@ export default () => {
     >
       <Form.Field
         name="username"
-        label="用户名"
-        rules={[{ required: true, message: '请输入用户名!' }]}
+        label="Username"
+        rules={[{ required: true, message: 'Please enter username!' }]}
       >
-        <Input placeholder="请输入用户名" />
+        <Input placeholder="Please enter username" />
       </Form.Field>
 
-      <h4>用户列表</h4>
+      <h4>User List</h4>
       <Form.List name="users" initialValue={[{ name: '', age: '' }]}>
         {(fields, { add, remove, move }) => (
           <>
@@ -36,38 +36,38 @@ export default () => {
               >
                 <Form.Field
                   name={[field.name, 'name']}
-                  label={`姓名 ${index + 1}`}
+                  label={`Name ${index + 1}`}
                   required
                 >
-                  <Input placeholder="姓名" style={{ width: 150 }} />
+                  <Input placeholder="Name" style={{ width: 150 }} />
                 </Form.Field>
 
                 <Form.Field
                   name={[field.name, 'age']}
-                  label={`年龄 ${index + 1}`}
+                  label={`Age ${index + 1}`}
                   required
                   rules={[
-                    { type: 'number', min: 0, max: 120, message: '年龄必须在 0-120 之间' },
+                    { type: 'number', min: 0, max: 120, message: 'Age must be between 0-120' },
                   ]}
                 >
-                  <Input type="number" placeholder="年龄" style={{ width: 100 }} />
+                  <Input type="number" placeholder="Age" style={{ width: 100 }} />
                 </Form.Field>
 
                 {fields.length > 1 && (
                   <Button onClick={() => remove(field.name)} color="danger">
-                    删除
+                    Delete
                   </Button>
                 )}
 
                 {index > 0 && (
                   <Button onClick={() => move(index, index - 1)}>
-                    上移
+                    Move Up
                   </Button>
                 )}
 
                 {index < fields.length - 1 && (
                   <Button onClick={() => move(index, index + 1)}>
-                    下移
+                    Move Down
                   </Button>
                 )}
               </Space>
@@ -78,10 +78,10 @@ export default () => {
                   add({ name: '', age: '' })
                 }}
               >
-                添加用户
+                Add User
               </Button>
               <Button type="primary" htmlType="submit">
-                提交
+                Submit
               </Button>
             </Space>
           </>

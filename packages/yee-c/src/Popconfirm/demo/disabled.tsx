@@ -10,16 +10,16 @@ export default () => {
         checked={disabled}
         onChange={(e) => setDisabled(e.target.checked)}
       >
-        禁用确认框
+        Disable popconfirm
       </Checkbox>
 
       <Popconfirm
         disabled={disabled}
-        title="确认删除吗？"
+        title="Are you sure to delete?"
         onConfirm={() => console.log('Confirmed')}
       >
         <Button disabled={disabled} color="danger">
-          删除
+          Delete
         </Button>
       </Popconfirm>
     </Space>

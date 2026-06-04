@@ -1,5 +1,6 @@
-import { Cascader } from '@oh/yee-c';
 import React from 'react';
+import { Cascader } from '@oh/yee-c';
+import type { Option } from '../interface';
 
 export default () => {
   const options = [
@@ -37,7 +38,7 @@ export default () => {
     },
   ];
 
-  const onChange = (value: any, selectedOptions: any) => {
+  const onChange = (value: Array<Array<string | number>> | Array<string | number> | undefined, selectedOptions: Option[]) => {
     console.log(value, selectedOptions);
   };
 

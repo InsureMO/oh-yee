@@ -14,7 +14,7 @@ export default () => {
     <Select
       mode="tags"
       value={value}
-      onChange={setValue as any}
+      onChange={(val) => setValue(val as string[])}
       options={options}
       style={{ width: 300 }}
       placeholder="Please select or type"

@@ -12,10 +12,10 @@ export default () => {
           width: '100%',
         }}
       >
-        <h2>基础文本水印</h2>
-        <p>这是一个带有文本水印的容器。水印会自动覆盖整个区域。</p>
+        <h2>Basic Text Watermark</h2>
+        <p>This is a container with a text watermark. The watermark automatically covers the entire area.</p>
         <p>
-          尝试在浏览器开发者工具中删除水印层，水印会自动恢复（防删除功能）。
+          Try removing the watermark layer in browser DevTools — the watermark will automatically restore (anti-removal feature).
         </p>
       </div>
     </Watermark>

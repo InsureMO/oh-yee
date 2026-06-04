@@ -167,7 +167,7 @@ import zhCN from 'yee-c/es/locale/zh_CN';
 
 ### Q: 如何报告 Bug？
 
-请在 [GitHub Issues](https://github.com/InsureMO/oh-yee-c/issues) 中提交，包含：
+请在 [GitHub Issues](https://github.com/InsureMO/oh-yee/issues) 中提交，包含：
 
 - 复现步骤
 - 预期行为
@@ -185,4 +185,4 @@ import zhCN from 'yee-c/es/locale/zh_CN';
 
 ---
 
-仍有问题？欢迎在 [GitHub Discussions](https://github.com/InsureMO/oh-yee-c/discussions) 中提问。
+仍有问题？欢迎在 [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions) 中提问。

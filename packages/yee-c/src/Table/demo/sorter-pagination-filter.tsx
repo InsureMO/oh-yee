@@ -1,8 +1,13 @@
 import { Table } from '@oh/yee-c';
+import type { ColumnProps, onChangeParams } from '@oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
-  const [tableData, setTableData] = useState({
+  const [tableData, setTableData] = useState<{
+    pagination: { current: number; pageSize: number };
+    sorter: object;
+    filters: object;
+  }>({
     pagination: { current: 1, pageSize: 5 },
     sorter: {},
     filters: {},
@@ -55,19 +60,19 @@ export default () => {
     { key: '7', name: 'David Wilson', age: 38, score: 90, city: 'New York' },
   ];
 
-  const handleChange = (params: any) => {
+  const handleChange = (params: onChangeParams) => {
     console.log('onChange triggered:', params);
     setTableData({
-      pagination: params.pagination,
-      sorter: params.sorter,
-      filters: params.filters,
+      pagination: params.pagination as { current: number; pageSize: number },
+      sorter: params.sorter ?? {},
+      filters: params.filters ?? {},
     });
   };
 
   return (
     <div>
       <Table
-        columns={columns as any}
+        columns={columns as ColumnProps[]}
         dataSource={dataSource}
         onChange={handleChange}
         pagination={{
@@ -77,10 +82,10 @@ export default () => {
         }}
       />
       <div style={{ marginTop: 16, padding: 16, background: '#f5f5f5' }}>
-        <p><strong>当前状态:</strong></p>
-        <p>分页: Page {tableData.pagination.current}, {tableData.pagination.pageSize} per page</p>
-        <p>排序: {JSON.stringify(tableData.sorter)}</p>
-        <p>过滤: {JSON.stringify(tableData.filters)}</p>
+        <p><strong>Current State:</strong></p>
+        <p>Pagination: Page {tableData.pagination.current}, {tableData.pagination.pageSize} per page</p>
+        <p>Sorter: {JSON.stringify(tableData.sorter)}</p>
+        <p>Filters: {JSON.stringify(tableData.filters)}</p>
       </div>
     </div>
   );

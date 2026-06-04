@@ -5,19 +5,19 @@ export default () => {
   return (
     <Space>
       <Popconfirm
-        title="确认删除吗？"
-        description="删除后无法恢复，请确认"
+        title="Are you sure to delete?"
+        description="This action cannot be undone"
         onConfirm={() => console.log('Confirmed')}
         onCancel={() => console.log('Canceled')}
       >
-        <Button color="danger">删除</Button>
+        <Button color="danger">Delete</Button>
       </Popconfirm>
 
       <Popconfirm
-        title="确认操作吗？"
+        title="Are you sure?"
         onConfirm={() => console.log('Confirmed')}
       >
-        <Button>确认操作</Button>
+        <Button>Confirm</Button>
       </Popconfirm>
     </Space>
   );

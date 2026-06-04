@@ -3,7 +3,7 @@ import Column from './column';
 import Summary from './summary';
 import Head from './theader';
 
-export type { TableProps, ColumnProps } from './interface';
+export type { TableProps, ColumnProps, onChangeParams, PaginationType, RowSelectionType } from './interface';
 
 type TableType = typeof InternalTable & {
   Column: typeof Column;

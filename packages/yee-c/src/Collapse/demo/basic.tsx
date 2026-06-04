@@ -1,5 +1,5 @@
-import { Collapse } from '@oh/yee-c';
 import React from 'react';
+import { Collapse } from '@oh/yee-c';
 
 export default () => {
   const items = [

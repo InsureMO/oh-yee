@@ -63,11 +63,11 @@ export default () => {
           rowSelection={{
             type: 'radio',
             selectedRowKeys: [value],
-            onChange: (selectedKeys: any) => {
-              setValue(selectedKeys);
+            onChange: (selectedKeys: string[] | number[]) => {
+              setValue(selectedKeys as unknown as string);
               console.log('Selected:', selectedKeys);
             },
-          } as any}
+          } as unknown as TableSelectRowSelectionType}
           rowKey="key"
           optionLabelProp="name"
           placeholder="Select a person"
@@ -86,8 +86,8 @@ export default () => {
           rowSelection={{
             type: 'checkbox',
             selectedRowKeys: multiValue,
-            onChange: (selectedKeys: any) => {
-              setMultiValue(selectedKeys);
+            onChange: (selectedKeys: string[] | number[]) => {
+              setMultiValue(selectedKeys as unknown as string[]);
               console.log('Selected:', selectedKeys);
             },
           } as TableSelectRowSelectionType}

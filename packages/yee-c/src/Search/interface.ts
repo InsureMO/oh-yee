@@ -1,5 +1,5 @@
-import { TriggerProps } from '../Trigger';
 import type { ListItemProps } from '../List';
+import { TriggerProps } from '../Trigger';
 
 export type SemanticDOM = 'prefix' | 'input' | 'suffix' | 'clear' | 'button';
 
@@ -7,11 +7,11 @@ export type SearchOption = ListItemProps;
 
 export interface SearchProps
   extends
-  Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    'size' | 'prefix' | 'onChange'
-  >,
-  Omit<TriggerProps, 'children' | 'popup'> {
+    Omit<
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'size' | 'prefix' | 'onChange'
+    >,
+    Omit<TriggerProps, 'children' | 'popup'> {
   /**
    * @description Custom class name prefix
    * @default 'yee-search'
@@ -86,6 +86,11 @@ export interface SearchProps
    * @default false
    */
   allowClear?: boolean;
+  /**
+   * @description loading state of the search button
+   * @default false
+   */
+  loading?: boolean;
 
   /**
    * @description trigger search event

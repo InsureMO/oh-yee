@@ -9,11 +9,11 @@ export default () => {
       <RangePicker
         value={value}
         onChange={(dates, dateStrings) => {
-          console.log('选中的日期:', dates);
-          console.log('格式化后:', dateStrings);
+          console.log('Selected dates:', dates);
+          console.log('Formatted:', dateStrings);
           setValue(dates as [string, string]);
         }}
-        placeholder={['开始日期', '结束日期']}
+        placeholder={['Start date', 'End date']}
       />
     </div>
   );

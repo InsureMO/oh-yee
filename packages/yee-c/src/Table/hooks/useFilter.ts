@@ -47,9 +47,16 @@ export default function useFilter({
     }
     return data.filter((item) => {
       return handled.find((o) => {
-        const v = o.value.toLowerCase();
-        const t = item[o.dataIndex];
-        return (t as string).toLowerCase().includes(v);
+        if (Array.isArray(o.value)) {
+          return o.value.some((v) => {
+            const t = item[o.dataIndex];
+            return (t as string).toLowerCase() === v.toLowerCase();
+          });
+        } else {
+          const v = o.value.toLowerCase();
+          const t = item[o.dataIndex];
+          return (t as string).toLowerCase().includes(v);
+        }
       });
     });
   }, [data, filterRecords]);

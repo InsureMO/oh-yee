@@ -1,14 +1,14 @@
-import { Button, Form, Input, Space, Grid } from '@oh/yee-c';
 import React from 'react';
+import { Button, Form, Input, Space, Grid } from '@oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Received values:', values);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = (errorInfo: unknown) => {
     console.log('Failed:', errorInfo);
   };
 

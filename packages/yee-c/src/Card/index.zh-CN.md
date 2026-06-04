@@ -15,6 +15,7 @@ toc: 'content'
 ## 代码演示
 
 <code src="./demo/basic.tsx" title="基础用法" description="Card的基础用法"></code>
+<code src="./demo/card-group.tsx" title="卡片分组" description="使用 Card.Group 包裹多个卡片"></code>
 <code src="./demo/collapsible.tsx" title="可折叠" description="可折叠的卡片"></code>
 <code src="./demo/extra.tsx" title="额外内容" description="带有额外内容的卡片"></code>
 <code src="./demo/expandIcon.tsx" title="自定义展开图标" description="带有自定义展开图标的卡片"></code>

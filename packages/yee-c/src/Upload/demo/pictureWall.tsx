@@ -1,29 +1,30 @@
 import { Button, Upload } from '@oh/yee-c';
+import type { UploadFile } from '../interface';
 import React, { useState } from 'react';
 
 export default () => {
-  const [fileList, setFileList] = useState<any[]>([
+  const [fileList, setFileList] = useState<UploadFile[]>([
     {
       uid: '-1',
       name: 'image.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
+    } as unknown as UploadFile,
     {
       uid: '-2',
       name: 'image.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
+    } as unknown as UploadFile,
     {
       uid: '-3',
       name: 'image.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
+    } as unknown as UploadFile,
   ]);
 
-  const handleChange = ({ fileList }: any) => {
+  const handleChange = ({ fileList }: { fileList: UploadFile[] }) => {
     setFileList(fileList);
   };
 

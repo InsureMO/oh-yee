@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import React, { forwardRef, useContext } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useEsc from '../hooks/useEsc';
+import useFocusManage from '../hooks/useFocusManage';
+import useLockFocus from '../hooks/useLockFocus';
 import useMergedState from '../hooks/useMergedState';
 import Trigger from '../Trigger';
 import mergeContextToProps from '../utils/mergeContextToProps';
@@ -35,6 +37,10 @@ const Popover = forwardRef<HTMLElement, PopoverProps>((baseprops, ref) => {
     defaultValue: defaultOpen,
   });
 
+  const popupRef = React.useRef<HTMLDivElement>(null);
+  useFocusManage(popupRef.current as HTMLElement, mergedOpen);
+  useLockFocus(popupRef.current as HTMLElement, mergedOpen);
+
   const renderPopup = () => {
     if (!content && !title) {
       return null;
@@ -45,6 +51,7 @@ const Popover = forwardRef<HTMLElement, PopoverProps>((baseprops, ref) => {
         className={clsx(prefixCls, [`${prefixCls}-${placement}`], className)}
         style={style}
         role="dialog"
+        ref={popupRef}
       >
         {title && (
           <div

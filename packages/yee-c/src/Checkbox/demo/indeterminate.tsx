@@ -1,5 +1,6 @@
-import { Checkbox } from '@oh/yee-c';
 import React, { useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { Checkbox } from '@oh/yee-c';
 
 export default () => {
   const [checkedList, setCheckedList] = useState(['Apple']);
@@ -14,7 +15,7 @@ export default () => {
     setCheckAll(list.length === options.length);
   };
 
-  const onCheckAllChange = (e: any) => {
+  const onCheckAllChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckedList(e.target.checked ? options : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);

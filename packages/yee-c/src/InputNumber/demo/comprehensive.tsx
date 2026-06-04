@@ -2,9 +2,9 @@
  * title: Comprehensive Example
  * description: Demonstrates various feature combinations of InputNumber.
  */
+import React, { useState } from 'react';
 import { InputNumber, Space } from '@oh/yee-c';
 import { DollarSign, Percent } from 'lucide-react';
-import React, { useState } from 'react';
 
 export default () => {
     const [value1, setValue1] = useState<number | null>(100);
@@ -13,7 +13,7 @@ export default () => {
     return (
         <Space direction="vertical" style={{ width: '100%' }}>
             <div>
-                <div style={{ marginBottom: 8 }}>价格输入（带图标前缀）：</div>
+                <div style={{ marginBottom: 8 }}>Price input (with icon prefix):</div>
                 <InputNumber
                     value={value1}
                     onChange={setValue1}
@@ -26,15 +26,15 @@ export default () => {
                     allowClear
                     formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     parser={(value) => value!.replace(/,/g, '')}
-                    placeholder="请输入价格"
+                    placeholder="Enter price"
                 />
                 <div style={{ marginTop: 8, color: '#666' }}>
-                    当前值: {value1 ?? 'null'}
+                    Current value: {value1 ?? 'null'}
                 </div>
             </div>
 
             <div>
-                <div style={{ marginBottom: 8 }}>百分比输入（带图标后缀）：</div>
+                <div style={{ marginBottom: 8 }}>Percentage input (with icon suffix):</div>
                 <InputNumber
                     value={value2}
                     onChange={setValue2}
@@ -45,21 +45,21 @@ export default () => {
                     suffix={<Percent size={14} />}
                     allowClear
                     formatter={(value) => `${value}`}
-                    placeholder="请输入百分比"
+                    placeholder="Enter percentage"
                 />
                 <div style={{ marginTop: 8, color: '#666' }}>
-                    当前值: {value2 ?? 'null'}%
+                    Current value: {value2 ?? 'null'}%
                 </div>
             </div>
 
             <div>
-                <div style={{ marginBottom: 8 }}>无步进器：</div>
+                <div style={{ marginBottom: 8 }}>No stepper:</div>
                 <InputNumber
                     defaultValue={999}
                     controls={false}
                     prefix="¥"
                     allowClear
-                    placeholder="无步进器"
+                    placeholder="No stepper"
                 />
             </div>
         </Space>

@@ -7,7 +7,7 @@ export default () => {
       <Space>
         <Popconfirm
           placement="top"
-          title="顶部提示"
+          title="Top placement"
           onConfirm={() => console.log('Top confirmed')}
         >
           <Button>Top</Button>
@@ -15,7 +15,7 @@ export default () => {
 
         <Popconfirm
           placement="bottom"
-          title="底部提示"
+          title="Bottom placement"
           onConfirm={() => console.log('Bottom confirmed')}
         >
           <Button>Bottom</Button>
@@ -25,7 +25,7 @@ export default () => {
       <Space>
         <Popconfirm
           placement="left"
-          title="左侧提示"
+          title="Left placement"
           onConfirm={() => console.log('Left confirmed')}
         >
           <Button>Left</Button>
@@ -33,7 +33,7 @@ export default () => {
 
         <Popconfirm
           placement="right"
-          title="右侧提示"
+          title="Right placement"
           onConfirm={() => console.log('Right confirmed')}
         >
           <Button>Right</Button>

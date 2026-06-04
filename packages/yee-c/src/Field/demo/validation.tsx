@@ -14,7 +14,7 @@ export default () => {
     const errors = form?.submit();
     console.log("errors: ", errors);
     if (errors && errors.length === 0) {
-      console.log('提交成功:', form?.getFieldsValue());
+      console.log('Submit success:', form?.getFieldsValue());
     }
   };
 
@@ -23,46 +23,46 @@ export default () => {
       <Field
         formName="validationForm"
         name="username"
-        label="用户名"
+        label="Username"
         required
         rules={[
-          { required: true, message: '用户名不能为空' },
-          { minLength: 3, message: '用户名至少3个字符' },
+          { required: true, message: 'Username is required' },
+          { minLength: 3, message: 'Username must be at least 3 characters' },
         ]}
       >
-        <Input placeholder="请输入用户名" />
+        <Input placeholder="Please enter username" />
       </Field>
       <Field
         formName="validationForm"
         name="phone"
-        label="手机号"
+        label="Phone"
         rules={[
-          { regexp: /^1[3-9]\d{9}$/, message: '请输入正确的手机号' },
+          { regexp: /^1[3-9]\d{9}$/, message: 'Please enter a valid phone number' },
         ]}
       >
-        <Input placeholder="请输入手机号" />
+        <Input placeholder="Please enter phone number" />
       </Field>
       <Field
         formName="validationForm"
         name="age"
-        label="年龄"
+        label="Age"
         rules={[
-          { validator: (v) => Number(v) >= 18, message: '年龄必须满18岁' },
+          { validator: (v) => Number(v) >= 18, message: 'Must be at least 18 years old' },
         ]}
       >
-        <Input placeholder="请输入年龄" />
+        <Input placeholder="Please enter age" />
       </Field>
       <Field
         formName="validationForm"
         name="code"
-        label="验证码"
+        label="Verification Code"
         rules={[
-          { minLength: 6, maxLength: 6, message: '验证码为6位', validateTrigger: 'onBlur' },
+          { minLength: 6, maxLength: 6, message: 'Verification code must be 6 digits', validateTrigger: 'onBlur' },
         ]}
       >
-        <Input placeholder="仅失焦时校验" />
+        <Input placeholder="Validate on blur only" />
       </Field>
-      <Button type="primary" onClick={handleSubmit}>提交</Button>
+      <Button type="primary" onClick={handleSubmit}>Submit</Button>
     </div>
   );
 };

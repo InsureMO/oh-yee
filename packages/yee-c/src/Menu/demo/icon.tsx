@@ -1,5 +1,5 @@
-import { Menu } from '@oh/yee-c';
 import React from 'react';
+import { Menu } from '@oh/yee-c';
 
 export default () => {
   const items = [

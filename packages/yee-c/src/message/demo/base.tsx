@@ -6,22 +6,22 @@ const BaseDemo = () => {
   const showMessage = (type: string) => {
     switch (type) {
       case 'info':
-        messageApi.open('这是一条info消息');
+        messageApi.open('This is an info message');
         break;
       case 'success':
-        message.success('这是一条success消息');
+        message.success('This is a success message');
         break;
       case 'warning':
-        message.warning('这是一条warning消息');
+        message.warning('This is a warning message');
         break;
       case 'error':
-        message.error('这是一条error消息');
+        message.error('This is an error message');
         break;
       case 'loading':
-        message.loading('这是一条loading消息');
+        message.loading('This is a loading message');
         break;
       default:
-        message.open('这是一条普通消息');
+        message.open('This is a plain message');
     }
   };
 

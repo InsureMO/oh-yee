@@ -19,8 +19,9 @@ High performance form component with data scope management.
 <code src="./demo/watch.tsx" title="Field Watch" description="useWatch monitors field value changes for conditional rendering"></code>
 <code src="./demo/layout.tsx" title="Layout" description="Different form layouts"></code>
 <code src="./demo/validate.tsx" title="Validation" description="Form validation"></code>
+<code src="./demo/list.tsx" title="Form List" description="Form list field usage"></code>
+<code src="./demo/form-table.tsx" title="Form Table" description="Form table field usage"></code>
 <code src="./demo/dynamic.tsx" title="Dynamic Form" description="Dynamic form items"></code>
-<code src="./demo/virtual.tsx" title="Virtual Form" description="Virtual form"></code>
 
 ## API
 

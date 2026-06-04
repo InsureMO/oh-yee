@@ -1,5 +1,5 @@
-import { Avatar, Badge, Box } from '@oh/yee-c';
 import React from 'react';
+import { Avatar, Badge, Box } from '@oh/yee-c';
 
 export default () => {
     return (

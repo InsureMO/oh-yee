@@ -4,7 +4,7 @@ Learning resources, tools, and community content for yee-c.
 
 ## Official Resources
 
-- **GitHub**: [https://github.com/InsureMO/oh-yee-c](https://github.com/InsureMO/oh-yee-c)
+- **GitHub**: [https://github.com/InsureMO/oh-yee](https://github.com/InsureMO/oh-yee)
 - **NPM**: [https://www.npmjs.com/package/yee-c](https://www.npmjs.com/package/yee-c)
 - **Docs**: [https://yee-c.dev](https://yee-c.dev)
 
@@ -18,9 +18,9 @@ Learning resources, tools, and community content for yee-c.
 
 ### Example Projects
 
-- **Basic Example**: [GitHub](https://github.com/InsureMO/oh-yee-c-examples-basic)
-- **Next.js Integration**: [GitHub](https://github.com/InsureMO/oh-yee-c-examples-nextjs)
-- **Vite + React**: [GitHub](https://github.com/InsureMO/oh-yee-c-examples-vite)
+- **Basic Example**: [GitHub](https://github.com/InsureMO/oh-yee-examples-basic)
+- **Next.js Integration**: [GitHub](https://github.com/InsureMO/oh-yee-examples-nextjs)
+- **Vite + React**: [GitHub](https://github.com/InsureMO/oh-yee-examples-vite)
 
 ## Design Resources
 
@@ -63,4 +63,4 @@ yee-c add button alert
 - **TypeScript**: [https://www.typescriptlang.org](https://www.typescriptlang.org)
 - **Vite**: [https://vitejs.dev](https://vitejs.dev)
 
-Have a resource to share? Submit a PR or share in [Discussions](https://github.com/InsureMO/oh-yee-c/discussions).
+Have a resource to share? Submit a PR or share in [Discussions](https://github.com/InsureMO/oh-yee/discussions).

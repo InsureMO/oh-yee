@@ -38,7 +38,12 @@ export default () => {
   ];
 
   const handleExpandAll = () => {
-    const getAllKeys = (data: any[]): string[] => {
+    type TreeNodeData = {
+      title: string;
+      key: string;
+      children?: TreeNodeData[];
+    };
+    const getAllKeys = (data: TreeNodeData[]): string[] => {
       let keys: string[] = [];
       data.forEach((item) => {
         keys.push(item.key);

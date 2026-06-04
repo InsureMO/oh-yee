@@ -5,19 +5,19 @@ export default () => {
   return (
     <Space>
       <Popconfirm
-        title="带自定义图标"
+        title="With custom icon"
         icon={<span>❓</span>}
         onConfirm={() => console.log('Confirmed')}
       >
-        <Button>自定义图标</Button>
+        <Button>Custom Icon</Button>
       </Popconfirm>
 
       <Popconfirm
-        title="无图标"
+        title="No icon"
         icon={null}
         onConfirm={() => console.log('Confirmed')}
       >
-        <Button>无图标</Button>
+        <Button>No Icon</Button>
       </Popconfirm>
     </Space>
   );

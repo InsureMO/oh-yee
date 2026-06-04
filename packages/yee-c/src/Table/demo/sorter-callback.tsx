@@ -1,4 +1,5 @@
 import { Table } from '@oh/yee-c';
+import type { ColumnProps, onChangeParams } from '@oh/yee-c';
 import React from 'react';
 
 export default () => {
@@ -8,7 +9,7 @@ export default () => {
       dataIndex: 'name',
       key: 'name',
       sorter: {
-        sort: () => Math.random() - 0.5, // 随机排序示例
+        sort: () => Math.random() - 0.5, // Random sort example
         multiple: true,
       },
     },
@@ -70,13 +71,13 @@ export default () => {
     },
   ];
 
-  const handleChange = (params: any) => {
+  const handleChange = (params: onChangeParams) => {
     console.log('Table changed:', params);
   };
 
   return (
     <Table
-      columns={columns as any}
+      columns={columns as ColumnProps[]}
       dataSource={dataSource}
       onChange={handleChange}
     />

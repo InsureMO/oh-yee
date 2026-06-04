@@ -1,5 +1,5 @@
-import { JsonViewer } from '@oh/yee-c';
 import React from 'react';
+import { JsonViewer } from '@oh/yee-c';
 
 export default () => {
   const data = {

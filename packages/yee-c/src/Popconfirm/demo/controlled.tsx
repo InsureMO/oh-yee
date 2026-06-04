@@ -7,21 +7,21 @@ export default () => {
   return (
     <Space direction="vertical">
       <Space>
-        <Button onClick={() => setOpen(true)}>打开确认框</Button>
-        <Button onClick={() => setOpen(false)}>关闭确认框</Button>
+        <Button onClick={() => setOpen(true)}>Open Confirm</Button>
+        <Button onClick={() => setOpen(false)}>Close Confirm</Button>
       </Space>
 
       <Popconfirm
         open={open}
-        title="受控的确认框"
-        description="这是一个受控的确认框"
+        title="Controlled Popconfirm"
+        description="This is a controlled popconfirm"
         onConfirm={() => {
           console.log('Confirmed');
           setOpen(false);
         }}
         onCancel={() => setOpen(false)}
       >
-        <Button>受控确认框</Button>
+        <Button>Controlled Confirm</Button>
       </Popconfirm>
     </Space>
   );

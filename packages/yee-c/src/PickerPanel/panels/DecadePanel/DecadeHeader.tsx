@@ -5,7 +5,6 @@ import Header from '../Header';
 
 export default function DecadeHeader(props: any) {
   const { viewDate, offsetYear, onViewDateChange } = props;
-  console.log('DecadeHeader render: ', props);
   const onSuperPrevClick = useEvent(() => {
     onViewDateChange(pickerUtils.addYear(viewDate, -100));
   });

@@ -4,7 +4,7 @@
 
 ## 官方资源
 
-- **GitHub 仓库**：[https://github.com/InsureMO/oh-yee-c](https://github.com/InsureMO/oh-yee-c)
+- **GitHub 仓库**：[https://github.com/InsureMO/oh-yee](https://github.com/InsureMO/oh-yee)
 - **NPM 包**：[https://www.npmjs.com/package/yee-c](https://www.npmjs.com/package/yee-c)
 - **官方文档**：[https://yee-c.dev](https://yee-c.dev)
 
@@ -18,10 +18,10 @@
 
 ### 示例项目
 
-- **基础示例**：[GitHub](https://github.com/InsureMO/oh-yee-c-examples-basic)
-- **Next.js 集成**：[GitHub](https://github.com/InsureMO/oh-yee-c-examples-nextjs)
-- **Vite + React**：[GitHub](https://github.com/InsureMO/oh-yee-c-examples-vite)
-- **TypeScript 最佳实践**：[GitHub](https://github.com/InsureMO/oh-yee-c-examples-ts)
+- **基础示例**：[GitHub](https://github.com/InsureMO/oh-yee-examples-basic)
+- **Next.js 集成**：[GitHub](https://github.com/InsureMO/oh-yee-examples-nextjs)
+- **Vite + React**：[GitHub](https://github.com/InsureMO/oh-yee-examples-vite)
+- **TypeScript 最佳实践**：[GitHub](https://github.com/InsureMO/oh-yee-examples-ts)
 
 ## 设计资源
 
@@ -114,4 +114,4 @@ yee-c upgrade
 
 ## 贡献资源
 
-如果你有好的学习资源或工具想要分享，欢迎提交 PR 或在 [Discussions](https://github.com/InsureMO/oh-yee-c/discussions) 中分享。
+如果你有好的学习资源或工具想要分享，欢迎提交 PR 或在 [Discussions](https://github.com/InsureMO/oh-yee/discussions) 中分享。

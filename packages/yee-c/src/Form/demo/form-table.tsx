@@ -1,16 +1,17 @@
-import { Button, Form, Input, Space, Table } from '@oh/yee-c';
 import React from 'react';
+import { Button, Form, Input, Space, Table } from '@oh/yee-c';
+import type { ColumnProps } from '@oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Form Values:', values);
   };
 
   return (
     <div style={{ padding: '24px' }}>
-      <h2>Form + Table 动态表单示例</h2>
+      <h2>Form + Table Dynamic Form Example</h2>
       <Form
         form={form}
         onFinish={onFinish}
@@ -22,52 +23,52 @@ export default () => {
           address: '',
         }]}>
           {(fields, operations, meta) => {
-            // 定义列配置 - 在这里可以访问 operations
-            const columns = [
+            // Define column config - operations are accessible here
+            const columns: ColumnProps[] = [
               {
-                title: '姓名',
+                title: 'Name',
                 dataIndex: 'name',
                 key: 'name',
                 width: '30%',
-                render: (record: any, index: number) => (
+                render: (_record, index) => (
                   <Form.Field name={[index, 'name']} required>
-                    <Input placeholder="请输入姓名" />
+                    <Input placeholder="Please enter name" />
                   </Form.Field>
                 ),
               },
               {
-                title: '年龄',
+                title: 'Age',
                 dataIndex: 'age',
                 key: 'age',
                 width: '20%',
-                render: (record: any, index: number) => (
+                render: (_record, index) => (
                   <Form.Field name={[index, 'age']} required>
-                    <Input placeholder="请输入年龄" type="number" />
+                    <Input placeholder="Please enter age" type="number" />
                   </Form.Field>
                 ),
               },
               {
-                title: '地址',
+                title: 'Address',
                 dataIndex: 'address',
                 key: 'address',
                 width: '40%',
-                render: (record: any, index: number) => (
+                render: (_record, index) => (
                   <Form.Field name={[index, 'address']}>
-                    <Input placeholder="请输入地址" />
+                    <Input placeholder="Please enter address" />
                   </Form.Field>
                 ),
               },
               {
-                title: '操作',
+                title: 'Action',
                 key: 'action',
                 width: '10%',
-                render: (record: any, index: number) => (
+                render: (_record, index) => (
                   <Button
                     type="link"
                     color="danger"
                     onClick={() => operations.remove(index)}
                   >
-                    删除
+                    Delete
                   </Button>
                 ),
               },
@@ -89,7 +90,7 @@ export default () => {
                     })}
                     block
                   >
-                    + 添加一行
+                    + Add Row
                   </Button>
                 )}
               />
@@ -99,7 +100,7 @@ export default () => {
 
         <Space style={{ marginTop: '24px' }}>
           <Button type="primary" htmlType="submit">
-            提交
+            Submit
           </Button>
           <Button
             style={{ marginLeft: '8px' }}
@@ -107,7 +108,7 @@ export default () => {
               console.log('Current Values:', form.getFieldsValue());
             }}
           >
-            查看当前值
+            View Current Values
           </Button>
         </Space>
       </Form>

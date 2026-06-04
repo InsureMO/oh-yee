@@ -6,15 +6,15 @@ export default () => {
   const [value, setValue] = useState<[string, string]>();
 
   const ranges = {
-    今天: [dayjs(), dayjs()],
-    最近7天: [dayjs().subtract(6, 'day'), dayjs()],
-    最近30天: [dayjs().subtract(29, 'day'), dayjs()],
-    本月: [dayjs().startOf('month'), dayjs().endOf('month')],
-    上月: [
+    Today: [dayjs(), dayjs()],
+    'Last 7 Days': [dayjs().subtract(6, 'day'), dayjs()],
+    'Last 30 Days': [dayjs().subtract(29, 'day'), dayjs()],
+    'This Month': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Last Month': [
       dayjs().subtract(1, 'month').startOf('month'),
       dayjs().subtract(1, 'month').endOf('month'),
     ],
-    本年: [dayjs().startOf('year'), dayjs().endOf('year')],
+    'This Year': [dayjs().startOf('year'), dayjs().endOf('year')],
   } as Record<string, [Dayjs, Dayjs]>;
 
   return (
@@ -23,10 +23,10 @@ export default () => {
         value={value}
         ranges={ranges}
         onChange={(dates, dateStrings) => {
-          console.log('选中的日期:', dates);
+          console.log('Selected dates:', dates);
           setValue(dates as [string, string]);
         }}
-        placeholder={['开始日期', '结束日期']}
+        placeholder={['Start date', 'End date']}
       />
     </div>
   );

@@ -7,6 +7,14 @@
     &-avatar {
         width: var(--yee-skeleton-avatar-width);
         height: var(--yee-skeleton-avatar-height);
+
+        &-circle {
+            border-radius: 50%;
+        }
+
+        &-square {
+            border-radius: var(--yee-skeleton-avatar-square-radius, 4px);
+        }
     }
 
     &-title {
@@ -47,31 +55,10 @@
                 position: absolute;
                 inset: var(--yee-skeleton-active-after-inset);
                 background: linear-gradient(90deg, var(--yee-skeleton-bg-color) 25%, var(--yee-skeleton-bg-active-color) 37%, var(--yee-skeleton-bg-color) 63%);
-                animation: yee-skeleton-active var(--yee-skeleton-active-animation-duration) ease infinite;
                 animation: yee-skeleton-active var(--yee-skeleton-active-animation-duration) ease infinite var(--yee-skeleton-active-animation-delay);
                 content: "";
             }
         }
-    }
-}
-
-@keyframes yee-skeleton-active {
-    0% {
-        transform: translateX(var(--yee-skeleton-active-translate-start));
-    }
-
-    100% {
-        transform: translateX(var(--yee-skeleton-active-translate-end));
-    }
-}
-
-@keyframes yee-skeleton-active {
-    0% {
-        transform: translateX(var(--yee-skeleton-active-translate-start));
-    }
-
-    100% {
-        transform: translateX(var(--yee-skeleton-active-translate-end));
     }
 }
 

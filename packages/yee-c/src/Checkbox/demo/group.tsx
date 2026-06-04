@@ -1,8 +1,8 @@
-import { Checkbox } from '@oh/yee-c';
 import React, { useState } from 'react';
+import { Checkbox } from '@oh/yee-c';
 
 export default () => {
-  const [value, setValue] = useState(['Apple']);
+  const [value, setValue] = useState<Array<string | number>>(['Apple']);
 
   const options = [
     { label: 'Apple', value: 'Apple' },
@@ -11,7 +11,7 @@ export default () => {
     { label: 'Banana', value: 'Banana', disabled: true },
   ];
 
-  const onChange = (checkedValues: any[]) => {
+  const onChange = (checkedValues: Array<string | number>) => {
     console.log('checked = ', checkedValues);
     setValue(checkedValues);
   };

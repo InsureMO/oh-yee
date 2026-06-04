@@ -1,8 +1,9 @@
 import { Table } from '@oh/yee-c';
+import type { RowSelectionType } from '@oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([]);
 
   const columns = [
     {
@@ -46,7 +47,7 @@ export default () => {
   const rowSelection = {
     type: 'checkbox',
     selectedRowKeys,
-    onChange: (selectedKeys: any) => {
+    onChange: (selectedKeys: string[] | number[]) => {
       setSelectedRowKeys(selectedKeys);
     },
   };
@@ -55,7 +56,7 @@ export default () => {
     <Table
       columns={columns}
       dataSource={dataSource}
-      rowSelection={rowSelection as any}
+      rowSelection={rowSelection as RowSelectionType}
       rowKey="key"
     />
   );

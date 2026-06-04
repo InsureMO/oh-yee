@@ -1,5 +1,5 @@
-import { Menu } from '@oh/yee-c';
 import React, { useState } from 'react';
+import { Menu } from '@oh/yee-c';
 import { Aperture, AudioLines, Settings } from 'lucide-react';
 
 export default () => {
@@ -37,7 +37,7 @@ export default () => {
         onClick={() => setCollapsed(!collapsed)}
         style={{ marginBottom: 16, padding: '4px 12px', cursor: 'pointer' }}
       >
-        {collapsed ? '展开' : '折叠'}
+        {collapsed ? 'Expand' : 'Collapse'}
       </button>
       <Menu
         items={items}

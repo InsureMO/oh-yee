@@ -11,7 +11,7 @@ export default () => (
   <Reveal mode="stagger">
     {items.map((id) => (
       <Card key={id} title={`Card ${id}`}>
-        <p>这是第 {id} 张卡片，stagger 模式下逐帧渲染。</p>
+        <p>This is card {id}, rendered frame by frame in stagger mode.</p>
       </Card>
     ))}
   </Reveal>

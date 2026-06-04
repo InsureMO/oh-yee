@@ -11,9 +11,9 @@ export default () => {
       gapY={50}
     >
       <div style={{ height: 500, padding: 20, background: '#f5f5f5' }}>
-        <h2>图片水印</h2>
-        <p>这是一个带有图片水印的容器。</p>
-        <p>可以使用 SVG 或其他图片格式作为水印。</p>
+        <h2>Image Watermark</h2>
+        <p>This is a container with an image watermark.</p>
+        <p>You can use SVG or other image formats as watermarks.</p>
       </div>
     </Watermark>
   );

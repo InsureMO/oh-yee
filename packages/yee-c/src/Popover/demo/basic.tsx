@@ -3,7 +3,7 @@ import React from 'react';
 
 export default () => {
   return (
-    <Popover title="标题" content="这是一段内容,这是一段内容,这是一段内容">
+    <Popover title="Title" content="This is some content, this is some content, this is some content">
       <Button>Hover me</Button>
     </Popover>
   );

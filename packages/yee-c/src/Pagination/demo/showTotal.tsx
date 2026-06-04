@@ -6,7 +6,7 @@ export default () => {
 
   return (
     <Pagination
-      showTotal={(total, current) => `第 ${current} 页，共 ${total} 条`}
+      showTotal={(total, current) => `Page ${current}, Total ${total} items`}
       current={current}
       total={50}
       onChange={({ current }) => setCurrent(current)}

@@ -12,20 +12,20 @@ export default () => {
       }}
     >
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>小尺寸</div>
-        <RangePicker size="small" placeholder={['开始日期', '结束日期']} />
+        <div style={{ marginBottom: '8px', color: '#666' }}>Small</div>
+        <RangePicker size="small" placeholder={['Start date', 'End date']} />
       </div>
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          中等尺寸（默认）
+          Middle (default)
         </div>
-        <RangePicker size="middle" placeholder={['开始日期', '结束日期']} />
+        <RangePicker size="middle" placeholder={['Start date', 'End date']} />
       </div>
 
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>大尺寸</div>
-        <RangePicker size="large" placeholder={['开始日期', '结束日期']} />
+        <div style={{ marginBottom: '8px', color: '#666' }}>Large</div>
+        <RangePicker size="large" placeholder={['Start date', 'End date']} />
       </div>
     </div>
   );

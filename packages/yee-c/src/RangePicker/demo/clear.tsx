@@ -15,22 +15,22 @@ export default () => {
       }}
     >
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>可清除（默认）</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>Clearable (default)</div>
         <RangePicker
           value={value1}
           onChange={(dates) => setValue1(dates)}
-          onClear={() => console.log('已清除')}
-          placeholder={['开始日期', '结束日期']}
+          onClear={() => console.log('Cleared')}
+          placeholder={['Start date', 'End date']}
         />
       </div>
 
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>不可清除</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>Not clearable</div>
         <RangePicker
           value={value2}
           allowClear={false}
           onChange={(dates) => setValue2(dates)}
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
     </div>

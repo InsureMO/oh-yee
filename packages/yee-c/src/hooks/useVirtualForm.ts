@@ -12,12 +12,10 @@ const forms = new Map();
 
 export default function useVirtualForm() {
   const getForm = useCallback((formName: string) => {
-    console.log('getForm: ', formName);
     return forms.get(formName);
   }, []);
 
   const createForm = (name: string) => {
-    console.log('createForm', name);
     const form = new FormStore();
     forms.set(name, form);
 

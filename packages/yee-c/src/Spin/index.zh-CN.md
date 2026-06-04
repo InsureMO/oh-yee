@@ -43,6 +43,7 @@ toc: 'content'
 | styles | `Partial<Record<'tip' \| 'indicator', React.CSSProperties>>` | 语义化结构样式 | - |
 | tip | `React.ReactNode` | 加载状态的提示词 | - |
 | delay | `number` | 延迟显示加载效果的时间（毫秒） | - |
+| variant | `'dot' \| 'ring' \| 'spokes'` | 加载器样式变体，`ring` 为圆环转圈，`spokes` 为辐条旋转 | `'dot'` |
 | indicator | `React.ReactNode` | 加载器指示符 | - |
 | mask | `boolean` | 是否显示遮罩 | - |
 | children | `React.ReactNode` | 子元素 | - |

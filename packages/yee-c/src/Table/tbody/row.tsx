@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { SquareMinus, SquarePlus } from 'lucide-react';
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import Button from '../../Button';
 import Checkbox from '../../Checkbox';
 import Radio from '../../Radio';
@@ -97,7 +97,11 @@ const TableRow: React.FC<TableRowProps> = (props) => {
         if (key === 'YEE_SELECTION_COL') {
           const selection = getSelection(column);
           return (
-            <td className={`${prefixCls}-cell`} style={{ textAlign: 'center' }} key={`selection-${col}`}>
+            <td
+              className={`${prefixCls}-cell`}
+              style={{ textAlign: 'center' }}
+              key={`selection-${col}`}
+            >
               {selection}
             </td>
           );
@@ -110,7 +114,10 @@ const TableRow: React.FC<TableRowProps> = (props) => {
 
           let renderExpandable = (
             <td
-              className={clsx(`${prefixCls}-cell`, `${prefixCls}-row-expand-icon`)}
+              className={clsx(
+                `${prefixCls}-cell`,
+                `${prefixCls}-row-expand-icon`,
+              )}
               style={{ textAlign: 'center' }}
               key={'expandable-' + index}
             >
@@ -118,9 +125,9 @@ const TableRow: React.FC<TableRowProps> = (props) => {
                 type="text"
                 icon={
                   expanded ? (
-                    <SquareMinus size={14} strokeWidth={1.5} />
+                    <SquareMinus size={16} strokeWidth={2} />
                   ) : (
-                    <SquarePlus size={14} strokeWidth={1.5} />
+                    <SquarePlus size={16} strokeWidth={2} />
                   )
                 }
                 onClick={handleExpand}

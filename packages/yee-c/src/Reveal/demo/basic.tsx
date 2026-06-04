@@ -11,7 +11,7 @@ export default () => (
   <Reveal offset="100px">
     {items.map((id) => (
       <Card key={id} title={`Card ${id}`}>
-        <p>这是第 {id} 张卡片的内容，只有滚动到这里才会渲染。</p>
+        <p>This is the content of card {id}, it will only render when scrolled into view.</p>
       </Card>
     ))}
   </Reveal>

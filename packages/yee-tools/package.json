@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "A modern, type-safe TypeScript utility library",
   "license": "MIT",
-  "author": "tao.liu",
   "type": "module",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",

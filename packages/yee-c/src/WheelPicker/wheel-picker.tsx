@@ -19,7 +19,6 @@ const WheelPicker: FC<WheelPickerProps> = ({
     (colIndex: number) => (itemIndex: number) => {
       const newValue = [...value];
       newValue[colIndex] = itemIndex;
-      console.log("newValue: ", newValue);
       onChange?.(newValue);
     },
     [value, onChange],

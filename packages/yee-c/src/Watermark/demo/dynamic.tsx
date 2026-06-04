@@ -7,15 +7,15 @@ export default () => {
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <Input
-        placeholder="输入水印文本"
+        placeholder="Enter watermark text"
         value={text}
         onChange={(e) => setText(e)}
         style={{ width: 300 }}
       />
       <Watermark content={text}>
         <div style={{ height: 500, padding: 20, background: '#f5f5f5' }}>
-          <h2>动态水印</h2>
-          <p>在上方输入框中输入文本，水印会实时更新。</p>
+          <h2>Dynamic Watermark</h2>
+          <p>Type in the input box above and the watermark will update in real time.</p>
         </div>
       </Watermark>
     </Space>

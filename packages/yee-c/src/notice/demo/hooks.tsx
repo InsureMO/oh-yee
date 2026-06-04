@@ -5,21 +5,21 @@ const HooksDemo = () => {
   const { noticeApi, noticeHolders } = useNotice();
 
   const handleHooksBasic = () => {
-    noticeApi.open('这是通过 hooks 调用的基本通知');
+    noticeApi.open('This is a basic notification called via hooks');
   };
 
   const handleHooksSuccess = () => {
     noticeApi.success({
-      title: 'Hooks 成功',
-      content: '通过 useNotice hooks 调用的成功通知',
+      title: 'Hooks Success',
+      content: 'Success notification called via useNotice hook',
       placement: 'topLeft',
     });
   };
 
   const handleHooksError = () => {
     noticeApi.error({
-      title: 'Hooks 错误',
-      content: '通过 useNotice hooks 调用的错误通知',
+      title: 'Hooks Error',
+      content: 'Error notification called via useNotice hook',
       placement: 'bottomRight',
       duration: 0, // No auto close
     });
@@ -27,26 +27,26 @@ const HooksDemo = () => {
 
   const handleMultiplePositions = () => {
     noticeApi.info({
-      title: '左上角',
-      content: '这是左上角的通知',
+      title: 'Top Left',
+      content: 'This is a top-left notification',
       placement: 'topLeft',
     });
 
     noticeApi.success({
-      title: '右上角',
-      content: '这是右上角的通知',
+      title: 'Top Right',
+      content: 'This is a top-right notification',
       placement: 'topRight',
     });
 
     noticeApi.warning({
-      title: '左下角',
-      content: '这是左下角的通知',
+      title: 'Bottom Left',
+      content: 'This is a bottom-left notification',
       placement: 'bottomLeft',
     });
 
     noticeApi.error({
-      title: '右下角',
-      content: '这是右下角的通知',
+      title: 'Bottom Right',
+      content: 'This is a bottom-right notification',
       placement: 'bottomRight',
     });
   };
@@ -57,13 +57,13 @@ const HooksDemo = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>useNotice Hooks 演示</h2>
+      <h2>useNotice Hook Demo</h2>
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <Button onClick={handleHooksBasic}>Hooks 基本通知</Button>
-        <Button onClick={handleHooksSuccess}>Hooks 成功通知</Button>
-        <Button onClick={handleHooksError}>Hooks 错误通知</Button>
-        <Button onClick={handleMultiplePositions}>多位置同时显示</Button>
-        <Button onClick={handleClearAll}>清除所有通知</Button>
+        <Button onClick={handleHooksBasic}>Hooks Basic</Button>
+        <Button onClick={handleHooksSuccess}>Hooks Success</Button>
+        <Button onClick={handleHooksError}>Hooks Error</Button>
+        <Button onClick={handleMultiplePositions}>Multiple Positions</Button>
+        <Button onClick={handleClearAll}>Clear All</Button>
       </div>
       {noticeHolders}
     </div>

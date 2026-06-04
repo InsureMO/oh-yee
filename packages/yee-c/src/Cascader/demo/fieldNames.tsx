@@ -1,5 +1,6 @@
-import { Cascader } from '@oh/yee-c';
 import React from 'react';
+import { Cascader } from '@oh/yee-c';
+import type { Option } from '../interface';
 
 export default () => {
   const options = [
@@ -43,14 +44,14 @@ export default () => {
     children: 'items',
   };
 
-  const onChange = (value: any, selectedOptions: any) => {
+  const onChange = (value: Array<Array<string | number>> | Array<string | number> | undefined, selectedOptions: Option[]) => {
     console.log(value, selectedOptions);
   };
 
   return (
     <Cascader
       fieldNames={fieldNames}
-      options={options as any}
+      options={options as unknown as Option[]}
       onChange={onChange}
       placeholder="Please select"
       style={{ width: '300px' }}

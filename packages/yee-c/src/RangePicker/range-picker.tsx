@@ -235,7 +235,6 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     if (type === 'start') {
       const end = pickerUtils.addMonth(date, 1);
       setPickerView([date, end]);
-      console.log("start panel change: ", date.format('YYYY/MM/DD'), end.format('YYYY/MM/DD'));
     } else if (type === 'end') {
       const start = pickerUtils.addMonth(date, -1);
       setPickerView([start, date]);

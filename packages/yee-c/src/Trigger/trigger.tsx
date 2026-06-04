@@ -1,14 +1,7 @@
 import RcTrigger, { AlignType } from '@rc-component/trigger';
-import React, {
-  FC,
-  isValidElement,
-  useContext,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { FC, isValidElement, useContext, useMemo, useRef } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
-import useFocusManage from '../hooks/useFocusManage';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import { TriggerProps } from './interface';
 import { getPopupAlign } from './utils';
@@ -32,15 +25,21 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
     mouseEnterDelay = 0,
     mouseLeaveDelay = 0.2,
     arrow,
-    forceRender=false,
+    forceRender = false,
     onOpenChange,
     zIndex,
     ...rest
   } = props;
 
-  const triggerTestId = (rest as Record<string, unknown>)['data-testid'] as string | undefined;
+  const triggerTestId = (rest as Record<string, unknown>)['data-testid'] as
+    | string
+    | undefined;
   const wrappedPopup = triggerTestId
-    ? () => <div data-popup-for={triggerTestId}>{typeof popup === 'function' ? popup() : popup}</div>
+    ? () => (
+        <div data-popup-for={triggerTestId}>
+          {typeof popup === 'function' ? popup() : popup}
+        </div>
+      )
     : popup;
 
   const triggerRef = useRef<HTMLElement>(null);
@@ -48,8 +47,6 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
     value: open,
     defaultValue: defaultOpen,
   });
-
-  // useFocusManage(triggerRef.current as HTMLElement, mergedOpen);
 
   // -------- trigger action -----------------------
   const handlePopupOpenChange = (visible: boolean) => {

@@ -10,14 +10,14 @@ export default () => {
 
   return (
     <div style={{ maxWidth: 400 }}>
-      <Field formName="basicForm" name="username" label="用户名">
-        <Input placeholder="请输入用户名" />
+      <Field formName="basicForm" name="username" label="Username">
+        <Input placeholder="Please enter username" />
       </Field>
-      <Field formName="basicForm" name="email" label="邮箱">
-        <Input placeholder="请输入邮箱" />
+      <Field formName="basicForm" name="email" label="Email">
+        <Input placeholder="Please enter email" />
       </Field>
-      <Field formName="basicForm" name="remark" label="备注">
-        <TextArea placeholder="请输入备注" rows={3} />
+      <Field formName="basicForm" name="remark" label="Remark">
+        <TextArea placeholder="Please enter remark" rows={3} />
       </Field>
     </div>
   );

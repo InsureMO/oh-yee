@@ -6,13 +6,13 @@ export default () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h3>隐藏Tooltip</h3>
+      <h3>Hide Tooltip</h3>
       <Slider
         value={value}
         tooltipVisible={false}
         onChange={(val) => setValue(val as number)}
       />
-      <p>当前值: {value}</p>
+      <p>Current value: {value}</p>
     </div>
   );
 };

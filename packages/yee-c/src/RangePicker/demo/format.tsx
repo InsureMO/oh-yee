@@ -17,47 +17,47 @@ export default () => {
     >
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          默认格式 (YYYY/MM/DD)
+          Default format (YYYY/MM/DD)
         </div>
         <RangePicker
           value={value1}
           onChange={(dates) => {
-            console.log('格式化值:', dates);
+            console.log('Formatted value:', dates);
             setValue1(dates as [string, string]);
           }}
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          自定义格式 (YYYY-MM-DD)
+          Custom format (YYYY-MM-DD)
         </div>
         <RangePicker
           value={value2}
           format="YYYY-MM-DD"
           saveFormat="YYYY-MM-DD"
           onChange={(dates) => {
-            console.log('格式化值:', dates);
+            console.log('Formatted value:', dates);
             setValue2(dates as [string, string]);
           }}
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          中文格式 (YYYY年MM月DD日)
+          Display format (YYYY/MM/DD)
         </div>
         <RangePicker
           value={value3}
-          format="YYYY年MM月DD日"
+          format="YYYY/MM/DD"
           saveFormat="YYYY-MM-DD"
           onChange={(dates) => {
-            console.log('格式化值:', dates);
+            console.log('Formatted value:', dates);
             setValue3(dates as [string, string]);
           }}
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
     </div>

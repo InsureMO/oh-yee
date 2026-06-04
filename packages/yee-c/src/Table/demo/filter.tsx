@@ -1,3 +1,4 @@
+import type { ColumnProps } from '@oh/yee-c';
 import { Table } from '@oh/yee-c';
 import React from 'react';
 
@@ -27,6 +28,10 @@ export default () => {
       key: 'gender',
       filter: {
         filterMode: 'tree',
+        items: [
+          { label: 'Male', key: 'male' },
+          { label: 'Female', key: 'female' },
+        ],
       },
     },
   ];
@@ -69,5 +74,5 @@ export default () => {
     },
   ];
 
-  return <Table columns={columns as any} dataSource={dataSource} />;
+  return <Table columns={columns as ColumnProps[]} dataSource={dataSource} />;
 };

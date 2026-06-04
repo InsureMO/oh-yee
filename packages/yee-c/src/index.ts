@@ -11,7 +11,6 @@ export { default as Badge } from './Badge';
 export * from './Box';
 export { default as Box } from './Box';
 
-export type { DataAttributeProps } from './utils/types';
 export * from './Breadcrumb';
 export { default as Breadcrumb } from './Breadcrumb';
 export * from './Button';
@@ -34,12 +33,12 @@ export * from './ErrorBoundary';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export * from './FloatButton';
 export { default as FloatButton } from './FloatButton';
+export * from './ImageViewer';
+export { default as ImageViewer } from './ImageViewer';
 export * from './Input';
 export { default as Input } from './Input';
 export * from './InputNumber';
 export { default as InputNumber } from './InputNumber';
-export * from './ImageViewer';
-export { default as ImageViewer } from './ImageViewer';
 export * from './Label';
 export { default as Label } from './Label';
 export * from './List';
@@ -70,6 +69,7 @@ export * from './Trigger';
 export { default as Trigger } from './Trigger';
 export * from './Upload';
 export { default as Upload } from './Upload';
+export type { DataAttributeProps } from './utils/types';
 
 export * from './Pagination';
 export { default as Pagination } from './Pagination';
@@ -113,6 +113,9 @@ export { default as TreeSelect } from './TreeSelect';
 
 export * from './Form';
 export { default as Form } from './Form';
+
+export * from './Field';
+export { default as Field } from './Field';
 
 export * from './Grid';
 export { default as Grid } from './Grid';

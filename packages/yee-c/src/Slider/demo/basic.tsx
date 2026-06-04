@@ -6,15 +6,15 @@ export default () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h3>基础滑动条</h3>
-      <Slider 
-        value={value} 
+      <h3>Basic Slider</h3>
+      <Slider
+        value={value}
         onChange={(val) => {
           console.log('Slider value changed:', val);
           setValue(val as number);
-        }} 
+        }}
       />
-      <p>当前值: {value}</p>
+      <p>Current value: {value}</p>
     </div>
   );
 };

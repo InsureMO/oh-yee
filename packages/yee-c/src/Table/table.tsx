@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useContext, useMemo, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import Spin from '../Spin';
 import ColGroup from './col-group';
 import Footer from './footer';
@@ -37,7 +37,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     rowKey = 'key',
     bordered,
     tableLayout,
-    loading=false,
+    loading = false,
     showHeader = true,
     pagination: propPagination = true,
     columns: propColumns = [],
@@ -70,7 +70,9 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   );
 
   const allKeys = useMemo(() => {
-    return Array.isArray(dataSource) ? dataSource.map((item) => getRowKey(item)) : [];
+    return Array.isArray(dataSource)
+      ? dataSource.map((item) => getRowKey(item))
+      : [];
   }, [dataSource, rowKey, getRowKey]);
 
   const { wrapedColumns, columns } = useColumns({
@@ -81,7 +83,9 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   });
 
   // Filter
-  const { data: filteredData, onFilter: onFilterInternal } = useFilter({ data: dataSource });
+  const { data: filteredData, onFilter: onFilterInternal } = useFilter({
+    data: dataSource,
+  });
 
   // Sort
   const {
@@ -93,15 +97,17 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   const { pageData, current, pageSize, pagination } = usePagination({
     data: sortedData,
     pagination: propPagination,
-    onTableChange: onChange ? (info) => {
-      onChange({
-        pagination: info,
-        sorter: sorters,
-        filters: undefined, // TODO: Extract filter info from onFilterInternal
-        currentDataSource: sortedData,
-        action: 'paginate',
-      })
-    } : undefined,
+    onTableChange: onChange
+      ? (info) => {
+          onChange({
+            pagination: info,
+            sorter: sorters,
+            filters: undefined, // TODO: Extract filter info from onFilterInternal
+            currentDataSource: sortedData,
+            action: 'paginate',
+          });
+        }
+      : undefined,
   });
 
   // Expanded row data
@@ -127,19 +133,30 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   });
 
   // Wrap onFilter to trigger onChange
-  const onFilter = React.useCallback((...args: Parameters<typeof onFilterInternal>) => {
-    onFilterInternal(...args);
-    // Trigger onChange for filter action
-    if (onChange) {
-      onChange({
-        pagination: pagination === false ? undefined : { current, pageSize },
-        sorter: sorters,
-        filters: undefined, // TODO: Extract filter info from args
-        currentDataSource: filteredData,
-        action: 'filter',
-      });
-    }
-  }, [onChange, pagination, current, pageSize, sorters, filteredData, onFilterInternal]);
+  const onFilter = React.useCallback(
+    (...args: Parameters<typeof onFilterInternal>) => {
+      onFilterInternal(...args);
+      // Trigger onChange for filter action
+      if (onChange) {
+        onChange({
+          pagination: pagination === false ? undefined : { current, pageSize },
+          sorter: sorters,
+          filters: undefined, // TODO: Extract filter info from args
+          currentDataSource: filteredData,
+          action: 'filter',
+        });
+      }
+    },
+    [
+      onChange,
+      pagination,
+      current,
+      pageSize,
+      sorters,
+      filteredData,
+      onFilterInternal,
+    ],
+  );
 
   // Trigger onChange when sorter, pagination, or filter changes
   useEffect(() => {
@@ -159,26 +176,6 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
       });
       return;
     }
-
-    // Check if pagination changed
-    // const paginationChanged =
-    //   prevPaginationRef.current.current !== current ||
-    //   prevPaginationRef.current.pageSize !== pageSize;
-    // if (paginationChanged) {
-    //   prevPaginationRef.current = { current, pageSize };
-    //   onChange({
-    //     pagination: pagination === false ? undefined : { current, pageSize },
-    //     sorter: sorters,
-    //     filters: undefined,
-    //     currentDataSource: pageData,
-    //     action: 'paginate',
-    //   });
-    //   return;
-    // }
-
-    // Initialize refs on first render
-    // prevSortersRef.current = sorters;
-    // prevPaginationRef.current = { current, pageSize };
   }, [sorters, current, pageSize, pageData, sortedData, onChange]);
 
   const renderHeader = () => {

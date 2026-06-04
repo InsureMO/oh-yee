@@ -62,7 +62,6 @@ const WheelColumn: FC<WheelColumnProps> = ({
 
     scrollTimerRef.current = setTimeout(() => {
       const index = getIndexFromScroll();
-      console.log("index: ", index);
       setScrolling(false);
       isInternalRef.current = true;
       onChange?.(index);

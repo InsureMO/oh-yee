@@ -8,11 +8,7 @@ import Indicator from './indicator';
 import { SpinProps } from './interface';
 import './style/index.less';
 
-const loadingSize = new Map([
-  ['small', { width: '16px', height: '16px' }],
-  ['default', { width: '24px', height: '24px' }],
-  ['large', { width: '40px', height: '40px' }],
-]);
+const PRESET_COLORS = ['info', 'success', 'warning', 'error'] as const;
 
 const Spin: FC<SpinProps> = (baseprops) => {
   const { spin } = useContext(GlobalContext);
@@ -29,12 +25,13 @@ const Spin: FC<SpinProps> = (baseprops) => {
     mask,
     children,
     size,
+    variant,
+    color,
     getContainer,
     ...rest
   } = props;
 
   const dataAttrs = pickDataAttrs(rest as Record<string, unknown>);
-
 
   const node = spinning ? (
     <div
@@ -42,7 +39,10 @@ const Spin: FC<SpinProps> = (baseprops) => {
         prefixCls,
         {
           [`${prefixCls}-blur`]: children,
-          [`${prefixCls}-fullscreen`]: fullscreen
+          [`${prefixCls}-fullscreen`]: fullscreen,
+          [`${prefixCls}-${color}`]: PRESET_COLORS.includes(
+            color as (typeof PRESET_COLORS)[number],
+          ),
         },
         className,
       )}
@@ -54,6 +54,7 @@ const Spin: FC<SpinProps> = (baseprops) => {
         classNames={classNames}
         styles={styles}
         size={size}
+        variant={variant}
       />
       {tip && (
         <span
@@ -74,11 +75,11 @@ const Spin: FC<SpinProps> = (baseprops) => {
   if (children) {
     return (
       <div className={clsx(`${prefixCls}-container`)} {...dataAttrs}>
-        { mask && node && <div className={`${prefixCls}-mask-layer`}></div> }
+        {mask && node && <div className={`${prefixCls}-mask-layer`}></div>}
         {node}
         {children}
       </div>
-    )
+    );
   }
 
   return node;

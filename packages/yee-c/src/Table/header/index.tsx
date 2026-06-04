@@ -29,81 +29,21 @@ import { HeaderProps } from '../interface';
 // };
 
 export default function Header(props: HeaderProps) {
-  const {
-    prefixCls,
-    header,
-    // columnFilter,
-    download,
-    // pageData,
-    // dataSource,
-    // columns,
-    classNames,
-    styles,
-  } = props;
+  const { prefixCls, header, classNames, styles } = props;
 
-  if (!header && !download) return null;
+  if (!header) return null;
 
-  let renderHeader: React.ReactNode;
+  let headerNode: React.ReactNode;
   if (header) {
-    renderHeader = typeof header === 'function' ? header() : header;
+    headerNode = typeof header === 'function' ? header() : header;
   }
-
-  const renderDownload = () => {
-    if (!download) return null;
-    // const def = {
-    //   range: 'current',
-    //   icon: 'Download',
-    //   title: 'download',
-    // };
-    // const deps =
-    //   typeof download === 'boolean'
-    //     ? def
-    //     : {
-    //         ...def,
-    //         ...(typeof download === 'function'
-    //           ? download({
-    //               columns: columns,
-    //               pageData,
-    //               data: dataSource,
-    //             })
-    //           : download),
-    //       };
-
-    // const dataInfo = {
-    //   data: getCSVData(
-    //     deps.range === 'current' ? pageData : dataSource,
-    //     columns,
-    //   ),
-    // };
-    // return <CSVDownload {...dataInfo} {...deps} />;
-    return <span></span>;
-  };
-
-  const renderColumnFilter = () => {
-    // if (!columnFilter) return null;
-    // return (
-    //   <ColumnFilter {...rest} columns={columns} columnFilter={columnFilter} />
-    // );
-    return null;
-  };
-
-  const renderActions = () => {
-    // if (!columnFilter && !download) return null;
-    return (
-      <div className={`${prefixCls}-actionbar`}>
-        {renderDownload()}
-        {renderColumnFilter()}
-      </div>
-    );
-  };
 
   return (
     <div
       className={clsx(`${prefixCls}-header`, classNames?.header)}
       style={styles?.header}
     >
-      {renderHeader}
-      {renderActions()}
+      {headerNode}
     </div>
   );
 }

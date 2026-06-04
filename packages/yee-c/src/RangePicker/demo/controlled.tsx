@@ -23,18 +23,18 @@ export default () => {
   return (
     <div style={{ padding: '20px' }}>
       <div style={{ marginBottom: '16px', display: 'flex', gap: '8px' }}>
-        <button onClick={handleSetToday}>设置为今天</button>
-        <button onClick={handleSetThisMonth}>设置为本月</button>
-        <button onClick={handleReset}>重置</button>
+        <button onClick={handleSetToday}>Set to today</button>
+        <button onClick={handleSetThisMonth}>Set to this month</button>
+        <button onClick={handleReset}>Reset</button>
       </div>
 
       <RangePicker
         value={value}
         onChange={(dates) => {
-          console.log('新值:', dates);
+          console.log('New value:', dates);
           setValue(dates);
         }}
-        placeholder={['开始日期', '结束日期']}
+        placeholder={['Start date', 'End date']}
       />
 
       <div
@@ -45,7 +45,7 @@ export default () => {
           borderRadius: '4px',
         }}
       >
-        <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>当前值：</div>
+        <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Current value:</div>
         <pre style={{ margin: 0, fontSize: '12px' }}>
           {JSON.stringify(value, null, 2)}
         </pre>

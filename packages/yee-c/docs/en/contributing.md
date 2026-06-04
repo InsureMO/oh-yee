@@ -8,7 +8,7 @@ Thanks for your interest in contributing to yee-c! We welcome all forms of contr
 
 If you find a bug or have a feature request:
 
-1. Search [GitHub Issues](https://github.com/InsureMO/oh-yee-c/issues)
+1. Search [GitHub Issues](https://github.com/InsureMO/oh-yee/issues)
 2. Create a new issue if not found
 3. Provide detailed description and reproduction steps
 
@@ -18,7 +18,7 @@ If you find a bug or have a feature request:
 
 ```bash
 # Clone repository
-git clone https://github.com/InsureMO/oh-yee-c.git
+git clone https://github.com/InsureMO/oh-yee.git
 cd yee-c
 
 # Install dependencies
@@ -146,7 +146,7 @@ Contributions are licensed under [MIT License](LICENSE).
 
 ## Contact
 
-- [GitHub Issues](https://github.com/InsureMO/oh-yee-c/issues)
-- Email: [yee-c@insuremo.com](mailto:yee-c@insuremo.com)
+- [GitHub Issues](https://github.com/InsureMO/oh-yee/issues)
+- [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions)
 
 Thanks for contributing! 🎉

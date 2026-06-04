@@ -77,6 +77,10 @@ export type SpinProps = DataAttributeProps & {
      */
     delay?: number;
     /**
+     * Indicator variant
+     * */
+    variant?: 'dot' | 'ring' | 'spokes';
+    /**
      * Loading indicator
     */
     indicator?: React.ReactNode;

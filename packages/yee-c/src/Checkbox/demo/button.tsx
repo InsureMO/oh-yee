@@ -1,5 +1,5 @@
-import { Checkbox } from '@oh/yee-c';
 import React, { useState } from 'react';
+import { Checkbox } from '@oh/yee-c';
 
 export default () => {
   const [value1, setValue1] = useState(['Apple']);

@@ -1,5 +1,5 @@
-import { Menu, Radio, Space } from '@oh/yee-c';
 import React, { useState } from 'react';
+import { Menu, Radio, Space } from '@oh/yee-c';
 
 export default () => {
   const [mode, setMode] = useState<'vertical' | 'inline' | 'horizontal'>(
@@ -35,7 +35,7 @@ export default () => {
     <Space direction="vertical">
       <Radio.Group
         value={mode}
-        onChange={(value) => setMode(value as any)}
+        onChange={(value) => setMode(value as 'vertical' | 'inline' | 'horizontal')}
         options={[
           { label: 'Vertical', value: 'vertical' },
           { label: 'Inline', value: 'inline' },

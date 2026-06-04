@@ -1,4 +1,5 @@
 import { Table } from '@oh/yee-c';
+import type { PaginationType } from '@oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -39,7 +40,7 @@ export default () => {
   return (
     <Table columns={columns} dataSource={dataSource} onChange={({ pagination, action }) => {
       if (action === 'paginate') {
-        setpagination(prev => ({ ...prev, current: (pagination as any).current, pageSize: (pagination as any).pageSize }));
+        setpagination(prev => ({ ...prev, current: (pagination as PaginationType).current, pageSize: (pagination as PaginationType).pageSize }));
       }
     }}/>
   );

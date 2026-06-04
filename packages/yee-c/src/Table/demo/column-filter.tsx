@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { Table, Button, Transfer, Space, Trigger, Box } from '@oh/yee-c';
+import type { ColumnProps } from '@oh/yee-c';
 import { Funnel, FunnelPlus } from 'lucide-react';
 
 export default () => {
-  // ========== 状态管理 ==========
-  // 所有可用的列定义
+  // ========== State ==========
+  // All available column definitions
   const allColumns = [
     {
       title: 'Name',
@@ -33,22 +34,22 @@ export default () => {
     },
   ];
 
-  // Transfer 数据源（列的选项）
+  // Transfer data source (column options)
   const transferDataSource = allColumns.map((col) => ({
     key: col.key,
     label: col.title,
   }));
 
-  // 默认显示的列（显示前3列）
+  // Default visible columns (first 3)
   const defaultTargetKeys = ['name', 'age', 'address'];
 
-  // 当前选中的列 keys
+  // Currently selected column keys
   const [targetKeys, setTargetKeys] = useState<Array<string | number>>(defaultTargetKeys);
 
-  // Transfer 弹窗显示状态
+  // Transfer popup visibility
   const [transferVisible, setTransferVisible] = useState(false);
 
-  // ========== 数据 ==========
+  // ========== Data ==========
   const dataSource = [
     {
       key: '1',
@@ -76,32 +77,32 @@ export default () => {
     },
   ];
 
-  // ========== 事件处理 ==========
+  // ========== Event Handlers ==========
   /**
-   * 处理 Transfer 选择变化
-   * @param newTargetKeys - 新选中的列 keys
+   * Handle Transfer selection change
+   * @param newTargetKeys - Newly selected column keys
    */
   const handleTransferChange = (newTargetKeys: Array<string | number>) => {
     setTargetKeys(newTargetKeys);
   };
 
   /**
-   * 切换 Transfer 弹窗显示状态
+   * Toggle Transfer popup visibility
    */
   const toggleTransfer = () => {
     setTransferVisible(!transferVisible);
   };
 
-  // ========== 计算属性 ==========
+  // ========== Computed ==========
   /**
-   * 根据 targetKeys 过滤要显示的列
-   * 保持列的原始顺序
+   * Filter visible columns based on targetKeys
+   * Preserve original column order
    */
   const visibleColumns = useMemo(() => {
     return allColumns.filter((col) => targetKeys.includes(col.key as string));
   }, [targetKeys]);
 
-  // ========== 渲染 ==========
+  // ========== Render ==========
   return (
     <div>
       <Space block style={{justifyContent: 'end', padding: '8px 0'}}>
@@ -113,7 +114,7 @@ export default () => {
                         dataSource={transferDataSource}
                         targetKeys={targetKeys}
                         onChange={handleTransferChange}
-                        titles={['可选列', '已选列']}
+                        titles={['Available', 'Selected']}
                         searchable
                         oneWay={true}
                     />
@@ -125,8 +126,8 @@ export default () => {
         </Trigger>
       </Space>
 
-      {/* 表格 */}
-      <Table columns={visibleColumns as any} dataSource={dataSource} />
+      {/* Table */}
+      <Table columns={visibleColumns as ColumnProps[]} dataSource={dataSource} />
     </div>
   );
 };

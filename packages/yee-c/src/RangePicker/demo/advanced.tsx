@@ -13,18 +13,18 @@ export default () => {
   });
 
   const ranges: Record<string, [dayjs.Dayjs, dayjs.Dayjs]> = {
-    今天: [dayjs(), dayjs()],
-    昨天: [dayjs().subtract(1, 'day'), dayjs().subtract(1, 'day')],
-    最近7天: [dayjs().subtract(6, 'day'), dayjs()],
-    最近30天: [dayjs().subtract(29, 'day'), dayjs()],
-    本周: [dayjs().startOf('week'), dayjs().endOf('week')],
-    本月: [dayjs().startOf('month'), dayjs().endOf('month')],
-    上月: [
+    Today: [dayjs(), dayjs()],
+    Yesterday: [dayjs().subtract(1, 'day'), dayjs().subtract(1, 'day')],
+    'Last 7 Days': [dayjs().subtract(6, 'day'), dayjs()],
+    'Last 30 Days': [dayjs().subtract(29, 'day'), dayjs()],
+    'This Week': [dayjs().startOf('week'), dayjs().endOf('week')],
+    'This Month': [dayjs().startOf('month'), dayjs().endOf('month')],
+    'Last Month': [
       dayjs().subtract(1, 'month').startOf('month'),
       dayjs().subtract(1, 'month').endOf('month'),
     ],
-    本季度: [dayjs().startOf('quarter'), dayjs().endOf('quarter')],
-    本年: [dayjs().startOf('year'), dayjs().endOf('year')],
+    'This Quarter': [dayjs().startOf('quarter'), dayjs().endOf('quarter')],
+    'This Year': [dayjs().startOf('year'), dayjs().endOf('year')],
   };
 
   return (
@@ -37,7 +37,7 @@ export default () => {
           borderRadius: '4px',
         }}
       >
-        <h3 style={{ marginTop: 0 }}>配置选项</h3>
+        <h3 style={{ marginTop: 0 }}>Configuration</h3>
 
         <div
           style={{
@@ -54,12 +54,12 @@ export default () => {
                 fontSize: '14px',
               }}
             >
-              尺寸：
+              Size:
             </label>
             <select
               value={config.size}
               onChange={(e) =>
-                setConfig({ ...config, size: e.target.value as any })
+                setConfig({ ...config, size: e.target.value as 'small' | 'middle' | 'large' })
               }
               style={{ width: '100%', padding: '4px 8px' }}
             >
@@ -77,19 +77,19 @@ export default () => {
                 fontSize: '14px',
               }}
             >
-              状态：
+              Status:
             </label>
             <select
               value={config.status || ''}
               onChange={(e) =>
                 setConfig({
                   ...config,
-                  status: (e.target.value as any) || undefined,
+                  status: (e.target.value as 'error' | 'warning' | '') || undefined,
                 })
               }
               style={{ width: '100%', padding: '4px 8px' }}
             >
-              <option value="">默认</option>
+              <option value="">Default</option>
               <option value="error">Error</option>
               <option value="warning">Warning</option>
             </select>
@@ -111,7 +111,7 @@ export default () => {
                 }
                 style={{ marginRight: '8px' }}
               />
-              禁用
+              Disabled
             </label>
           </div>
 
@@ -131,7 +131,7 @@ export default () => {
                 }
                 style={{ marginRight: '8px' }}
               />
-              允许清除
+              Allow Clear
             </label>
           </div>
 
@@ -151,14 +151,14 @@ export default () => {
                 }
                 style={{ marginRight: '8px' }}
               />
-              结束日期限制
+              End Date Limit
             </label>
           </div>
         </div>
       </div>
 
       <div style={{ marginBottom: '20px' }}>
-        <h3>日期范围选择器</h3>
+        <h3>Range Picker</h3>
         <RangePicker
           value={value}
           size={config.size}
@@ -168,23 +168,23 @@ export default () => {
           endLimitStart={config.endLimitStart}
           ranges={ranges}
           onChange={(dates, dateStrings) => {
-            console.log('选中的日期:', dates);
+            console.log('Selected dates:', dates);
             setValue(dates);
           }}
           onOpenChange={(open) =>
-            console.log('面板状态:', open ? '打开' : '关闭')
+            console.log('Panel state:', open ? 'Open' : 'Closed')
           }
-          onClear={() => console.log('已清除')}
-          placeholder={['开始日期', '结束日期']}
+          onClear={() => console.log('Cleared')}
+          placeholder={['Start date', 'End date']}
         />
       </div>
 
       <div
         style={{ padding: '16px', background: '#f5f5f5', borderRadius: '4px' }}
       >
-        <h3 style={{ marginTop: 0 }}>当前值</h3>
+        <h3 style={{ marginTop: 0 }}>Current Value</h3>
         <pre style={{ margin: 0, fontSize: '12px', overflow: 'auto' }}>
-          {value.length > 0 ? JSON.stringify(value, null, 2) : '未选择日期'}
+          {value.length > 0 ? JSON.stringify(value, null, 2) : 'No date selected'}
         </pre>
       </div>
     </div>

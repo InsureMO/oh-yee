@@ -14,7 +14,7 @@ export default () => {
       </div>
 
       <div style={{ marginTop: 16 }}>
-        <Rate value={value2} onChange={setValue2} character="好" count={5} />
+        <Rate value={value2} onChange={setValue2} character="A" count={5} />
         <span style={{ marginLeft: 8 }}>{value2} stars</span>
       </div>
 

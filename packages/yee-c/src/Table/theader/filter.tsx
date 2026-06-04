@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Search } from 'lucide-react';
+import { Filter, Search } from 'lucide-react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../../Button';
 import Divider from '../../Divider';
@@ -7,6 +7,7 @@ import Input from '../../Input';
 import Popover from '../../Popover';
 import Space from '../../Space';
 import Tree from '../../Tree';
+import { useLocale } from '../../locale';
 import { TableCtx } from '../table';
 
 export interface TableFilterProps {
@@ -22,9 +23,12 @@ const getStrLower = (str: any) => {
   return str;
 };
 
-const Filter = React.memo((props: any) => {
+const HeaderFilter = React.memo((props: any) => {
   const { filter, column, getContainer, onInternalFilter } = props;
   const { prefixCls } = useContext(TableCtx);
+  const {
+    locale: { table: loc = {} },
+  } = useLocale();
   const { dataIndex } = column;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -118,14 +122,20 @@ const Filter = React.memo((props: any) => {
         <Divider style={{ margin: '8px 0' }} />
         <Tree
           dataSource={dataSource}
+          checkable
+          multiple
+          checkedKeys={selectNodes}
+          onCheck={(keys) => setSelectNodes(keys as Array<string | number>)}
           //   selectedKeys={selectNodes}
           //   multiple
           //   onSelect={handleSelect}
         />
         <Divider style={{ margin: '8px 0' }} />
-        <Space style={{ padding: '0 12px' }}>
-          <Button onClick={reset}>Reset</Button>
-          <Button onClick={() => ok('filter')} type="primary">
+        <Space block style={{ justifyContent: 'flex-end' }}>
+          <Button size="small" onClick={reset}>
+            Reset
+          </Button>
+          <Button size="small" onClick={() => ok('filter')} type="primary">
             Confirm
           </Button>
         </Space>
@@ -163,9 +173,9 @@ const Filter = React.memo((props: any) => {
         <Button
           icon={
             items ? (
-              <Filter size={18} strokeWidth={1.5} />
+              <Filter size={16} strokeWidth={1.5} />
             ) : (
-              <Search size={18} strokeWidth={1.5} />
+              <Search size={16} strokeWidth={1.5} />
             )
           }
           type="text"
@@ -190,4 +200,4 @@ const Filter = React.memo((props: any) => {
     </Popover>
   );
 });
-export default Filter;
+export default HeaderFilter;

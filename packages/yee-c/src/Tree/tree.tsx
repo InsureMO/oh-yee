@@ -128,8 +128,6 @@ const Tree = <T extends Record<string, unknown> = any>(
         map: itemMap,
       });
 
-      console.log('newKeys: ', newKeys);
-
       const nodes = newKeys
         .map((key) => itemMap.get(key as string)?.original)
         .filter((node): node is T => node !== undefined);

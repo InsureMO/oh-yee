@@ -1,10 +1,10 @@
-import { Button, DatePicker, Form, Grid, Input, Select, Space, TextArea } from '@oh/yee-c';
 import React, { useEffect } from 'react';
+import { Button, DatePicker, Form, Grid, Input, Select, Space, TextArea } from '@oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Received values:', values);
   };
 

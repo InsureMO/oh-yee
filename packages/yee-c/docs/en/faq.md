@@ -98,4 +98,4 @@ Yes, most components support SSR. Some components like Dialog may need client-si
 
 ---
 
-Still have questions? Ask in [GitHub Discussions](https://github.com/InsureMO/oh-yee-c/discussions).
+Still have questions? Ask in [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions).

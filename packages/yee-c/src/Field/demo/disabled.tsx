@@ -10,14 +10,14 @@ export default () => {
 
   return (
     <div style={{ maxWidth: 400 }}>
-      <Field formName="disabledForm" name="readonly" label="只读字段">
-        <Input value="不可编辑的内容" readOnly />
+      <Field formName="disabledForm" name="readonly" label="Readonly Field">
+        <Input value="Non-editable content" readOnly />
       </Field>
-      <Field formName="disabledForm" name="disabled" label="禁用字段" disabled>
-        <Input placeholder="整个 Field 被禁用" />
+      <Field formName="disabledForm" name="disabled" label="Disabled Field" disabled>
+        <Input placeholder="Entire Field is disabled" />
       </Field>
-      <Field formName="disabledForm" name="normal" label="正常字段">
-        <Input placeholder="可正常输入" />
+      <Field formName="disabledForm" name="normal" label="Normal Field">
+        <Input placeholder="Normal input" />
       </Field>
     </div>
   );

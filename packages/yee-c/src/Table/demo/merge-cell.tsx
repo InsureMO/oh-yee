@@ -17,7 +17,7 @@ export default () => {
       title: 'Address',
       dataIndex: 'address',
       key: 'address',
-      onCell: (_: any, index: number) => {
+      onCell: (_: Record<string, unknown>, index: number) => {
         return {
           rowSpan: index === 0 ? 2 : index === 1 ? 0 : 1,
           colSpan: index === 2 ? 2 : 1,

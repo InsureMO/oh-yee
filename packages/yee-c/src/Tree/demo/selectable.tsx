@@ -1,4 +1,5 @@
 import { Tree } from '@oh/yee-c';
+import type { TreeProps } from '@oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -37,8 +38,8 @@ export default () => {
     },
   ];
 
-  const onSelect = (keys: string[]) => {
-    setSelectedKeys(keys);
+  const onSelect: TreeProps<Record<string, unknown>>['onSelect'] = (keys) => {
+    setSelectedKeys(keys as string[]);
   };
 
   return (
@@ -46,7 +47,7 @@ export default () => {
       defaultExpandAll
       dataSource={treeData}
       selectedKeys={selectedKeys}
-      onSelect={onSelect as any}
+      onSelect={onSelect}
       multiple
     />
   );

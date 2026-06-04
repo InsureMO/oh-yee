@@ -60,8 +60,8 @@ export default () => {
   const rowSelection = {
     type: 'checkbox' as const,
     selectedRowKeys: value,
-    onChange: (selectedKeys: any) => {
-      setValue(selectedKeys);
+    onChange: (selectedKeys: string[] | number[]) => {
+      setValue(selectedKeys as unknown as string[]);
     },
   };
 

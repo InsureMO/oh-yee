@@ -6,7 +6,7 @@ export default () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h3>自定义范围和步长</h3>
+      <h3>Custom Range and Step</h3>
       <Slider
         min={0}
         max={1000}
@@ -14,7 +14,7 @@ export default () => {
         value={value}
         onChange={(val) => setValue(val as number)}
       />
-      <p>当前值: {value}</p>
+      <p>Current value: {value}</p>
     </div>
   );
 };

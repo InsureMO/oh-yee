@@ -12,27 +12,27 @@ export default () => {
       }}
     >
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>默认分隔符 (~)</div>
-        <RangePicker placeholder={['开始日期', '结束日期']} />
+        <div style={{ marginBottom: '8px', color: '#666' }}>Default separator (~)</div>
+        <RangePicker placeholder={['Start date', 'End date']} />
       </div>
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          自定义分隔符 (至)
+          Custom separator (to)
         </div>
-        <RangePicker separator="至" placeholder={['开始日期', '结束日期']} />
+        <RangePicker separator="to" placeholder={['Start date', 'End date']} />
       </div>
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          自定义分隔符 (→)
+          Custom separator (→)
         </div>
-        <RangePicker separator="→" placeholder={['开始日期', '结束日期']} />
+        <RangePicker separator="→" placeholder={['Start date', 'End date']} />
       </div>
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>
-          自定义 JSX 分隔符
+          Custom JSX separator
         </div>
         <RangePicker
           separator={
@@ -42,7 +42,7 @@ export default () => {
               ⇄
             </span>
           }
-          placeholder={['开始日期', '结束日期']}
+          placeholder={['Start date', 'End date']}
         />
       </div>
     </div>

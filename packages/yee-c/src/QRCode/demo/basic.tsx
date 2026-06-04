@@ -1,10 +1,28 @@
-import { QRCode } from '@oh/yee-c';
 import React from 'react';
+import { QRCode, Space, Card } from '@oh/yee-c';
 
 export default () => {
   return (
-    <div>
-      <QRCode value="https://yee-c.example.com" />
-    </div>
+    <Space direction="vertical" gap={16}>
+      <Card title="Basic QR Code">
+        <QRCode value="https://yee-c.example.com" />
+      </Card>
+
+      <Card title="Custom Sizes">
+        <Space wrap>
+          <QRCode value="https://yee-c.example.com" size={100} />
+          <QRCode value="https://yee-c.example.com" size={160} />
+          <QRCode value="https://yee-c.example.com" size={220} />
+        </Space>
+      </Card>
+
+      <Card title="Custom Colors">
+        <Space wrap>
+          <QRCode value="https://yee-c.example.com" color="#52c41a" />
+          <QRCode value="https://yee-c.example.com" color="#1890ff" />
+          <QRCode value="https://yee-c.example.com" color="#722ed1" />
+        </Space>
+      </Card>
+    </Space>
   );
 };

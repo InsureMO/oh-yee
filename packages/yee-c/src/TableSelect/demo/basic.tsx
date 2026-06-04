@@ -1,5 +1,5 @@
 import { TableSelect } from '@oh/yee-c';
-import type {TableSelectRowSelectionType} from '@oh/yee-c';
+import type { TableSelectRowSelectionType, TableSelectProps } from '@oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -57,7 +57,7 @@ export default () => {
     selectedRowKeys: value,
   } as unknown as TableSelectRowSelectionType;
 
-  const handleChange = (selectedKeys: string | string[]) => {
+  const handleChange: TableSelectProps['onChange'] = (selectedKeys) => {
     console.log('Selected keys:', selectedKeys);
     setValue(selectedKeys as string);
   }
@@ -71,7 +71,7 @@ export default () => {
       rowKey="key"
       optionLabelProp="name"
       placeholder="Please select a person"
-      onChange={handleChange as any}
+      onChange={handleChange}
     />
   );
 };

@@ -1,5 +1,5 @@
-import { Badge, Card } from '@oh/yee-c';
 import React from 'react';
+import { Badge, Card } from '@oh/yee-c';
 
 export default () => {
   return (

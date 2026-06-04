@@ -14,7 +14,7 @@ export default () => {
     <Space direction="vertical">
       <Select
         value={value}
-        onChange={setValue as any}
+        onChange={(val) => setValue(val as string)}
         options={options}
         style={{ width: 200 }}
         placeholder="Small Size"
@@ -22,7 +22,7 @@ export default () => {
 
       <Select
         value={value}
-        onChange={setValue as any}
+        onChange={(val) => setValue(val as string)}
         options={options}
         style={{ width: 200 }}
         placeholder="Default Size"
@@ -30,7 +30,7 @@ export default () => {
 
       <Select
         value={value}
-        onChange={setValue as any}
+        onChange={(val) => setValue(val as string)}
         options={options}
         style={{ width: 200 }}
         placeholder="Large Size"

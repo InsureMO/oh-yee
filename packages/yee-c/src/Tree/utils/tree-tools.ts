@@ -94,7 +94,6 @@ export function tree2array<T extends Record<string, unknown>>(
 }
 
 export function containsAll<T>(a: Array<T>, b: Array<T>) {
-  console.log('containsAll: ', a, b);
   if (b.length > a.length) {
     return false;
   }

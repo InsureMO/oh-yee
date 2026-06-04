@@ -55,8 +55,8 @@ export default () => {
   const rowSelection = {
     type: 'radio' as const,
     selectedRowKeys: value,
-    onChange: (selectedKeys: any) => {
-      setValue(selectedKeys);
+    onChange: (selectedKeys: string[] | number[]) => {
+      setValue(selectedKeys as unknown as string);
     },
   } as unknown as TableSelectRowSelectionType;
 
@@ -84,9 +84,10 @@ export default () => {
           rowSelection={{
             type: 'radio',
             selectedRowKeys: [value],
-            // @ts-ignore
-            onChange: setValue,
-          }}
+            onChange: (selectedKeys: string[] | number[]) => {
+              setValue(selectedKeys as unknown as string);
+            },
+          } as unknown as TableSelectRowSelectionType}
           rowKey="key"
           optionLabelProp="name"
           allowClear
@@ -103,9 +104,10 @@ export default () => {
           rowSelection={{
             type: 'radio',
             selectedRowKeys: [value],
-            // @ts-ignore
-            onChange: setValue,
-          }}
+            onChange: (selectedKeys: string[] | number[]) => {
+              setValue(selectedKeys as unknown as string);
+            },
+          } as unknown as TableSelectRowSelectionType}
           rowKey="key"
           optionLabelProp="name"
           placement="topLeft"

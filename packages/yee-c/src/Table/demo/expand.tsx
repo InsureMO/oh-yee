@@ -42,12 +42,12 @@ export default () => {
   ];
 
   const expandable = {
-    expandedRowRender: (record: any) => (
-      <p style={{ margin: 0 }}>{record.description}</p>
+    expandedRowRender: (record: object) => (
+      <p style={{ margin: 0 }}>{String((record as Record<string, unknown>).description)}</p>
     ),
   };
 
-  // 添加描述信息到数据源
+  // Add description to data source
   const extendedDataSource = dataSource.map((item) => ({
     ...item,
     description: `My name is ${item.name}, I am ${item.age} years old, living in ${item.address}.`,

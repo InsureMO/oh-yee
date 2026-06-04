@@ -9,9 +9,9 @@ export default () => {
       <RangePicker
         value={value}
         onChange={(dates) => setValue(dates as [string, string])}
-        placeholder={['开始日期', '结束日期']}
+        placeholder={['Start date', 'End date']}
         separator={
-          <span style={{ color: '#1890ff', fontWeight: 'bold' }}>至</span>
+          <span style={{ color: '#1890ff', fontWeight: 'bold' }}>to</span>
         }
       />
     </div>

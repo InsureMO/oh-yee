@@ -73,8 +73,8 @@ export default () => {
   const rowSelection = {
     type: 'radio' as const,
     selectedRowKeys: value,
-    onChange: (selectedKeys: any) => {
-      setValue(selectedKeys);
+    onChange: (selectedKeys: string[] | number[]) => {
+      setValue(selectedKeys as unknown as string);
     },
   } as unknown as TableSelectRowSelectionType;
 

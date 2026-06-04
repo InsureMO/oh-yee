@@ -1,10 +1,10 @@
-import { Button, Form, Grid, Input, message, Select, Space } from '@oh/yee-c';
 import React from 'react';
+import { Button, Form, Grid, Input, message, Select, Space } from '@oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Record<string, unknown>) => {
     console.log('Received values:', values);
     message.success('Submit success!');
   };

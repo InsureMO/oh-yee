@@ -1,137 +1,162 @@
 # @oh/yee-tools
 
-A modern, type-safe TypeScript utility library.
+[![npm](https://img.shields.io/npm/v/@oh/yee-tools.svg)](https://www.npmjs.com/package/@oh/yee-tools) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+
+A modern, type-safe TypeScript utility library. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
 
 ## Features
 
 - **100% TypeScript** with strict mode enabled
-- **Zero `any` types** - fully type-safe
-- **Comprehensive test coverage** - 173 passing tests
-- **Modern ES6+ syntax** - arrow functions, optional chaining, destructuring
-- **Defensive programming** - handles null/undefined and edge cases
-- **JSDoc documentation** - complete API documentation with examples
-- **Tree-shakeable** - modular exports for optimal bundle size
+- **Zero `any` types** — fully type-safe across all modules
+- **Tree-shakeable** — modular ESM / CJS / UMD exports for optimal bundle size
+- **Comprehensive tests** — 173 passing tests covering edge cases and real-world usage
+- **JSDoc documentation** — complete API documentation with inline examples
+- **Zero dependencies** — no runtime dependencies (optional `dayjs` peer dependency for date utils)
 
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+pnpm add @oh/yee-tools
 ```
 
 ## Usage
 
 ```typescript
-import { StringUtils, NumberUtils, SessionContext } from "@oh/yee-tools";
+import { StringUtils, NumberUtils, DateUtils, SessionContext } from '@oh/yee-tools';
 
 // String utilities
-const cleaned = StringUtils.trim("  hello  "); // 'hello'
-const empty = StringUtils.isBlank("   "); // true
+const cleaned = StringUtils.trim('  hello  '); // 'hello'
+const empty = StringUtils.isBlank('   '); // true
 
 // Precise floating-point arithmetic
-const sum = NumberUtils.add(0.1, 0.2); // 0.3 (not 0.30000000000000004)
+const sum = NumberUtils.add(0.1, 0.2); // 0.3
 const product = NumberUtils.multiply(0.1, 0.2); // 0.02
 
-// Session storage
-SessionContext.put("token", "abc123");
-const token = SessionContext.get("token");
+// Date utilities (requires dayjs peer dependency)
+const formatted = DateUtils.getCurrentDateTime('YYYY-MM-DD HH:mm:ss');
+```
+
+Import specific modules for tree-shaking:
+
+```typescript
+import { StringUtils } from '@oh/yee-tools/string';
+import { NumberUtils } from '@oh/yee-tools/number';
+import { DateUtils } from '@oh/yee-tools/date';
+```
+
+## Modules
+
+### StringUtils
+
+`trim`, `isEmpty`, `isNotEmpty`, `isBlank`, `isNotBlank`, `mask`
+
+```typescript
+StringUtils.mask('4111111111111111', 4, 4); // '4111********1111'
+```
+
+### NumberUtils
+
+`add`, `subtract`, `multiply`, `divide`, `random`
+
+```typescript
+NumberUtils.add(0.1, 0.2);   // 0.3 (not 0.30000000000000004)
+NumberUtils.divide(1, 3, 2); // 0.33
+```
+
+### DateUtils
+
+`getCurrentDateTime`, `formatStringToDate`, `formatToSubmitFormat`, `formatToViewFormat`, `add`, `subtract`
+
+> Requires `dayjs >= 1.11.11` as a peer dependency.
+
+### ArrayUtils
+
+`trimArray`, `isRepeat`, `repeatElement`, `unique`, `chunk`
+
+```typescript
+ArrayUtils.chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]
+```
+
+### ObjectUtils
+
+`clone`, `extend`, `merge`, `pick`, `omit`
+
+```typescript
+ObjectUtils.pick({ a: 1, b: 2, c: 3 }, ['a', 'c']); // { a: 1, c: 3 }
+```
+
+### SecurityUtils
+
+`escapeHTML`, `unescapeHTML`, `escapeHTMLAttribute`, `encodeJavaScriptIdentifier`, `encodeJavaScriptString`, `encodeCSSIdentifier`, `encodeCSSString`
+
+```typescript
+SecurityUtils.escapeHTML('<script>alert("xss")</script>');
+// '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;'
+```
+
+### CookieUtils
+
+`get`, `set`, `remove`
+
+```typescript
+CookieUtils.set('theme', 'dark', { expires: 7 });
+const theme = CookieUtils.get('theme'); // 'dark'
+```
+
+### TypeUtils
+
+`parseBool`, `isArray`, `isString`, `isNumber`, `isDate`, `isFunction`, `isObject`, `isNullOrUndefined`
+
+### Cache
+
+Four storage strategies with the same `get`/`set`/`remove`/`clear` API:
+
+| Module | Storage | Lifecycle |
+|---|---|---|
+| `SessionContext` | `sessionStorage` | Cleared on browser close |
+| `LocalContext` | `localStorage` | Persists until cleared |
+| `PageContext` | In-memory | Cleared on page navigation |
+| `StoreContext` | IndexedDB | Persists across sessions |
+
+```typescript
+import { SessionContext, LocalContext, PageContext, StoreContext } from '@oh/yee-tools/cache';
 ```
 
 ### HTTP Client
 
-The `fetch` module provides a lightweight HTTP client with interceptor support. Authentication and custom headers are injected via request interceptors:
+Lightweight HTTP client with interceptor support:
 
 ```typescript
-import { ax } from "@oh/yee-tools/fetch";
+import { ax } from '@oh/yee-tools/fetch';
 
 // Add auth header via interceptor
 ax.interceptors.request.use(({ config }) => {
-  const token = sessionStorage.getItem("Authorization");
+  const token = sessionStorage.getItem('Authorization');
   if (token) {
-    config.headers = {
-      ...config.headers,
-      Authorization: `Bearer ${token}`,
-    };
+    config.headers = { ...config.headers, Authorization: `Bearer ${token}` };
   }
   return config;
 });
 
 // Make requests
-const users = await ax.get("/api/users");
-const result = await ax.post("/api/users", { name: "John" });
+const users = await ax.get('/api/users');
+const result = await ax.post('/api/users', { name: 'John' });
 ```
 
-## Modules
+### i18n
 
-### String Utilities
+Internationalization utilities for multi-language support:
 
-- `trim` - Trim whitespace
-- `isEmpty` / `isNotEmpty` - Check if string is empty
-- `isBlank` / `isNotBlank` - Check if string is null/undefined/whitespace
-- `mask` - Mask portions of strings (e.g., credit cards)
-
-### Number Utilities
-
-- `add` - Precise floating-point addition
-- `subtract` - Precise floating-point subtraction
-- `multiply` - Precise floating-point multiplication
-- `divide` - Precise floating-point division
-- `random` - Generate random integers
-
-### Date Utilities
-
-- `getCurrentDateTime` - Get current date/time formatted
-- `formatStringToDate` - Parse and format date strings
-- `formatToSubmitFormat` / `formatToViewFormat` - Format dates
-- `add` / `subtract` - Add/subtract time from dates
-
-### Array Utilities
-
-- `trimArray` - Trim all strings in array
-- `isRepeat` - Check for duplicates
-- `repeatElement` - Find first duplicate
-- `unique` - Remove duplicates
-- `chunk` - Split array into chunks
-
-### Object Utilities
-
-- `clone` - Deep clone objects/arrays
-- `extend` - Extend objects (shallow/deep)
-- `merge` - Merge multiple objects
-- `pick` - Pick specific properties
-- `omit` - Omit specific properties
-
-### Security Utilities
-
-- `escapeHTML` / `unescapeHTML` - HTML escaping
-- `escapeHTMLAttribute` - Escape HTML attributes
-- `encodeJavaScriptIdentifier` / `encodeJavaScriptString` - JS encoding
-- `encodeCSSIdentifier` / `encodeCSSString` - CSS encoding
-
-### Cookie Utilities
-
-- `get` - Get cookie value
-- `set` - Set cookie with options
-- `remove` - Remove cookie
-
-### Type Utilities
-
-- `parseBool` - Convert values to boolean
-- `isArray` / `isString` / `isNumber` / `isDate` / `isFunction` / `isObject` - Type checking
-- `isNullOrUndefined` - Check for null/undefined
-- `isIE` - Detect Internet Explorer
-
-### Cache Utilities
-
-- `SessionContext` - Session storage (cleared on browser close)
-- `LocalContext` - Local storage (persists until cleared)
-- `PageContext` - In-memory storage (cleared on page navigation)
+```typescript
+import { I18nUtils } from '@oh/yee-tools/i18n';
+```
 
 ### Platform-dependent Modules
 
 The following modules depend on specific backend services and are designed for use within the Yee platform:
 
-- **codetable** (`@oh/yee-tools/codetable`) - Requires Yee backend API endpoints for code table data. Hardcoded API paths include `/dd/public/codetable/v1/...`.
-- **url** (`@oh/yee-tools/url`) - `normalizeURL` uses platform-specific routing logic (tenant-aware URL prefixes).
+- **codetable** (`@oh/yee-tools/codetable`) — Requires Yee backend API endpoints for code table data
+- **url** (`@oh/yee-tools/url`) — `normalizeURL` uses platform-specific routing logic (tenant-aware URL prefixes)
 
 These modules can still be imported but will not function correctly without the matching backend services.
 
@@ -139,31 +164,25 @@ These modules can still be imported but will not function correctly without the 
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Run tests
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm test:watch
 
 # Build
-npm run build
+pnpm build
 
 # Build with type definitions
-npm run build:all
+pnpm build:all
 ```
 
-## Testing
+## Contributing
 
-The library has comprehensive test coverage with 173 passing tests covering:
-
-- Edge cases and boundary conditions
-- Null/undefined handling
-- Type safety
-- Error conditions
-- Real-world usage scenarios
+See the root [Contributing Guide](https://github.com/InsureMO/oh-yee/blob/main/CONTRIBUTING.md).
 
 ## License
 
-MIT
+[MIT](./LICENSE) © [InsureMO](https://github.com/InsureMO)

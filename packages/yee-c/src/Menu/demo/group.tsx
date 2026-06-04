@@ -1,5 +1,5 @@
-import { Menu } from '@oh/yee-c';
 import React from 'react';
+import { Menu } from '@oh/yee-c';
 import { Aperture, AudioLines, Settings, User } from 'lucide-react';
 
 export default () => {
@@ -14,16 +14,16 @@ export default () => {
     },
     {
       type: 'group' as const,
-      label: '用户管理',
+      label: 'User Management',
       children: [
         {
           key: '2',
-          label: '用户列表',
+          label: 'User List',
           icon: <User size={16} />,
         },
         {
           key: '3',
-          label: '用户设置',
+          label: 'User Settings',
           icon: <Settings size={16} />,
         },
       ],
@@ -33,11 +33,11 @@ export default () => {
     },
     {
       type: 'group' as const,
-      label: '内容管理',
+      label: 'Content Management',
       children: [
         {
           key: '4',
-          label: '音频管理',
+          label: 'Audio Management',
           icon: <AudioLines size={16} />,
         },
       ],
