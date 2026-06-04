@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "A modern, type-safe TypeScript utility library",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "type": "module",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",

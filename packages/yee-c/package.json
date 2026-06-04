@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "yee basic components",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "sideEffects": [
     "**/*.css",
     "**/*.less",
