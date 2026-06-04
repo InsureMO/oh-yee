@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script>
+  // 处理 ?md=raw 参数和 .md 后缀 → 就地显示 raw markdown（避免重定向导致端口泄漏）
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var raw = params.get('md') === 'raw';
+    var path = window.location.pathname;
+    var base = '<%= context.config.publicPath || "/" %>raw';
+    var basePath = '<%= context.config.base || "/" %>';
+    if (raw || path.endsWith('.md')) {
+      var p = path
+        .replace(new RegExp('^' + basePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '')
+        .replace(/\.md$/, '');
+      if (!p || p === '/') p = 'index';
+      var rawUrl = base + '/' + p + '.md';
+      document.write('<pre id="raw-md" style="margin:0;padding:16px;font-size:14px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;background:#fff;">Loading...</pre>');
+      fetch(rawUrl).then(function(r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      }).then(function(text) {
+        document.getElementById('raw-md').textContent = text;
+        document.title = p.split('/').pop() + '.md';
+      }).catch(function() {
+        document.getElementById('raw-md').textContent = 'Not found: ' + p + '.md';
+      });
+    }
+  })();
+</script>
+<style>
+  /* 骨架屏样式 - JS 加载前显示，消除白屏感知 */
+  .app-loading {
+    display: flex;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  .app-loading-sidebar {
+    width: 260px;
+    background: #f7f8fa;
+    border-right: 1px solid #e8e8e8;
+    padding: 48px 0 0;
+    flex-shrink: 0;
+  }
+  .app-loading-sidebar-item {
+    height: 14px;
+    margin: 16px 24px;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+    animation: app-loading-shimmer 1.5s infinite;
+  }
+  .app-loading-sidebar-item:nth-child(1) { width: 60%; }
+  .app-loading-sidebar-item:nth-child(2) { width: 75%; }
+  .app-loading-sidebar-item:nth-child(3) { width: 50%; }
+  .app-loading-sidebar-item:nth-child(4) { width: 65%; }
+  .app-loading-sidebar-item:nth-child(5) { width: 55%; }
+  .app-loading-content {
+    flex: 1;
+    padding: 48px;
+  }
+  .app-loading-title {
+    height: 28px;
+    width: 40%;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    animation: app-loading-shimmer 1.5s infinite;
+  }
+  .app-loading-line {
+    height: 12px;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+    animation: app-loading-shimmer 1.5s infinite;
+  }
+  .app-loading-line:nth-child(2) { width: 90%; }
+  .app-loading-line:nth-child(3) { width: 75%; }
+  .app-loading-line:nth-child(4) { width: 85%; }
+  .app-loading-line:nth-child(5) { width: 60%; }
+  .app-loading-line:nth-child(6) { width: 80%; }
+  @keyframes app-loading-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="app-loading">
+    <div class="app-loading-sidebar">
+      <div class="app-loading-sidebar-item"></div>
+      <div class="app-loading-sidebar-item"></div>
+      <div class="app-loading-sidebar-item"></div>
+      <div class="app-loading-sidebar-item"></div>
+      <div class="app-loading-sidebar-item"></div>
+    </div>
+    <div class="app-loading-content">
+      <div class="app-loading-title"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+      <div class="app-loading-line"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+@pls: .yee-splitter;
+
+@{pls} {
+    display: flex;
+    background-color: var(--yee-splitter-bg-color);
+    border-radius: var(--yee-splitter-border-radius);
+
+    &-bordered {
+        border: var(--yee-splitter-border-width) solid var(--yee-splitter-border-color);
+    }
+
+    &-vertical {
+        flex-direction: column;
+    }
+}
+
+@{pls}-item-expandable {
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+// Horizontal layout
+@{pls}-item-horizontal {
+    width: 100%;
+
+    &@{pls}-item-expanded {
+        width: auto;
+        opacity: 1;
+    }
+
+    &@{pls}-item-collapse {
+        width: 0 !important;
+        opacity: 0;
+    }
+}
+
+// Vertical layout
+@{pls}-item-vertical {
+    height: 100%;
+
+    &@{pls}-item-expanded {
+        height: auto;
+        opacity: 1;
+    }
+
+    &@{pls}-item-collapse {
+        height: 0 !important;
+        opacity: 0;
+    }
+}
+
+@{pls}-item {
+    flex-grow: 0;
+    overflow: hidden;
+}
+
+// -------------- handler Start -------------------
+
+@{pls}-handler {
+    --yee-splitter-handler-size: var(--yee-splitter-handler-line-size);
+
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+
+    &-dragger {
+        position: relative;
+
+        &::after {
+            position: absolute;
+            display: block;
+            background-color: var(--yee-splitter-handler-color);
+            transition: background 0.2s ease-in-out, opacity 0.2s ease-in-out;
+            content: '';
+        }
+    }
+
+    &-flexable {
+        @{pls}-handler-dragger {
+            &:hover {
+                &::after {
+                    background-color: var(--yee-splitter-handler-hover-color);
+                }
+            }
+
+            &.moving {
+                &::after {
+                    background-color: var(--yee-splitter-handler-drag-color);
+                }
+            }
+        }
+    }
+}
+
+@{pls}-expand-start,
+@{pls}-expand-end {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--yee-splitter-expand-width);
+    height: var(--yee-splitter-expand-height);
+    color: var(--yee-splitter-arrow-color);
+    font-size: var(--yee-splitter-expand-font-size);
+    background-color: var(--yee-splitter-arrow-bg-color);
+    cursor: pointer;
+    opacity: 0;
+
+    &:hover {
+        color: var(--yee-splitter-arrow-hover-color);
+        background-color: var(--yee-splitter-arrow-bg-hover-color);
+    }
+}
+
+// Page vertical Handle horizontal
+@{pls}-vertical {
+    >@{pls}-handler {
+        flex: none;
+        height: 0;
+
+        &-flexable {
+            cursor: row-resize;
+        }
+
+        &:hover {
+
+            @{pls}-expand-start,
+            @{pls}-expand-end {
+                opacity: 1;
+            }
+        }
+
+        @{pls}-handler-dragger {
+            width: var(--yee-splitter-vertical-dragger-width);
+            height: var(--yee-splitter-vertical-dragger-height);
+
+            &::after {
+                width: 100%;
+                height: var(--yee-splitter-handler-size);
+                transform: translateY(-50%);
+            }
+        }
+
+        @{pls}-expand-start,
+        @{pls}-expand-end {
+            left: 50%;
+            transform: translateX(-50%) rotate(90deg);
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        @{pls}-expand-start {
+            top: var(--yee-splitter-vertical-expand-start-top);
+        }
+
+        @{pls}-expand-end {
+            bottom: var(--yee-splitter-vertical-expand-end-bottom);
+        }
+    }
+}
+
+// Horizontal layout for the page, with vertical joysticks.
+@{pls}-horizontal {
+
+    >@{pls}-handler {
+        flex: none;
+        width: 0;
+
+        &-flexable {
+            cursor: col-resize;
+        }
+
+        &:hover {
+
+            @{pls}-expand-start,
+            @{pls}-expand-end {
+                opacity: 1;
+            }
+        }
+
+        @{pls}-handler-dragger {
+            top: var(--yee-splitter-horizontal-dragger-top);
+            width: var(--yee-splitter-horizontal-dragger-width);
+            height: var(--yee-splitter-horizontal-dragger-height);
+
+            &::after {
+                width: var(--yee-splitter-handler-size);
+                height: 100%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @{pls}-expand-start,
+        @{pls}-expand-end {
+            top: 50%;
+            transform: translateY(var(--yee-splitter-horizontal-expand-transform-y));
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        @{pls}-expand-start {
+            left: var(--yee-splitter-horizontal-expand-start-left);
+        }
+
+        @{pls}-expand-end {
+            right: var(--yee-splitter-horizontal-expand-end-right);
+        }
+    }
+}
+
+
+// ------------------- handler End --------------------

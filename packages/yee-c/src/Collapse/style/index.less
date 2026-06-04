@@ -1,0 +1,55 @@
+@pls: .yee-collapse;
+
+@{pls} {
+    color: var(--yee-color-text);
+    background-color: var(--yee-collapse-bg-color);
+
+    &-bordered {
+        border: var(--yee-collapse-border-width) solid var(--yee-collapse-border-color);
+        border-radius: var(--yee-collapse-border-radius, 4px);
+    }
+}
+
+
+@{pls}-item {
+    background-color: var(--yee-collapse-item-bg-color);
+
+    &-expanded {
+        @{pls}-header {
+            border-bottom: var(--yee-collapse-border-width) solid var(--yee-collapse-border-color);
+        }
+    }
+}
+
+@{pls}-item:not(:last-child) {
+    border-bottom: var(--yee-collapse-border-width) solid var(--yee-collapse-border-color);
+}
+
+@{pls}-header {
+    display: flex;
+    align-items: center;
+    padding: var(--yee-collapse-header-padding, 12px 15px);
+    cursor: pointer;
+
+    @{pls}-expand-icon {
+        display: flex;
+        align-items: center;
+    }
+
+    &-content {
+        flex-grow: 1;
+        width: fit-content;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    @{pls}-extra {
+        display: flex;
+        margin-left: auto;
+    }
+}
+
+@{pls}-content {
+    padding: var(--yee-collapse-content-padding, 4px 15px 16px);
+}

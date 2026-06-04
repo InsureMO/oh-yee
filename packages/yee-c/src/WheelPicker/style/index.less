@@ -1,0 +1,84 @@
+@pls: .yee-wheel-picker;
+@mask-height: 80px; // (visibleItemCount/2) * itemHeight = 2 * 40
+
+@{pls} {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+
+  &-columns {
+    display: flex;
+    height: 100%;
+  }
+
+  &-column {
+    flex: 1;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    // top/bottom gradient masks via sticky pseudo-elements
+    // height matches the padding divs injected by WheelColumn
+    &::before,
+    &::after {
+      content: '';
+      position: sticky;
+      display: block;
+      z-index: 2;
+      pointer-events: none;
+      height: @mask-height;
+      flex-shrink: 0;
+    }
+
+    &::before {
+      top: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.92),
+        rgba(255, 255, 255, 0)
+      );
+    }
+
+    &::after {
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.92)
+      );
+    }
+  }
+
+  &-column-item {
+    scroll-snap-align: center;
+    text-align: center;
+    font-size: 16px;
+    color: var(--yee-text-color, #333);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 4px;
+    transition: color 0.15s;
+    box-sizing: border-box;
+  }
+
+  // selected row indicator — the highlighted band in the center
+  &-indicator {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    pointer-events: none;
+    border-top: 1px solid var(--yee-border-color, #e8e8e8);
+    border-bottom: 1px solid var(--yee-border-color, #e8e8e8);
+    border-radius: 4px;
+    background: var(--yee-wheel-picker-indicator-bg, rgba(0, 0, 0, 0.04));
+    z-index: 1;
+  }
+}

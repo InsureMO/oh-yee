@@ -1,0 +1,215 @@
+@pls: .yee-notice;
+
+@{pls} {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: var(--yee-notice-width);
+  // min-height: var(--yee-notice-min-height);
+  padding: var(--yee-notice-padding);
+  margin-bottom: var(--yee-notice-margin-bottom);
+  background-color: var(--yee-notice-bg-color);
+  border-radius: var(--yee-notice-border-radius);
+  box-shadow: var(--yee-notice-box-shadow);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: var(--yee-notice-border-width) solid transparent;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: var(--yee-notice-box-shadow-hover);
+  }
+
+  &-content-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--yee-notice-content-gap);
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--yee-notice-icon-size);
+    height: var(--yee-notice-icon-size);
+    margin-top: var(--yee-notice-icon-margin-top);
+    flex-shrink: 0;
+  }
+
+  &-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-title {
+    margin: var(--yee-notice-title-margin);
+    font-size: var(--yee-notice-title-font-size);
+    font-weight: var(--yee-notice-title-font-weight);
+    line-height: var(--yee-notice-title-line-height);
+    color: var(--yee-notice-header-title-color);
+    word-wrap: break-word;
+  }
+
+  &-description {
+    margin: 0;
+    font-size: var(--yee-notice-description-font-size);
+    line-height: var(--yee-notice-description-line-height);
+    color: var(--yee-notice-description-color);
+    word-wrap: break-word;
+  }
+
+  &-close {
+    position: absolute;
+    top: var(--yee-notice-close-top);
+    right: var(--yee-notice-close-right);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--yee-notice-close-size);
+    height: var(--yee-notice-close-size);
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--yee-notice-close-color);
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--yee-notice-close-hover-color);
+    }
+  }
+
+  &-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 2px;
+    --yee-progress-outer-height: 2px;
+  }
+
+  // 状态样式
+  &-success {
+    border-color: var(--yee-notice-success-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-notice-success-icon-color);
+    }
+  }
+
+  &-info {
+    border-color: var(--yee-notice-info-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-notice-info-icon-color);
+    }
+  }
+
+  &-error {
+    border-color: var(--yee-notice-error-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-notice-error-icon-color);
+    }
+  }
+
+  &-warning {
+    border-color: var(--yee-notice-warning-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-notice-warning-icon-color);
+    }
+  }
+
+  // 列表容器样式
+  &-list {
+    position: fixed;
+    z-index: var(--yee-notice-list-z-index);
+    pointer-events: none;
+
+    > * {
+      pointer-events: auto;
+    }
+
+    // 顶部位置
+    &-top {
+      top: var(--yee-notice-list-position-offset);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    &-topLeft {
+      top: var(--yee-notice-list-position-offset);
+      left: var(--yee-notice-list-position-offset);
+    }
+
+    &-topRight {
+      top: var(--yee-notice-list-position-offset);
+      right: var(--yee-notice-list-position-offset);
+    }
+
+    // 底部位置
+    &-bottom {
+      bottom: var(--yee-notice-list-position-offset);
+      left: 50%;
+      transform: translateX(-50%);
+
+      @{pls} {
+        margin-bottom: 0;
+        margin-top: var(--yee-notice-margin-bottom);
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    &-bottomLeft {
+      bottom: var(--yee-notice-list-position-offset);
+      left: var(--yee-notice-list-position-offset);
+
+      @{pls} {
+        margin-bottom: 0;
+        margin-top: var(--yee-notice-margin-bottom);
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    &-bottomRight {
+      bottom: var(--yee-notice-list-position-offset);
+      right: var(--yee-notice-list-position-offset);
+
+      @{pls} {
+        margin-bottom: 0;
+        margin-top: var(--yee-notice-margin-bottom);
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  @{pls} {
+    width: var(--yee-notice-mobile-width);
+    max-width: var(--yee-notice-width);
+  }
+
+  @{pls}-list {
+    &-top,
+    &-bottom {
+      left: var(--yee-notice-list-position-offset);
+      right: var(--yee-notice-list-position-offset);
+      transform: none;
+    }
+  }
+}

@@ -1,0 +1,188 @@
+@pls: .yee-error-boundary;
+
+@{pls} {
+    &-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: var(--yee-error-boundary-bg, #fafafa);
+        color: var(--yee-error-boundary-fg, #1f1f1f);
+        overflow: auto;
+        font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+    }
+
+    &-container {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 60px 32px 80px;
+    }
+
+    &-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: 20px;
+        background: oklch(0.95 0.03 25);
+        border: 1px solid oklch(0.88 0.06 25);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--yee-error-boundary-badge-color, oklch(0.5 0.15 25));
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    &-message {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.4;
+        color: var(--yee-error-boundary-message-color, oklch(0.4 0.12 25));
+        margin: 0 0 8px;
+        word-break: break-word;
+    }
+
+    &-timestamp {
+        font-size: 11px;
+        color: var(--yee-error-boundary-muted, #999);
+        margin-bottom: 20px;
+    }
+
+    &-section {
+        margin-bottom: 8px;
+    }
+
+    &-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &-section-toggle {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 0;
+        border: none;
+        background: none;
+        color: var(--yee-error-boundary-muted, #666);
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        font-family: inherit;
+
+        &:hover {
+            color: var(--yee-error-boundary-fg, #1f1f1f);
+        }
+    }
+
+    &-section-copy {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border: none;
+        border-radius: 4px;
+        background: none;
+        color: var(--yee-error-boundary-muted, #999);
+        cursor: pointer;
+        transition: color 0.15s, background 0.15s;
+
+        &:hover {
+            color: var(--yee-error-boundary-fg, #1f1f1f);
+            background: oklch(0.94 0.01 270);
+        }
+    }
+
+    &-stack {
+        margin: 0 0 8px;
+        padding: 12px 16px;
+        border-radius: 6px;
+        background: var(--yee-error-boundary-stack-bg, #f0f0f0);
+        border: 1px solid var(--yee-error-boundary-border, #e0e0e0);
+        overflow-x: auto;
+        font-size: 12px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-break: break-all;
+        color: var(--yee-error-boundary-stack-fg, #555);
+    }
+
+    &-source-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        gap: 6px;
+        padding: 8px 0 6px;
+        color: var(--yee-error-boundary-muted, #666);
+        font-size: 12px;
+    }
+
+    &-source-file {
+        color: var(--yee-error-boundary-fg, #1f1f1f);
+        font-weight: 500;
+    }
+
+    &-source-line-no {
+        color: var(--yee-error-boundary-muted, #999);
+    }
+
+    &-source {
+        margin: 0 0 8px;
+        border-radius: 6px;
+        background: var(--yee-error-boundary-stack-bg, #f0f0f0);
+        border: 1px solid var(--yee-error-boundary-border, #e0e0e0);
+        overflow-x: auto;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    &-source-line-el {
+        display: flex;
+        padding: 0 16px 0 0;
+    }
+
+    &-source-line-error {
+        background: oklch(0.65 0.15 25 / 0.1);
+        border-left: 3px solid oklch(0.55 0.2 25);
+    }
+
+    &-source-gutter {
+        width: 16px;
+        text-align: center;
+        color: oklch(0.55 0.2 25);
+        flex-shrink: 0;
+        user-select: none;
+    }
+
+    &-source-num {
+        width: 36px;
+        padding-right: 12px;
+        text-align: right;
+        color: var(--yee-error-boundary-muted, #bbb);
+        flex-shrink: 0;
+        user-select: none;
+    }
+
+    &-source-text {
+        color: var(--yee-error-boundary-stack-fg, #555);
+        white-space: pre;
+    }
+
+    &-source-line-error &-source-text {
+        color: var(--yee-error-boundary-message-color, oklch(0.4 0.12 25));
+    }
+
+    &-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid var(--yee-error-boundary-border, #e8e8e8);
+    }
+
+    &-dismiss {
+        margin-left: auto;
+    }
+}

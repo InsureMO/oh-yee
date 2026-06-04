@@ -1,0 +1,169 @@
+@pls: .yee-transfer;
+
+
+@{pls} {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: var(--yee-transfer-bg-color);
+
+    &-list {
+        width: 100%;
+        min-width: var(--yee-transfer-list-min-width, 260px);
+        border: 1px solid var(--yee-transfer-list-border-color);
+        border-radius: var(--yee-transfer-list-border-radius, 4px);
+        background-color: var(--yee-transfer-list-bg-color);
+
+        &-header {
+            padding: var(--yee-transfer-list-header-padding, 11px);
+            height: var(--yee-transfer-list-header-height, 46px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--yee-transfer-list-border-color);
+            background-color: var(--yee-transfer-list-header-bg-color);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+
+            &-title {
+                flex-grow: 1;
+                text-align: right;
+            }
+        }
+
+        @{pls}-search {
+            padding: var(--yee-transfer-list-search-padding, 8px 11px);
+        }
+
+        &-body {
+            display: flex;
+            flex-direction: column;
+            height: 160px;
+            overflow: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            &:focus-visible {
+                outline: 4px solid var(--yee-tab-active-border-color, #39364e);
+                outline-offset: 1px;
+            }
+
+            & > .yee-tree {
+                padding: 0 12px;
+            }
+        }
+
+        .yee-pagination {
+            border-top: 1px solid var(--yee-transfer-list-border-color);
+            padding: 5px 11px;
+            justify-content: flex-end;
+        }
+
+        &-item {
+            display: flex;
+            align-items: center;
+            height: var(--yee-transfer-list-item-height, 32px);
+            line-height: var(--yee-transfer-list-item-height, 32px);
+            padding: var(--yee-transfer-list-item-padding, 0 11px);
+
+            &:hover:not(.yee-one-way):not(.disabled) {
+                color: var(--yee-transfer-list-content-item-hover-color);
+                background-color: var(--yee-transfer-list-content-item-hover-bg-color);
+            }
+
+            @{pls}-list-item-text {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            @{pls}-list-delete {
+                color: var(--yee-transfer-list-delete-font-color);
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--yee-transfer-list-delete-hover-font-color);
+                }
+            }
+
+            @{pls}-list-disabled-delete {
+                color: var(--yee-transfer-operation-disabled-border-color);
+                cursor: not-allowed;
+            }
+
+            // checkbox
+            .yee-checkbox-title {
+                line-height: 22px; // If this property is not set, the drag operation will initially be triggered on the span tag, preventing the label's drag event from being activated.
+            }
+        }
+
+        &-item-disabled {
+            color: var(--yee-transfer-list-body-disabled-color);
+        }
+    }
+
+    &-operation {
+        // Intermediate operation area
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 12px;
+        margin-right: 12px;
+        gap: 16px;
+
+        @{pls}-ops-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border-radius: 4px;
+            border: 1px solid var(--yee-btn-default-border-color);
+            padding: 0 8px;
+            cursor: pointer;
+
+            &:focus-visible {
+                outline: 4px solid var(--yee-tab-active-border-color, #39364e);
+                z-index: 1;
+            }
+
+            &-icon {
+                width: 16px;
+                height: 32px;
+                line-height: 32px;
+                position: static;
+                right: inherit;
+                cursor: pointer;
+            }
+
+            @{pls}-operation-to-left,
+            @{pls}-operation-to-right {
+                white-space: nowrap;
+                margin-left: 8px;
+            }
+
+            &.disabled {
+                pointer-events: none;
+                border-color: var(--yee-transfer-operation-disabled-border-color);
+                color: var(--yee-transfer-operation-disabled-color);
+                background-color: var(--yee-transfer-operation-disabled-bg-color);
+            }
+        }
+    }
+
+    &-disabled {
+        .yee-transfer-list {
+            cursor: not-allowed;
+            color: var(--yee-transfer-list-body-disabled-color);
+            background-color: var(--yee-transfer-list-body-disabled-bg-color);
+        }
+    }
+}
+
+// Allow Dragging
+@{pls}-with-draggable {
+    > @{pls}-list-item-text {
+        line-height: 1;
+    }
+}

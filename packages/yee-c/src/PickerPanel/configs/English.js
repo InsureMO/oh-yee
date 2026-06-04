@@ -1,0 +1,13 @@
+export default {
+    language: 'en',
+    weekList: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+    shortWeekList: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    monthList: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    shortMonthList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+    timeList: ['Hour', 'Minute', 'Second'],
+    APMList: ['AM', 'PM'],
+    selectTime: 'Select Time',
+    returnDate: 'Retuen Date',
+    now: 'Now',
+    confirm: 'Confirm'
+}

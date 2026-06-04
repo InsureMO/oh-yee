@@ -1,0 +1,29 @@
+@pls: .yee-verification-code;
+
+@{pls} {
+    display: flex;
+    gap: var(--yee-verification-code-gap);
+    align-items: center;
+
+    &-item {
+        width: var(--yee-verification-code-item-width);
+        height: var(--yee-verification-code-item-height);
+        text-align: center;
+        border: var(--yee-verification-code-item-border-width) solid var(--yee-input-border-color);
+        border-radius: var(--yee-verification-code-item-border-radius);
+
+        &:hover {
+            border-color: var(--yee-input-hover-border-color);
+        }
+
+        &:focus {
+            border-color: var(--yee-input-content-focus-border-color);
+            outline: none;
+            box-shadow: var(--yee-verification-code-item-focus-box-shadow);
+        }
+    }
+}
+
+@{pls}-disabled {
+    cursor: not-allowed;
+}

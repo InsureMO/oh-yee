@@ -1,0 +1,59 @@
+@pls: .yee-message;
+
+@{pls} {
+    display: flex;
+    gap: var(--yee-message-gap);
+    align-items: center;
+    width: fit-content;
+    padding: var(--yee-message-padding);
+    background-color: var(--yee-message-bg-color);
+    border-radius: var(--yee-message-border-radius);
+    box-shadow: var(--yee-message-box-shadow);
+
+    &-icon {
+        width: var(--yee-message-icon-size);
+        height: var(--yee-message-icon-size);
+    }
+
+    &-content {
+        margin: 0;
+        padding: 0;
+    }
+
+    &-list {
+        position: fixed;
+        top: var(--yee-message-list-top);
+        z-index: var(--yee-message-list-z-index);
+        display: flex;
+        flex-direction: column;
+        gap: var(--yee-message-list-gap);
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    // status
+    &-success {
+        @{pls}-icon {
+            color: var(--yee-primary-color);
+        }
+    }
+
+    &-info {
+        @{pls}-icon {
+            color: var(--yee-info-color);
+        }
+    }
+
+    &-error {
+        @{pls}-icon {
+            color: var(--yee-error-color);
+        }
+    }
+
+    &-warning {
+        @{pls}-icon {
+            color: var(--yee-warning-color);
+        }
+    }
+}

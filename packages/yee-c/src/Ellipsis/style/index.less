@@ -1,0 +1,48 @@
+@pls: .yee-ellipsis;
+
+@{pls} {
+    position: relative;
+    width: 100%;
+    line-height: 1.6;
+
+    &-content {
+        width: 100%;
+    }
+
+    &-text {
+        word-break: break-word;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    // &-collapsed&-show-expand-button {
+    //     @{pls}-text {
+    //         padding-right: 5em;
+    //     }
+    // }
+
+    &-expanded {
+        @{pls}-text {
+            display: inline;
+            overflow: visible;
+        }
+    }
+
+    &-button-fixed {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding-left: 18px;
+        background: linear-gradient(to right, transparent, var(--yee-color-bg-container) 40%);
+        z-index: 1;
+    }
+
+    &-button-inline {
+        display: inline;
+        padding: 0 4px;
+        margin-left: 4px;
+    }
+}

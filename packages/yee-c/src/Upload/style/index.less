@@ -1,0 +1,307 @@
+@pls: .yee-upload;
+
+@{pls} {
+  position: relative;
+
+  &-input {
+    display: flex;
+
+    &-disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  // 拖拽上传样式
+  &-drag {
+    width: 100%;
+    padding: 16px;
+    border: 1px dashed var(--yee-color-border);
+    border-radius: var(--yee-radius-lg);
+    transition: all 0.3s;
+    background-color: var(--yee-color-bg-container);
+
+    &-container {
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    &:hover {
+      border-color: var(--yee-color-primary);
+    }
+
+    &-hover {
+      border-color: var(--yee-color-primary);
+      background-color: var(--yee-color-primary-bg);
+    }
+  }
+
+  // 图片墙样式
+  &-picture-wall {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    @{pls}-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    &-trigger {
+      width: 100px;
+      height: 100px;
+      border: 1px dashed var(--yee-border-color);
+      border-radius: var(--yee-radius-lg, 4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      background-color: var(--yee-color-bg-container);
+
+      &:hover {
+        border-color: var(--yee-color-primary);
+        color: var(--yee-color-primary);
+      }
+    }
+
+    &-item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border: 1px solid var(--yee-color-border);
+      border-radius: var(--yee-radius-lg);
+      overflow: hidden;
+      background-color: var(--yee-color-bg-container);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+      }
+
+      &-error {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        color: var(--yee-color-error);
+      }
+
+      &-operate {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--yee-mask-bg-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.3s;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    &-name {
+      font-size: 12px;
+      margin-top: 4px;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+  }
+
+  // 图片列表样式
+  &-picture-list {
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border: 1px solid var(--yee-color-border);
+      border-radius: var(--yee-radius);
+      margin-bottom: 8px;
+      background-color: var(--yee-color-bg-container);
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: var(--yee-color-bg-hover);
+      }
+
+      &-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+
+        img {
+          width: 48px;
+          height: 48px;
+          object-fit: cover;
+          border-radius: var(--yee-radius);
+        }
+
+        span {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &-operate {
+        display: flex;
+        gap: 8px;
+      }
+    }
+
+    &-header-img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: var(--yee-radius);
+    }
+  }
+
+  // 普通列表样式
+  &-list {
+    margin-top: 8px;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: var(--yee-radius);
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: var(--yee-color-bg-hover);
+      }
+
+      &-clickable {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &-item {
+    &-icon {
+      display: flex;
+      align-items: center;
+      margin-right: 8px;
+    }
+
+    &-name-content {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-operate {
+      display: flex;
+      align-items: center;
+    }
+
+    &-progress {
+      padding: 8px 12px 0;
+      margin-left: 24px;
+    }
+  }
+
+  // 上传状态样式
+  &-state {
+    &-uploading {
+      color: var(--yee-color-primary);
+    }
+
+    &-error {
+      color: var(--yee-color-error);
+    }
+
+    &-success {
+      color: var(--yee-color-success);
+    }
+  }
+
+  // 上传中样式
+  &-uploading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &-spin {
+      display: flex;
+      align-items: center;
+    }
+
+    &-content {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  &-file-progress {
+    margin-top: 4px;
+  }
+
+  // 图片预览对话框
+  &-picture-dialog {
+    img {
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+    }
+  }
+
+  // dragger 类型
+  &-dragger {
+    display: flex;
+    width: 100%;
+    border-radius: 4px;
+    padding: 31px 79px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px dashed var(--yee-upload-dragger-trigger-border-color);
+    cursor: pointer;
+
+    &:not(@{pls}-disabled) {
+      &:hover {
+        border-color: var(--yee-upload-dragger-trigger-hover-color);
+      }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+@pls: .yee-card;
+
+@{pls} {
+
+  background-color: var(--yee-card-bg-color);
+  border-radius: var(--yee-card-border-radius);
+  padding: var(--yee-card-padding, 16px 24px 24px);
+
+  &-header {
+    display: flex;
+    align-items: center;
+    height: var(--yee-card-header-height, 32px);
+    margin-bottom: var(--yee-card-header-bottom, 16px);
+
+    &-clickable {
+      cursor: pointer;
+      // transition: all 0.3s ease;
+
+      // &:hover {
+      //   // background-color: var(--yee-card-header-clickable-bg-color);
+      //   // border-radius: var(--yee-card-header-clickable-border-radius);
+      // }
+    }
+
+    &-title {
+      position: relative;
+      user-select: none;
+      font-size: var(--yee-card-title-size, 16px);
+      font-weight: var(--yee-card-title-weight, 500);
+      margin-left: var(--yee-card-title-margin, 12px);
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -12px;
+        height: 16px;
+        width: 4px;
+        border-radius: 1px;
+        top: 4px;
+        background-color: var(--yee-card-title-prefix-color);
+      }
+    }
+
+    &-actions {
+      display: inline-flex;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    &-expand-icon {
+      display: inline-flex;
+      cursor: pointer;
+    }
+  }
+
+  &-content {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  &-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--yee-card-group-card-gap, 16px);
+    height: min-content;
+    padding: var(--yee-card-group-padding, 16px);
+    background-color: var(--yee-card-group-bg-color);
+
+    &-inner {
+      padding: 0;
+      background-color: var(--yee-card-group-inner-bg-color);
+    }
+  }
+
+  &-bordered {
+    border: 1px solid var(--yee-card-border-color);
+  }
+}

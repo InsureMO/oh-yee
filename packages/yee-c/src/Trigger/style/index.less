@@ -1,0 +1,281 @@
+@pls: .yee-trigger;
+
+@{pls} {
+    position: absolute;
+    z-index: var(--yee-trigger-z-index);
+
+    &-hidden {
+        display: none;
+    }
+
+    &-topLeft,
+    &-top,
+    &-topRight {
+        box-shadow: var(--yee-trigger-box-shadow);
+
+        @{pls}-arrow {
+            &::after {
+                margin-left: var(--yee-trigger-arrow-margin-left);
+            }
+        }
+    }
+
+    &-bottomLeft,
+    &-bottom,
+    &-bottomRight {
+        box-shadow: var(--yee-trigger-box-shadow);
+    }
+
+    &-leftTop,
+    &-left,
+    &-leftBottom {
+        box-shadow: var(--yee-trigger-box-shadow);
+
+        @{pls}-arrow {
+            &::after {
+                margin-left: var(--yee-trigger-arrow-margin-left);
+            }
+        }
+    }
+
+    &-rightTop,
+    &-right,
+    &-rightBottom {
+        box-shadow: var(--yee-trigger-box-shadow);
+
+        @{pls}-arrow {
+            &::after {
+                margin-left: var(--yee-trigger-arrow-margin-left);
+            }
+        }
+    }
+}
+
+// 动画
+
+.yee-slide-up {
+    animation-duration: var(--yee-trigger-animation-duration);
+    animation-timing-function: var(--yee-trigger-animation-timing-function);
+
+    &-enter {
+        transform: scale(0);
+        transform-origin: 0% 0%;
+        opacity: var(--yee-trigger-opacity-start);
+        animation-fill-mode: both;
+
+        &-prepare {
+            &-active {
+                transform: scale(1);
+            }
+        }
+
+        &-active {
+            animation-name: slideUp;
+        }
+    }
+
+    &-leave {
+        animation-name: slideUp;
+        animation-direction: reverse;
+
+        &-active {
+            animation-fill-mode: both;
+        }
+    }
+}
+
+// 弨出层自动翻转时，修正动画方向
+// 弹出层实际在上面（预期在下面，使用 yee-slide-down）
+.yee-trigger-top,
+.yee-trigger-topLeft,
+.yee-trigger-topRight {
+    &.yee-slide-down-enter-active {
+        animation-name: slideUp;
+    }
+    &.yee-slide-down-leave-active {
+        animation-name: slideUp;
+    }
+}
+
+// 弹出层实际在下面（预期在上面，使用 yee-slide-up）
+.yee-trigger-bottom,
+.yee-trigger-bottomLeft,
+.yee-trigger-bottomRight {
+    &.yee-slide-up-enter-active {
+        animation-name: slideDown;
+    }
+    &.yee-slide-up-leave-active {
+        animation-name: slideDown;
+    }
+}
+
+// 弹出层实际在左边（预期在右边，使用 yee-slide-right）
+.yee-trigger-leftTop,
+.yee-trigger-left,
+.yee-trigger-leftBottom {
+    &.yee-slide-right-enter-active {
+        animation-name: slideLeft;
+    }
+    &.yee-slide-right-leave-active {
+        animation-name: slideLeft;
+    }
+}
+
+// 弹出层实际在右边（预期在左边，使用 yee-slide-left）
+.yee-trigger-rightTop,
+.yee-trigger-right,
+.yee-trigger-rightBottom {
+    &.yee-slide-left-enter-active {
+        animation-name: slideRight;
+    }
+    &.yee-slide-left-leave-active {
+        animation-name: slideRight;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: scaleY(var(--yee-trigger-scale-start));
+        transform-origin: 100% 100%;
+        opacity: var(--yee-trigger-opacity-start);
+    }
+
+    100% {
+        transform: scaleY(var(--yee-trigger-scale-end));
+        transform-origin: 100% 100%;
+        opacity: var(--yee-trigger-opacity-end);
+    }
+}
+
+.yee-slide-down {
+    animation-duration: var(--yee-trigger-animation-duration);
+    animation-timing-function: var(--yee-trigger-animation-timing-function);
+
+    &-enter {
+        transform: scale(0);
+        transform-origin: 0% 0%;
+        opacity: var(--yee-trigger-opacity-start);
+        animation-fill-mode: both;
+
+        &-prepare {
+            &-active {
+                transform: scale(1);
+            }
+        }
+
+        &-active {
+            animation-name: slideDown;
+        }
+    }
+
+    &-leave {
+        animation-name: slideDown;
+        animation-direction: reverse;
+
+        &-active {
+            animation-fill-mode: both;
+        }
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: scaleY(var(--yee-trigger-scale-start));
+        transform-origin: 0% 0%;
+        opacity: var(--yee-trigger-opacity-start);
+    }
+
+    100% {
+        transform: scaleY(var(--yee-trigger-scale-end));
+        transform-origin: 0% 0%;
+        opacity: var(--yee-trigger-opacity-end);
+    }
+}
+
+.yee-slide-left {
+    animation-duration: var(--yee-trigger-animation-duration);
+    animation-timing-function: var(--yee-trigger-animation-timing-function);
+
+    &-enter {
+        transform: scale(0);
+        transform-origin: 100% 0%;
+        opacity: var(--yee-trigger-opacity-start);
+        animation-fill-mode: both;
+
+        &-prepare {
+            &-active {
+                transform: scale(1);
+            }
+        }
+
+        &-active {
+            animation-name: slideLeft;
+        }
+    }
+
+    &-leave {
+        transform-origin: 100% 0%;
+        animation-name: slideLeft;
+        animation-direction: reverse;
+
+        &-active {
+            animation-fill-mode: both;
+        }
+    }
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: scaleX(var(--yee-trigger-scale-start));
+        opacity: var(--yee-trigger-opacity-start);
+    }
+
+    100% {
+        transform: scaleX(var(--yee-trigger-scale-end));
+        opacity: var(--yee-trigger-opacity-end);
+    }
+}
+
+.yee-slide-right {
+    animation-duration: var(--yee-trigger-animation-duration);
+    animation-timing-function: var(--yee-trigger-animation-timing-function);
+
+    &-enter {
+        transform: scale(0);
+        transform-origin: 0% 0%;
+        opacity: var(--yee-trigger-opacity-start);
+        animation-fill-mode: both;
+
+        &-prepare {
+            &-active {
+                transform: scale(1);
+            }
+        }
+
+        &-active {
+            animation-name: slideRight;
+        }
+    }
+
+    &-leave {
+        transform-origin: 0% 0%;
+        animation-name: slideRight;
+        animation-direction: reverse;
+
+        &-active {
+            animation-fill-mode: both;
+        }
+    }
+}
+
+@keyframes slideRight {
+    0% {
+        transform: scaleX(var(--yee-trigger-scale-start));
+        opacity: var(--yee-trigger-opacity-start);
+    }
+
+    100% {
+        transform: scaleX(var(--yee-trigger-scale-end));
+        opacity: var(--yee-trigger-opacity-end);
+    }
+}

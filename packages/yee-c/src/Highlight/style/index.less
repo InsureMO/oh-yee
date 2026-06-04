@@ -1,0 +1,22 @@
+@pls: .yee-highlight;
+
+@{pls} {
+  color: var(--yee-color-text);
+  display: inline-block;
+
+  .yee-highlight-item {
+    color: var(--yee-highlight-color);
+    display: inline-block;
+
+    &-click {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--yee-highlight-hover-color);
+      }
+      &:active {
+        color: var(--yee-highlight-active-color);
+      }
+    }
+  }
+}

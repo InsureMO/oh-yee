@@ -1,0 +1,23 @@
+@pls: .yee-popconfirm;
+
+@{pls} {
+    padding: var(--yee-popconfirm-padding);
+    color: var(--yee-color-text);
+    background-color: var(--yee-popconfirm-bg-font-color);
+    border-radius: var(--yee-popconfirm-border-radius);
+    box-shadow: var(--yee-popconfirm-box-shadow);
+
+    &-header {
+        display: flex;
+        gap: var(--yee-popconfirm-header-gap);
+        align-items: center;
+    }
+
+    &-title {
+        margin: var(--yee-popconfirm-title-margin);
+    }
+
+    &-footer {
+        margin-top: var(--yee-popconfirm-footer-margin-top);
+    }
+}

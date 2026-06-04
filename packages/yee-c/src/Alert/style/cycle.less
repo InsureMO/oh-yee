@@ -1,0 +1,64 @@
+.yee-alert-cycle {
+    width: 100%;
+}
+
+.yee-alert-cycle-vertical-item {
+    overflow: hidden;
+    line-height: 22px;
+    white-space: pre-wrap;
+}
+
+.yee-alert-cycle-vertical-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.yee-alert-cycle-vertical-scroll {
+    animation: verticalLoop var(--yee-alert-loop-duration, 6s) linear var(--yee-alert-loop-delay, 0s) infinite;
+    animation-play-state: var(--yee-alert-loop-play, 'running');
+    will-change: auto;
+}
+
+.yee-alert-cycle-horizontal-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.yee-alert-cycle-horizontal-item {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    min-width: 100%;
+    animation: horizontalLoop var(--yee-alert-loop-duration, 15s) linear var(--yee-alert-loop-delay, 0s) infinite;
+    animation-play-state: var(--yee-alert-loop-play, 'running');
+
+    div:not(:last-child) {
+        margin-right: 16px;
+    }
+
+    div:last-child {
+        margin-right: 160px;
+    }
+}
+
+// 垂直滚动动画
+@keyframes verticalLoop {
+    to {
+        transform: translateY(-100%);
+    }
+}
+
+// 水平滚动动画
+@keyframes horizontalLoop {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}

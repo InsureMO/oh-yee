@@ -1,0 +1,554 @@
+@pls: .yee-steps;
+
+// 辅助 mixin
+.step-line() {
+  position: absolute;
+  left: 100%;
+  width: var(--yee-steps-line-width);
+  height: var(--yee-steps-line-height);
+  background-color: var(--yee-steps-line-bg-color);
+  content: '';
+}
+
+@{pls} {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &-item {
+    position: relative;
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+
+    &:not(:first-child) {
+      padding-left: var(--yee-steps-item-padding-left);
+    }
+
+    &-icon {
+      position: relative;
+
+      > span {
+        font-size: var(--yee-steps-item-icon-font-size);
+      }
+    }
+
+    &-content {
+      margin-left: var(--yee-steps-item-content-margin-left);
+      min-width: var(--yee-steps-item-content-min-width);
+    }
+
+    &-dot {
+      width: var(--yee-steps-item-dot-width);
+      height: var(--yee-steps-item-dot-height);
+      border-radius: 50%;
+    }
+
+    &-serial {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--yee-steps-item-serial-width);
+      height: var(--yee-steps-item-serial-height);
+      font-size: var(--yee-steps-item-serial-font-size);
+      line-height: var(--yee-steps-item-serial-line-height);
+      border: var(--yee-steps-item-serial-border-width) solid;
+      border-radius: 50%;
+    }
+
+    &-title {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      height: var(--yee-steps-item-title-height);
+      padding-right: var(--yee-steps-item-title-padding-right);
+      color: var(--yee-steps-step-title-color);
+      font-size: var(--yee-steps-item-title-font-size);
+      line-height: var(--yee-steps-item-title-line-height);
+      white-space: nowrap;
+
+      &::after {
+        .step-line();
+      }
+    }
+
+    &-sub-title {
+      height: var(--yee-steps-item-sub-title-height);
+      margin-left: var(--yee-steps-item-sub-title-margin-left);
+      color: var(--yee-steps-step-subtitle-color);
+      line-height: var(--yee-steps-item-sub-title-line-height);
+    }
+
+    &-description {
+      color: var(--yee-steps-step-description);
+      font-size: var(--yee-steps-item-description-font-size);
+    }
+
+    // 状态样式
+    &-wait {
+      color: var(--yee-steps-step-undo-color, #999);
+
+      @{pls}-item-serial {
+        background-color: var(--yee-steps-serial-undo-bg-color, #fff);
+        background-clip: padding-box;
+        border-color: var(--yee-steps-serial-undo-border-color, #d9d9d9);
+      }
+
+      @{pls}-item-title {
+        color: var(--yee-steps-serial-undo-title-color, #999);
+      }
+
+      @{pls}-item-dot {
+        background-color: var(--yee-steps-step-undo-dot-color, #d9d9d9);
+      }
+
+      &@{pls}-item-has-cus-icon {
+        color: var(--yee-steps-step-icon-undo-color, #999);
+      }
+    }
+
+    &-process {
+      color: var(--yee-steps-step-doing-color, #1890ff);
+
+      @{pls}-item-serial {
+        background-color: var(--yee-steps-serial-doing-bg-color, #1890ff);
+        border-color: var(--yee-steps-serial-doing-border-color, #1890ff);
+        color: #fff;
+      }
+
+      @{pls}-item-description {
+        color: var(--yee-steps-step-doing-description-color, #999);
+      }
+
+      @{pls}-item-dot {
+        background-color: var(--yee-steps-step-doing-dot-color, #1890ff);
+
+        &::before {
+          background-color: var(--yee-steps-done-line-bg-color, #1890ff) !important;
+        }
+      }
+    }
+
+    &-finish {
+      color: var(--yee-steps-step-done-color, #1890ff);
+
+      @{pls}-item-serial {
+        display: flex;
+        background-color: var(--yee-steps-serial-done-bg-color, #fff);
+        background-clip: padding-box;
+        border-color: var(--yee-steps-serial-done-border-color, #1890ff);
+        color: var(--yee-steps-serial-done-color, #1890ff);
+      }
+
+      @{pls}-item-title {
+        &::after {
+          background-color: var(--yee-steps-done-line-bg-color, #1890ff);
+        }
+      }
+
+      &@{pls}-item-has-cus-icon {
+        color: var(--yee-steps-step-icon-done-color, #1890ff);
+      }
+
+      @{pls}-item-icon {
+        > span::after {
+          background-color: var(--yee-steps-done-line-bg-color, #1890ff) !important;
+        }
+
+        @{pls}-item-dot {
+          background-color: var(--yee-steps-step-done-dot-color, #1890ff);
+
+          &::before {
+            background-color: var(--yee-steps-done-line-bg-color, #1890ff);
+          }
+        }
+      }
+    }
+
+    &-error {
+      @{pls}-item-icon,
+      @{pls}-item-title,
+      @{pls}-item-description {
+        color: var(--yee-steps-step-error-color, #ff4d4f);
+      }
+
+      @{pls}-item-serial {
+        display: flex;
+        color: var(--yee-steps-step-error-color, #ff4d4f);
+        background-color: var(--yee-steps-step-error-bg-color, #fff);
+        border-color: var(--yee-steps-step-error-border-color, #ff4d4f);
+      }
+    }
+
+    &-disabled {
+      cursor: not-allowed !important;
+    }
+
+    &-click:not(@{pls}-item-active) {
+      cursor: pointer;
+
+      &:not(@{pls}-item-disabled):hover {
+        @{pls}-item-title,
+        @{pls}-item-description {
+          color: var(--yee-steps-step-nav-click-hover-color, #40a9ff);
+        }
+      }
+
+      &@{pls}-item-wait:not(@{pls}-item-active):hover {
+        @{pls}-item-icon {
+          color: var(--yee-steps-step-nav-click-hover-color, #40a9ff);
+        }
+      }
+    }
+
+    // 最后一个步骤
+    &:last-child {
+      @{pls}-item-icon {
+        span::after {
+          content: none;
+        }
+      }
+
+      @{pls}-item-title::after {
+        content: none;
+      }
+    }
+  }
+
+  // 水平布局
+  &-horizontal {
+    margin-bottom: var(--yee-steps-horizontal-margin-bottom, 16px);
+  }
+
+  // 小尺寸
+  &-small {
+    @{pls}-item {
+      align-items: center;
+
+      &-title {
+        height: 24px;
+        font-size: 14px;
+        line-height: 22px;
+      }
+
+      &-icon {
+        width: 24px;
+
+        > span {
+          font-size: 12px;
+        }
+      }
+
+      &-serial {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+
+    @{pls}-item-has-cus-icon {
+      @{pls}-item-icon {
+        height: 24px;
+
+        > span {
+          font-size: 24px;
+        }
+      }
+
+      @{pls}-item-title {
+        height: 24px;
+      }
+    }
+  }
+
+  // 垂直布局
+  &-vertical {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: var(--yee-steps-vertical-margin-right, 16px);
+
+    @{pls}-item {
+      flex-direction: row;
+      min-height: 64px;
+      margin-bottom: 8px;
+      padding-left: 0;
+
+      &-content {
+        align-items: flex-start;
+        margin-left: 8px;
+      }
+
+      &-icon {
+        position: relative;
+        width: 32px;
+
+        @{pls}-item-dot {
+          &::before {
+            width: 0;
+          }
+
+          &::after {
+            top: calc(100% + 8px);
+            left: 3px;
+            width: 2px;
+          }
+        }
+
+        > span {
+          &::after {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            width: 1px;
+            height: 999px;
+            background-color: var(--yee-steps-line-bg-color, #e8e8e8);
+            content: '';
+          }
+        }
+      }
+    }
+  }
+
+  // 点状步骤条
+  &-dot {
+    pointer-events: none;
+
+    @{pls}-item {
+      flex-direction: column;
+      margin-bottom: 0 !important;
+
+      &:first-child {
+        @{pls}-item-icon > @{pls}-item-dot::before {
+          content: none;
+        }
+      }
+
+      &:last-child {
+        @{pls}-item-icon > @{pls}-item-dot::after {
+          content: none;
+        }
+      }
+
+      &-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: 32px;
+
+        @{pls}-item-dot {
+          position: relative;
+
+          &::before {
+            .step-line();
+            top: 50%;
+            right: calc(100% + 8px);
+            left: auto;
+            height: 2px;
+          }
+
+          &::after {
+            .step-line();
+            top: 50%;
+            left: calc(100% + 8px);
+            height: 2px;
+          }
+        }
+      }
+
+      &-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @{pls}-item-title::after {
+          content: none;
+        }
+      }
+    }
+  }
+
+  // 导航样式
+  &-navigation {
+    &::after {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--yee-steps-step-nav-border-color, #e8e8e8);
+      content: '';
+    }
+
+    @{pls}-item {
+      justify-content: center;
+      padding-bottom: 12px;
+      padding-left: 32px;
+
+      &-title::after {
+        content: none;
+      }
+
+      &-navi-arrow {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding-bottom: 12px;
+
+        > span {
+          color: var(--yee-steps-step-nav-arrow-color, #999);
+          font-size: 16px;
+        }
+
+        &:last-child {
+          display: none;
+        }
+      }
+
+      &-active {
+        &::after {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          z-index: 1;
+          width: 100%;
+          height: 2px;
+          background-color: var(--yee-steps-step-nav-doing-border-color, #1890ff);
+          content: '';
+        }
+      }
+    }
+  }
+
+  // 丝带样式
+  &-ribbon {
+    @{pls}-item {
+      justify-content: center;
+      height: 32px;
+      line-height: 32px;
+      background-color: var(--yee-steps-step-ribbon-undo-bg-color, #f5f5f5);
+
+      &:not(:first-child) {
+        padding-left: 0;
+      }
+
+      &-ribbon-end {
+        width: 0;
+        height: 0;
+        margin-left: -6px;
+        border-top: 16px solid var(--yee-steps-step-ribbon-undo-bg-color, #f5f5f5);
+        border-bottom: 16px solid var(--yee-steps-step-ribbon-undo-bg-color, #f5f5f5);
+        border-left: 10px solid transparent;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &.done {
+          border-top-color: var(--yee-steps-step-ribbon-done-bg-color, #e6f7ff);
+          border-bottom-color: var(--yee-steps-step-ribbon-done-bg-color, #e6f7ff);
+        }
+
+        &.doing {
+          border-top-color: var(--yee-steps-step-ribbon-doing-bg-color, #1890ff);
+          border-bottom-color: var(--yee-steps-step-ribbon-doing-bg-color, #1890ff);
+        }
+      }
+
+      &-ribbon-head {
+        z-index: 1;
+        width: 0;
+        height: 0;
+        border-top: 16px solid transparent;
+        border-bottom: 16px solid transparent;
+        border-left: 10px solid var(--yee-steps-step-ribbon-undo-bg-color, #f5f5f5);
+
+        &.done {
+          border-left-color: var(--yee-steps-step-ribbon-done-bg-color, #e6f7ff);
+        }
+
+        &.doing {
+          border-left-color: var(--yee-steps-step-ribbon-doing-bg-color, #1890ff);
+        }
+      }
+
+      &-title {
+        display: block;
+        padding-right: 24px;
+        overflow: hidden;
+        line-height: 32px;
+        text-overflow: ellipsis;
+
+        &::after {
+          content: none;
+        }
+      }
+
+      &-serial {
+        width: 20px;
+        height: 20px;
+        margin-top: 6px;
+        font-size: 12px;
+      }
+
+      &-icon {
+        margin-left: 24px;
+
+        span {
+          font-size: 12px;
+        }
+      }
+
+      &-wait {
+        @{pls}-item-serial {
+          color: var(--yee-steps-step-ribbon-undo-icon-color, #999) !important;
+          background-color: var(--yee-steps-step-ribbon-undo-icon-bg-color, #fff);
+          border-color: var(--yee-steps-step-ribbon-undo-icon-border-color, #d9d9d9);
+        }
+
+        @{pls}-item-title {
+          color: var(--yee-steps-step-ribbon-undo-color, #999) !important;
+        }
+
+        &@{pls}-item {
+          background-color: var(--yee-steps-step-ribbon-undo-bg-color, #f5f5f5);
+        }
+      }
+
+      &-process {
+        @{pls}-item-serial {
+          color: #fff;
+          background-color: var(--yee-steps-step-ribbon-icon-bg-color, #1890ff);
+          border-color: var(--yee-steps-step-ribbon-icon-border-color, #1890ff);
+        }
+
+        @{pls}-item-title {
+          color: var(--yee-steps-step-ribbon-doing-color, #fff) !important;
+        }
+
+        &@{pls}-item {
+          background-color: var(--yee-steps-step-ribbon-doing-bg-color, #1890ff);
+        }
+      }
+
+      &-finish {
+        @{pls}-item-serial {
+          color: var(--yee-steps-step-ribbon-done-icon-color, #1890ff);
+          background-color: var(--yee-steps-step-ribbon-done-icon-bg-color, #fff);
+          border-color: var(--yee-steps-step-ribbon-done-icon-border-color, #1890ff);
+        }
+
+        @{pls}-item-title {
+          color: var(--yee-steps-step-ribbon-done-color, #1890ff) !important;
+        }
+
+        &@{pls}-item {
+          background-color: var(--yee-steps-step-ribbon-done-bg-color, #e6f7ff);
+        }
+      }
+    }
+  }
+}

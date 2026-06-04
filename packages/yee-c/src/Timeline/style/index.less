@@ -1,0 +1,306 @@
+@pls: .yee-timeline;
+
+@{pls} {
+  &-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: var(--yee-timeline-item-margin-bottom);
+
+    &-last {
+      padding-top: var(--yee-timeline-item-last-padding-top);
+
+      @{pls}-item-head {
+        top: var(--yee-timeline-item-last-head-top);
+      }
+
+      &-reverse {
+        padding-bottom: var(--yee-timeline-item-last-reverse-padding-bottom);
+
+        @{pls}-item-head {
+          top: var(--yee-timeline-item-last-reverse-head-top);
+        }
+      }
+    }
+
+    &:last-child {
+      @{pls}-item-tail {
+        height: 0;
+      }
+    }
+  }
+}
+
+@{pls}-item-tail {
+  position: absolute;
+  top: var(--yee-timeline-item-tail-top);
+  left: var(--yee-timeline-item-tail-left);
+  width: var(--yee-timeline-item-tail-width);
+  height: var(--yee-timeline-item-tail-height);
+  margin: var(--yee-timeline-item-tail-margin);
+  background-color: var(--yee-timeline-item-tail-color);
+}
+
+@{pls}-item-head {
+  position: absolute;
+  top: var(--yee-timeline-item-head-top);
+  left: var(--yee-timeline-item-head-left);
+  width: var(--yee-timeline-item-head-width);
+  height: var(--yee-timeline-item-head-height);
+  background-color: var(--yee-timeline-item-head-bg-color);
+  border: var(--yee-timeline-item-head-border-width) solid var(--yee-timeline-item-head-color);
+  border-radius: 50%;
+}
+
+@{pls}-item-title {
+  color: var(--yee-timeline-item-title-color);
+
+  &-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--yee-timeline-item-title-wrapper-gap);
+    align-items: center;
+  }
+}
+
+@{pls}-item-date {
+  color: var(--yee-timeline-item-title-color);
+}
+
+@{pls}-item-body {
+  position: relative;
+  width: 100%;
+  padding-left: var(--yee-timeline-item-body-padding-left);
+  word-break: break-word;
+}
+
+@{pls}-item-content {
+  color: var(--yee-timeline-item-content-color);
+}
+
+// state
+@{pls}-item-info {
+  @{pls}-item-head {
+    border-color: var(--yee-timeline-item-info);
+  }
+}
+
+@{pls}-item-success {
+  @{pls}-item-head {
+    border-color: var(--yee-timeline-item-success);
+  }
+}
+
+@{pls}-item-warning {
+  @{pls}-item-head {
+    border-color: var(--yee-timeline-item-warning);
+  }
+}
+
+@{pls}-item-error {
+  @{pls}-item-head {
+    border-color: var(--yee-timeline-item-error);
+  }
+}
+
+@{pls}-item-disabled {
+  @{pls}-item-head {
+    border-color: var(--yee-timeline-item-disabled);
+  }
+}
+
+@{pls}-item-right,
+@{pls}-item-left {
+  @{pls}-item-tail,
+  @{pls}-item-head {
+    left: 50%;
+    transform: translateX(var(--yee-timeline-item-left-right-transform-x));
+  }
+
+  @{pls}-item-tail {
+    margin-left: var(--yee-timeline-item-left-right-tail-margin-left);
+  }
+
+  @{pls}-item-head-custom {
+    top: 0;
+    margin-left: var(--yee-timeline-item-head-custom-margin-left);
+    transform: translate(0);
+  }
+}
+
+@{pls}-item-right {
+  @{pls}-item-body {
+    padding-right: var(--yee-timeline-item-body-padding-right);
+    padding-left: 0;
+
+    @{pls}-item-title-wrapper {
+      justify-content: flex-end;
+    }
+  }
+}
+
+@{pls}-item-left {
+  @{pls}-item-body {
+    width: 50%;
+    text-align: right;
+  }
+}
+
+@{pls}-alternate {
+  @{pls}-item-right {
+    @{pls}-item-body {
+      left: 0;
+      width: 50%;
+      padding-right: var(--yee-timeline-cross-date-body-padding);
+    }
+  }
+}
+
+// dot
+@{pls}-item-head-custom {
+  position: absolute;
+  top: var(--yee-timeline-item-head-custom-top);
+  left: var(--yee-timeline-item-head-custom-left);
+  width: auto;
+  height: auto;
+  margin-top: 0;
+  line-height: 1;
+  text-align: center;
+  background-color: var(--yee-color-bg-container);
+  border: 0;
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+}
+
+// pending
+@{pls}-item-head-pending {
+  width: var(--yee-timeline-item-head-pending-width);
+  height: var(--yee-timeline-item-head-pending-height);
+  margin-left: var(--yee-timeline-item-head-pending-margin-left);
+  border: 0;
+}
+
+@{pls}-item-pending {
+  @{pls}-item-tail {
+    height: var(--yee-timeline-item-pending-tail-height);
+    background-color: transparent;
+    border-left: var(--yee-timeline-item-tail-border-width) dotted var(--yee-timeline-item-tail-color);
+  }
+}
+
+// mode === 'right'
+@{pls}-right {
+  @{pls}-item-right {
+    @{pls}-item-head,
+    @{pls}-item-tail {
+      left: 100%;
+      transform: translateX(var(--yee-timeline-right-transform-x));
+    }
+
+    @{pls}-item-body {
+      text-align: right;
+    }
+  }
+}
+
+@{pls}-alternate {
+  &@{pls}-right {
+    @{pls}-item-right {
+      @{pls}-item-head,
+      @{pls}-item-tail {
+        left: 50%;
+      }
+
+      @{pls}-item-body {
+        text-align: right;
+      }
+    }
+  }
+}
+
+@{pls}-alternate {
+  > @{pls}-item-left {
+    @{pls}-item-date {
+      // padding-right: 12px;
+      text-align: right;
+    }
+
+    @{pls}-item-body {
+      left: 50%;
+      padding-left: var(--yee-timeline-cross-date-body-padding);
+      text-align: left;
+    }
+  }
+
+  > @{pls}-item-right {
+    @{pls}-item-date {
+      // padding-left: 24px;
+      text-align: left;
+    }
+
+    @{pls}-item-body {
+      text-align: right;
+    }
+  }
+}
+
+// date crossDisplayDate
+@{pls}-cross-date {
+  width: 100%;
+
+  .cross {
+    width: 50%;
+  }
+
+  @{pls}-item-left {
+    text-align: right;
+
+    .cross {
+      padding-right: var(--yee-timeline-cross-date-body-padding);
+    }
+
+    @{pls}-item-content {
+      text-align: left;
+    }
+
+    @{pls}-item-body {
+      left: 0;
+      padding-left: var(--yee-timeline-cross-date-body-padding);
+    }
+  }
+
+  @{pls}-item-right {
+    text-align: left;
+
+    @{pls}-item-head,
+    @{pls}-item-tail {
+      transform: translateX(var(--yee-timeline-item-left-right-transform-x));
+    }
+  }
+
+  &@{pls}-right {
+    @{pls}-item-tail,
+    @{pls}-item-head {
+      left: 50%;
+    }
+
+    @{pls}-item-body {
+      width: 50%;
+      padding-right: var(--yee-timeline-cross-date-body-padding);
+    }
+
+    .cross {
+      position: absolute;
+      left: 50%;
+      padding-left: var(--yee-timeline-cross-date-body-padding);
+    }
+  }
+
+  &@{pls}-alternate {
+    @{pls}-item-right {
+      .cross {
+        padding-left: var(--yee-timeline-cross-date-body-padding);
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+@pls: .yee-input;
+
+@{pls} {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--yee-input-height, 32px);
+  width: 100%;
+  padding: var(--yee-input-padding, 2px 8px);
+  font-size: var(--yee-input-font-size);
+  line-height: var(--yee-input-line-height);
+  border: var(--yee-input-border-width) solid var(--yee-input-border-color);
+  border-radius: var(--yee-input-border-radius, 4px);
+
+  &:not(@{pls}-disabled):hover {
+    border-color: var(--yee-input-hover-border-color);
+  }
+
+  &:not(@{pls}-disabled):not(@{pls}-borderless):focus-within {
+    border-color: var(--yee-input-hover-border-color);
+    box-shadow: 0 0 0 2px var(--yee-input-focus-bs-color);
+  }
+
+  &-disabled {
+    background-color: var(--yee-input-disabled-bg-color);
+    color: var(--yee-input-disabled-color);
+    cursor: not-allowed;
+  }
+
+  &-prefix {
+    display: inline-flex;
+  }
+
+  &-suffix {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--yee-input-suffix-gap);
+  }
+
+  &-borderless {
+    border: none;
+    box-shadow: none;
+    height: auto;
+    padding: 0;
+  }
+
+  &-inner {
+    width: 100%;
+    line-height: var(--yee-input-line-height);
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: inherit;
+  }
+
+  &-clear {
+    display: inline-flex;
+    padding: var(--yee-input-clear-padding);
+    color: var(--yee-input-clear-color);
+    background-color: var(--yee-input-clear-bg-color);
+    border-radius: 50%;
+    visibility: hidden;
+    cursor: pointer;
+  }
+
+  &&-with-clear:not(@{pls}-disabled):hover {
+    @{pls}-clear {
+      visibility: visible;
+    }
+  }
+
+  &-password {
+    flex: 1;
+    outline: none;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type='password']::-webkit-reveal,
+input[type='password']::-webkit-textfield-decoration-container {
+  display: none !important;
+}
+
+
+/* Chrome、Edge、Safari */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input::placeholder {
+  color: var(--yee-placeholder-color);
+}
+
+// form error status
+.yee-form-item-error {
+  @{pls} {
+    border-color: var(--yee-error-color);
+
+    &:hover {
+      border-color: var(--yee-error-color-hover);
+    }
+  }
+}
+
+.yee-form-item-warning {
+  @{pls} {
+    border-color: var(--yee-warning-color)
+  }
+}

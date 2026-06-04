@@ -1,0 +1,118 @@
+@pls: .yee-float-btn;
+
+@{pls} {
+    position: fixed;
+    right: var(--yee-float-btn-right);
+    bottom: var(--yee-float-btn-bottom);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--yee-float-btn-min-width);
+    min-height: var(--yee-float-btn-min-height);
+    overflow: hidden;
+    border: none;
+    box-shadow: var(--yee-float-btn-box-shadow);
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &-icon {
+        display: inline-flex;
+    }
+
+    &-description {
+        margin-left: var(--yee-float-btn-description-margin-left);
+        font-weight: 400;
+        font-size: var(--yee-float-btn-description-font-size);
+        line-height: var(--yee-float-btn-description-line-height);
+    }
+
+    &-square {
+        border-radius: var(--yee-float-btn-square-border-radius);
+    }
+
+    &-circle {
+        border-radius: 50%;
+    }
+
+    &-default {
+        color: var(--yee-float-btn-color);
+        background-color: var(--yee-float-btn-default-bg-color);
+    }
+
+    &-group {
+        position: fixed;
+        right: var(--yee-float-btn-right);
+        bottom: var(--yee-float-btn-bottom);
+        display: inline-flex;
+        flex-direction: column;
+        gap: var(--yee-float-btn-group-gap);
+
+        &-static {
+            position: static;
+        }
+
+        @{pls} {
+            position: static;
+            box-shadow: none;
+        }
+    }
+}
+
+// Popup Layer
+// .yee-float-btn-group-wrap {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 8px;
+//     padding-bottom: 4px;
+
+//     .yee-float-btn {
+//         position: static;
+//     }
+// }
+
+// // Button group
+// .yee-float-btn-group {
+//     position: fixed;
+//     right: 8px;
+//     bottom: 68px;
+//     display: inline-flex;
+//     flex-direction: column;
+
+//     .yee-float-btn {
+//         position: static;
+
+//         &:has(.yee-float-btn-description) {
+//             min-height: 38px;
+//         }
+//     }
+// }
+
+
+// .yee-float-btn-group-circle {
+//     gap: 8px;
+// }
+
+// // menu
+// .yee-float-button-menu-wrapper {
+//     position: fixed;
+//     z-index: 999;
+//     display: inline-block;
+
+//     .yee-float-btn {
+//         position: static;
+//     }
+// }
+
+// .yee-float-button-menu-container {
+//     position: absolute;
+//     top: 48px;
+//     z-index: 999;
+//     max-height: var(--yee-float-button-menu-container-max-height, 251px);
+//     padding: 4px 0;
+//     overflow: auto;
+//     color: var(--yee-color-text);
+//     background-color: var(--yee-float-button-menu-bg-color);
+//     border-radius: 4px;
+//     box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+// }

@@ -1,0 +1,818 @@
+:root {
+  /* ── z-index 基础层级 ── */
+  --yee-z-index-fixed: 990;        /* L1 吸顶 */
+  --yee-z-index-mask: 1000;        /* L2 遮罩背景 */
+  --yee-z-index-overlay: 1010;     /* L3 遮罩内容 */
+  --yee-z-index-popup: 1050;       /* L4 弹出面板 */
+  --yee-z-index-tooltip: 1060;     /* L5 轻提示 */
+  --yee-z-index-message: 1100;     /* L6 全局反馈 */
+  --yee-z-index-max: 1110;         /* L7 最顶层 */
+
+  /* --Alert-- */
+  --yee-alert-close-top: 7px;
+  --yee-alert-close-right: 11px;
+  --yee-alert-icon-margin-right: 6px;
+  --yee-alert-title-font-size: 16px;
+  --yee-alert-message-font-size: 14px;
+  --yee-alert-banner-padding: 8px 12px;
+
+  /* --Anchor-- */
+  --yee-anchor-padding: 0 16px;
+  --yee-anchor-affix-right: 8px;
+  --yee-anchor-affix-z-index: var(--yee-z-index-fixed);
+  --yee-anchor-affix-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-anchor-affix-border-radius: 4px;
+  --yee-anchor-static-max-height: calc(100vh - 120px);
+  --yee-anchor-static-content-padding: 8px 0;
+  --yee-anchor-static-item-active-width: 2px;
+  --yee-anchor-static-item-active-height: 22px;
+  --yee-anchor-vertical-line-left: 4px;
+  --yee-anchor-horizontal-item-padding: 6px 12px;
+  --yee-anchor-nav-arrow-left: -8px;
+  --yee-anchor-nav-arrow-height: 80px;
+  --yee-anchor-nav-arrow-width: 16px;
+  --yee-anchor-nav-arrow-icon-font-size: 16px;
+  --yee-anchor-nav-arrow-icon-margin-top: -8px;
+  --yee-anchor-nav-arrow-before-top: -14px;
+  --yee-anchor-nav-arrow-after-bottom: -14px;
+  --yee-anchor-nav-arrow-border-width: 8px;
+  --yee-anchor-content-padding: 16px 0;
+  --yee-anchor-content-line-width: 2px;
+  --yee-anchor-item-padding: 4px 0;
+  --yee-anchor-item-dot-left: 2px;
+  --yee-anchor-item-dot-size: 6px;
+  --yee-anchor-item-active-border-width: 2px;
+
+  /* --Avatar-- */
+  --yee-avatar-square-border-radius: 4px;
+
+  /* --Badge-- */
+  --yee-badge-sup-z-index: 10;
+  --yee-badge-large-count-line-height: 28px;
+  --yee-badge-small-count-line-height: 18px;
+  --yee-badge-status-text-margin-left: 8px;
+  --yee-badge-status-text-font-size: 14px;
+  --yee-badge-status-text-line-height: 22px;
+  --yee-badge-count-min-width: 20px;
+  --yee-badge-count-height: 20px;
+  --yee-badge-count-font-size: 12px;
+  --yee-badge-count-line-height: 20px;
+  --yee-badge-count-border-radius: 10px;
+  --yee-badge-count-box-shadow: 0 0 0 1px var(--yee-badge-count-border-color);
+  --yee-badge-dot-width: 6px;
+  --yee-badge-dot-height: 6px;
+  --yee-badge-multi-padding: 0 8px;
+  --yee-ribbon-content-top: 8px;
+  --yee-ribbon-content-right: -8px;
+  --yee-ribbon-content-padding: 4px 12px;
+  --yee-ribbon-content-border-radius: 2px;
+  --yee-ribbon-anger-width: 8px;
+  --yee-ribbon-anger-height: 8px;
+  --yee-ribbon-anger-border-width: 4px;
+
+  /* --Box-- */
+  --yee-box-padding: 16px 24px;
+
+  /* --Breadcrumb-- */
+  --yee-breadcrumb-height: 22px;
+  --yee-breadcrumb-item-padding: 0 4px;
+  --yee-breadcrumb-item-dropdown-arrow-margin-left: 8px;
+  --yee-breadcrumb-item-split-padding: 0 8px;
+  --yee-breadcrumb-item-prefix-icon-margin-right: 8px;
+  --yee-breadcrumb-item-suffix-icon-margin-left: 8px;
+
+  /* --Button-- */
+  --yee-btn-height: 32px;
+  --yee-btn-padding: 4px 12px;
+  --yee-btn-font-size: 14px;
+  --yee-btn-line-height: 22px;
+  --yee-btn-border-radius: 4px;
+  --yee-btn-loading-margin-inline-end: 6px;
+  --yee-btn-border-width: 1px;
+  --yee-btn-solid-active-box-shadow: 0 0 2px 2px rgba(64, 169, 255, 30%);
+  --yee-btn-circle-min-width: 32px;
+  --yee-btn-icon-gap: 4px;
+  --yee-btn-disabled-opacity: 0.5;
+
+  /* --Card-- */
+  --yee-card-header-padding: 0 12px;
+  --yee-card-header-clickable-border-radius: 4px;
+  --yee-card-content-margin: 16px;
+  --yee-card-border-radius: 8px;
+
+  /* --Carousel-- */
+  --yee-carousel-vertical-prev-top: 10px;
+  --yee-carousel-vertical-next-bottom: 10px;
+  --yee-carousel-item-min-height: 168px;
+  --yee-carousel-arrow-width: 40px;
+  --yee-carousel-arrow-height: 40px;
+  --yee-carousel-arrow-border-width: 1px;
+  --yee-carousel-arrow-left-right: 8px;
+  --yee-carousel-bar-column-gap: 8px;
+  --yee-carousel-bar-item-border-radius: 2px;
+  --yee-carousel-bar-line-width: 16px;
+  --yee-carousel-bar-line-height: 4px;
+  --yee-carousel-bar-line-active-width: 24px;
+  --yee-carousel-bar-dot-size: 6px;
+  --yee-carousel-bar-dot-active-size: 8px;
+  --yee-carousel-bar-top-bottom: 20px;
+  --yee-carousel-bar-row-gap: 5px;
+  --yee-carousel-bar-vertical-line-width: 5px;
+  --yee-carousel-bar-vertical-line-height: 16px;
+  --yee-carousel-bar-vertical-line-active-height: 24px;
+  --yee-carousel-bar-left-right: 20px;
+
+  /* --Cascader-- */
+  --yee-cascader-menu-padding: 4px 0;
+  --yee-cascader-menu-border-width: 1px;
+  --yee-cascader-menu-item-text-margin-right: 8px;
+  --yee-cascader-menu-item-text-loaded-left: 6px;
+  --yee-cascader-menu-item-text-loaded-size: 4px;
+  --yee-cascader-menu-item-line-height: 32px;
+  --yee-cascader-filter-menu-p-padding: 5px 12px;
+  --yee-cascader-input-z-index: -1;
+  --yee-cascader-input-focus-z-index: 1;
+  --yee-cascader-popup-z-index: var(--yee-z-index-popup);
+  --yee-cascader-select-item-opacity: 0;
+
+  /* --Checkbox-- */
+  --yee-checkbox-inner-width: 16px;
+  --yee-checkbox-inner-height: 16px;
+  --yee-checkbox-inner-border-width: 1px;
+  --yee-checkbox-inner-border-radius: 4px;
+  --yee-checkbox-checked-after-width: calc(16px / 14 * 5);
+  --yee-checkbox-checked-after-height: calc(16px / 14 * 8);
+  --yee-checkbox-checked-after-border-width: 2px;
+  --yee-checkbox-checked-after-inset-inline-start: 25%;
+  --yee-checkbox-input-z-index: 1;
+  --yee-checkbox-label-padding: 0 8px;
+  --yee-checkbox-indeterminate-after-width: 80%;
+  --yee-checkbox-indeterminate-after-height: 80%;
+  --yee-checkbox-indeterminate-after-border-radius: 4px;
+
+  /* --Collapse-- */
+  --yee-collapse-border-width: 1px;
+
+  /* --PickerPanel-- */
+  --yee-picker-popup-z-index: var(--yee-z-index-popup);
+  --yee-picker-cell-inner-height: 24px;
+  --yee-picker-cell-inner-line-height: 24px;
+  --yee-picker-header-height: 40px;
+  --yee-picker-header-padding: 8px 4px;
+  --yee-picker-header-prev-next-margin: 8px;
+  --yee-picker-content-tr-padding: 4px 0;
+  --yee-picker-content-thead-height: 32px;
+  --yee-picker-content-thead-padding: 4px 12px;
+  --yee-picker-content-tbody-padding: 4px 12px;
+  --yee-picker-content-th-width: 48px;
+  --yee-picker-content-th-font-size: 14px;
+  --yee-picker-content-th-line-height: 22px;
+  --yee-picker-cell-disabled-after-height: 24px;
+  --yee-picker-cell-current-before-bottom: 4px;
+  --yee-picker-cell-current-before-size: 4px;
+  --yee-picker-cell-current-before-margin-left: -2px;
+  --yee-picker-cell-current-before-border-radius: 4px;
+  --yee-picker-cell-selected-border-radius: 2px;
+  --yee-picker-decade-cell-width: 100px;
+  --yee-picker-decade-cell-padding: 4px 12px;
+  --yee-picker-year-cell-width: 112px;
+  --yee-picker-year-cell-padding: 4px 24px;
+  --yee-picker-quarter-cell-width: 84px;
+  --yee-picker-quarter-cell-padding: 4px 10px;
+  --yee-picker-month-cell-width: 112px;
+  --yee-picker-month-cell-padding: 4px 24px;
+  --yee-picker-week-cell-width: 42px;
+  --yee-picker-week-cell-padding: 4px 9px;
+  --yee-picker-date-cell-width: 48px;
+  --yee-picker-date-cell-padding: 4px 12px;
+  --yee-picker-datetime-border-width: 1px;
+  --yee-picker-time-panel-content-height: 208px;
+  --yee-picker-time-panel-content-padding: 4px 0;
+  --yee-picker-time-panel-title-cell-width: 72px;
+  --yee-picker-time-panel-title-cell-height: 32px;
+  --yee-picker-time-panel-title-cell-line-height: 32px;
+  --yee-picker-time-panel-title-cell-border-width: 1px;
+  --yee-picker-time-panel-column-width: 72px;
+  --yee-picker-time-panel-column-padding-bottom: 168px;
+  --yee-picker-time-panel-column-border-width: 1px;
+  --yee-picker-time-panel-cell-padding: 4px 0;
+  --yee-picker-time-panel-cell-inner-height: 24px;
+  --yee-picker-time-panel-cell-inner-line-height: 24px;
+  --yee-picker-footer-padding: 12px;
+  --yee-picker-footer-border-width: 1px;
+  --yee-picker-footer-preset-gap: 8px;
+  --yee-picker-range-hover-after-height: 22px;
+  --yee-picker-range-hover-after-border-width: 1px;
+  --yee-picker-range-hover-after-border-radius: 2px;
+  --yee-picker-range-hover-start-after-width: calc(100% - 10px);
+  --yee-picker-range-start-before-left: 9px;
+  --yee-picker-range-start-before-width: calc(100% - 18px);
+  --yee-picker-range-start-in-range-before-width: calc(100% - 9px);
+  --yee-picker-range-end-before-width: calc(100% - 18px);
+  --yee-picker-in-range-before-height: 24px;
+  --yee-picker-in-range-before-border-radius: 2px;
+
+  /* --Dialog-- */
+  --yee-dialog-z-index: var(--yee-z-index-overlay);
+  --yee-dialog-mask-z-index: var(--yee-z-index-mask);
+  --yee-dialog-content-wrapper-z-index: var(--yee-z-index-overlay);
+  --yee-dialog-header-margin-bottom: 12px;
+  --yee-dialog-content-margin-top: 10%;
+  --yee-dialog-content-padding: 24px;
+  --yee-dialog-content-border-radius: 6px;
+  --yee-dialog-content-box-shadow: var(--yee-dialog-content-box-shadow-color) 0 2px 40px 0;
+  --yee-dialog-close-top: 12px;
+  --yee-dialog-close-right: 12px;
+  --yee-dialog-footer-gap: 16px;
+
+  /* --Divider-- */
+  --yee-divider-border-width: 1px;
+  --yee-divider-with-text-margin: 16px 0;
+  --yee-divider-vertical-margin: 0 8px;
+  --yee-divider-inner-text-font-size: 16px;
+  --yee-divider-inner-text-line-height: 24px;
+
+  /* --Drawer-- */
+  --yee-drawer-z-index: var(--yee-z-index-overlay);
+  --yee-drawer-header-padding: 20px 42px 16px 24px;
+  --yee-drawer-body-padding: 20px 24px;
+  --yee-drawer-close-top: 20px;
+  --yee-drawer-close-right: 20px;
+
+  /* --Field-- */
+  --yee-field-gap: 8px;
+  --yee-field-content-padding-bottom: 24px;
+
+  /* --FloatButton-- */
+  --yee-float-btn-right: 8px;
+  --yee-float-btn-bottom: 68px;
+  --yee-float-btn-min-width: 42px;
+  --yee-float-btn-min-height: 42px;
+  --yee-float-btn-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-float-btn-description-margin-left: 4px;
+  --yee-float-btn-description-font-size: 14px;
+  --yee-float-btn-description-line-height: 22px;
+  --yee-float-btn-square-border-radius: 4px;
+  --yee-float-btn-group-gap: 8px;
+
+  /* --Form-- */
+  --yee-form-item-padding-bottom: 24px;
+  --yee-form-item-label-line-height: 24px;
+  --yee-form-item-required-margin-inline-start: 4px;
+  --yee-form-item-additional-bottom: 2px;
+
+  /* --Grid-- */
+  --yee-grid-column-min-width: 50px;
+
+  /* --Input-- */
+  --yee-input-font-size: 14px;
+  --yee-input-line-height: 22px;
+  --yee-input-border-width: 1px;
+  --yee-input-suffix-gap: 4px;
+  --yee-input-clear-padding: 1px;
+
+  /* --JsonViewer-- */
+  --yee-json-view-font-size: 14px;
+  --yee-json-view-line-height: 1.4;
+  --yee-json-value-margin-left: 8px;
+  --yee-json-comma-font-size: 16px;
+  --yee-json-collapsed-padding: 0 2px;
+  --yee-json-collapsed-letter-spacing: 2px;
+  --yee-json-leaf-margin-left: 8px;
+  --yee-json-items-margin-left: 16px;
+  --yee-json-item-line-height: 24px;
+
+  /* --List-- */
+  --yee-list-item-padding: 8px 16px;
+  --yee-list-bordered-border-width: 1px;
+
+  /* --Menu-- */
+  --yee-menu-padding-short: 4px;
+  --yee-menu-item-padding: 0 12px;
+  --yee-menu-item-border-radius: 6px;
+  --yee-menu-item-icon-margin-right: 8px;
+  --yee-menu-sub-border-radius: 4px;
+  --yee-menu-item-icon-size: 16px;
+  --yee-menu-item-label-margin-inline-start: 8px;
+  --yee-menu-item-switch-margin-left: 8px;
+  --yee-menu-vertical-width: 129px;
+  --yee-menu-submenu-vertical-top: -4px;
+
+  /* --Message-- */
+  --yee-message-gap: 8px;
+  --yee-message-padding: 12px 16px;
+  --yee-message-border-radius: 4px;
+  --yee-message-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-message-icon-size: 20px;
+  --yee-message-list-top: 24px;
+  --yee-message-list-z-index: var(--yee-z-index-message);
+  --yee-message-list-gap: 12px;
+
+  /* --Notice-- */
+  --yee-notice-width: 320px;
+  --yee-notice-min-height: 64px;
+  --yee-notice-padding: 16px 20px;
+  --yee-notice-margin-bottom: 16px;
+  --yee-notice-border-radius: 8px;
+  --yee-notice-box-shadow: 0 6px 16px 0 var(--yee-notice-box-shadow-color-1), 0 3px 6px -4px var(--yee-notice-box-shadow-color-2), 0 9px 28px 8px var(--yee-notice-box-shadow-color-3);
+  --yee-notice-box-shadow-hover: 0 8px 20px 0 var(--yee-notice-box-shadow-hover-color-1), 0 4px 8px -4px var(--yee-notice-box-shadow-hover-color-2), 0 12px 32px 8px var(--yee-notice-box-shadow-hover-color-3);
+  --yee-notice-border-width: 1px;
+  --yee-notice-content-gap: 12px;
+  --yee-notice-icon-size: 20px;
+  --yee-notice-icon-margin-top: 2px;
+  --yee-notice-title-margin: 0 0 8px 0;
+  --yee-notice-title-font-size: 16px;
+  --yee-notice-title-font-weight: 600;
+  --yee-notice-title-line-height: 1.4;
+  --yee-notice-description-font-size: 14px;
+  --yee-notice-description-line-height: 1.5;
+  --yee-notice-close-top: 16px;
+  --yee-notice-close-right: 16px;
+  --yee-notice-close-size: 20px;
+  --yee-notice-list-z-index: var(--yee-z-index-message);
+  --yee-notice-list-position-offset: 24px;
+  --yee-notice-mobile-width: calc(100vw - 48px);
+
+  /* --Pagination-- */
+  --yee-pagination-item-height: 32px;
+  --yee-pagination-item-margin: 0 4px;
+  --yee-pagination-prev-next-padding: 4px 11px;
+  --yee-pagination-item-width: 32px;
+  --yee-pagination-item-border-width: 1px;
+  --yee-pagination-item-border-radius: 4px;
+  --yee-pagination-size-change-width: 80px;
+  --yee-pagination-size-changer-margin-left: 12px;
+  --yee-pagination-quick-jumper-span-margin-right: 8px;
+  --yee-pagination-quick-jumper-margin-left: 12px;
+  --yee-pagination-mini-height: 24px;
+  --yee-pagination-item-mini-width: 16px;
+  --yee-pagination-item-mini-height: 16px;
+  --yee-pagination-simple-split-width: 32px;
+  --yee-pagination-simple-input-width: 60px;
+  --yee-pagination-simple-size-changer-margin-left: 16px;
+
+  /* --Popconfirm-- */
+  --yee-popconfirm-z-index: var(--yee-z-index-tooltip);
+  --yee-popconfirm-padding: 16px;
+  --yee-popconfirm-border-radius: 4px;
+  --yee-popconfirm-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-popconfirm-header-gap: 16px;
+  --yee-popconfirm-title-margin: 0px;
+  --yee-popconfirm-footer-margin-top: 16px;
+
+  /* --Popover-- */
+  --yee-popover-z-index: var(--yee-z-index-tooltip);
+  --yee-popover-max-width: 704px;
+  --yee-popover-padding: 16px;
+  --yee-popover-border-radius: 4px;
+  --yee-popover-header-margin-bottom: 16px;
+  --yee-popover-header-font-weight: 500;
+  --yee-popover-header-font-size: 16px;
+  --yee-popover-header-line-height: 24px;
+
+  /* --Progress-- */
+  --yee-progress-text-width: 48px;
+  --yee-progress-text-margin-left: 8px;
+  --yee-progress-text-font-size: 14px;
+  --yee-progress-text-line-height: 22px;
+  --yee-progress-outer-height: 32px;
+  --yee-progress-inner-border-radius: 4px;
+  --yee-progress-bg-border-radius: 4px;
+  --yee-progress-steps-gap: 4px;
+  --yee-progress-steps-height: 32px;
+  --yee-progress-steps-text-margin-left: 4px;
+  --yee-progress-step-min-width: 20px;
+  --yee-progress-circle-text-font-size: 16px;
+  --yee-progress-circle-text-line-height: 24px;
+  --yee-progress-success-icon-circle-font-size: 40px;
+  --yee-progress-done-bg-border-radius: 4px;
+  --yee-progress-error-icon-circle-font-size: 40px;
+  --yee-progress-gradient-conic-stroke-dasharray: 351.86px, 351.86;
+
+  /* --Radio-- */
+  --yee-radio-group-gap: 8px;
+  --yee-radio-cornermark-border-width: 16px;
+  --yee-radio-wrapper-gap: 4px;
+  --yee-radio-label-margin-inline-start: 4px;
+  --yee-radio-button-wrapper-padding: 4px 8px;
+  --yee-radio-button-wrapper-border-width: 1px;
+  --yee-radio-button-wrapper-border-radius: 4px;
+  --yee-radio-inner-width: 16px;
+  --yee-radio-inner-height: 16px;
+  --yee-radio-inner-border-width: 1px;
+  --yee-radio-inner-after-width: 10px;
+  --yee-radio-inner-after-height: 10px;
+
+  /* --Rate-- */
+  --yee-rate-star-width: 24px;
+  --yee-rate-star-height: 24px;
+  --yee-rate-margin-right: 4px;
+  --yee-rate-star-font-size: 20px;
+  --yee-rate-star-hover-font-size: 24px;
+  --yee-rate-star-first-hover-width: 10px;
+  --yee-rate-star-first-width: 12px;
+  --yee-rate-star-icon-size: 20px;
+
+  /* --Search-- */
+  --yee-search-padding: 4px 11px;
+  --yee-search-font-size: 14px;
+  --yee-search-border-width: 1px;
+  --yee-search-border-radius: 6px;
+  --yee-search-focus-box-shadow: 0 0 0 2px var(--yee-input-focus-bs-color);
+  --yee-search-small-padding: 1px 7px;
+  --yee-search-small-font-size: 12px;
+  --yee-search-small-border-radius: 4px;
+  --yee-search-large-padding: 7px 11px;
+  --yee-search-large-font-size: 16px;
+  --yee-search-large-border-radius: 8px;
+  --yee-search-prefix-margin-right: 8px;
+  --yee-search-suffix-margin-left: 8px;
+  --yee-search-button-margin-left: 8px;
+  --yee-search-button-padding: 0 8px;
+  --yee-search-button-font-weight: 500;
+  --yee-search-button-border-radius: 4px;
+
+  /* --Select-- */
+  --yee-select-popup-z-index: var(--yee-z-index-popup);
+  --yee-select-popup-padding: 4px 0;
+  --yee-select-option-padding: 4px 6px;
+
+  /* --Selector-- */
+  --yee-selector-padding: 2px 6px;
+  --yee-selector-border-width: 1px;
+  --yee-selector-border-radius: 4px;
+  --yee-selector-height: 32px;
+  --yee-selector-input-font-size: 14px;
+  --yee-selector-input-line-height: 22px;
+  --yee-selector-input-focus-opacity: 0.6;
+  --yee-selector-selection-item-focus-opacity: 0.6;
+  --yee-selector-content-gap: 4px;
+  --yee-selector-content-min-height: 22px;
+  --yee-selector-placeholder-font-size: 14px;
+  --yee-selector-selection-item-font-size: 14px;
+  --yee-selector-arrow-right: 8px;
+  --yee-selector-clear-right: 8px;
+  --yee-selector-clear-padding: 1px;
+  --yee-tags-height: 32px;
+  --yee-tags-input-font-size: 14px;
+  --yee-tags-input-line-height: 22px;
+  --yee-tags-input-focus-opacity: 0.6;
+  --yee-tags-single-option-focus-opacity: 0.6;
+  --yee-tags-multi-min-height: 32px;
+  --yee-tags-multi-tag-max-width: calc(100% - 8px);
+  --yee-tags-multi-tag-height: 24px;
+  --yee-tags-multi-input-height: 26px;
+  --yee-tags-multi-input-after-min-width: 2px;
+  --yee-tags-multi-input-min-width: 2px;
+
+  /* --Skeleton-- */
+  --yee-skeleton-avatar-width: 32px;
+  --yee-skeleton-avatar-height: 32px;
+  --yee-skeleton-title-height: 16px;
+  --yee-skeleton-paragraph-li-height: 22px;
+  --yee-skeleton-paragraph-li-margin-bottom: 12px;
+  --yee-skeleton-active-after-inset: 0 -150%;
+  --yee-skeleton-active-animation-duration: 1.4s;
+  --yee-skeleton-active-animation-delay: 0.1s;
+  --yee-skeleton-active-translate-start: -37.5%;
+  --yee-skeleton-active-translate-end: 37.5%;
+
+  /* --Slider-- */
+  --yee-slider-height: 12px;
+  --yee-slider-padding: 4px 0;
+  --yee-slider-rail-height: 4px;
+  --yee-slider-rail-border-radius: 2px;
+  --yee-slider-track-height: 4px;
+  --yee-slider-track-border-radius: 2px;
+  --yee-slider-handler-width: 12px;
+  --yee-slider-handler-height: 12px;
+  --yee-slider-handler-margin-left: -6px;
+  --yee-slider-handler-border-width: 2px;
+  --yee-slider-handler-hover-scale: 1.2;
+  --yee-slider-handler-active-box-shadow: 0 0 5px var(--yee-primary-color);
+  --yee-slider-tooltip-margin-bottom: 10px;
+  --yee-slider-tooltip-padding: 4px 8px;
+  --yee-slider-tooltip-font-size: 12px;
+  --yee-slider-tooltip-border-radius: 4px;
+  --yee-slider-tooltip-arrow-border-width: 4px;
+
+  /* --Spin-- */
+  --yee-spin-tip-margin-top: 4px;
+  --yee-spin-fullscreen-z-index: var(--yee-z-index-max);
+  --yee-full-loading-width: 40px;
+  --yee-spin-loading-rotate-50: 180deg;
+  --yee-spin-loading-opacity-50: 0.5;
+  --yee-spin-loading-rotate-100: 360deg;
+
+  /* --Splitter-- */
+  --yee-splitter-border-radius: 4px;
+  --yee-splitter-border-width: 1px;
+  --yee-splitter-handler-line-size: 2px;
+  --yee-splitter-expand-width: 16px;
+  --yee-splitter-expand-height: 32px;
+  --yee-splitter-expand-font-size: 12px;
+  --yee-splitter-vertical-dragger-width: calc(100% - 48px);
+  --yee-splitter-vertical-dragger-height: 6px;
+  --yee-splitter-vertical-expand-start-top: -27px;
+  --yee-splitter-vertical-expand-end-bottom: -27px;
+  --yee-splitter-horizontal-dragger-top: 16px;
+  --yee-splitter-horizontal-dragger-width: 6px;
+  --yee-splitter-horizontal-dragger-height: calc(100% - 40px);
+  --yee-splitter-horizontal-expand-transform-y: calc(-50% - 4px);
+  --yee-splitter-horizontal-expand-start-left: -19px;
+  --yee-splitter-horizontal-expand-end-right: -19px;
+
+  /* --Steps-- */
+  --yee-steps-line-width: 999px;
+  --yee-steps-line-height: 1px;
+  --yee-steps-item-padding-left: 12px;
+  --yee-steps-item-icon-font-size: 16px;
+  --yee-steps-item-content-margin-left: 8px;
+  --yee-steps-item-content-min-width: 70px;
+  --yee-steps-item-dot-width: 8px;
+  --yee-steps-item-dot-height: 8px;
+  --yee-steps-item-serial-width: 32px;
+  --yee-steps-item-serial-height: 32px;
+  --yee-steps-item-serial-font-size: 14px;
+  --yee-steps-item-serial-line-height: 22px;
+  --yee-steps-item-serial-border-width: 1px;
+  --yee-steps-item-title-height: 32px;
+  --yee-steps-item-title-padding-right: 12px;
+  --yee-steps-item-title-font-size: 16px;
+  --yee-steps-item-title-line-height: 24px;
+  --yee-steps-item-sub-title-height: 32px;
+  --yee-steps-item-sub-title-margin-left: 8px;
+  --yee-steps-item-sub-title-line-height: 32px;
+  --yee-steps-item-description-font-size: 14px;
+  --yee-steps-horizontal-margin-bottom: 16px;
+  --yee-steps-small-title-height: 24px;
+  --yee-steps-small-title-font-size: 14px;
+  --yee-steps-small-title-line-height: 22px;
+  --yee-steps-small-icon-width: 24px;
+  --yee-steps-small-icon-font-size: 12px;
+  --yee-steps-small-serial-width: 24px;
+  --yee-steps-small-serial-height: 24px;
+  --yee-steps-small-serial-font-size: 12px;
+  --yee-steps-small-serial-line-height: 20px;
+  --yee-steps-small-cus-icon-height: 24px;
+  --yee-steps-small-cus-icon-font-size: 24px;
+  --yee-steps-vertical-margin-right: 16px;
+  --yee-steps-vertical-item-min-height: 64px;
+  --yee-steps-vertical-item-margin-bottom: 8px;
+  --yee-steps-vertical-item-content-margin-left: 8px;
+  --yee-steps-vertical-icon-width: 32px;
+  --yee-steps-vertical-dot-after-top: calc(100% + 8px);
+  --yee-steps-vertical-dot-after-left: 3px;
+  --yee-steps-vertical-dot-after-width: 2px;
+  --yee-steps-vertical-span-after-top: calc(100% + 8px);
+  --yee-steps-vertical-span-after-width: 1px;
+  --yee-steps-vertical-span-after-height: 999px;
+  --yee-steps-dot-item-icon-height: 32px;
+  --yee-steps-dot-before-right: calc(100% + 8px);
+  --yee-steps-dot-before-height: 2px;
+  --yee-steps-dot-after-left: calc(100% + 8px);
+  --yee-steps-dot-after-height: 2px;
+  --yee-steps-navigation-after-height: 1px;
+  --yee-steps-navigation-item-padding-bottom: 12px;
+  --yee-steps-navigation-item-padding-left: 32px;
+  --yee-steps-navigation-arrow-padding-bottom: 12px;
+  --yee-steps-navigation-arrow-font-size: 16px;
+  --yee-steps-navigation-active-after-height: 2px;
+  --yee-steps-ribbon-item-height: 32px;
+  --yee-steps-ribbon-item-line-height: 32px;
+  --yee-steps-ribbon-end-margin-left: -6px;
+  --yee-steps-ribbon-end-border-top: 16px;
+  --yee-steps-ribbon-end-border-bottom: 16px;
+  --yee-steps-ribbon-end-border-left: 10px;
+  --yee-steps-ribbon-head-border-top: 16px;
+  --yee-steps-ribbon-head-border-bottom: 16px;
+  --yee-steps-ribbon-head-border-left: 10px;
+  --yee-steps-ribbon-title-padding-right: 24px;
+  --yee-steps-ribbon-title-line-height: 32px;
+  --yee-steps-ribbon-serial-width: 20px;
+  --yee-steps-ribbon-serial-height: 20px;
+  --yee-steps-ribbon-serial-margin-top: 6px;
+  --yee-steps-ribbon-serial-font-size: 12px;
+  --yee-steps-ribbon-icon-margin-left: 24px;
+  --yee-steps-ribbon-icon-font-size: 12px;
+
+  /* --Switch-- */
+  --yee-switch-border-radius-offset: 4px;
+  --yee-switch-handle-top: 2px;
+  --yee-switch-handle-left: 2px;
+  --yee-switch-inner-height: 22px;
+  --yee-switch-inner-line-height: 22px;
+  --yee-switch-handle-large-size: 24px;
+  --yee-switch-large-height: 28px;
+  --yee-switch-handle-small-size: 14px;
+  --yee-switch-small-width: 32px;
+  --yee-switch-small-height: 18px;
+  --yee-switch-handle-offset: 2px;
+  --yee-switch-inner-padding-offset: 2px;
+  --yee-switch-handle-size: 18px;
+  --yee-switch-width: 44px;
+  --yee-switch-height: 22px;
+
+  /* --Table-- */
+  --yee-table-bordered-cell-border-width: 1px;
+  --yee-table-bordered-thead-border-width: 1px;
+  --yee-table-thead-action-gap: 8px;
+  --yee-table-filter-popup-padding: 16px;
+  --yee-table-content-border-radius: 6px 6px 0 0;
+  --yee-table-cell-padding: 13px 16px;
+  --yee-table-cell-line-height: 22px;
+  --yee-table-cell-border-bottom-width: 1px;
+  --yee-table-no-record-padding: 32px 0;
+  --yee-table-footer-margin-top: 16px;
+  --yee-table-td-height: 47px;
+  --yee-table-td-padding: 0 8px;
+  --yee-table-summary-td-border-bottom-width: 1px;
+  --yee-table-summary-fixed-z-index: 5;
+  --yee-table-small-size-height: 40px;
+  --yee-table-small-size-padding: 0 4px;
+
+  /* --Tabs-- */
+  --yee-tabs-border-width: 1px;
+  --yee-tabs-border-radius: 4px;
+  --yee-tabs-active-bar-height: 2px;
+  --yee-tabs-active-bar-width: 2px;
+  --yee-tabs-vertical-padding: 8px 0;
+  --yee-tabs-vertical-nav-wrap-padding: 8px 0;
+  --yee-tabs-vertical-container-padding: 0 20px;
+  --yee-tabs-vertical-active-bar-height: 32px;
+  --yee-tabs-nav-wrapper-height: 46px;
+  --yee-tabs-nav-wrapper-margin: 0 16px;
+  --yee-tabs-nav-wrapper-left-right-height: 250px;
+  --yee-tabs-nav-wrapper-left-right-padding: 0 10px;
+  --yee-tabs-nav-wrapper-left-right-tab-height: 40px;
+  --yee-tabs-nav-wrapper-left-right-tab-margin-bottom: 4px;
+  --yee-tabs-tab-with-prefix-margin-right: 8px;
+  --yee-tabs-tab-badge-min-width: 16px;
+  --yee-tabs-tab-badge-height: 16px;
+  --yee-tabs-tab-badge-margin-left: 8px;
+  --yee-tabs-tab-badge-padding: 0 4px;
+  --yee-tabs-tab-badge-font-size: 10px;
+  --yee-tabs-tab-badge-line-height: 16px;
+  --yee-tabs-tab-badge-border-radius: 8px;
+  --yee-tabs-tab-title-font-weight: 500;
+  --yee-tabs-tab-title-font-size: 16px;
+  --yee-tabs-tab-title-line-height: 24px;
+  --yee-tabs-pills-margin-bottom: 16px;
+  --yee-tabs-pills-tab-height: 32px;
+  --yee-tabs-pills-tab-padding: 0 16px;
+  --yee-tabs-pills-tab-border-width: 1px;
+  --yee-tabs-pills-tab-border-radius: 4px;
+  --yee-tabs-pills-tab-margin-left: -1px;
+  --yee-tabs-pills-tab-title-font-weight: 400;
+  --yee-tabs-pills-tab-title-font-size: 14px;
+  --yee-tabs-pills-tab-title-line-height: 22px;
+  --yee-tabs-pills-container-padding-top: 16px;
+  --yee-tabs-card-border-bottom: -1px;
+  --yee-tabs-card-tab-height: 40px;
+  --yee-tabs-card-tab-margin-right: 8px;
+  --yee-tabs-card-tab-padding: 0 24px;
+  --yee-tabs-card-tab-border-width: 1px;
+  --yee-tabs-card-tab-border-radius: 4px;
+  --yee-tabs-card-tab-not-active-height: 39px;
+  --yee-tabs-nav-wrap-scroll-width: calc(100% - 64px);
+  --yee-tabs-nav-wrap-scroll-margin-left: 32px;
+  --yee-tabs-nav-wrapper-shadow-width: 8px;
+  --yee-tabs-nav-wrapper-shadow-inset: 4px;
+  --yee-tabs-nav-wrapper-top-z-index: var(--yee-z-index-fixed);
+  --yee-tabs-nav-wrapper-border-bottom-width: 1px;
+  --yee-tabs-nav-operations-width: 56px;
+  --yee-tabs-nav-operations-height: 46px;
+  --yee-tabs-operation-container-max-height: 192px;
+  --yee-tabs-operation-container-margin-top: -8px;
+  --yee-tabs-operation-container-padding: 4px 0;
+  --yee-tabs-operation-tab-height: 32px;
+  --yee-tabs-operation-tab-padding: 5px 12px;
+  --yee-tabs-tab-group-margin-left: 4px;
+  --yee-tabs-tab-group-container-padding: 8px;
+  --yee-tabs-tab-group-container-line-height: 32px;
+  --yee-tabs-fixed-top-nav-wrapper-height: 56px;
+  --yee-tabs-fixed-top-nav-wrapper-padding: 0 40px 8px;
+  --yee-tabs-fixed-top-nav-wrapper-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-tabs-nav-add-height: 38px;
+  --yee-tabs-nav-add-padding: 0 12px;
+  --yee-tabs-nav-add-font-size: 16px;
+  --yee-tabs-border-card-nav-add-border-width: 1px;
+  --yee-tabs-border-card-nav-add-border-radius: 4px;
+
+  /* --Tag-- */
+  --yee-tag-height: 22px;
+  --yee-tag-padding: 0 7px;
+  --yee-tag-font-size: 12px;
+  --yee-tag-line-height: 22px;
+  --yee-tag-border-width: 1px;
+  --yee-tag-border-radius: 2px;
+  --yee-tag-icon-margin-left: 4px;
+  --yee-tag-small-height: 16px;
+  --yee-tag-large-height: 28px;
+  --yee-tag-close-margin-left: 8px;
+  --yee-tag-checkable-margin: 5px 0;
+
+  /* --TextArea-- */
+  --yee-textarea-padding: 4px 35px 4px 11px;
+  --yee-textarea-font-size: 14px;
+  --yee-textarea-line-height: 22px;
+  --yee-textarea-border-radius: 4px;
+  --yee-textarea-clear-top: 8px;
+  --yee-textarea-clear-right: 12px;
+  --yee-textarea-number-margin-top: 4px;
+  --yee-textarea-number-font-size: 14px;
+  --yee-textarea-number-line-height: 22px;
+  --yee-textarea-border-width: 1px;
+
+  /* --Timeline-- */
+  --yee-timeline-item-margin-bottom: 16px;
+  --yee-timeline-item-last-padding-top: 16px;
+  --yee-timeline-item-last-head-top: 19px;
+  --yee-timeline-item-last-reverse-padding-bottom: 16px;
+  --yee-timeline-item-last-reverse-head-top: 3px;
+  --yee-timeline-item-tail-top: 14px;
+  --yee-timeline-item-tail-left: 2px;
+  --yee-timeline-item-tail-width: 2px;
+  --yee-timeline-item-tail-height: calc(100% + 10px);
+  --yee-timeline-item-tail-margin: 0 4px;
+  --yee-timeline-item-tail-border-width: 2px;
+  --yee-timeline-item-head-top: 6px;
+  --yee-timeline-item-head-left: 0;
+  --yee-timeline-item-head-width: 10px;
+  --yee-timeline-item-head-height: 10px;
+  --yee-timeline-item-head-border-width: 2px;
+  --yee-timeline-item-title-wrapper-gap: 8px;
+  --yee-timeline-item-body-padding-left: 26px;
+  --yee-timeline-item-body-padding-right: 26px;
+  --yee-timeline-item-left-right-transform-x: -5px;
+  --yee-timeline-item-left-right-tail-margin-left: 6px;
+  --yee-timeline-item-head-custom-margin-left: -2px;
+  --yee-timeline-item-head-custom-top: 11px;
+  --yee-timeline-item-head-custom-left: 5px;
+  --yee-timeline-item-head-pending-width: 16px;
+  --yee-timeline-item-head-pending-height: 16px;
+  --yee-timeline-item-head-pending-margin-left: -3px;
+  --yee-timeline-item-pending-tail-height: calc(100% + 21px);
+  --yee-timeline-right-transform-x: -10px;
+  --yee-timeline-cross-date-body-padding: 21px;
+
+  /* --Tooltip-- */
+  --yee-tooltip-z-index: var(--yee-z-index-tooltip);
+  --yee-tooltip-padding: 8px 12px;
+  --yee-tooltip-border-radius: 4px;
+  --yee-tooltip-arrow-width: 8px;
+  --yee-tooltip-arrow-height: 8px;
+  --yee-tooltip-arrow-border-radius: 0 0 2px 0;
+  --yee-tooltip-arrow-translate-y: 50%;
+  --yee-tooltip-arrow-rotate: -135deg;
+
+  /* --Tree-- */
+  --yee-tree-node-height: 32px;
+  --yee-tree-node-expand-icon-margin-left: 4px;
+  --yee-tree-node-checkbox-margin-left: 4px;
+  --yee-tree-node-label-margin-left: 4px;
+
+  /* --Trigger-- */
+  --yee-trigger-z-index: var(--yee-z-index-popup);
+  --yee-trigger-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-trigger-arrow-margin-left: -4px;
+  --yee-trigger-animation-duration: 0.2s;
+  --yee-trigger-animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  --yee-trigger-scale-start: 0.8;
+  --yee-trigger-scale-end: 1;
+  --yee-trigger-opacity-start: 0.8;
+  --yee-trigger-opacity-end: 1;
+
+  /* --ImageViewer-- */
+  --yee-image-preview-popup-zindex: var(--yee-z-index-overlay);
+
+  /* --VerificationCode-- */
+  --yee-verification-code-gap: 8px;
+  --yee-verification-code-item-width: 32px;
+  --yee-verification-code-item-height: 32px;
+  --yee-verification-code-item-border-width: 1px;
+  --yee-verification-code-item-border-radius: 4px;
+  --yee-verification-code-item-focus-box-shadow: 0 0 0 2px var(--yee-input-focus-bs-color);
+
+  /* --Descriptions-- */
+  --yee-descriptions-font-size: 14px;
+  --yee-descriptions-line-height: 1.5714;
+  --yee-descriptions-header-margin-bottom: 12px;
+  --yee-descriptions-title-font-size: 16px;
+  --yee-descriptions-label-width: 30%;
+  --yee-descriptions-label-padding: 12px 16px 12px 0;
+  --yee-descriptions-content-padding: 12px 0;
+  --yee-descriptions-bordered-label-padding: 12px 16px;
+  --yee-descriptions-bordered-content-padding: 12px 16px;
+  --yee-descriptions-vertical-label-padding: 8px 0;
+  --yee-descriptions-vertical-content-padding: 4px 0 16px;
+  --yee-descriptions-border-radius: 8px;
+  --yee-descriptions-small-font-size: 13px;
+  --yee-descriptions-small-label-padding: 8px 12px 8px 0;
+  --yee-descriptions-small-content-padding: 8px 0;
+  --yee-descriptions-small-padding: 8px 12px;
+  --yee-descriptions-large-font-size: 16px;
+  --yee-descriptions-large-label-padding: 16px 16px 16px 0;
+  --yee-descriptions-large-content-padding: 16px 0;
+  --yee-descriptions-large-padding: 16px 24px;
+}

@@ -1,0 +1,144 @@
+{
+  "name": "@oh/yee-c",
+  "version": "0.1.0",
+  "description": "yee basic components",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.less",
+    "**/style/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./style/*": "./src/*/style/*",
+    "./variables.css": "./dist/esm/style/variables.css",
+    "./themes.css": "./dist/esm/style/themes.css",
+    "./color.css": "./dist/esm/style/color.css",
+    "./color.blue.css": "./dist/esm/style/color.blue.css",
+    "./color.crimson.css": "./dist/esm/style/color.crimson.css",
+    "./color.dark.css": "./dist/esm/style/color.dark.css",
+    "./color.green.css": "./dist/esm/style/color.green.css",
+    "./color.jam.css": "./dist/esm/style/color.jam.css",
+    "./color.navy.css": "./dist/esm/style/color.navy.css",
+    "./color.peach.css": "./dist/esm/style/color.peach.css",
+    "./color.pine.css": "./dist/esm/style/color.pine.css",
+    "./color.pitaya.css": "./dist/esm/style/color.pitaya.css",
+    "./color.pumpkin.css": "./dist/esm/style/color.pumpkin.css",
+    "./color.ruby.css": "./dist/esm/style/color.ruby.css",
+    "./size.css": "./dist/esm/style/size.css",
+    "./mobile.css": "./src/style/mobile.css",
+    "./umd/*": "./dist/umd/*"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node scripts/generate-version.js && rm -rf dist && father build",
+    "postbuild": "node scripts/merge-css.js",
+    "build:release": "dumi build && node scripts/generate-raw-md.js",
+    "build:watch": "father dev",
+    "dev": "dumi dev",
+    "docs:build": "dumi build && node scripts/generate-raw-md.js",
+    "docs:preview": "dumi preview",
+    "docs:scan": "node scripts/scan-docs.js",
+    "doctor": "father doctor",
+    "lint": "npm run lint:es && npm run lint:css",
+    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
+    "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "dumi setup",
+    "prepublishOnly": "npm run docs:scan && father doctor && node scripts/generate-version.js && npm run build",
+    "start": "npm run dev",
+    "watch": "father dev"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{css,less}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@rc-component/trigger": "^3.5.2",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "lucide-react": "^0.554.0",
+    "motion": "^12.23.12",
+    "qrcode.react": "^4.2.0",
+    "react-markdown": "^9.1.0",
+    "react-syntax-highlighter": "^16.1.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "@umijs/lint": "^4.5.3",
+    "dumi": "^2.4.13",
+    "eslint": "^8.23.0",
+    "father": "^4.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "prettier-plugin-packagejson": "^2.2.18",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "stylelint": "^16.26.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-order": "^7.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InsureMO/oh-yee.git",
+    "directory": "packages/yee-c"
+  },
+  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-c#readme",
+  "bugs": {
+    "url": "https://github.com/InsureMO/oh-yee/issues"
+  },
+  "keywords": [
+    "react",
+    "ui-components",
+    "component-library",
+    "typescript",
+    "design-system",
+    "yee"
+  ],
+  "authors": [
+    "InsureMO"
+  ]
+}

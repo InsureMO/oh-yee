@@ -1,0 +1,113 @@
+@pls: .yee-spin;
+
+@{pls} {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-indicator {
+        position: relative;
+        display: inline-block;
+        align-items: center;
+        justify-content: center;
+
+        --m-indicator-dot-bg-color: var(--yee-spin-default-color);
+
+        &-info {
+            --m-indicator-dot-bg-color: var(--yee-spin-info-color);
+        }
+
+        &-success {
+            --m-indicator-dot-bg-color: var(--yee-spin-success-color);
+        }
+
+        &-warning {
+            --m-indicator-dot-bg-color: var(--yee-spin-warning-color);
+        }
+
+        &-error {
+            --m-indicator-dot-bg-color: var(--yee-spin-danger-color);
+        }
+
+        &-dot {
+            top: 50%;
+            left: 50%;
+            background-color: var(--m-indicator-dot-bg-color);
+            border-radius: 50%;
+            transform-origin: center;
+        }
+    }
+
+    &-tip {
+        margin-top: var(--yee-spin-tip-margin-top);
+        color: var(--yee-color-text);
+    }
+
+    &-fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: var(--yee-spin-fullscreen-z-index);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--yee-full-loading-mask-bg-color);
+    }
+
+    &-container {
+        position: relative;
+    }
+
+    &-blur {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--yee-color-bg-mask-light, rgba(255,255,255,0.4));
+    }
+
+    &-mask-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--yee-color-bg-mask-light, rgba(255,255,255,0.6));
+    }
+}
+
+.yee-full-spin-container {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--yee-color-bg-mask-light, rgba(255,255,255,0.6));
+}
+
+.yee-full-loading {
+    width: var(--yee-full-loading-width);
+    fill: var(--yee-full-loading-color);
+}
+
+
+@keyframes loading {
+    0% {
+        transform: rotate(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(var(--yee-spin-loading-rotate-50));
+        opacity: var(--yee-spin-loading-opacity-50);
+    }
+
+    100% {
+        transform: rotate(var(--yee-spin-loading-rotate-100));
+        opacity: 1;
+    }
+}

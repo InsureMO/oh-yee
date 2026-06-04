@@ -1,0 +1,6 @@
+{
+  "extends": ["stylelint-config-rational-order","@umijs/lint/dist/config/stylelint"],
+  "rules": {
+    "order/properties-order": []
+  }
+}

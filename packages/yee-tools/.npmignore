@@ -1,0 +1,42 @@
+# Source files
+src/
+older-src/
+
+# Tests
+*.test.ts
+*.spec.ts
+__tests__/
+coverage/
+
+# Configuration files
+tsconfig.json
+tsconfig.types.json
+rollup.config.mjs
+jest.config.cjs
+
+# Development files
+.github/
+.vscode/
+.idea/
+*.log
+.DS_Store
+
+# Git files
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (keep only README)
+GUIDE.md
+PENDING_REVIEW.md
+PENDING_REVIEW_CN.md
+
+# Build artifacts
+node_modules/
+*.tsbuildinfo
+dist/stats.html
+dist/esm/_virtual/
+dist/esm/node_modules/
+dist/cjs/_virtual/
+dist/cjs/node_modules/
+__tests__/

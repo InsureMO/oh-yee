@@ -1,0 +1,353 @@
+/*
+ * yee-c Mobile Responsive Overrides
+ *
+ * Only affects viewports <= 768px.
+ * Desktop (>768px) is completely untouched — this media query never matches.
+ *
+ * This file MUST be imported after all component styles to ensure cascade priority.
+ */
+@media screen and (max-width: 768px) {
+  :root {
+    /* ── Breakpoint token (for JS read via getComputedStyle) ── */
+    --yee-breakpoint: mobile;
+
+    /* ── Button ── 触控目标 >= 44px ── */
+    --yee-btn-height: 44px;
+    --yee-btn-padding: 8px 16px;
+    --yee-btn-circle-min-width: 44px;
+    --yee-btn-icon-only-width: 44px;
+
+    /* ── Card ── */
+    --yee-card-padding: 12px 16px 16px;
+    --yee-card-group-padding: 12px;
+    --yee-card-content-margin: 12px;
+
+    /* ── Box ── */
+    --yee-box-padding: 12px 16px;
+
+
+    /* ── Checkbox ── */
+    --yee-checkbox-inner-width: 20px;
+    --yee-checkbox-inner-height: 20px;
+    --yee-checkbox-label-padding: 0 12px;
+
+    /* ── Descriptions ── */
+    --yee-descriptions-label-padding: 8px 8px 8px 0;
+    --yee-descriptions-content-padding: 8px 0;
+
+    /* ── Dialog ── 全屏 ── */
+    --yee-dialog-content-padding: 16px;
+    --yee-dialog-close-top: 12px;
+    --yee-dialog-close-right: 12px;
+
+    /* ── Divider ── */
+    --yee-divider-with-text-margin: 12px 0;
+
+    /* ── Drawer ── */
+    --yee-drawer-header-padding: 16px 36px 12px 16px;
+    --yee-drawer-body-padding: 16px;
+
+    /* ── Field ── */
+    --yee-field-content-padding-bottom: 16px;
+
+    /* ── FloatButton ── */
+    --yee-float-btn-min-width: 48px;
+    --yee-float-btn-min-height: 48px;
+
+    /* ── Form ── */
+    --yee-form-item-label-mb: 8px;
+    --yee-form-item-padding-bottom: 16px;
+
+    /* ── Input / InputNumber ── */
+    --yee-input-height: 44px;
+    --yee-input-font-size: 16px;
+    --yee-input-line-height: 24px;
+
+    /* ── List ── */
+    --yee-list-item-padding: 12px;
+
+    /* ── Menu ── */
+    --yee-menu-item-padding: 0 16px;
+    --yee-menu-item-height: 44px;
+    --yee-menu-item-line-height: 44px;
+
+    /* ── Message ── */
+    --yee-message-padding: 10px 12px;
+
+    /* ── Notice ── */
+    --yee-notice-width: var(--yee-notice-mobile-width);
+    --yee-notice-padding: 12px 16px;
+
+    /* ── Pagination ── */
+    --yee-pagination-item-height: 40px;
+    --yee-pagination-item-width: 40px;
+    --yee-pagination-prev-next-padding: 8px 14px;
+
+    /* ── Popconfirm / Popover ── */
+    --yee-popconfirm-padding: 12px;
+    --yee-popover-max-width: calc(100vw - 32px);
+    --yee-popover-padding: 12px;
+
+    /* ── Radio ── */
+    --yee-radio-inner-width: 20px;
+    --yee-radio-inner-height: 20px;
+    --yee-radio-inner-after-width: 12px;
+    --yee-radio-inner-after-height: 12px;
+    --yee-radio-button-wrapper-padding: 8px 12px;
+
+    /* ── Rate ── */
+    --yee-rate-star-width: 32px;
+    --yee-rate-star-height: 32px;
+    --yee-rate-star-font-size: 28px;
+    --yee-rate-star-hover-font-size: 32px;
+    --yee-rate-margin-right: 6px;
+
+    /* ── Search ── */
+    --yee-search-font-size: 16px;
+    --yee-search-padding: 8px 12px;
+
+    /* ── Select ── */
+    --yee-select-option-padding: 8px 12px;
+
+    /* ── Selector / Tags ── */
+    --yee-selector-height: 44px;
+    --yee-selector-input-font-size: 16px;
+    --yee-selector-placeholder-font-size: 16px;
+    --yee-tags-height: 44px;
+    --yee-tags-input-font-size: 16px;
+    --yee-tags-multi-min-height: 44px;
+    --yee-tags-multi-tag-height: 28px;
+
+    /* ── Skeleton ── */
+    --yee-skeleton-avatar-width: 40px;
+    --yee-skeleton-avatar-height: 40px;
+
+    /* ── Slider ── */
+    --yee-slider-handler-width: 22px;
+    --yee-slider-handler-height: 22px;
+    --yee-slider-handler-margin-left: -11px;
+    --yee-slider-rail-height: 6px;
+    --yee-slider-track-height: 6px;
+
+    /* ── Steps ── */
+    --yee-steps-item-title-font-size: 14px;
+    --yee-steps-item-description-font-size: 12px;
+    --yee-steps-item-serial-width: 36px;
+    --yee-steps-item-serial-height: 36px;
+
+    /* ── Switch ── */
+    --yee-switch-width: 52px;
+    --yee-switch-height: 28px;
+    --yee-switch-handle-size: 24px;
+
+    /* ── Table ── */
+    --yee-table-cell-padding: 8px 12px;
+    --yee-table-td-height: 40px;
+
+    /* ── Tabs ── */
+    --yee-tabs-tab-title-font-size: 14px;
+    --yee-tabs-nav-wrapper-height: 44px;
+    --yee-tabs-card-tab-height: 44px;
+    --yee-tabs-pills-tab-height: 36px;
+
+    /* ── Tag ── */
+    --yee-tag-height: 26px;
+    --yee-tag-padding: 0 8px;
+    --yee-tag-font-size: 12px;
+    --yee-tag-line-height: 26px;
+
+    /* ── TextArea ── */
+    --yee-textarea-font-size: 16px;
+    --yee-textarea-line-height: 24px;
+
+    /* ── Tree ── */
+    --yee-tree-node-height: 44px;
+
+    /* ── TreeSelect ── */
+    --yee-tree-select-popup-height: calc(100vh - 120px);
+
+    /* ── VerificationCode ── */
+    --yee-verification-code-item-width: 44px;
+    --yee-verification-code-item-height: 44px;
+
+    /* ── Alert ── */
+    --yee-alert-padding: 12px 16px;
+
+    /* ── Carousel ── */
+    --yee-carousel-arrow-width: 44px;
+    --yee-carousel-arrow-height: 44px;
+
+    /* ── Collapse ── */
+    --yee-collapse-header-padding: 14px 16px;
+  }
+
+  /* ================================================================
+   * Layout overrides (cannot be done with CSS variables alone)
+   * ================================================================ */
+
+  /* ── Dialog: fullscreen ── */
+  .yee-dialog-content {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow-y: auto;
+  }
+
+  /* ── Form: horizontal → vertical ── */
+  .yee-form-horizontal .yee-form-item-row {
+    flex-direction: column;
+  }
+
+  /* ── Table: ensure horizontal scroll ── */
+  .yee-table-wrapper {
+    -webkit-overflow-scrolling: touch;
+  }
+  .yee-table-content > table {
+    min-width: 600px;
+  }
+
+  /* ── Button: touch feedback ── */
+  .yee-btn:not(.yee-btn-disabled):active {
+    opacity: 0.7;
+    transition: opacity 0.1s;
+  }
+
+  /* ── Tabs: scrollable nav ── */
+  .yee-tabs-nav-wrap-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Drawer: full width / full height ── */
+  .yee-drawer-right .yee-drawer-content-wrapper,
+  .yee-drawer-left .yee-drawer-content-wrapper {
+    width: 100% !important;
+    height: 100vh !important;
+  }
+  .yee-drawer-top .yee-drawer-content-wrapper,
+  .yee-drawer-bottom .yee-drawer-content-wrapper {
+    width: 100vw !important;
+    max-height: 70vh !important;
+  }
+
+  /* ── RangePicker: stack calendars vertically ── */
+  .yee-range-picker-panel-wrapper {
+    flex-direction: column;
+  }
+
+  /* ── FloatButton: iPhone safe area ── */
+  .yee-float-btn,
+  .yee-float-btn-group {
+    bottom: calc(var(--yee-float-btn-bottom) + env(safe-area-inset-bottom));
+  }
+
+  /* ── Steps: horizontal scrollable ── */
+  .yee-steps-horizontal {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Dropdown: prevent overflow ── */
+  .yee-dropdown-popup {
+    max-width: calc(100vw - 32px);
+  }
+
+  /* ── Tooltip: prevent overflow ── */
+  .yee-tooltip {
+    max-width: calc(100vw - 32px);
+  }
+
+  /* ── InputNumber: larger stepper buttons ── */
+  .yee-input-number-handler-wrap {
+    width: 32px;
+  }
+
+  /* ── ImageViewer: larger touch targets ── */
+  .yee-image-viewer-popup-close {
+    width: 44px;
+    height: 44px;
+  }
+  .yee-image-viewer-toolbar {
+    padding: 0 16px;
+  }
+  .yee-image-viewer-toolbar .yee-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* ── Upload: reduce dragger padding, always show operate buttons ── */
+  .yee-upload-dragger {
+    padding: 16px;
+  }
+  .yee-upload-picture-wall-item-operate {
+    opacity: 1;
+  }
+  .yee-upload-list-item,
+  .yee-upload-picture-list-item {
+    min-height: 44px;
+  }
+  .yee-upload-list-item-operate,
+  .yee-upload-picture-list-item-operate {
+    min-width: 44px;
+    justify-content: center;
+  }
+
+  /* ── TreeSelect: prevent overflow ── */
+  .yee-tree-select-popup {
+    max-width: calc(100vw - 32px);
+  }
+
+  /* ── TableSelect: prevent overflow ── */
+  .yee-table-select-popup {
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+  }
+
+  /* ── Timeline: alternate/left/right → single column left-aligned ── */
+  .yee-timeline-item-left .yee-timeline-item-body,
+  .yee-timeline-item-right .yee-timeline-item-body {
+    width: 100%;
+    text-align: left;
+  }
+  .yee-timeline-item-left .yee-timeline-item-tail,
+  .yee-timeline-item-left .yee-timeline-item-head,
+  .yee-timeline-item-right .yee-timeline-item-tail,
+  .yee-timeline-item-right .yee-timeline-item-head {
+    left: var(--yee-timeline-item-tail-left);
+    transform: none;
+  }
+  .yee-timeline-item-right .yee-timeline-item-body {
+    padding-right: 0;
+    padding-left: var(--yee-timeline-item-body-padding-left);
+  }
+  .yee-timeline-item-right .yee-timeline-item-title-wrapper {
+    justify-content: flex-start;
+  }
+  .yee-timeline-cross-date .cross {
+    width: 100%;
+  }
+
+  /* ── PickerPanel: stack dual panels vertically ── */
+  .yee-picker-panels {
+    flex-direction: column;
+  }
+
+  /* ── Collapse: ensure touch target ── */
+  .yee-collapse-header {
+    min-height: 44px;
+  }
+
+  /* ── Alert: larger close button touch area ── */
+  .yee-alert-close {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

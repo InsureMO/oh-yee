@@ -1,0 +1,11 @@
+import React from 'react';
+import { Email } from '@oh/yee-c';
+
+export default () => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Email placeholder="请输入邮箱地址" />
+      <Email placeholder="请输入邮箱地址" allowClear />
+    </div>
+  );
+};

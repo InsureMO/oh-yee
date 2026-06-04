@@ -1,0 +1,70 @@
+@pls: .yee-tree;
+
+@{pls} {
+  &-node {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: var(--yee-tree-node-height);
+
+    &-switcher {
+      display: inline-flex;
+      align-items: center;
+      width: 24px;
+      height: 32px;
+
+      &-icon {
+        display: inline-flex;
+        cursor: pointer;
+      }
+
+      @{pls}-node-indent-with-line {
+        &::before {
+          position: relative;
+          display: block;
+          content: '';
+          width: 50%;
+          top: 50%;
+          left: 50%;
+          border-top: 1px dashed var(--yee-color-split);
+        }
+      }
+
+      @{pls}-node-indent-last@{pls}-node-indent-with-line {
+        &::after {
+          height: 50%;
+        }
+      }
+    }
+
+    &-checkbox {
+      display: inline-flex;
+      margin-left: var(--yee-tree-node-checkbox-margin-left);
+    }
+
+    &-label {
+      display: inline-flex;
+      user-select: none;
+      margin-left: var(--yee-tree-node-label-margin-left);
+    }
+  }
+
+  &-node-indent {
+    position: relative;
+    display: inline-block;
+    width: 24px;
+    height: 100%;
+
+    &-with-line {
+      &::after {
+        content: '';
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px dashed var(--yee-color-split);
+      }
+    }
+  }
+}

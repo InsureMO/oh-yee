@@ -1,0 +1,82 @@
+@pls: .yee-json;
+
+@{pls} {
+    &-view {
+        position: relative;
+        color: var(--yee-json-view-color);
+        font-size: var(--yee-json-view-font-size);
+        font-family: monospace;
+        line-height: var(--yee-json-view-line-height);
+    }
+
+    &-key {
+        color: var(--yee-json-key-color);
+    }
+
+    &-value {
+        margin-left: var(--yee-json-value-margin-left);
+    }
+
+    &-string {
+        color: var(--yee-json-string-color);
+    }
+
+    &-number {
+        color: var(--yee-json-number-color);
+    }
+
+    &-boolean {
+        color: var(--yee-json-boolean-color);
+    }
+
+    &-null {
+        color: var(--yee-json-null-color);
+    }
+
+    &-brace,
+    &-bracket {
+        color: var(--yee-json-brace-color);
+        font-weight: bold;
+    }
+
+    &-comma {
+        align-self: end;
+        color: var(--yee-json-comma-color);
+        font-weight: 800;
+        font-size: var(--yee-json-comma-font-size);
+    }
+
+    &-collapsed {
+        padding: var(--yee-json-collapsed-padding);
+        color: var(--yee-json-collapsed-color);
+        font-weight: 600;
+        font-style: italic;
+        letter-spacing: var(--yee-json-collapsed-letter-spacing);
+    }
+
+    &-object-collapsed,
+    &-array-collapsed {
+        display: flex;
+    }
+
+    &-collapsible {
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    &-brace-leaf,
+    &-bracket-leaf {
+        margin-left: var(--yee-json-leaf-margin-left);
+    }
+
+    &-items,
+    &-properties {
+        margin-left: var(--yee-json-items-margin-left);
+    }
+
+    &-item,
+    &-property {
+        display: flex;
+        line-height: var(--yee-json-item-line-height);
+    }
+}

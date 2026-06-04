@@ -1,0 +1,48 @@
+@pls: .yee-select;
+
+@{pls} {
+  &-popup {
+    padding: var(--yee-select-popup-padding);
+    background-color: var(--yee-select-down-container-bg-color);
+    max-height: var(--yee-select-popup-max-height, 200px);
+    overflow: auto;
+  }
+
+  &-option {
+    padding: var(--yee-select-option-padding);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:not(&-disabled):hover {
+      background-color: var(--yee-select-option-hover-bg-color);
+    }
+
+    &-selected {
+      color: var(--yee-select-option-active-color);
+      background-color: var(--yee-select-option-active-bg-color);
+    }
+
+    &-focused:not(&-selected) {
+      background-color: var(--yee-select-option-active-bg-color);
+    }
+  }
+
+  &-empty {
+    padding: var(--yee-select-option-padding);
+  }
+}
+
+// form error status
+.yee-form-item-error {
+  @{pls} {
+    border-color: var(--yee-error-color);
+  }
+}
+
+.yee-form-item-warning {
+  @{pls} {
+    border-color: var(--yee-warning-color)
+  }
+}

@@ -1,0 +1,357 @@
+@pls: .yee-range-picker;
+
+@{pls} {
+  &-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--yee-rangepicker-trigger-border-color);
+    border-radius: 4px;
+    padding: 0 11px;
+    background-color: var(--yee-input-content-bg-color);
+    cursor: pointer;
+
+    &:hover:not(&-disabled) {
+      border-color: var(--yee-rangepicker-trigger-hover-border-color);
+
+      @{pls}-clear {
+        visibility: visible;
+        z-index: 1;
+      }
+    }
+
+    &-focused {
+      border-color: var(--yee-rangepicker-trigger-border-color);
+      box-shadow: 0 0 0 2px var(--yee-input-focus-bs-color);
+    }
+
+    &-disabled {
+      background-color: var(--yee-input-disabled-bg-color);
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    // Size variants
+    &-small {
+      padding: 0 7px;
+
+      @{pls}-start-input,
+      @{pls}-end-input {
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+      }
+    }
+
+    &-middle {
+      padding: 0 11px;
+
+      @{pls}-start-input,
+      @{pls}-end-input {
+        font-size: 14px;
+        height: 32px;
+        line-height: 32px;
+      }
+    }
+
+    &-large {
+      padding: 0 15px;
+
+      @{pls}-start-input,
+      @{pls}-end-input {
+        font-size: 16px;
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+
+    // Status variants
+    &-error {
+      border-color: var(--yee-error-color);
+
+      &:hover,
+      &-focused {
+        border-color: var(--yee-error-color);
+      }
+
+      &-focused {
+        box-shadow: 0 0 0 2px var(--yee-input-content-error-focus-bs-color);
+      }
+    }
+
+    &-warning {
+      border-color: var(--yee-warning-color);
+
+      &:hover,
+      &-focused {
+        border-color: var(--yee-warning-color);
+      }
+
+      &-focused {
+        box-shadow: 0 0 0 2px var(--yee-input-content-warning-focus-bs-color);
+      }
+    }
+  }
+
+  &-start-input,
+  &-end-input {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+  }
+
+  &-separator {
+    margin: 0 8px;
+    color: var(--yee-placeholder-color);
+  }
+
+  &-suffix {
+    display: flex;
+    align-items: center;
+    color: var(--yee-text-color-description);
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+
+  &-clear {
+    display: inline-flex;
+    padding: var(--yee-input-clear-padding);
+    color: var(--yee-input-clear-color);
+    background-color: var(--yee-input-clear-bg-color);
+    border-radius: 50%;
+    visibility: hidden;
+    z-index: 0;
+    cursor: pointer;
+  }
+
+  &-panel {
+    background-color: var(--yee-rangepicker-panel-bg-color);
+
+    &-now-btn {
+      margin-left: auto;
+    }
+  }
+
+  &-panel-footer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 8px 12px;
+  }
+
+  // Panel wrapper with ranges
+  &-panel-wrapper {
+    display: flex;
+    background: var(--yee-color-bg-elevated);
+    border-radius: 4px;
+    box-shadow:
+      0 3px 6px -4px var(--yee-notice-box-shadow-color-2),
+      0 6px 16px 0 var(--yee-notice-box-shadow-color-1),
+      0 9px 28px 8px var(--yee-notice-box-shadow-color-3);
+  }
+
+  &-ranges {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    border-right: 1px solid var(--yee-color-split);
+  }
+
+  &-range-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    font-size: 14px;
+    color: var(--yee-text-color);
+
+    &:hover {
+      background-color: var(--yee-color-bg-rail);
+      color: var(--yee-primary-color);
+    }
+  }
+
+  // Mobile tab switcher
+  &-mobile-tabs {
+    display: flex;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--yee-border-color, #e5e5e5);
+  }
+
+  &-mobile-tab {
+    flex: 1;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 14px;
+    color: var(--yee-text-color-description, #999);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &-active {
+      color: var(--yee-primary-color);
+      border-bottom-color: var(--yee-primary-color);
+    }
+  }
+}
+
+// Range picker cell styles
+@cellPrefixCls: .yee-picker-cell;
+
+@{cellPrefixCls} {
+  // Hover range styles
+  &-range-hover:not(&-not-in-view) {
+    position: relative;
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      z-index: 2;
+      width: 100%;
+      height: 22px;
+      border-top: 1px dashed var(--yee-rangepicker-hover-border-color);
+      border-bottom: 1px dashed var(--yee-rangepicker-hover-border-color);
+      transform: translateY(-50%);
+      content: '';
+    }
+  }
+
+  // Hover start and end width adjustment
+  &-range-hover-start:not(&-not-in-view),
+  &-range-hover-end:not(&-not-in-view) {
+    &::after {
+      width: ~"calc(100%)";
+    }
+  }
+
+  // When hover-start is also range-start (already selected start date)
+  &-range-hover-start:not(&-not-in-view)&.yee-picker-cell-range-start {
+    &::after {
+      left: 12px;
+      width: ~"calc(100% - 13px)";
+    }
+  }
+
+  // When hover-end is also range-end (already selected end date)
+  &-range-hover-end:not(&-not-in-view)&.yee-picker-cell-range-end {
+    &::after {
+      width: ~"calc(100% - 13px)";
+    }
+  }
+
+  // When hover-start is also hover-end (same cell)
+  &-range-hover-start&-range-end {
+    &::after {
+      width: 100%;
+    }
+  }
+
+  // Right border for hover end cells
+  &-end&-range-hover,
+  &-range-hover:last-child:not(&-not-in-view),
+  &-range-hover-end:not(&-not-in-view) {
+    &::after {
+      z-index: 2;
+      border-right: 1px dashed var(--yee-rangepicker-hover-border-color);
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+    }
+  }
+
+  // Left border for hover start cells
+  &-range-hover&-start:not(&-not-in-view),
+  &-range-hover-start:not(&-not-in-view),
+  &-range-hover:first-child:not(&-not-in-view) {
+    &::after {
+      z-index: 2;
+      border-left: 1px dashed var(--yee-rangepicker-hover-border-color);
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 2px;
+    }
+  }
+
+  // Adjust left position for hover-start when not already selected
+  &-range-hover-start:not(&-not-in-view):not(.yee-picker-cell-range-start) {
+    &::after {
+      left: 0;
+    }
+  }
+
+  // Hover style for not-in-view cells
+  &-range-hover&-not-in-view:hover {
+    .yee-picker-cell-inner {
+      background-color: var(--yee-date-picker-hover-bg-color);
+    }
+  }
+
+  // Selected range background styles
+  &-range-start,
+  &-in-range {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 24px;
+      transform: translateY(-50%);
+      content: '';
+    }
+
+    &:not(@{cellPrefixCls}-not-in-view) {
+      &::before {
+        background-color: var(--yee-rangepicker-checked-bg-color);
+      }
+    }
+  }
+
+  // Border radius for range end
+  &-in-range&-end,
+  &-in-range:last-child {
+    &::before {
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
+    }
+  }
+
+  // Border radius for range start
+  &-in-range&-start,
+  &-in-range:first-child {
+    &::before {
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 2px;
+    }
+  }
+
+  // Range start background adjustment
+  &-range-start {
+    &::before {
+      left: 12px;
+      width: ~"calc(100% - 24px)";
+    }
+  }
+
+  // Range start when also in-range
+  &-range-start&-in-range {
+    &::before {
+      left: 12px;
+      width: ~"calc(100% - 12px)";
+    }
+  }
+
+  // Range end background adjustment
+  &-range-end:not(&-not-in-view) {
+    &::before {
+      width: ~"calc(100% - 18px)";
+    }
+  }
+}

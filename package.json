@@ -1,0 +1,19 @@
+{
+  "name": "oh-yee-monorepo",
+  "private": true,
+  "description": "Yee - React component library, AI workflow components, and TypeScript utilities",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm -r --filter='./packages/*' build",
+    "dev": "pnpm -r --parallel --filter='./packages/*' dev",
+    "lint": "pnpm -r --parallel --filter='./packages/*' lint",
+    "test": "pnpm -r --parallel --filter='./packages/*' test",
+    "clean": "pnpm -r --parallel --filter='./packages/*' clean",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0"
+  }
+}
