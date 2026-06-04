@@ -1,4 +1,4 @@
-import { Button, Spin } from '@oh/yee-c';
+import { Button, Spin } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Table, Button, Transfer, Space, Trigger, Box } from '@oh/yee-c';
-import type { ColumnProps } from '@oh/yee-c';
+import { Table, Button, Transfer, Space, Trigger, Box } from '@rainbow-oh/yee-c';
+import type { ColumnProps } from '@rainbow-oh/yee-c';
 import { Funnel, FunnelPlus } from 'lucide-react';
 
 export default () => {

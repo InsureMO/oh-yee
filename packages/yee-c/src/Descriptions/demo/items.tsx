@@ -1,6 +1,6 @@
 import React from 'react';
-import type { DescriptionsProps } from '@oh/yee-c';
-import { Descriptions } from '@oh/yee-c';
+import type { DescriptionsProps } from '@rainbow-oh/yee-c';
+import { Descriptions } from '@rainbow-oh/yee-c';
 
 export default () => {
   const items: DescriptionsProps['items'] = [

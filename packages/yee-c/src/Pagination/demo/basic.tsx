@@ -1,4 +1,4 @@
-import { Pagination } from '@oh/yee-c';
+import { Pagination } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

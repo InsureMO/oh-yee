@@ -1,6 +1,6 @@
 import React from 'react';
 import { Download, Plus, Search } from 'lucide-react';
-import { Button } from '@oh/yee-c';
+import { Button } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

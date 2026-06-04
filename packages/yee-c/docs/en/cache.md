@@ -5,7 +5,7 @@ Cache management tools providing three different lifecycle strategies.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -13,20 +13,20 @@ npm install @oh/yee-tools
 ### Method 1: Namespace Import (Recommended)
 
 ```typescript
-import { SessionContext, LocalContext, PageContext } from '@oh/yee-tools/cache';
+import { SessionContext, LocalContext, PageContext } from '@rainbow-oh/yee-tools/cache';
 
 // Or import directly
-import { SessionContext } from '@oh/yee-tools';
-import { LocalContext } from '@oh/yee-tools';
-import { PageContext } from '@oh/yee-tools';
+import { SessionContext } from '@rainbow-oh/yee-tools';
+import { LocalContext } from '@rainbow-oh/yee-tools';
+import { PageContext } from '@rainbow-oh/yee-tools';
 ```
 
 ### Method 2: Tree Shaking
 
 ```typescript
-import { SessionContext } from '@oh/yee-tools/cache/session';
-import { LocalContext } from '@oh/yee-tools/cache/local';
-import { PageContext } from '@oh/yee-tools/cache/page';
+import { SessionContext } from '@rainbow-oh/yee-tools/cache/session';
+import { LocalContext } from '@rainbow-oh/yee-tools/cache/local';
+import { PageContext } from '@rainbow-oh/yee-tools/cache/page';
 ```
 
 ## Cache Type Comparison
@@ -74,7 +74,7 @@ SessionContext.checkSize(maxSizeKB: number): boolean
 ### Example
 
 ```typescript
-import { SessionContext } from '@oh/yee-tools';
+import { SessionContext } from '@rainbow-oh/yee-tools';
 
 // Store user token
 SessionContext.put('Authorization', 'Bearer token123');
@@ -135,7 +135,7 @@ LocalContext.checkSize(maxSizeKB: number): boolean
 ### Example
 
 ```typescript
-import { LocalContext } from '@oh/yee-tools';
+import { LocalContext } from '@rainbow-oh/yee-tools';
 
 // Store user preferences
 LocalContext.put('preferences', {
@@ -199,7 +199,7 @@ PageContext.size(): number
 ### Example
 
 ```typescript
-import { PageContext } from '@oh/yee-tools';
+import { PageContext } from '@rainbow-oh/yee-tools';
 
 // Store page data
 PageContext.put('formData', { name: 'John', email: 'john@example.com' });
@@ -226,7 +226,7 @@ function onRouteChange() {
 ### User Authentication State
 
 ```typescript
-import { SessionContext } from '@oh/yee-tools';
+import { SessionContext } from '@rainbow-oh/yee-tools';
 
 // Login
 function login(token: string, user: User) {
@@ -248,7 +248,7 @@ function logout() {
 ### User Preferences
 
 ```typescript
-import { LocalContext } from '@oh/yee-tools';
+import { LocalContext } from '@rainbow-oh/yee-tools';
 
 // Save preferences
 function savePreferences(prefs: Preferences) {
@@ -271,7 +271,7 @@ function updateTheme(theme: string) {
 ### Form Data Draft
 
 ```typescript
-import { PageContext } from '@oh/yee-tools';
+import { PageContext } from '@rainbow-oh/yee-tools';
 
 // Save form draft
 function saveDraft(formData: FormData) {
@@ -293,7 +293,7 @@ function onSubmit() {
 ### Mixed Strategy
 
 ```typescript
-import { SessionContext, LocalContext, PageContext } from '@oh/yee-tools';
+import { SessionContext, LocalContext, PageContext } from '@rainbow-oh/yee-tools';
 
 // 1. Sensitive data in SessionContext (auto-clear on session end)
 SessionContext.put('token', authToken);

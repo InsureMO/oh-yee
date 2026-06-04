@@ -3,7 +3,7 @@
  * description: Set the step size for each change via the step property.
  */
 import React from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

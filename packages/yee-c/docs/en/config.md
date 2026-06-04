@@ -5,13 +5,13 @@ Global configuration management tool for unified application configuration.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 ```
 
 ## API
@@ -60,7 +60,7 @@ interface YeeConfig {
 **Example:**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 configer.setConfig({
   date: {
@@ -96,7 +96,7 @@ function get<T>(path: string, defaultValue?: T): T
 **Example:**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // Get top-level config
 const timeout = configer.get('http.timeout', 3000);
@@ -124,7 +124,7 @@ function getAll(): YeeConfig
 **Example:**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 const allConfig = configer.getAll();
 console.log(allConfig);
@@ -144,7 +144,7 @@ function isInitialized(): boolean
 **Example:**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 if (!configer.isInitialized()) {
   configer.setConfig(defaultConfig);
@@ -164,7 +164,7 @@ function reset(): void
 **Example:**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // Reset after tests
 afterEach(() => {
@@ -177,7 +177,7 @@ afterEach(() => {
 ### Application Initialization
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // Configure on app startup
 function initApp() {
@@ -201,7 +201,7 @@ function initApp() {
 ### Environment Configuration
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // Load config based on environment
 function loadConfig() {
@@ -228,7 +228,7 @@ function loadConfig() {
 ### Dynamic Configuration Reading
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // Use configuration in code
 function makeRequest(url: string) {
@@ -244,7 +244,7 @@ function makeRequest(url: string) {
 ### Configuration Update
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // Update config after user preference change
 function updateLanguage(locale: string) {

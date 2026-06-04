@@ -1,13 +1,13 @@
 # Tools
 
-`@oh/yee-tools` is a collection of lightweight, zero-dependency JavaScript/TypeScript utility libraries for common development tasks.
+`@rainbow-oh/yee-tools` is a collection of lightweight, zero-dependency JavaScript/TypeScript utility libraries for common development tasks.
 
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 # or
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -18,13 +18,13 @@ Best for scenarios where you need to use multiple functions from a category:
 
 ```typescript
 // String utilities
-import { StringUtils } from '@oh/yee-tools';
+import { StringUtils } from '@rainbow-oh/yee-tools';
 
 // Date utilities
-import { DateUtils } from '@oh/yee-tools';
+import { DateUtils } from '@rainbow-oh/yee-tools';
 
 // Array utilities
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 ```
 
 ### Method 2: Tree Shaking
@@ -33,13 +33,13 @@ Best for scenarios where you only need a single function, can further reduce bun
 
 ```typescript
 // String utilities
-import { trim } from '@oh/yee-tools/string';
+import { trim } from '@rainbow-oh/yee-tools/string';
 
 // Date utilities
-import { formatDate } from '@oh/yee-tools/date';
+import { formatDate } from '@rainbow-oh/yee-tools/date';
 
 // Array utilities
-import { uniq } from '@oh/yee-tools/array';
+import { uniq } from '@rainbow-oh/yee-tools/array';
 ```
 
 ## Categories
@@ -96,7 +96,7 @@ Internationalization utilities with multi-language support.
 ### Using Namespace Import
 
 ```typescript
-import { StringUtils, DateUtils, ArrayUtils } from '@oh/yee-tools';
+import { StringUtils, DateUtils, ArrayUtils } from '@rainbow-oh/yee-tools';
 
 // String manipulation
 const str = StringUtils.trim('  hello  ');
@@ -114,9 +114,9 @@ const arr = ArrayUtils.uniq([1, 2, 2, 3, 3, 3]);
 ### Using Tree Shaking
 
 ```typescript
-import { trim } from '@oh/yee-tools/string';
-import { getCurrentDateTime } from '@oh/yee-tools/date';
-import { uniq } from '@oh/yee-tools/array';
+import { trim } from '@rainbow-oh/yee-tools/string';
+import { getCurrentDateTime } from '@rainbow-oh/yee-tools/date';
+import { uniq } from '@rainbow-oh/yee-tools/array';
 
 // String manipulation
 const str = trim('  hello  ');

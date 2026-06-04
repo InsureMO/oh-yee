@@ -6,7 +6,7 @@
  *
  * @example
  * ```typescript
- * import { I18nUtils } from '@oh/yee-tools/i18n';
+ * import { I18nUtils } from '@rainbow-oh/yee-tools/i18n';
  *
  * // Get user language
  * const lang = I18nUtils.getUserLang('/api/user/lang');

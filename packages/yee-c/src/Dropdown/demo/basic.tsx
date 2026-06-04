@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu } from '@oh/yee-c';
+import { Button, Dropdown, Menu } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

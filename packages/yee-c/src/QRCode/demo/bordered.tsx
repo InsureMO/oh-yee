@@ -1,4 +1,4 @@
-import { QRCode } from '@oh/yee-c';
+import { QRCode } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

@@ -1,4 +1,4 @@
-import { Timeline } from '@oh/yee-c';
+import { Timeline } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

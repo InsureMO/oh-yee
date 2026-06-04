@@ -1,4 +1,4 @@
-import { Slider } from '@oh/yee-c';
+import { Slider } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

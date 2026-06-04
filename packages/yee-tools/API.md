@@ -1,4 +1,4 @@
-# @oh/yee-tools API Reference
+# @rainbow-oh/yee-tools API Reference
 
 Complete utility function API reference
 
@@ -23,7 +23,7 @@ Complete utility function API reference
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ npm install @oh/yee-tools
 ### Full Import
 
 ```typescript
-import * as YeeTools from "@oh/yee-tools";
+import * as YeeTools from "@rainbow-oh/yee-tools";
 
 YeeTools.StringUtils.trim("  hello  ");
 ```
@@ -39,8 +39,8 @@ YeeTools.StringUtils.trim("  hello  ");
 ### Sub-module Import (Recommended)
 
 ```typescript
-import { trim, isBlank } from "@oh/yee-tools/string";
-import { add, multiply } from "@oh/yee-tools/number";
+import { trim, isBlank } from "@rainbow-oh/yee-tools/string";
+import { add, multiply } from "@rainbow-oh/yee-tools/number";
 
 trim("  hello  ");
 add(0.1, 0.2);
@@ -49,8 +49,8 @@ add(0.1, 0.2);
 ### Namespace Import
 
 ```typescript
-import * as StringUtils from "@oh/yee-tools/string";
-import * as NumberUtils from "@oh/yee-tools/number";
+import * as StringUtils from "@rainbow-oh/yee-tools/string";
+import * as NumberUtils from "@rainbow-oh/yee-tools/number";
 
 StringUtils.trim("  hello  ");
 NumberUtils.add(0.1, 0.2);
@@ -60,7 +60,7 @@ NumberUtils.add(0.1, 0.2);
 
 ## StringUtils - String Utilities
 
-Import: `import { ... } from '@oh/yee-tools/string'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/string'`
 
 ### trim
 
@@ -174,7 +174,7 @@ mask("13800138000", "*:(3,7)"); // '138****8000'
 
 ## NumberUtils - Number Utilities
 
-Import: `import { ... } from '@oh/yee-tools/number'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/number'`
 
 ### add
 
@@ -263,7 +263,7 @@ random(0, 100); // e.g. 42
 
 ## DateUtils - Date Utilities
 
-Import: `import { ... } from '@oh/yee-tools/date'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/date'`
 
 Built on [dayjs](https://day.js.org/)
 
@@ -407,7 +407,7 @@ subtract("2024-01-15", 2, "months", "YYYY-MM-DD"); // '2023-11-15'
 
 ## ArrayUtils - Array Utilities
 
-Import: `import { ... } from '@oh/yee-tools/array'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/array'`
 
 ### trimArray
 
@@ -503,7 +503,7 @@ chunk(["a", "b", "c", "d"], 3); // [['a', 'b', 'c'], ['d']]
 
 ## ObjectUtils - Object Utilities
 
-Import: `import { ... } from '@oh/yee-tools/object'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/object'`
 
 ### clone
 
@@ -606,7 +606,7 @@ omit({ name: "John", age: 30, city: "NY" }, ["age"]); // { name: 'John', city: '
 
 ## SecurityUtils - Security Utilities
 
-Import: `import { ... } from '@oh/yee-tools/security'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/security'`
 
 Implemented following OWASP security guidelines
 
@@ -746,7 +746,7 @@ encodeCSSString("my-class"); // '"my\\00002dclass"'
 
 ## CookieUtils - Cookie Utilities
 
-Import: `import { ... } from '@oh/yee-tools/cookie'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/cookie'`
 
 ### get
 
@@ -839,7 +839,7 @@ interface CookieOptions {
 
 ## TypeUtils - Type Utilities
 
-Import: `import { ... } from '@oh/yee-tools/type'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/type'`
 
 ### parseBool
 
@@ -1007,7 +1007,7 @@ if (isIE()) {
 
 ## URLUtils - URL Utilities
 
-Import: `import { ... } from '@oh/yee-tools/url'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/url'`
 
 ### getUrlParam
 
@@ -1113,7 +1113,7 @@ Provides three levels of caching: Session, Local, and Page
 
 ### SessionContext - Session-level Cache
 
-Import: `import { SessionContext } from '@oh/yee-tools/cache/session'`
+Import: `import { SessionContext } from '@rainbow-oh/yee-tools/cache/session'`
 
 Implemented using `sessionStorage`, cleared when the browser is closed
 
@@ -1214,7 +1214,7 @@ SessionContext.checkSize(maxSizeKB: number): boolean
 
 ### LocalContext - Local-level Cache
 
-Import: `import { LocalContext } from '@oh/yee-tools/cache/local'`
+Import: `import { LocalContext } from '@rainbow-oh/yee-tools/cache/local'`
 
 Implemented using `localStorage`, persists until manually cleared
 
@@ -1241,7 +1241,7 @@ const prefs = LocalContext.get("preferences");
 
 ### PageContext - Page-level Cache
 
-Import: `import { PageContext } from '@oh/yee-tools/cache/page'`
+Import: `import { PageContext } from '@rainbow-oh/yee-tools/cache/page'`
 
 Implemented using an in-memory Map, cleared on page refresh
 
@@ -1347,7 +1347,7 @@ console.log(PageContext.size()); // 1
 
 ### ConfigProvider - Configuration Provider
 
-Import: `import { configProvider } from '@oh/yee-tools/config/provider'`
+Import: `import { configProvider } from '@rainbow-oh/yee-tools/config/provider'`
 
 Global configuration management singleton
 
@@ -1415,7 +1415,7 @@ configProvider.reset(): void
 
 ### Session Config - Session Configuration
 
-Import: `import { ... } from '@oh/yee-tools/config/session'`
+Import: `import { ... } from '@rainbow-oh/yee-tools/config/session'`
 
 Manages project configuration stored in sessionStorage
 

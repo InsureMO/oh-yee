@@ -8,8 +8,8 @@
     "baseUrl": "./",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "@oh/yee-c": ["src"],
-      "@oh/yee-c/*": ["src/*", "*"],
+      "@rainbow-oh/yee-c": ["src"],
+      "@rainbow-oh/yee-c/*": ["src/*", "*"],
       "yee-c": ["src"],
       "yee-c/*": ["src/*", "*"]
     }

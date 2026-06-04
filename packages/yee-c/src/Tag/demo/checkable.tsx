@@ -1,4 +1,4 @@
-import { Space, Tag } from '@oh/yee-c';
+import { Space, Tag } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

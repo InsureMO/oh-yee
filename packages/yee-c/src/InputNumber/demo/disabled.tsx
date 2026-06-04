@@ -3,7 +3,7 @@
  * description: Disable the input via the disabled property.
  */
 import React from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

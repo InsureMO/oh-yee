@@ -1,4 +1,4 @@
-import { Pagination, Space } from '@oh/yee-c';
+import { Pagination, Space } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

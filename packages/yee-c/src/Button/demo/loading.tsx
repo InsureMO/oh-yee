@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@oh/yee-c';
+import { Button } from '@rainbow-oh/yee-c';
 
 export default () => {
     const [loading, setLoading] = useState(false);

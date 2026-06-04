@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个类型工具函数：
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isArray([1, 2, 3]);
 TypeUtils.isString('hello');
@@ -27,7 +27,7 @@ TypeUtils.parseBool('true');
 适合只需要使用单个函数：
 
 ```typescript
-import { isString, isNumber, parseBool } from '@oh/yee-tools/type';
+import { isString, isNumber, parseBool } from '@rainbow-oh/yee-tools/type';
 
 isString('hello');
 isNumber(123);
@@ -47,7 +47,7 @@ function parseBool(input: unknown): boolean
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.parseBool('true');
 // => true
@@ -83,7 +83,7 @@ function isArray(value: unknown): value is unknown[]
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isArray([1, 2, 3]);
 // => true
@@ -108,7 +108,7 @@ function isString(value: unknown): value is string
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isString('hello');
 // => true
@@ -130,7 +130,7 @@ function isNumber(value: unknown): value is number
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isNumber(123);
 // => true
@@ -155,7 +155,7 @@ function isDate(value: unknown): value is Date
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isDate(new Date());
 // => true
@@ -177,7 +177,7 @@ function isFunction(value: unknown): value is Function
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isFunction(() => {});
 // => true
@@ -199,7 +199,7 @@ function isObject(value: unknown): value is Record<string, unknown>
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isObject({});
 // => true
@@ -224,7 +224,7 @@ function isNullOrUndefined(value: unknown): value is null | undefined
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isNullOrUndefined(null);
 // => true
@@ -252,7 +252,7 @@ function isIE(): boolean
 **示例：**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 if (TypeUtils.isIE()) {
   console.log('Running in IE browser');
@@ -262,7 +262,7 @@ if (TypeUtils.isIE()) {
 ## 常见用例
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 // 数据验证
 function processValue(value: unknown) {

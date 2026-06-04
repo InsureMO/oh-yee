@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { PickerPanel, Space } from '@oh/yee-c';
+import { PickerPanel, Space } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

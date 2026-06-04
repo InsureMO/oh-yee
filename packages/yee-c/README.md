@@ -1,6 +1,6 @@
-# @oh/yee-c
+# @rainbow-oh/yee-c
 
-[![npm](https://img.shields.io/npm/v/@oh/yee-c.svg)](https://www.npmjs.com/package/@oh/yee-c) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-c.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-c) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 65+ foundational React UI components for building modern enterprise applications. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
 
@@ -16,7 +16,7 @@
 ## Installation
 
 ```bash
-pnpm add @oh/yee-c
+pnpm add @rainbow-oh/yee-c
 ```
 
 Requires `react >= 18` and `react-dom >= 18` as peer dependencies.
@@ -24,23 +24,23 @@ Requires `react >= 18` and `react-dom >= 18` as peer dependencies.
 ## Usage
 
 ```tsx
-import { Button, Form, Input, Table, Card, Select, Dialog, message } from '@oh/yee-c';
+import { Button, Form, Input, Table, Card, Select, Dialog, message } from '@rainbow-oh/yee-c';
 ```
 
 Import styles:
 
 ```tsx
 // Variables and theme
-import '@oh/yee-c/variables.css';
+import '@rainbow-oh/yee-c/variables.css';
 
 // Or a specific color theme
-import '@oh/yee-c/color.blue.css';
+import '@rainbow-oh/yee-c/color.blue.css';
 ```
 
 ### Quick Example
 
 ```tsx
-import { Form, Input, Button, message } from '@oh/yee-c';
+import { Form, Input, Button, message } from '@rainbow-oh/yee-c';
 
 function UserForm() {
   const [form] = Form.useForm();
@@ -120,9 +120,9 @@ ConfigProvider, Portal
 Use built-in color themes by importing the corresponding CSS file:
 
 ```tsx
-import '@oh/yee-c/variables.css';   // Base variables
-import '@oh/yee-c/color.blue.css';  // Blue theme
-import '@oh/yee-c/color.dark.css';  // Dark theme
+import '@rainbow-oh/yee-c/variables.css';   // Base variables
+import '@rainbow-oh/yee-c/color.blue.css';  // Blue theme
+import '@rainbow-oh/yee-c/color.dark.css';  // Dark theme
 ```
 
 Available themes: `blue`, `crimson`, `dark`, `green`, `jam`, `navy`, `peach`, `pine`, `pitaya`, `pumpkin`, `ruby`.

@@ -3,7 +3,7 @@
  * description: Display a clear button via the allowClear property.
  */
 import React from 'react';
-import { InputNumber } from '@oh/yee-c';
+import { InputNumber } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

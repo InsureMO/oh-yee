@@ -5,7 +5,7 @@ Cookie manipulation utility functions.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple cookie utility functions:
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 CookieUtils.set('username', 'john_doe');
 CookieUtils.get('username');
@@ -27,7 +27,7 @@ CookieUtils.remove('username');
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { get, set, remove } from '@oh/yee-tools/cookie';
+import { get, set, remove } from '@rainbow-oh/yee-tools/cookie';
 
 set('username', 'john_doe');
 get('username');
@@ -51,7 +51,7 @@ function get(name: string, options?: CookieOptions | converter): unknown
 **Example:**
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // Get string value
 CookieUtils.get('username');
@@ -97,7 +97,7 @@ interface CookieOptions {
 **Example:**
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // Basic cookie
 CookieUtils.set('username', 'john_doe');
@@ -132,7 +132,7 @@ function remove(name: string, options?: CookieOptions): string
 **Example:**
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // Remove basic cookie
 CookieUtils.remove('username');
@@ -147,7 +147,7 @@ CookieUtils.remove('token', { path: '/', domain: '.example.com' });
 ## Common Use Cases
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // User session management
 function login(username: string, remember: boolean) {

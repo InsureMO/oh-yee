@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Space } from '@oh/yee-c';
+import { Input, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

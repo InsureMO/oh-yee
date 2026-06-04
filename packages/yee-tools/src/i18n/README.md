@@ -15,11 +15,11 @@ A powerful internationalization toolkit that provides comprehensive multi-langua
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 # or
-yarn add @oh/yee-tools
+yarn add @rainbow-oh/yee-tools
 # or
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 ```
 
 ## Quick Start
@@ -27,7 +27,7 @@ pnpm add @oh/yee-tools
 ### Basic Configuration
 
 ```typescript
-import { configer, I18nUtils } from "@oh/yee-tools";
+import { configer, I18nUtils } from "@rainbow-oh/yee-tools";
 
 // Configure I18n settings
 configer.setConfig({
@@ -46,7 +46,7 @@ configer.setConfig({
 ### Basic Usage
 
 ```typescript
-import { I18nUtils } from "@oh/yee-tools/i18n";
+import { I18nUtils } from "@rainbow-oh/yee-tools/i18n";
 
 // Get system language
 const lang = I18nUtils.getSystemI18N();
@@ -222,7 +222,7 @@ configer.setConfig({
 
 ```typescript
 import React from "react";
-import { I18nUtils } from "@oh/yee-tools/i18n";
+import { I18nUtils } from "@rainbow-oh/yee-tools/i18n";
 
 const WelcomeMessage = ({ username, messageCount }) => {
   const message = I18nUtils.format(
@@ -263,7 +263,7 @@ const TermsMessage = () => {
 </template>
 
 <script>
-import { I18nUtils } from "@oh/yee-tools/i18n";
+import { I18nUtils } from "@rainbow-oh/yee-tools/i18n";
 
 export default {
   props: ["username", "messageCount"],
@@ -294,7 +294,7 @@ export default {
 ### Multi-language Switching
 
 ```typescript
-import { I18nUtils } from "@oh/yee-tools/i18n";
+import { I18nUtils } from "@rainbow-oh/yee-tools/i18n";
 
 class LanguageManager {
   private supportedLanguages = [
@@ -344,7 +344,7 @@ class LanguageManager {
 ### Cache Management
 
 ```typescript
-import { I18nUtils, LocalContext, PageContext } from "@oh/yee-tools";
+import { I18nUtils, LocalContext, PageContext } from "@rainbow-oh/yee-tools";
 
 class I18nCacheManager {
   // Clear cache for a specific language
@@ -390,7 +390,7 @@ class I18nCacheManager {
 ## Error Handling
 
 ```typescript
-import { I18nUtils } from "@oh/yee-tools/i18n";
+import { I18nUtils } from "@rainbow-oh/yee-tools/i18n";
 
 // Safe message formatting
 function safeFormat(template: string, ...args: any[]): string {

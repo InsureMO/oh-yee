@@ -1,4 +1,4 @@
-import { Upload } from '@oh/yee-c';
+import { Upload } from '@rainbow-oh/yee-c';
 import type { UploadFile } from '../interface';
 import React from 'react';
 

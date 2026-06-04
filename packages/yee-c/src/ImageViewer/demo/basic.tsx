@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageViewer } from '@oh/yee-c';
+import { ImageViewer } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

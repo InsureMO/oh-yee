@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from '@oh/yee-c';
+import { Avatar } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Collapse } from '@oh/yee-c';
+import { Button, Collapse } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [activeKey, setActiveKey] = useState(['1']);

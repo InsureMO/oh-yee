@@ -5,13 +5,13 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 ```
 
 ## API
@@ -60,7 +60,7 @@ interface YeeConfig {
 **示例：**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 configer.setConfig({
   date: {
@@ -96,7 +96,7 @@ function get<T>(path: string, defaultValue?: T): T
 **示例：**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // 获取顶层配置
 const timeout = configer.get('http.timeout', 3000);
@@ -124,7 +124,7 @@ function getAll(): YeeConfig
 **示例：**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 const allConfig = configer.getAll();
 console.log(allConfig);
@@ -144,7 +144,7 @@ function isInitialized(): boolean
 **示例：**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 if (!configer.isInitialized()) {
   configer.setConfig(defaultConfig);
@@ -164,7 +164,7 @@ function reset(): void
 **示例：**
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // 测试后重置
 afterEach(() => {
@@ -177,7 +177,7 @@ afterEach(() => {
 ### 应用初始化
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // 应用启动时配置
 function initApp() {
@@ -201,7 +201,7 @@ function initApp() {
 ### 环境配置
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // 根据环境加载配置
 function loadConfig() {
@@ -228,7 +228,7 @@ function loadConfig() {
 ### 动态配置读取
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // 在代码中使用配置
 function makeRequest(url: string) {
@@ -244,7 +244,7 @@ function makeRequest(url: string) {
 ### 配置更新
 
 ```typescript
-import { configer } from '@oh/yee-tools';
+import { configer } from '@rainbow-oh/yee-tools';
 
 // 用户更新偏好后更新配置
 function updateLanguage(locale: string) {

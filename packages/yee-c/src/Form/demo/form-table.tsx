@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Form, Input, Space, Table } from '@oh/yee-c';
-import type { ColumnProps } from '@oh/yee-c';
+import { Button, Form, Input, Space, Table } from '@rainbow-oh/yee-c';
+import type { ColumnProps } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();

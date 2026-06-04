@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton, Card, Space } from '@oh/yee-c';
+import { Skeleton, Card, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

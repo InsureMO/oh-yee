@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Radio, Space } from '@oh/yee-c';
+import { Menu, Radio, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [mode, setMode] = useState<'vertical' | 'inline' | 'horizontal'>(

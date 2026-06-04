@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Descriptions } from '@oh/yee-c';
+import { Button, Descriptions } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

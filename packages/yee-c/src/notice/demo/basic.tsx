@@ -1,4 +1,4 @@
-import { Button, notice } from '@oh/yee-c';
+import { Button, notice } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 const BasicDemo = () => {

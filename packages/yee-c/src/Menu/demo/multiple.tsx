@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu } from '@oh/yee-c';
+import { Menu } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [selectedKeys, setSelectedKeys] = useState(['1', '2']);

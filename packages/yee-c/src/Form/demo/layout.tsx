@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Input, Radio, Space } from '@oh/yee-c';
+import { Button, Form, Grid, Input, Radio, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();

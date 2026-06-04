@@ -1,6 +1,6 @@
-import { Transfer } from '@oh/yee-c';
+import { Transfer } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
-import type { Key } from '@oh/yee-c';
+import type { Key } from '@rainbow-oh/yee-c';
 
 const dataSource = [
   { key: '1', label: 'Apple' },

@@ -1,4 +1,4 @@
-import { Button, Upload } from '@oh/yee-c';
+import { Button, Upload } from '@rainbow-oh/yee-c';
 import type { UploadFile } from '../interface';
 import React, { useState } from 'react';
 

@@ -3,7 +3,7 @@
  * description: Control decimal places via the precision property.
  */
 import React from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

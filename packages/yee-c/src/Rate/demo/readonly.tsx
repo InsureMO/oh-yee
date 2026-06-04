@@ -1,4 +1,4 @@
-import { Rate } from '@oh/yee-c';
+import { Rate } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

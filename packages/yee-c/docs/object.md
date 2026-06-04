@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个对象工具函数：
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 ObjectUtils.clone({ a: 1, b: { c: 2 } });
 ObjectUtils.pick({ a: 1, b: 2, c: 3 }, ['a', 'c']);
@@ -26,7 +26,7 @@ ObjectUtils.pick({ a: 1, b: 2, c: 3 }, ['a', 'c']);
 适合只需要使用单个函数：
 
 ```typescript
-import { clone, pick, omit } from '@oh/yee-tools/object';
+import { clone, pick, omit } from '@rainbow-oh/yee-tools/object';
 
 clone({ a: 1, b: { c: 2 } });
 pick({ a: 1, b: 2, c: 3 }, ['a', 'c']);
@@ -46,7 +46,7 @@ function clone<T>(obj: T): T
 **示例：**
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 const original = { a: 1, b: { c: 2 } };
 const cloned = ObjectUtils.clone(original);
@@ -79,7 +79,7 @@ function extend<T, S>(target: T, source: S, deep?: boolean): T & S
 **示例：**
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 // 浅合并
 const target = { a: 1 };
@@ -107,7 +107,7 @@ function merge<T>(...objects: Partial<T>[]): Partial<T>
 **示例：**
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 ObjectUtils.merge({ a: 1 }, { b: 2 }, { c: 3 });
 // => { a: 1, b: 2, c: 3 }
@@ -131,7 +131,7 @@ function pick<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K>
 **示例：**
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 const user = {
   id: 1,
@@ -158,7 +158,7 @@ function omit<T, K extends keyof T>(obj: T, keys: K[]): Omit<T, K>
 **示例：**
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 const user = {
   id: 1,
@@ -179,7 +179,7 @@ const minimalUser = ObjectUtils.omit(user, ['password', 'email']);
 ## 常见用例
 
 ```typescript
-import { ObjectUtils } from '@oh/yee-tools';
+import { ObjectUtils } from '@rainbow-oh/yee-tools';
 
 // 配置合并
 const defaultConfig = { theme: 'light', pageSize: 10 };

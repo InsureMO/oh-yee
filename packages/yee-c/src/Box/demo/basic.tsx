@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@oh/yee-c';
+import { Box } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

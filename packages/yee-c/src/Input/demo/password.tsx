@@ -1,5 +1,5 @@
 import React from 'react';
-import { Password } from '@oh/yee-c';
+import { Password } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

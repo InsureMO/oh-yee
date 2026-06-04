@@ -1,5 +1,5 @@
 import React from 'react';
-import { Anchor } from '@oh/yee-c';
+import { Anchor } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

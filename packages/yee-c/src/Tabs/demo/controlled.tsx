@@ -1,4 +1,4 @@
-import { Button, Space, Tabs } from '@oh/yee-c';
+import { Button, Space, Tabs } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

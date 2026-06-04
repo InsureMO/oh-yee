@@ -1,4 +1,4 @@
-import { Ellipsis } from '@oh/yee-c';
+import { Ellipsis } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 const longText = `yee-c is a React UI component library. Its goal is to provide a set of high-quality, feature-rich, customizable, extensible, and accessibility-friendly enterprise-level components built with React. yee-c is a React UI component library. Its goal is to provide a set of high-quality, feature-rich, customizable, extensible, and accessibility-friendly enterprise-level components built with React.

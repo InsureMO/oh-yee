@@ -5,7 +5,7 @@ Type checking and conversion utility functions.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple type utility functions:
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isArray([1, 2, 3]);
 TypeUtils.isString('hello');
@@ -27,7 +27,7 @@ TypeUtils.parseBool('true');
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { isString, isNumber, parseBool } from '@oh/yee-tools/type';
+import { isString, isNumber, parseBool } from '@rainbow-oh/yee-tools/type';
 
 isString('hello');
 isNumber(123);
@@ -47,7 +47,7 @@ function parseBool(input: unknown): boolean
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.parseBool('true');
 // => true
@@ -83,7 +83,7 @@ function isArray(value: unknown): value is unknown[]
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isArray([1, 2, 3]);
 // => true
@@ -108,7 +108,7 @@ function isString(value: unknown): value is string
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isString('hello');
 // => true
@@ -130,7 +130,7 @@ function isNumber(value: unknown): value is number
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isNumber(123);
 // => true
@@ -155,7 +155,7 @@ function isDate(value: unknown): value is Date
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isDate(new Date());
 // => true
@@ -177,7 +177,7 @@ function isFunction(value: unknown): value is Function
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isFunction(() => {});
 // => true
@@ -199,7 +199,7 @@ function isObject(value: unknown): value is Record<string, unknown>
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isObject({});
 // => true
@@ -224,7 +224,7 @@ function isNullOrUndefined(value: unknown): value is null | undefined
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 TypeUtils.isNullOrUndefined(null);
 // => true
@@ -252,7 +252,7 @@ function isIE(): boolean
 **Example:**
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 if (TypeUtils.isIE()) {
   console.log('Running in IE browser');
@@ -262,7 +262,7 @@ if (TypeUtils.isIE()) {
 ## Common Use Cases
 
 ```typescript
-import { TypeUtils } from '@oh/yee-tools';
+import { TypeUtils } from '@rainbow-oh/yee-tools';
 
 // Data validation
 function processValue(value: unknown) {

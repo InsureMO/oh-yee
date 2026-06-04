@@ -1,4 +1,4 @@
-import { Input, Space, Watermark } from '@oh/yee-c';
+import { Input, Space, Watermark } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

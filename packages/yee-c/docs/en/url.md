@@ -5,7 +5,7 @@ URL processing utility functions.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple URL utility functions:
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 UrlUtils.getUrlParam();
 UrlUtils.buildQueryString({ id: '123' });
@@ -27,7 +27,7 @@ UrlUtils.updateUrlParams('http://example.com', { page: 1 });
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { getUrlParam, buildQueryString, updateUrlParams } from '@oh/yee-tools/url';
+import { getUrlParam, buildQueryString, updateUrlParams } from '@rainbow-oh/yee-tools/url';
 
 getUrlParam();
 buildQueryString({ id: '123' });
@@ -52,7 +52,7 @@ function getUrlParam(urlStr?: string): Record<string, string>
 **Example:**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // Parse current URL
 // Current URL: http://example.com?id=123&name=test
@@ -87,7 +87,7 @@ function buildQueryString(params: Record<string, string | number | boolean>): st
 **Example:**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 UrlUtils.buildQueryString({ id: '123', name: 'test' });
 // => 'id=123&name=test'
@@ -117,7 +117,7 @@ function updateUrlParams(url: string, params: Record<string, string | number | b
 **Example:**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // Add parameters
 UrlUtils.updateUrlParams('http://example.com', { id: '123' });
@@ -149,7 +149,7 @@ function removeUrlParams(url: string, keysToRemove: string[]): string
 **Example:**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // Remove single parameter
 UrlUtils.removeUrlParams('http://example.com?id=123&name=test', ['id']);
@@ -177,7 +177,7 @@ function normalizeURL(url: string): string
 ## Common Use Cases
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // Read URL parameters
 function getProductId(): string {

@@ -62,7 +62,7 @@ A component for selecting date ranges with support for shortcuts, custom formats
 ### Basic Usage
 
 ```tsx
-import { RangePicker } from '@oh/yee-c';
+import { RangePicker } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -85,7 +85,7 @@ export default () => {
 
 ```tsx
 import dayjs from 'dayjs';
-import { RangePicker } from '@oh/yee-c';
+import { RangePicker } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -111,7 +111,7 @@ export default () => {
 ### Custom Format
 
 ```tsx
-import { RangePicker } from '@oh/yee-c';
+import { RangePicker } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

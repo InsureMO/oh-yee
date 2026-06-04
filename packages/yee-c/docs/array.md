@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个数组工具函数：
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.unique([1, 2, 2, 3]);
 ArrayUtils.chunk([1, 2, 3, 4], 2);
@@ -26,7 +26,7 @@ ArrayUtils.chunk([1, 2, 3, 4], 2);
 适合只需要使用单个函数：
 
 ```typescript
-import { unique, chunk } from '@oh/yee-tools/array';
+import { unique, chunk } from '@rainbow-oh/yee-tools/array';
 
 unique([1, 2, 2, 3]);
 chunk([1, 2, 3, 4], 2);
@@ -45,7 +45,7 @@ function trimArray(array: string[]): string[]
 **示例：**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.trimArray([' hello ', ' world ', ' test ']);
 // => ['hello', 'world', 'test']
@@ -64,7 +64,7 @@ function isRepeat<T>(array: T[]): boolean
 **示例：**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.isRepeat([1, 2, 3, 2]);
 // => true
@@ -86,7 +86,7 @@ function repeatElement<T>(array: T[]): T | null
 **示例：**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.repeatElement([1, 2, 3, 2, 4]);
 // => 2
@@ -108,7 +108,7 @@ function unique<T>(array: T[]): T[]
 **示例：**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.unique([1, 2, 2, 3, 3, 4]);
 // => [1, 2, 3, 4]
@@ -134,7 +134,7 @@ function chunk<T>(array: T[], size: number): T[][]
 **示例：**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.chunk([1, 2, 3, 4, 5], 2);
 // => [[1, 2], [3, 4], [5]]
@@ -149,7 +149,7 @@ ArrayUtils.chunk(['a', 'b', 'c', 'd'], 2);
 **常见用例：**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 // 分页处理
 const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from '@oh/yee-c';
+import { Menu } from '@rainbow-oh/yee-c';
 import { Aperture, AudioLines, Settings, User } from 'lucide-react';
 
 export default () => {

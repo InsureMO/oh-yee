@@ -3,7 +3,7 @@
  * description: Provides three sizes: small, default, and large.
  */
 import React from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

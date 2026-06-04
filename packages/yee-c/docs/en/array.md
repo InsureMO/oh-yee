@@ -5,7 +5,7 @@ Array manipulation utility functions.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple array utility functions:
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.unique([1, 2, 2, 3]);
 ArrayUtils.chunk([1, 2, 3, 4], 2);
@@ -26,7 +26,7 @@ ArrayUtils.chunk([1, 2, 3, 4], 2);
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { unique, chunk } from '@oh/yee-tools/array';
+import { unique, chunk } from '@rainbow-oh/yee-tools/array';
 
 unique([1, 2, 2, 3]);
 chunk([1, 2, 3, 4], 2);
@@ -45,7 +45,7 @@ function trimArray(array: string[]): string[]
 **Example:**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.trimArray([' hello ', ' world ', ' test ']);
 // => ['hello', 'world', 'test']
@@ -64,7 +64,7 @@ function isRepeat<T>(array: T[]): boolean
 **Example:**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.isRepeat([1, 2, 3, 2]);
 // => true
@@ -86,7 +86,7 @@ function repeatElement<T>(array: T[]): T | null
 **Example:**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.repeatElement([1, 2, 3, 2, 4]);
 // => 2
@@ -108,7 +108,7 @@ function unique<T>(array: T[]): T[]
 **Example:**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.unique([1, 2, 2, 3, 3, 4]);
 // => [1, 2, 3, 4]
@@ -134,7 +134,7 @@ function chunk<T>(array: T[], size: number): T[][]
 **Example:**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 ArrayUtils.chunk([1, 2, 3, 4, 5], 2);
 // => [[1, 2], [3, 4], [5]]
@@ -149,7 +149,7 @@ ArrayUtils.chunk(['a', 'b', 'c', 'd'], 2);
 **Common Use Cases:**
 
 ```typescript
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 
 // Pagination
 const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

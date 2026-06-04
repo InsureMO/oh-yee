@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Download } from 'lucide-react';
-import { Card } from '@oh/yee-c';
+import { Card } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

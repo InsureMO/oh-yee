@@ -1,4 +1,4 @@
-import { Button, Drawer } from '@oh/yee-c';
+import { Button, Drawer } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

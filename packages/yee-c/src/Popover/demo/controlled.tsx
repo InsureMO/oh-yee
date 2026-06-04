@@ -1,4 +1,4 @@
-import { Button, Popover, Space } from '@oh/yee-c';
+import { Button, Popover, Space } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

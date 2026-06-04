@@ -275,7 +275,7 @@ function generateIndex(componentsInfo) {
 
 \`\`\`tsx
 // Example: using the Form component
-import { Form } from '@oh/yee-c';
+import { Form } from '@rainbow-oh/yee-c';
 
 // See docs: references/components/Form.md
 // Learn about all properties and methods
@@ -309,7 +309,7 @@ Grep({
 
 ## ⚠️ 注意事项
 
-1. **文档版本** - 文档对应 @oh/yee-c 的当前版本
+1. **文档版本** - 文档对应 @rainbow-oh/yee-c 的当前版本
 2. **更新频率** - 组件库更新时需重新运行脚本同步文档
 3. **实际 API 优先** - 如有疑问，以组件库实际 API 为准
 4. **代码示例** - 所有代码示例已从 demo 文件中提取并嵌入文档

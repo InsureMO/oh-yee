@@ -1,4 +1,4 @@
-import { Field, Input, Select, useVirtualForm } from '@oh/yee-c';
+import { Field, Input, Select, useVirtualForm } from '@rainbow-oh/yee-c';
 import React, { useEffect } from 'react';
 
 export default () => {

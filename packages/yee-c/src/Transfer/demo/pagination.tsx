@@ -1,6 +1,6 @@
-import { Transfer } from '@oh/yee-c';
+import { Transfer } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
-import type { Key } from '@oh/yee-c';
+import type { Key } from '@rainbow-oh/yee-c';
 
 const dataSource = Array.from({ length: 20 }, (_, i) => ({
   key: `${i + 1}`,

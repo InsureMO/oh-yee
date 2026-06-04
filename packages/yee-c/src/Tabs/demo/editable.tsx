@@ -1,4 +1,4 @@
-import { Tabs } from '@oh/yee-c';
+import { Tabs } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

@@ -1,4 +1,4 @@
-import { Select } from '@oh/yee-c';
+import { Select } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 const options = [

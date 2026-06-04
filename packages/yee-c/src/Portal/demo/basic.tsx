@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Portal } from '@oh/yee-c';
+import { Button, Portal } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [open, setOpen] = useState(false);

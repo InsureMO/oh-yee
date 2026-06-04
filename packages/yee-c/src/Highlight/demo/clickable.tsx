@@ -1,5 +1,5 @@
 import React from 'react';
-import { Highlight } from '@oh/yee-c';
+import { Highlight } from '@rainbow-oh/yee-c';
 
 export default () => {
   const handleClick = (e: React.MouseEvent<HTMLElement>, index: number) => {

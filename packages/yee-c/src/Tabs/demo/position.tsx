@@ -1,4 +1,4 @@
-import { Radio, Space, Tabs } from '@oh/yee-c';
+import { Radio, Space, Tabs } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

@@ -1,4 +1,4 @@
-import { Space, Table } from '@oh/yee-c';
+import { Space, Table } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

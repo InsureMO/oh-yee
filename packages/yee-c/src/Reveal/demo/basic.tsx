@@ -3,7 +3,7 @@
  * description: A single Reveal wraps multiple Cards, each rendered independently on demand. `offset` sets an early trigger distance of 200px.
  */
 import React from 'react';
-import { Reveal, Card } from '@oh/yee-c';
+import { Reveal, Card } from '@rainbow-oh/yee-c';
 
 const items = Array.from({ length: 20 }, (_, i) => i + 1);
 

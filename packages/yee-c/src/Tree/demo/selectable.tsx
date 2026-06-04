@@ -1,5 +1,5 @@
-import { Tree } from '@oh/yee-c';
-import type { TreeProps } from '@oh/yee-c';
+import { Tree } from '@rainbow-oh/yee-c';
+import type { TreeProps } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

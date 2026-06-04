@@ -64,7 +64,7 @@ npm run dev
 
 ```typescript
 alias: {
-  '@oh/yee-c': process.env.NODE_ENV === 'development'
+  '@rainbow-oh/yee-c': process.env.NODE_ENV === 'development'
     ? join(__dirname, '../yee-c/src')  // 开发：源码
     : join(__dirname, '../yee-c/dist'), // 生产：构建输出
 }

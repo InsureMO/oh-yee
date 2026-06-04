@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Space } from '@oh/yee-c';
+import { Button, Form, Input, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();

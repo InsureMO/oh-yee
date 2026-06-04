@@ -15,11 +15,11 @@ A TypeScript-based modern HTTP request library that supports both XMLHttpRequest
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 # or
-yarn add @oh/yee-tools
+yarn add @rainbow-oh/yee-tools
 # or
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 ```
 
 ## Quick Start
@@ -27,7 +27,7 @@ pnpm add @oh/yee-tools
 ### Basic Usage
 
 ```typescript
-import { ax, get, post } from "@oh/yee-tools/fetch";
+import { ax, get, post } from "@rainbow-oh/yee-tools/fetch";
 
 // Use the default instance
 const users = await ax.get("/api/users");
@@ -47,7 +47,7 @@ const newUser = await post("/api/users", {
 ### Creating a Custom Instance
 
 ```typescript
-import { createAxInstance } from "@oh/yee-tools/fetch";
+import { createAxInstance } from "@rainbow-oh/yee-tools/fetch";
 
 const api = createAxInstance({
   baseUrl: "https://api.example.com",
@@ -263,7 +263,7 @@ import type {
   ResponseType,
   ErrorResponse,
   ProgressEvent,
-} from "@oh/yee-tools/fetch";
+} from "@rainbow-oh/yee-tools/fetch";
 ```
 
 ## Browser Compatibility

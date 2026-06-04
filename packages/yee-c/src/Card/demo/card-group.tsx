@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Table } from '@oh/yee-c';
+import { Card, Table } from '@rainbow-oh/yee-c';
 
 export default () => {
   const columns = [

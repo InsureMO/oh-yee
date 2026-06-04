@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Highlight, Input, Space } from '@oh/yee-c';
+import { Highlight, Input, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [searchText, setSearchText] = useState('');

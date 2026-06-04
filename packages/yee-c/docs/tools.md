@@ -1,13 +1,13 @@
 # 工具函数
 
-`@oh/yee-tools` 是一组轻量级、零依赖的 JavaScript/TypeScript 工具函数库，提供日常开发中常用的工具方法。
+`@rainbow-oh/yee-tools` 是一组轻量级、零依赖的 JavaScript/TypeScript 工具函数库，提供日常开发中常用的工具方法。
 
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 # 或
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -18,13 +18,13 @@ pnpm add @oh/yee-tools
 
 ```typescript
 // 字符串工具
-import { StringUtils } from '@oh/yee-tools';
+import { StringUtils } from '@rainbow-oh/yee-tools';
 
 // 日期工具
-import { DateUtils } from '@oh/yee-tools';
+import { DateUtils } from '@rainbow-oh/yee-tools';
 
 // 数组工具
-import { ArrayUtils } from '@oh/yee-tools';
+import { ArrayUtils } from '@rainbow-oh/yee-tools';
 ```
 
 ### 方式二：按需引入
@@ -33,13 +33,13 @@ import { ArrayUtils } from '@oh/yee-tools';
 
 ```typescript
 // 字符串工具
-import { trim } from '@oh/yee-tools/string';
+import { trim } from '@rainbow-oh/yee-tools/string';
 
 // 日期工具
-import { formatDate } from '@oh/yee-tools/date';
+import { formatDate } from '@rainbow-oh/yee-tools/date';
 
 // 数组工具
-import { uniq } from '@oh/yee-tools/array';
+import { uniq } from '@rainbow-oh/yee-tools/array';
 ```
 
 ## 分类
@@ -96,7 +96,7 @@ URL 处理相关的工具函数。
 ### 使用命名空间导入
 
 ```typescript
-import { StringUtils, DateUtils, ArrayUtils } from '@oh/yee-tools';
+import { StringUtils, DateUtils, ArrayUtils } from '@rainbow-oh/yee-tools';
 
 // 字符串格式化
 const str = StringUtils.trim('  hello  ');
@@ -114,9 +114,9 @@ const arr = ArrayUtils.uniq([1, 2, 2, 3, 3, 3]);
 ### 使用按需引入
 
 ```typescript
-import { trim } from '@oh/yee-tools/string';
-import { getCurrentDateTime } from '@oh/yee-tools/date';
-import { uniq } from '@oh/yee-tools/array';
+import { trim } from '@rainbow-oh/yee-tools/string';
+import { getCurrentDateTime } from '@rainbow-oh/yee-tools/date';
+import { uniq } from '@rainbow-oh/yee-tools/array';
 
 // 字符串格式化
 const str = trim('  hello  ');

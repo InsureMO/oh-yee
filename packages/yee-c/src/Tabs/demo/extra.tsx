@@ -1,4 +1,4 @@
-import { Button, Tabs } from '@oh/yee-c';
+import { Button, Tabs } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

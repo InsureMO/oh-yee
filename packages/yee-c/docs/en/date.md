@@ -5,7 +5,7 @@ Date and time manipulation utilities based on dayjs.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple date utility functions:
 
 ```typescript
-import { DateUtils } from '@oh/yee-tools';
+import { DateUtils } from '@rainbow-oh/yee-tools';
 
 DateUtils.getCurrentDateTime();
 DateUtils.formatToViewFormat(new Date());
@@ -31,7 +31,7 @@ import {
   getCurrentDateTime,
   formatToViewFormat,
   add
-} from '@oh/yee-tools/date';
+} from '@rainbow-oh/yee-tools/date';
 
 getCurrentDateTime();
 formatToViewFormat(new Date());
@@ -54,7 +54,7 @@ function getCurrentDateTime(format?: string): string
 **Example:**
 
 ```typescript
-import { getCurrentDateTime } from '@oh/yee-tools/date';
+import { getCurrentDateTime } from '@rainbow-oh/yee-tools/date';
 
 getCurrentDateTime();
 // => '2026-03-02 14:30:00'
@@ -88,7 +88,7 @@ function formatStringToDate(
 **Example:**
 
 ```typescript
-import { formatStringToDate } from '@oh/yee-tools/date';
+import { formatStringToDate } from '@rainbow-oh/yee-tools/date';
 
 formatStringToDate('15/01/2024', 'DD/MM/YYYY');
 // => '2024-01-15 00:00:00'
@@ -114,7 +114,7 @@ function formatToSubmitFormat(date: Date | null | undefined, format?: string): s
 **Example:**
 
 ```typescript
-import { formatToSubmitFormat } from '@oh/yee-tools/date';
+import { formatToSubmitFormat } from '@rainbow-oh/yee-tools/date';
 
 formatToSubmitFormat(new Date());
 // => '2026-03-02 14:30:00'
@@ -140,7 +140,7 @@ function formatToViewFormat(date: Date | null | undefined, format?: string): str
 **Example:**
 
 ```typescript
-import { formatToViewFormat } from '@oh/yee-tools/date';
+import { formatToViewFormat } from '@rainbow-oh/yee-tools/date';
 
 formatToViewFormat(new Date());
 // => '2026-03-02 14:30:00'
@@ -173,7 +173,7 @@ function add(
 **Example:**
 
 ```typescript
-import { add } from '@oh/yee-tools/date';
+import { add } from '@rainbow-oh/yee-tools/date';
 
 add('2024-01-15', 1, 'day');
 // => '2024-01-16 00:00:00'
@@ -209,7 +209,7 @@ function subtract(
 **Example:**
 
 ```typescript
-import { subtract } from '@oh/yee-tools/date';
+import { subtract } from '@rainbow-oh/yee-tools/date';
 
 subtract('2024-01-15', 1, 'day');
 // => '2024-01-14 00:00:00'
@@ -224,7 +224,7 @@ subtract('2024-01-15', 1, 'year');
 ## Common Use Cases
 
 ```typescript
-import { DateUtils } from '@oh/yee-tools';
+import { DateUtils } from '@rainbow-oh/yee-tools';
 
 // Get today's date
 const today = DateUtils.getCurrentDateTime('YYYY-MM-DD');

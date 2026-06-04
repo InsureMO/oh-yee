@@ -1,4 +1,4 @@
-import { Button, Checkbox, Popconfirm, Space } from '@oh/yee-c';
+import { Button, Checkbox, Popconfirm, Space } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

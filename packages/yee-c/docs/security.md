@@ -7,7 +7,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -17,7 +17,7 @@ npm install @oh/yee-tools
 适合需要使用多个安全工具函数：
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.escapeHTML('<script>alert("XSS")</script>');
 SecurityUtils.encodeJavaScriptString('user input');
@@ -28,7 +28,7 @@ SecurityUtils.encodeJavaScriptString('user input');
 适合只需要使用单个函数：
 
 ```typescript
-import { escapeHTML, encodeJavaScriptString } from '@oh/yee-tools/security';
+import { escapeHTML, encodeJavaScriptString } from '@rainbow-oh/yee-tools/security';
 
 escapeHTML('<script>alert("XSS")</script>');
 encodeJavaScriptString('user input');
@@ -47,7 +47,7 @@ function escapeHTML(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 // 防止脚本注入
 SecurityUtils.escapeHTML('<script>alert("XSS")</script>');
@@ -76,7 +76,7 @@ function unescapeHTML(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.unescapeHTML('&lt;div&gt;');
 // => '<div>'
@@ -98,7 +98,7 @@ function escapeHTMLAttribute(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 // 防止属性注入
 SecurityUtils.escapeHTMLAttribute('value="test"');
@@ -122,7 +122,7 @@ function encodeJavaScriptIdentifier(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeJavaScriptIdentifier('alert("test")');
 // => 'alert\\u0028\\u0022test\\u0022\\u0029'
@@ -146,7 +146,7 @@ function encodeJavaScriptString(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeJavaScriptString('test');
 // => '"test"'
@@ -168,7 +168,7 @@ function encodeJavaScriptData(data: unknown): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeJavaScriptData({ name: 'test' });
 // => '{"name":"test"}'
@@ -190,7 +190,7 @@ function encodeCSSIdentifier(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeCSSIdentifier('my-class');
 // => 'my\\00002dclass'
@@ -213,7 +213,7 @@ function encodeCSSString(text: string): string
 **示例：**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeCSSString('my-class');
 // => '"my\\00002dclass"'
@@ -222,7 +222,7 @@ SecurityUtils.encodeCSSString('my-class');
 ## 常见用例
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 // 1. 防止 XSS 攻击
 function renderUserContent(content: string): string {

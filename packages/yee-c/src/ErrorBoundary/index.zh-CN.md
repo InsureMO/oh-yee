@@ -59,7 +59,7 @@ toc: 'content'
 
 ```tsx
 // 用法：包裹在应用根组件外层
-import { GlobalErrorListener } from '@oh/yee-c';
+import { GlobalErrorListener } from '@rainbow-oh/yee-c';
 
 <GlobalErrorListener onError={({ category, error }) => {
   reportToLogService(category, error);

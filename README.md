@@ -8,9 +8,9 @@ A collection of React UI components, AI workflow components, and TypeScript util
 
 | Package | Version | Description |
 |---|---|---|
-| [`@oh/yee-c`](./packages/yee-c) | [![npm](https://img.shields.io/npm/v/@oh/yee-c.svg)](https://www.npmjs.com/package/@oh/yee-c) | 65+ foundational UI components |
-| [`@oh/yee-x`](./packages/yee-x) | [![npm](https://img.shields.io/npm/v/@oh/yee-x.svg)](https://www.npmjs.com/package/@oh/yee-x) | AI-powered conversational components |
-| [`@oh/yee-tools`](./packages/yee-tools) | [![npm](https://img.shields.io/npm/v/@oh/yee-tools.svg)](https://www.npmjs.com/package/@oh/yee-tools) | TypeScript utility functions |
+| [`@rainbow-oh/yee-c`](./packages/yee-c) | [![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-c.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-c) | 65+ foundational UI components |
+| [`@rainbow-oh/yee-x`](./packages/yee-x) | [![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-x.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-x) | AI-powered conversational components |
+| [`@rainbow-oh/yee-tools`](./packages/yee-tools) | [![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-tools.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-tools) | TypeScript utility functions |
 
 ## Features
 
@@ -27,21 +27,21 @@ Install the packages you need:
 
 ```bash
 # UI components
-pnpm add @oh/yee-c
+pnpm add @rainbow-oh/yee-c
 
-# AI workflow components (requires @oh/yee-c)
-pnpm add @oh/yee-x @oh/yee-c
+# AI workflow components (requires @rainbow-oh/yee-c)
+pnpm add @rainbow-oh/yee-x @rainbow-oh/yee-c
 
 # Utility functions
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 ```
 
 Start using them:
 
 ```tsx
-import { Button, Form, Input, Card, Table } from '@oh/yee-c';
-import { AIRenderer, Bubble, Markdown, Sender } from '@oh/yee-x';
-import { FetchUtils, DateUtils, StringUtils } from '@oh/yee-tools';
+import { Button, Form, Input, Card, Table } from '@rainbow-oh/yee-c';
+import { AIRenderer, Bubble, Markdown, Sender } from '@rainbow-oh/yee-x';
+import { FetchUtils, DateUtils, StringUtils } from '@rainbow-oh/yee-tools';
 ```
 
 ## Development

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search } from '@oh/yee-c';
+import { Search } from '@rainbow-oh/yee-c';
 
 export default () => {
   const onSearch = (value: string) => {

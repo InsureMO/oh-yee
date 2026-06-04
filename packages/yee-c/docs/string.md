@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个字符串工具函数：
 
 ```typescript
-import { StringUtils } from '@oh/yee-tools';
+import { StringUtils } from '@rainbow-oh/yee-tools';
 
 StringUtils.trim('  hello  ');
 StringUtils.isEmpty('hello');
@@ -26,7 +26,7 @@ StringUtils.isEmpty('hello');
 适合只需要使用单个函数：
 
 ```typescript
-import { trim, isEmpty } from '@oh/yee-tools/string';
+import { trim, isEmpty } from '@rainbow-oh/yee-tools/string';
 
 trim('  hello  ');
 isEmpty('hello');
@@ -45,7 +45,7 @@ function trim(str: string): string
 **示例：**
 
 ```typescript
-import { trim } from '@oh/yee-tools/string';
+import { trim } from '@rainbow-oh/yee-tools/string';
 
 trim('  hello  ');
 // => 'hello'
@@ -67,7 +67,7 @@ function isEmpty(str: string): boolean
 **示例：**
 
 ```typescript
-import { isEmpty } from '@oh/yee-tools/string';
+import { isEmpty } from '@rainbow-oh/yee-tools/string';
 
 isEmpty('');
 // => true
@@ -89,7 +89,7 @@ function isNotEmpty(str: string): boolean
 **示例：**
 
 ```typescript
-import { isNotEmpty } from '@oh/yee-tools/string';
+import { isNotEmpty } from '@rainbow-oh/yee-tools/string';
 
 isNotEmpty('hello');
 // => true
@@ -111,7 +111,7 @@ function isBlank(str: string | null | undefined): boolean
 **示例：**
 
 ```typescript
-import { isBlank } from '@oh/yee-tools/string';
+import { isBlank } from '@rainbow-oh/yee-tools/string';
 
 isBlank(null);
 // => true
@@ -136,7 +136,7 @@ function isNotBlank(str: string | null | undefined): boolean
 **示例：**
 
 ```typescript
-import { isNotBlank } from '@oh/yee-tools/string';
+import { isNotBlank } from '@rainbow-oh/yee-tools/string';
 
 isNotBlank('hello');
 // => true
@@ -162,7 +162,7 @@ function mask(value: string | null | undefined, maskPattern: string): string
 **示例：**
 
 ```typescript
-import { mask } from '@oh/yee-tools/string';
+import { mask } from '@rainbow-oh/yee-tools/string';
 
 // 遮蔽前 3 位
 mask('1234567890', '*:(0,3)');

@@ -13,7 +13,7 @@ yee-c 组件库的本地化解决方案，支持多语言切换和自动 fallbac
 ## 📦 安装
 
 ```bash
-npm install @oh/yee-c
+npm install @rainbow-oh/yee-c
 ```
 
 ## 🚀 快速开始
@@ -21,8 +21,8 @@ npm install @oh/yee-c
 ### 基础使用
 
 ```tsx
-import { LocaleProvider, useLocale } from '@oh/yee-c/locale';
-import { DatePicker, Select } from '@oh/yee-c';
+import { LocaleProvider, useLocale } from '@rainbow-oh/yee-c/locale';
+import { DatePicker, Select } from '@rainbow-oh/yee-c';
 
 function App() {
   return (
@@ -47,7 +47,7 @@ function MyComponent() {
 ### 切换语言
 
 ```tsx
-import { LocaleProvider, useLocale } from '@oh/yee-c/locale';
+import { LocaleProvider, useLocale } from '@rainbow-oh/yee-c/locale';
 import { useState } from 'react';
 
 function App() {
@@ -76,7 +76,7 @@ function LanguageSelector() {
 ### 自定义语言包
 
 ```tsx
-import { LocaleProvider } from '@oh/yee-c/locale';
+import { LocaleProvider } from '@rainbow-oh/yee-c/locale';
 
 const customLocale = {
   locale: 'zh_CN',
@@ -101,7 +101,7 @@ function App() {
 ### 异步加载语言包
 
 ```tsx
-import { LocaleProvider } from '@oh/yee-c/locale';
+import { LocaleProvider } from '@rainbow-oh/yee-c/locale';
 
 async function loadLocale(lang: string) {
   const res = await fetch(`/locales/${lang}.json`);
@@ -156,7 +156,7 @@ interface LocaleContextType {
 翻译函数，支持自动 fallback。
 
 ```tsx
-import { translate } from '@oh/yee-c/locale';
+import { translate } from '@rainbow-oh/yee-c/locale';
 
 // 基础用法
 const text = translate(locale, 'datepicker.now');
@@ -176,7 +176,7 @@ const text = translate(incompleteLocale, 'datepicker.now');
 确保语言包的完整性，缺失的字段使用默认值填充。
 
 ```tsx
-import { normalizeLocale } from '@oh/yee-c/locale';
+import { normalizeLocale } from '@rainbow-oh/yee-c/locale';
 
 const partialLocale = {
   locale: 'en_US',
@@ -194,7 +194,7 @@ const completeLocale = normalizeLocale(partialLocale);
 深度合并两个语言包对象。
 
 ```tsx
-import { deepMerge } from '@oh/yee-c/locale';
+import { deepMerge } from '@rainbow-oh/yee-c/locale';
 
 const base = {
   datepicker: {
@@ -218,7 +218,7 @@ const merged = deepMerge(base, override);
 获取语言代码的显示名称。
 
 ```tsx
-import { getLocaleLabel } from '@oh/yee-c/locale';
+import { getLocaleLabel } from '@rainbow-oh/yee-c/locale';
 
 getLocaleLabel('zh_CN'); // => "简体中文"
 getLocaleLabel('en_US'); // => "English"
@@ -271,7 +271,7 @@ export default {
 ### 2. 使用常量
 
 ```typescript
-import { DEFAULT_LOCALE } from '@oh/yee-c/locale';
+import { DEFAULT_LOCALE } from '@rainbow-oh/yee-c/locale';
 
 const DEFAULT_LANG = DEFAULT_LOCALE; // 'zh_CN'
 ```
@@ -310,10 +310,10 @@ function MyComponent() {
 1. 更新导入路径：
 ```tsx
 // 旧版本
-import { LocaleProvider } from '@oh/yee-c/locale/context';
+import { LocaleProvider } from '@rainbow-oh/yee-c/locale/context';
 
 // 新版本
-import { LocaleProvider } from '@oh/yee-c/locale';
+import { LocaleProvider } from '@rainbow-oh/yee-c/locale';
 ```
 
 2. 新的组件（Table、Pagination 等）会自动使用 locale，无需额外配置。
@@ -338,8 +338,8 @@ type LocaleParams<K> = { total: number } | ...;
 
 ```tsx
 import React, { useState } from 'react';
-import { LocaleProvider, useLocale } from '@oh/yee-c/locale';
-import { DatePicker, Table, Pagination } from '@oh/yee-c';
+import { LocaleProvider, useLocale } from '@rainbow-oh/yee-c/locale';
+import { DatePicker, Table, Pagination } from '@rainbow-oh/yee-c';
 
 function App() {
   const [lang, setLang] = useState('zh_CN');

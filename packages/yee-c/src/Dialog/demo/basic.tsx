@@ -1,4 +1,4 @@
-import { Button, Dialog, Form, Input } from '@oh/yee-c';
+import { Button, Dialog, Form, Input } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

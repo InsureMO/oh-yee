@@ -1,5 +1,5 @@
 import React from 'react';
-import { Email } from '@oh/yee-c';
+import { Email } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

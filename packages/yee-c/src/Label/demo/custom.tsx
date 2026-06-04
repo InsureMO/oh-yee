@@ -1,5 +1,5 @@
 import React from 'react';
-import { Label } from '@oh/yee-c';
+import { Label } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

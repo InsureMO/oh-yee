@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个数字工具函数：
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.add(0.1, 0.2);
 NumberUtils.multiply(0.1, 0.2);
@@ -26,7 +26,7 @@ NumberUtils.multiply(0.1, 0.2);
 适合只需要使用单个函数：
 
 ```typescript
-import { add, multiply, divide } from '@oh/yee-tools/number';
+import { add, multiply, divide } from '@rainbow-oh/yee-tools/number';
 
 add(0.1, 0.2);
 multiply(0.1, 0.2);
@@ -64,7 +64,7 @@ function add(arg1: number, arg2: number): number
 **示例：**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.add(0.1, 0.2);
 // => 0.3
@@ -89,7 +89,7 @@ function subtract(arg1: number, arg2: number): string
 **示例：**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.subtract(0.3, 0.1);
 // => "0.2"
@@ -116,7 +116,7 @@ function multiply(arg1: number, arg2: number): number
 **示例：**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.multiply(0.1, 0.2);
 // => 0.02
@@ -141,7 +141,7 @@ function divide(arg1: number, arg2: number): number
 **示例：**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.divide(0.3, 0.1);
 // => 3
@@ -166,7 +166,7 @@ function random(min: number, max: number): number
 **示例：**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 // 生成 1-10 之间的随机整数
 NumberUtils.random(1, 10);
@@ -184,7 +184,7 @@ NumberUtils.random(1, 6);
 ## 常见用例
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 // 金融计算
 const total = NumberUtils.add(0.1, 0.2);  // 0.3

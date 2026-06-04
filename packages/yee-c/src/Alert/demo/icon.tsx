@@ -1,6 +1,6 @@
 import React from 'react';
 import { Apple } from 'lucide-react';
-import { Alert } from '@oh/yee-c';
+import { Alert } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

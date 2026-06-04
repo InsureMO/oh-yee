@@ -3,7 +3,7 @@
  * description: Add custom content before and after the input.
  */
 import React from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

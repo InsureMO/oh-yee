@@ -1,4 +1,4 @@
-import { Switch } from '@oh/yee-c';
+import { Switch } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

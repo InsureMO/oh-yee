@@ -62,7 +62,7 @@ toc: 'content'
 ### 基础用法
 
 ```tsx
-import { RangePicker } from '@oh/yee-c';
+import { RangePicker } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -85,7 +85,7 @@ export default () => {
 
 ```tsx
 import dayjs from 'dayjs';
-import { RangePicker } from '@oh/yee-c';
+import { RangePicker } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -111,7 +111,7 @@ export default () => {
 ### 自定义格式
 
 ```tsx
-import { RangePicker } from '@oh/yee-c';
+import { RangePicker } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

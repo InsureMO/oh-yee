@@ -3,7 +3,7 @@
  * description: Customize the display format of numbers via formatter and parser.
  */
 import React from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
     return (

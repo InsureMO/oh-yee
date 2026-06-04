@@ -59,7 +59,7 @@ Global error listener component that catches async errors, network errors, and r
 
 ```tsx
 // Usage: wrap outside the app root
-import { GlobalErrorListener } from '@oh/yee-c';
+import { GlobalErrorListener } from '@rainbow-oh/yee-c';
 
 <GlobalErrorListener onError={({ category, error }) => {
   reportToLogService(category, error);

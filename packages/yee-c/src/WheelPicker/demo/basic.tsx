@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { WheelPicker } from '@oh/yee-c';
-import type { WheelColumn } from '@oh/yee-c';
+import { WheelPicker } from '@rainbow-oh/yee-c';
+import type { WheelColumn } from '@rainbow-oh/yee-c';
 
 const columns: WheelColumn[] = [
   {

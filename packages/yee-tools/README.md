@@ -1,6 +1,6 @@
-# @oh/yee-tools
+# @rainbow-oh/yee-tools
 
-[![npm](https://img.shields.io/npm/v/@oh/yee-tools.svg)](https://www.npmjs.com/package/@oh/yee-tools) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-tools.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-tools) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
 A modern, type-safe TypeScript utility library. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
 
@@ -16,13 +16,13 @@ A modern, type-safe TypeScript utility library. Part of the [Yee](https://github
 ## Installation
 
 ```bash
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 ```
 
 ## Usage
 
 ```typescript
-import { StringUtils, NumberUtils, DateUtils, SessionContext } from '@oh/yee-tools';
+import { StringUtils, NumberUtils, DateUtils, SessionContext } from '@rainbow-oh/yee-tools';
 
 // String utilities
 const cleaned = StringUtils.trim('  hello  '); // 'hello'
@@ -39,9 +39,9 @@ const formatted = DateUtils.getCurrentDateTime('YYYY-MM-DD HH:mm:ss');
 Import specific modules for tree-shaking:
 
 ```typescript
-import { StringUtils } from '@oh/yee-tools/string';
-import { NumberUtils } from '@oh/yee-tools/number';
-import { DateUtils } from '@oh/yee-tools/date';
+import { StringUtils } from '@rainbow-oh/yee-tools/string';
+import { NumberUtils } from '@rainbow-oh/yee-tools/number';
+import { DateUtils } from '@rainbow-oh/yee-tools/date';
 ```
 
 ## Modules
@@ -119,7 +119,7 @@ Four storage strategies with the same `get`/`set`/`remove`/`clear` API:
 | `StoreContext` | IndexedDB | Persists across sessions |
 
 ```typescript
-import { SessionContext, LocalContext, PageContext, StoreContext } from '@oh/yee-tools/cache';
+import { SessionContext, LocalContext, PageContext, StoreContext } from '@rainbow-oh/yee-tools/cache';
 ```
 
 ### HTTP Client
@@ -127,7 +127,7 @@ import { SessionContext, LocalContext, PageContext, StoreContext } from '@oh/yee
 Lightweight HTTP client with interceptor support:
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 // Add auth header via interceptor
 ax.interceptors.request.use(({ config }) => {
@@ -148,15 +148,15 @@ const result = await ax.post('/api/users', { name: 'John' });
 Internationalization utilities for multi-language support:
 
 ```typescript
-import { I18nUtils } from '@oh/yee-tools/i18n';
+import { I18nUtils } from '@rainbow-oh/yee-tools/i18n';
 ```
 
 ### Platform-dependent Modules
 
 The following modules depend on specific backend services and are designed for use within the Yee platform:
 
-- **codetable** (`@oh/yee-tools/codetable`) — Requires Yee backend API endpoints for code table data
-- **url** (`@oh/yee-tools/url`) — `normalizeURL` uses platform-specific routing logic (tenant-aware URL prefixes)
+- **codetable** (`@rainbow-oh/yee-tools/codetable`) — Requires Yee backend API endpoints for code table data
+- **url** (`@rainbow-oh/yee-tools/url`) — `normalizeURL` uses platform-specific routing logic (tenant-aware URL prefixes)
 
 These modules can still be imported but will not function correctly without the matching backend services.
 

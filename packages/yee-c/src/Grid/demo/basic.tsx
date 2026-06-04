@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@oh/yee-c';
+import { Grid } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

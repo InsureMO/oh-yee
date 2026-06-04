@@ -3,7 +3,7 @@
  * description: Demonstrates various feature combinations of InputNumber.
  */
 import React, { useState } from 'react';
-import { InputNumber, Space } from '@oh/yee-c';
+import { InputNumber, Space } from '@rainbow-oh/yee-c';
 import { DollarSign, Percent } from 'lucide-react';
 
 export default () => {

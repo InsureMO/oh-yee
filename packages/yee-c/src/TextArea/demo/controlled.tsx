@@ -1,4 +1,4 @@
-import { TextArea } from '@oh/yee-c';
+import { TextArea } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

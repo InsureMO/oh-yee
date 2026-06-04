@@ -1,6 +1,6 @@
-import { QRCode } from '@oh/yee-c';
+import { QRCode } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
-import { Button } from '@oh/yee-c';
+import { Button } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [status, setStatus] = useState<'active' | 'loading' | 'expired' | 'scanned'>('active');

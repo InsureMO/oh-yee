@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cascader } from '@oh/yee-c';
+import { Cascader } from '@rainbow-oh/yee-c';
 import type { Option } from '../interface';
 
 export default () => {

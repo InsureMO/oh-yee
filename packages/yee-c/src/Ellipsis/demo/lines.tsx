@@ -1,4 +1,4 @@
-import { Ellipsis } from '@oh/yee-c';
+import { Ellipsis } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 const longText = `This is a long text content used to demonstrate the ellipsis effect with different line counts.

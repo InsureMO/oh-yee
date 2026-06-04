@@ -34,10 +34,10 @@ Code frontend features using Yee component libraries.
 
 | Library           | Description            | Count |
 | ----------------- | ---------------------- | ----- |
-| **@oh/yee-c**     | UI component library   | 62    |
-| **@oh/yee-x**     | AI workflow components | 16    |
-| **@oh/yee-biz**   | Business components    | 2     |
-| **@oh/yee-tools** | Utility functions      | 13    |
+| **@rainbow-oh/yee-c**     | UI component library   | 62    |
+| **@rainbow-oh/yee-x**     | AI workflow components | 16    |
+| **@rainbow-oh/yee-biz**   | Business components    | 2     |
+| **@rainbow-oh/yee-tools** | Utility functions      | 13    |
 
 ## Installation
 
@@ -48,7 +48,7 @@ Install yee-dev-skill via the VS Code extension **Yee Skill Manager**, which aut
 ### 1. Create a Project
 
 ```bash
-npx @oh/yee-cli@latest create my-project -y
+npx @rainbow-oh/yee-cli@latest create my-project -y
 cd my-project
 pnpm install
 pnpm dev

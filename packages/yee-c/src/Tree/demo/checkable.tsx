@@ -1,4 +1,4 @@
-import { Tree } from '@oh/yee-c';
+import { Tree } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

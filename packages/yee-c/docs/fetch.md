@@ -5,13 +5,13 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
 
 ```typescript
-import { ax, get, post, put, del, patch, createAxInstance } from '@oh/yee-tools/fetch';
+import { ax, get, post, put, del, patch, createAxInstance } from '@rainbow-oh/yee-tools/fetch';
 ```
 
 ## API
@@ -43,7 +43,7 @@ ax.request(config: AxConfig): Promise<any>
 ### 便捷方法
 
 ```typescript
-import { get, post, put, del, patch } from '@oh/yee-tools/fetch';
+import { get, post, put, del, patch } from '@rainbow-oh/yee-tools/fetch';
 
 // GET
 get(url, config?)
@@ -72,7 +72,7 @@ function createAxInstance(defaultConfig?: DefaultAxConfig): Ax
 ### GET 请求
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 // 简单 GET
 const users = await ax.get('/api/users');
@@ -90,7 +90,7 @@ const data = await ax.get('/api/data', {
 ### POST 请求
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 // 发送 JSON 数据
 const newUser = await ax.post('/api/users', {
@@ -107,7 +107,7 @@ const response = await ax.post('/api/users', userData, {
 ### PUT 请求
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 const updatedUser = await ax.put('/api/users/1', {
   name: 'John Doe'
@@ -117,7 +117,7 @@ const updatedUser = await ax.put('/api/users/1', {
 ### DELETE 请求
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 await ax.delete('/api/users/1');
 ```
@@ -125,7 +125,7 @@ await ax.delete('/api/users/1');
 ### PATCH 请求
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 const partialUpdate = await ax.patch('/api/users/1', {
   status: 'active'
@@ -137,7 +137,7 @@ const partialUpdate = await ax.patch('/api/users/1', {
 ### 创建自定义实例
 
 ```typescript
-import { createAxInstance } from '@oh/yee-tools/fetch';
+import { createAxInstance } from '@rainbow-oh/yee-tools/fetch';
 
 // 创建 API 实例
 const api = createAxInstance({
@@ -156,7 +156,7 @@ const users = await api.get('/users');
 ### 请求配置
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 const response = await ax.request({
   url: '/api/data',
@@ -175,7 +175,7 @@ const response = await ax.request({
 ### 错误处理
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 try {
   const response = await ax.get('/api/data', {
@@ -191,7 +191,7 @@ try {
 ### 请求/响应拦截
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 const response = await ax.request({
   url: '/api/data',
@@ -216,7 +216,7 @@ const response = await ax.request({
 ### 上传进度
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 const formData = new FormData();
 formData.append('file', file);
@@ -236,7 +236,7 @@ await ax.post('/api/upload', formData, {
 ### RESTful API 客户端
 
 ```typescript
-import { createAxInstance } from '@oh/yee-tools/fetch';
+import { createAxInstance } from '@rainbow-oh/yee-tools/fetch';
 
 const api = createAxInstance({
   baseUrl: 'https://api.example.com',
@@ -255,7 +255,7 @@ export const userApi = {
 ### 认证拦截器
 
 ```typescript
-import { createAxInstance } from '@oh/yee-tools/fetch';
+import { createAxInstance } from '@rainbow-oh/yee-tools/fetch';
 
 const authApi = createAxInstance({
   beforeRequest: (config) => {
@@ -274,7 +274,7 @@ const authApi = createAxInstance({
 ### 并发请求
 
 ```typescript
-import { ax } from '@oh/yee-tools/fetch';
+import { ax } from '@rainbow-oh/yee-tools/fetch';
 
 const [users, posts, comments] = await Promise.all([
   ax.get('/api/users'),

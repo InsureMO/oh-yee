@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb } from '@oh/yee-c';
+import { Breadcrumb } from '@rainbow-oh/yee-c';
 
 export default () => {
   const items = [

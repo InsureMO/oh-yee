@@ -1,4 +1,4 @@
-import { Steps } from '@oh/yee-c';
+import { Steps } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

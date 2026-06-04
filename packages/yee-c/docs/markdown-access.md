@@ -40,7 +40,7 @@
 Alert的基础用法
 
 ```tsx
-import { Alert } from '@oh/yee-c';
+import { Alert } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

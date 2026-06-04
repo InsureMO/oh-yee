@@ -5,7 +5,7 @@ Cookie 操作相关的工具函数。
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个 Cookie 工具函数：
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 CookieUtils.set('username', 'john_doe');
 CookieUtils.get('username');
@@ -27,7 +27,7 @@ CookieUtils.remove('username');
 适合只需要使用单个函数：
 
 ```typescript
-import { get, set, remove } from '@oh/yee-tools/cookie';
+import { get, set, remove } from '@rainbow-oh/yee-tools/cookie';
 
 set('username', 'john_doe');
 get('username');
@@ -51,7 +51,7 @@ function get(name: string, options?: CookieOptions | converter): unknown
 **示例：**
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // 获取字符串值
 CookieUtils.get('username');
@@ -97,7 +97,7 @@ interface CookieOptions {
 **示例：**
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // 设置基本 Cookie
 CookieUtils.set('username', 'john_doe');
@@ -132,7 +132,7 @@ function remove(name: string, options?: CookieOptions): string
 **示例：**
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // 删除基本 Cookie
 CookieUtils.remove('username');
@@ -147,7 +147,7 @@ CookieUtils.remove('token', { path: '/', domain: '.example.com' });
 ## 常见用例
 
 ```typescript
-import { CookieUtils } from '@oh/yee-tools';
+import { CookieUtils } from '@rainbow-oh/yee-tools';
 
 // 用户会话管理
 function login(username: string, remember: boolean) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker } from '@oh/yee-c';
+import { DatePicker } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

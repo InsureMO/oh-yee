@@ -1,4 +1,4 @@
-import { Space, Spin } from '@oh/yee-c';
+import { Space, Spin } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

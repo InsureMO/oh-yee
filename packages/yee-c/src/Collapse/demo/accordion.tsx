@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse } from '@oh/yee-c';
+import { Collapse } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

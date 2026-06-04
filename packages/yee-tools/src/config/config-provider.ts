@@ -6,7 +6,7 @@
  *
  * @example
  * ```typescript
- * import { configer } from '@oh/yee-tools';
+ * import { configer } from '@rainbow-oh/yee-tools';
  *
  * // Set configuration
  * configer.setConfig({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Spin, Space, Card } from '@oh/yee-c';
+import { Spin, Space, Card } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

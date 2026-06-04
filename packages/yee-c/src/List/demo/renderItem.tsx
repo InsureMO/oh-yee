@@ -1,6 +1,6 @@
 import React from 'react';
-import { List } from '@oh/yee-c';
-import type { ListItemProps } from '@oh/yee-c';
+import { List } from '@rainbow-oh/yee-c';
+import type { ListItemProps } from '@rainbow-oh/yee-c';
 
 export default () => {
   const users = [

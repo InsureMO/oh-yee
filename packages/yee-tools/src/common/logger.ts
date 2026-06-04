@@ -21,7 +21,7 @@ let handler: LogHandler = (level, ...args) => {
  *
  * @example
  * ```ts
- * import { setLogHandler } from '@oh/yee-tools';
+ * import { setLogHandler } from '@rainbow-oh/yee-tools';
  *
  * // Silence all library logs
  * setLogHandler(() => {});

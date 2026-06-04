@@ -55,7 +55,7 @@ allFiles.forEach((filename) => {
 });
 
 const banner = `/*!
- * @oh/yee-c CSS Variables
+ * @rainbow-oh/yee-c CSS Variables
  * Auto-generated, do not edit manually
  * Generated on ${new Date().toISOString()}
  */

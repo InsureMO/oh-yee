@@ -34,10 +34,10 @@
 
 | 库                | 说明            | 组件数 |
 | ----------------- | --------------- | ------ |
-| **@oh/yee-c**     | 基础 UI 组件库  | 62     |
-| **@oh/yee-x**     | AI 工作流组件库 | 16     |
-| **@oh/yee-biz**   | 业务组件库      | 2      |
-| **@oh/yee-tools** | 工具函数库      | 13     |
+| **@rainbow-oh/yee-c**     | 基础 UI 组件库  | 62     |
+| **@rainbow-oh/yee-x**     | AI 工作流组件库 | 16     |
+| **@rainbow-oh/yee-biz**   | 业务组件库      | 2      |
+| **@rainbow-oh/yee-tools** | 工具函数库      | 13     |
 
 ## 安装
 
@@ -48,7 +48,7 @@
 ### 1. 创建项目
 
 ```bash
-npx @oh/yee-cli@latest create my-project -y
+npx @rainbow-oh/yee-cli@latest create my-project -y
 cd my-project
 pnpm install
 pnpm dev

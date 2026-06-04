@@ -1,4 +1,4 @@
-import { Rate } from '@oh/yee-c';
+import { Rate } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox } from '@oh/yee-c';
+import { Checkbox } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [value, setValue] = useState<Array<string | number>>(['Apple']);

@@ -1,4 +1,4 @@
-import { Watermark } from '@oh/yee-c';
+import { Watermark } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

@@ -1,4 +1,4 @@
-import { Divider, Space } from '@oh/yee-c';
+import { Divider, Space } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

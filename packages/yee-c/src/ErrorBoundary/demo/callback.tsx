@@ -1,4 +1,4 @@
-import { Button, ErrorBoundary } from '@oh/yee-c';
+import { Button, ErrorBoundary } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 const ErrorComponent = () => {

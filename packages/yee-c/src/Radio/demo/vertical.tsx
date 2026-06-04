@@ -1,4 +1,4 @@
-import { Radio } from '@oh/yee-c';
+import { Radio } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

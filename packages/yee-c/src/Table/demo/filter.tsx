@@ -1,5 +1,5 @@
-import type { ColumnProps } from '@oh/yee-c';
-import { Table } from '@oh/yee-c';
+import type { ColumnProps } from '@rainbow-oh/yee-c';
+import { Table } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

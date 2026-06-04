@@ -1,4 +1,4 @@
-import { Tabs } from '@oh/yee-c';
+import { Tabs } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

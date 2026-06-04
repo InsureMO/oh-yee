@@ -1,4 +1,4 @@
-import { Button, VerificationCode } from '@oh/yee-c';
+import { Button, VerificationCode } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

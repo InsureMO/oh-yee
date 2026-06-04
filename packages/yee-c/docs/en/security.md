@@ -7,7 +7,7 @@ Follows OWASP (Open Web Application Security Project) guidelines for HTML, JavaS
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -17,7 +17,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple security utility functions:
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.escapeHTML('<script>alert("XSS")</script>');
 SecurityUtils.encodeJavaScriptString('user input');
@@ -28,7 +28,7 @@ SecurityUtils.encodeJavaScriptString('user input');
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { escapeHTML, encodeJavaScriptString } from '@oh/yee-tools/security';
+import { escapeHTML, encodeJavaScriptString } from '@rainbow-oh/yee-tools/security';
 
 escapeHTML('<script>alert("XSS")</script>');
 encodeJavaScriptString('user input');
@@ -47,7 +47,7 @@ function escapeHTML(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 // Prevent script injection
 SecurityUtils.escapeHTML('<script>alert("XSS")</script>');
@@ -76,7 +76,7 @@ function unescapeHTML(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.unescapeHTML('&lt;div&gt;');
 // => '<div>'
@@ -98,7 +98,7 @@ function escapeHTMLAttribute(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 // Prevent attribute injection
 SecurityUtils.escapeHTMLAttribute('value="test"');
@@ -122,7 +122,7 @@ function encodeJavaScriptIdentifier(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeJavaScriptIdentifier('alert("test")');
 // => 'alert\\u0028\\u0022test\\u0022\\u0029'
@@ -146,7 +146,7 @@ function encodeJavaScriptString(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeJavaScriptString('test');
 // => '"test"'
@@ -168,7 +168,7 @@ function encodeJavaScriptData(data: unknown): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeJavaScriptData({ name: 'test' });
 // => '{"name":"test"}'
@@ -190,7 +190,7 @@ function encodeCSSIdentifier(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeCSSIdentifier('my-class');
 // => 'my\\00002dclass'
@@ -213,7 +213,7 @@ function encodeCSSString(text: string): string
 **Example:**
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 SecurityUtils.encodeCSSString('my-class');
 // => '"my\\00002dclass"'
@@ -222,7 +222,7 @@ SecurityUtils.encodeCSSString('my-class');
 ## Common Use Cases
 
 ```typescript
-import { SecurityUtils } from '@oh/yee-tools';
+import { SecurityUtils } from '@rainbow-oh/yee-tools';
 
 // 1. Prevent XSS attacks
 function renderUserContent(content: string): string {

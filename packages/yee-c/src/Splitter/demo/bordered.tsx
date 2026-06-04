@@ -1,4 +1,4 @@
-import { Splitter } from '@oh/yee-c';
+import { Splitter } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

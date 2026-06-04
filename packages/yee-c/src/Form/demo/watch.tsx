@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Grid, Input, Select, Space, Switch } from '@oh/yee-c';
+import { Button, Form, Grid, Input, Select, Space, Switch } from '@rainbow-oh/yee-c';
 
 const UserTypeFields = () => {
 

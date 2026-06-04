@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input, Space } from '@oh/yee-c';
+import { Button, Input, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [value, setValue] = useState('Controlled value');

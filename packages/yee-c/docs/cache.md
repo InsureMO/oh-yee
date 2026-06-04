@@ -5,7 +5,7 @@
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -13,20 +13,20 @@ npm install @oh/yee-tools
 ### 方式一：命名空间导入（推荐）
 
 ```typescript
-import { SessionContext, LocalContext, PageContext } from '@oh/yee-tools/cache';
+import { SessionContext, LocalContext, PageContext } from '@rainbow-oh/yee-tools/cache';
 
 // 或直接引入
-import { SessionContext } from '@oh/yee-tools';
-import { LocalContext } from '@oh/yee-tools';
-import { PageContext } from '@oh/yee-tools';
+import { SessionContext } from '@rainbow-oh/yee-tools';
+import { LocalContext } from '@rainbow-oh/yee-tools';
+import { PageContext } from '@rainbow-oh/yee-tools';
 ```
 
 ### 方式二：按需引入
 
 ```typescript
-import { SessionContext } from '@oh/yee-tools/cache/session';
-import { LocalContext } from '@oh/yee-tools/cache/local';
-import { PageContext } from '@oh/yee-tools/cache/page';
+import { SessionContext } from '@rainbow-oh/yee-tools/cache/session';
+import { LocalContext } from '@rainbow-oh/yee-tools/cache/local';
+import { PageContext } from '@rainbow-oh/yee-tools/cache/page';
 ```
 
 ## 缓存类型对比
@@ -74,7 +74,7 @@ SessionContext.checkSize(maxSizeKB: number): boolean
 ### 示例
 
 ```typescript
-import { SessionContext } from '@oh/yee-tools';
+import { SessionContext } from '@rainbow-oh/yee-tools';
 
 // 存储用户令牌
 SessionContext.put('Authorization', 'Bearer token123');
@@ -135,7 +135,7 @@ LocalContext.checkSize(maxSizeKB: number): boolean
 ### 示例
 
 ```typescript
-import { LocalContext } from '@oh/yee-tools';
+import { LocalContext } from '@rainbow-oh/yee-tools';
 
 // 存储用户偏好
 LocalContext.put('preferences', {
@@ -199,7 +199,7 @@ PageContext.size(): number
 ### 示例
 
 ```typescript
-import { PageContext } from '@oh/yee-tools';
+import { PageContext } from '@rainbow-oh/yee-tools';
 
 // 存储页面数据
 PageContext.put('formData', { name: 'John', email: 'john@example.com' });
@@ -226,7 +226,7 @@ function onRouteChange() {
 ### 用户认证状态管理
 
 ```typescript
-import { SessionContext } from '@oh/yee-tools';
+import { SessionContext } from '@rainbow-oh/yee-tools';
 
 // 登录
 function login(token: string, user: User) {
@@ -248,7 +248,7 @@ function logout() {
 ### 用户偏好设置
 
 ```typescript
-import { LocalContext } from '@oh/yee-tools';
+import { LocalContext } from '@rainbow-oh/yee-tools';
 
 // 保存偏好
 function savePreferences(prefs: Preferences) {
@@ -271,7 +271,7 @@ function updateTheme(theme: string) {
 ### 表单数据临时缓存
 
 ```typescript
-import { PageContext } from '@oh/yee-tools';
+import { PageContext } from '@rainbow-oh/yee-tools';
 
 // 保存表单草稿
 function saveDraft(formData: FormData) {
@@ -293,7 +293,7 @@ function onSubmit() {
 ### 混合使用策略
 
 ```typescript
-import { SessionContext, LocalContext, PageContext } from '@oh/yee-tools';
+import { SessionContext, LocalContext, PageContext } from '@rainbow-oh/yee-tools';
 
 // 1. 敏感信息用 SessionContext（会话结束自动清除）
 SessionContext.put('token', authToken);

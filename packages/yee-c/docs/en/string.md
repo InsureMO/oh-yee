@@ -5,7 +5,7 @@ String manipulation utility functions.
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple string utility functions:
 
 ```typescript
-import { StringUtils } from '@oh/yee-tools';
+import { StringUtils } from '@rainbow-oh/yee-tools';
 
 StringUtils.trim('  hello  ');
 StringUtils.isEmpty('hello');
@@ -26,7 +26,7 @@ StringUtils.isEmpty('hello');
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { trim, isEmpty } from '@oh/yee-tools/string';
+import { trim, isEmpty } from '@rainbow-oh/yee-tools/string';
 
 trim('  hello  ');
 isEmpty('hello');
@@ -45,7 +45,7 @@ function trim(str: string): string
 **Example:**
 
 ```typescript
-import { trim } from '@oh/yee-tools/string';
+import { trim } from '@rainbow-oh/yee-tools/string';
 
 trim('  hello  ');
 // => 'hello'
@@ -67,7 +67,7 @@ function isEmpty(str: string): boolean
 **Example:**
 
 ```typescript
-import { isEmpty } from '@oh/yee-tools/string';
+import { isEmpty } from '@rainbow-oh/yee-tools/string';
 
 isEmpty('');
 // => true
@@ -89,7 +89,7 @@ function isNotEmpty(str: string): boolean
 **Example:**
 
 ```typescript
-import { isNotEmpty } from '@oh/yee-tools/string';
+import { isNotEmpty } from '@rainbow-oh/yee-tools/string';
 
 isNotEmpty('hello');
 // => true
@@ -111,7 +111,7 @@ function isBlank(str: string | null | undefined): boolean
 **Example:**
 
 ```typescript
-import { isBlank } from '@oh/yee-tools/string';
+import { isBlank } from '@rainbow-oh/yee-tools/string';
 
 isBlank(null);
 // => true
@@ -136,7 +136,7 @@ function isNotBlank(str: string | null | undefined): boolean
 **Example:**
 
 ```typescript
-import { isNotBlank } from '@oh/yee-tools/string';
+import { isNotBlank } from '@rainbow-oh/yee-tools/string';
 
 isNotBlank('hello');
 // => true
@@ -162,7 +162,7 @@ function mask(value: string | null | undefined, maskPattern: string): string
 **Example:**
 
 ```typescript
-import { mask } from '@oh/yee-tools/string';
+import { mask } from '@rainbow-oh/yee-tools/string';
 
 // Mask first 3 characters
 mask('1234567890', '*:(0,3)');

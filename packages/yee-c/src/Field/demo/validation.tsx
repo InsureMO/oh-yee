@@ -1,4 +1,4 @@
-import { Field, Input, useVirtualForm, Button } from '@oh/yee-c';
+import { Field, Input, useVirtualForm, Button } from '@rainbow-oh/yee-c';
 import React, { useLayoutEffect } from 'react';
 
 export default () => {

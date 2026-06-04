@@ -6,7 +6,7 @@
  *
  * @example
  * ```typescript
- * import { ax, createAxInstance } from '@oh/yee-tools/fetch';
+ * import { ax, createAxInstance } from '@rainbow-oh/yee-tools/fetch';
  *
  * // Use default instance
  * const response = await ax.get('/api/users');
@@ -22,7 +22,7 @@
  *
  * @example Interceptor usage
  * ```typescript
- * import { ax } from '@oh/yee-tools/fetch';
+ * import { ax } from '@rainbow-oh/yee-tools/fetch';
  *
  * // Add authentication interceptor
  * ax.interceptors.request.use(({ config }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Watermark } from '@oh/yee-c';
+import { Watermark } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

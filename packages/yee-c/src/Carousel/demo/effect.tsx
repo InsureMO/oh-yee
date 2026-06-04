@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel } from '@oh/yee-c';
+import { Carousel } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

@@ -166,7 +166,7 @@ importers:
 
   packages/yee-x:
     dependencies:
-      '@oh/yee-c':
+      '@rainbow-oh/yee-c':
         specifier: workspace:^
         version: link:../yee-c
       '@rc-component/trigger':

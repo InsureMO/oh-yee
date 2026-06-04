@@ -5,7 +5,7 @@ URL 处理相关的工具函数。
 ## 安装
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## 引入方式
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 适合需要使用多个 URL 工具函数：
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 UrlUtils.getUrlParam();
 UrlUtils.buildQueryString({ id: '123' });
@@ -27,7 +27,7 @@ UrlUtils.updateUrlParams('http://example.com', { page: 1 });
 适合只需要使用单个函数：
 
 ```typescript
-import { getUrlParam, buildQueryString, updateUrlParams } from '@oh/yee-tools/url';
+import { getUrlParam, buildQueryString, updateUrlParams } from '@rainbow-oh/yee-tools/url';
 
 getUrlParam();
 buildQueryString({ id: '123' });
@@ -52,7 +52,7 @@ function getUrlParam(urlStr?: string): Record<string, string>
 **示例：**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // 解析当前 URL
 // 当前 URL: http://example.com?id=123&name=test
@@ -87,7 +87,7 @@ function buildQueryString(params: Record<string, string | number | boolean>): st
 **示例：**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 UrlUtils.buildQueryString({ id: '123', name: 'test' });
 // => 'id=123&name=test'
@@ -117,7 +117,7 @@ function updateUrlParams(url: string, params: Record<string, string | number | b
 **示例：**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // 添加参数
 UrlUtils.updateUrlParams('http://example.com', { id: '123' });
@@ -149,7 +149,7 @@ function removeUrlParams(url: string, keysToRemove: string[]): string
 **示例：**
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // 移除单个参数
 UrlUtils.removeUrlParams('http://example.com?id=123&name=test', ['id']);
@@ -177,7 +177,7 @@ function normalizeURL(url: string): string
 ## 常见用例
 
 ```typescript
-import { UrlUtils } from '@oh/yee-tools';
+import { UrlUtils } from '@rainbow-oh/yee-tools';
 
 // 读取 URL 参数
 function getProductId(): string {

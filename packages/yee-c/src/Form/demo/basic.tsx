@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, DatePicker, Form, Grid, Input, Select, Space, TextArea } from '@oh/yee-c';
+import { Button, DatePicker, Form, Grid, Input, Select, Space, TextArea } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();

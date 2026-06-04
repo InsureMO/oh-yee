@@ -1,4 +1,4 @@
-import { QRCode, Space } from '@oh/yee-c';
+import { QRCode, Space } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

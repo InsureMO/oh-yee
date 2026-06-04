@@ -241,7 +241,7 @@ function generateMarkdown(category, moduleName, parsed) {
   md += `**所属分类**: ${category}\n\n`;
   md += `**导入方式**:\n\n`;
   md += `\`\`\`typescript\n`;
-  md += `import { ${exportName} } from '@oh/yee-tools';\n`;
+  md += `import { ${exportName} } from '@rainbow-oh/yee-tools';\n`;
   md += `\`\`\`\n\n`;
   md += `---\n\n`;
 
@@ -363,26 +363,26 @@ yee-tools 是 Moo 前端的工具函数库，提供常用的工具函数和类�
 ### 1. 安装
 
 \`\`\`bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 # 或
-pnpm add @oh/yee-tools
+pnpm add @rainbow-oh/yee-tools
 \`\`\`
 
 ### 2. 导入工具函数
 
 \`\`\`typescript
 // 导入整个模块
-import { StringUtils } from '@oh/yee-tools';
+import { StringUtils } from '@rainbow-oh/yee-tools';
 const trimmed = StringUtils.trim('  hello  ');
 
 // 按分类导入
-import { DateUtils, ArrayUtils } from '@oh/yee-tools';
+import { DateUtils, ArrayUtils } from '@rainbow-oh/yee-tools';
 \`\`\`
 
 ### 3. 使用示例
 
 \`\`\`typescript
-import { ArrayUtils, DateUtils } from '@oh/yee-tools';
+import { ArrayUtils, DateUtils } from '@rainbow-oh/yee-tools';
 
 // 数组去重
 const unique = ArrayUtils.unique([1, 2, 2, 3, 3, 4]);

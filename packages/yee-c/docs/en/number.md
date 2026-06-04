@@ -5,7 +5,7 @@ Precise floating-point arithmetic utilities to solve JavaScript precision issues
 ## Installation
 
 ```bash
-npm install @oh/yee-tools
+npm install @rainbow-oh/yee-tools
 ```
 
 ## Import Methods
@@ -15,7 +15,7 @@ npm install @oh/yee-tools
 Best for scenarios where you need to use multiple number utility functions:
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.add(0.1, 0.2);
 NumberUtils.multiply(0.1, 0.2);
@@ -26,7 +26,7 @@ NumberUtils.multiply(0.1, 0.2);
 Best for scenarios where you only need a single function:
 
 ```typescript
-import { add, multiply, divide } from '@oh/yee-tools/number';
+import { add, multiply, divide } from '@rainbow-oh/yee-tools/number';
 
 add(0.1, 0.2);
 multiply(0.1, 0.2);
@@ -64,7 +64,7 @@ function add(arg1: number, arg2: number): number
 **Example:**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.add(0.1, 0.2);
 // => 0.3
@@ -89,7 +89,7 @@ function subtract(arg1: number, arg2: number): string
 **Example:**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.subtract(0.3, 0.1);
 // => "0.2"
@@ -116,7 +116,7 @@ function multiply(arg1: number, arg2: number): number
 **Example:**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.multiply(0.1, 0.2);
 // => 0.02
@@ -141,7 +141,7 @@ function divide(arg1: number, arg2: number): number
 **Example:**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 NumberUtils.divide(0.3, 0.1);
 // => 3
@@ -166,7 +166,7 @@ function random(min: number, max: number): number
 **Example:**
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 // Generate random integer between 1-10
 NumberUtils.random(1, 10);
@@ -184,7 +184,7 @@ NumberUtils.random(1, 6);
 ## Common Use Cases
 
 ```typescript
-import { NumberUtils } from '@oh/yee-tools';
+import { NumberUtils } from '@rainbow-oh/yee-tools';
 
 // Financial calculations
 const total = NumberUtils.add(0.1, 0.2);  // 0.3

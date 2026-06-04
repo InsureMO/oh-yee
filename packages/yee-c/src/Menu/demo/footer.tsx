@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Aperture, AudioLines, PanelLeftClose, PanelLeftOpen, Settings } from 'lucide-react';
-import { Menu, Space } from '@oh/yee-c';
+import { Menu, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [collapsed, setCollapsed] = useState(false);

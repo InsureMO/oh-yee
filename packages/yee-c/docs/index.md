@@ -19,4 +19,4 @@ features:
     description: 灵活的主题配置系统，支持 CSS 变量和样式定制，轻松适配品牌风格
 ---
 
-@oh/yee-c 是一个企业级 React 组件库，为现代 Web 应用提供高质量、可定制的 UI 组件
+@rainbow-oh/yee-c 是一个企业级 React 组件库，为现代 Web 应用提供高质量、可定制的 UI 组件

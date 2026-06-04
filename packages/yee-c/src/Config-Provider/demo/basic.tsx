@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ConfigProvider, Space } from '@oh/yee-c';
+import { Button, ConfigProvider, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (
