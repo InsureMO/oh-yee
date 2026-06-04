@@ -3,6 +3,7 @@
   "private": true,
   "description": "Yee - React component library, AI workflow components, and TypeScript utilities",
   "license": "MIT",
+  "packageManager": "pnpm@10.28.2",
   "homepage": "https://github.com/InsureMO/oh-yee#readme",
   "scripts": {
     "build": "pnpm -r --filter='./packages/*' build",
