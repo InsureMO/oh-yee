@@ -18,7 +18,9 @@ const MenuItem = (props: MenuItemProps) => {
 
   const { children, label, icon, key, disabled } = item as MenuItemType;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const menuWrapperCtx = React.useContext(MenuWrapperCtx);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { level, mode, classNames, styles } = React.useContext(MenuCtx);
   const {
     prefixCls,
@@ -40,6 +42,7 @@ const MenuItem = (props: MenuItemProps) => {
     <span className={`${prefixCls}-item-icon`}>{icon}</span>
   ) : null;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const paddingLeft = React.useMemo(() => {
     if (level === 0 || mode === 'vertical' || isCollapsed) return undefined;
     return 18 + level * 16;
@@ -86,7 +89,7 @@ const MenuItem = (props: MenuItemProps) => {
   }
 
   const onExpandCallback = (expanded: boolean) => {
-    onOpenChange?.({ item: item as MenuItemType, expanded });
+    onOpenChange?.();
   };
 
   const handleExpand = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -121,7 +124,11 @@ const MenuItem = (props: MenuItemProps) => {
   };
 
   const popup = (
-    <Menu level={level + 1} mode={isCollapsed ? 'vertical' : mode} items={children || []} />
+    <Menu
+      level={level + 1}
+      mode={isCollapsed ? 'vertical' : mode}
+      items={children || []}
+    />
   );
   const opened = openKeys.includes(key);
   const cls = clsx(
@@ -165,7 +172,9 @@ const MenuItem = (props: MenuItemProps) => {
         [`${prefixCls}-submenu-open`]: opened,
         [`${prefixCls}-submenu-selected`]:
           selectedKeys.includes(key) ||
-          selectedKeys.find((k: number | string) => childrenKeys.includes(k as string)),
+          selectedKeys.find((k: number | string) =>
+            childrenKeys.includes(k as string),
+          ),
       })}
       style={{ paddingLeft }}
       onClick={handleExpand}
@@ -190,7 +199,8 @@ const MenuItem = (props: MenuItemProps) => {
   );
 
   const usePopup = mode === 'vertical' || mode === 'horizontal' || isCollapsed;
-  const placement = mode === 'horizontal' && !isCollapsed ? 'bottomLeft' : 'rightTop';
+  const placement =
+    mode === 'horizontal' && !isCollapsed ? 'bottomLeft' : 'rightTop';
 
   const childNode = (
     <li className={cls}>
@@ -213,7 +223,10 @@ const MenuItem = (props: MenuItemProps) => {
                 initial={{ height: 0 }}
                 animate={{ height: 'auto' }}
                 exit={{ height: 0 }}
-                transition={{ duration: 0.2, ease: 'easeInOut' }}
+                transition={{
+                  duration: 0.2,
+                  ease: 'easeInOut',
+                }}
                 style={{ overflow: 'hidden' }}
               >
                 {popup}

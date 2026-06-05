@@ -67,7 +67,7 @@ describe("Object Utils", () => {
     it("should not mutate original objects", () => {
       const target = { a: 1 };
       const source = { b: 2 };
-      const result = extend(target, source);
+      extend(target, source);
 
       expect(target).toEqual({ a: 1 });
       expect(source).toEqual({ b: 2 });

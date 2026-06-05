@@ -1,6 +1,6 @@
 import React from 'react';
-import Message from './message';
 import type { MessageProps } from './interface';
+import Message from './message';
 
 import './style/index.less';
 

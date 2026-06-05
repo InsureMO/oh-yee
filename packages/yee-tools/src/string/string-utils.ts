@@ -56,7 +56,7 @@ export function isNotEmpty(str: string): boolean {
  * ```
  */
 export function isBlank(str: string | null | undefined): boolean {
-  if (str == null) {
+  if (str == null) { // eslint-disable-line eqeqeq
     return true;
   }
   return trim(str).length === 0;
@@ -91,7 +91,7 @@ export function mask(
   value: string | null | undefined,
   maskPattern: string,
 ): string {
-  if (value == null || value === "" || value === undefined) {
+  if (value == null || value === "" || value === undefined) { // eslint-disable-line eqeqeq
     return "";
   }
 
@@ -130,7 +130,7 @@ export function mask(
 
     if (startEndArray[i]?.charAt(0) === "-") {
       // from end to start
-      if (endTemp == null) {
+      if (endTemp == null) { // eslint-disable-line eqeqeq
         start = 0;
         end = length < startTemp ? 0 : length - startTemp;
       } else {
@@ -139,7 +139,7 @@ export function mask(
       }
     } else {
       // from start to end
-      if (endTemp == null) {
+      if (endTemp == null) { // eslint-disable-line eqeqeq
         start = length < startTemp ? length : startTemp;
         end = length;
       } else {

@@ -1,6 +1,6 @@
 import React from 'react';
-import DateHeader from './DateHeader';
 import DateBody from './DateBody';
+import DateHeader from './DateHeader';
 
 export default function DatePanel(props: any) {
   const { prefixCls, showHeader = true } = props;

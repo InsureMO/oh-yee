@@ -5,7 +5,6 @@ import {
   formatToViewFormat,
   add,
   subtract,
-  DEFAULT_DATETIME_SUBMIT_FORMAT,
 } from "../date/date-utils";
 
 describe("Date Utils", () => {

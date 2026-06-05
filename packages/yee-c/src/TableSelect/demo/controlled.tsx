@@ -1,5 +1,5 @@
+import type { TableSelectRowSelectionType } from '@rainbow-oh/yee-c';
 import { TableSelect } from '@rainbow-oh/yee-c';
-import type {TableSelectRowSelectionType} from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -60,21 +60,23 @@ export default () => {
         <TableSelect
           columns={columns}
           dataSource={dataSource}
-          rowSelection={{
-            type: 'radio',
-            selectedRowKeys: [value],
-            onChange: (selectedKeys: string[] | number[]) => {
-              setValue(selectedKeys as unknown as string);
-              console.log('Selected:', selectedKeys);
-            },
-          } as unknown as TableSelectRowSelectionType}
+          rowSelection={
+            {
+              type: 'radio',
+              selectedRowKeys: [value],
+              onChange: (selectedKeys: string[] | number[]) => {
+                setValue(selectedKeys as unknown as string);
+                console.log('Selected:', selectedKeys);
+              },
+            } as unknown as TableSelectRowSelectionType
+          }
           rowKey="key"
           optionLabelProp="name"
           placeholder="Select a person"
           style={{ width: 300 }}
         />
         <div style={{ marginTop: 8 }}>
-          Selected: {dataSource.find(d => d.key === value)?.name || 'None'}
+          Selected: {dataSource.find((d) => d.key === value)?.name || 'None'}
         </div>
       </div>
 
@@ -83,22 +85,27 @@ export default () => {
         <TableSelect
           columns={columns}
           dataSource={dataSource}
-          rowSelection={{
-            type: 'checkbox',
-            selectedRowKeys: multiValue,
-            onChange: (selectedKeys: string[] | number[]) => {
-              setMultiValue(selectedKeys as unknown as string[]);
-              console.log('Selected:', selectedKeys);
-            },
-          } as TableSelectRowSelectionType}
+          rowSelection={
+            {
+              type: 'checkbox',
+              selectedRowKeys: multiValue,
+              onChange: (selectedKeys: string[] | number[]) => {
+                setMultiValue(selectedKeys as unknown as string[]);
+                console.log('Selected:', selectedKeys);
+              },
+            } as TableSelectRowSelectionType
+          }
           rowKey="key"
           optionLabelProp="name"
           placeholder="Select persons"
           style={{ width: 350 }}
         />
         <div style={{ marginTop: 8 }}>
-          Selected: {multiValue.length > 0
-            ? multiValue.map(k => dataSource.find(d => d.key === k)?.name).join(', ')
+          Selected:{' '}
+          {multiValue.length > 0
+            ? multiValue
+                .map((k) => dataSource.find((d) => d.key === k)?.name)
+                .join(', ')
             : 'None'}
         </div>
       </div>

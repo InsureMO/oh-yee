@@ -238,7 +238,8 @@
     display: flex;
 
     @{pls}-date-panel {
-      border-right: var(--yee-picker-datetime-border-width) solid var(--yee-picker-date-panel-border-color);
+      border-right: var(--yee-picker-datetime-border-width) solid
+        var(--yee-picker-date-panel-border-color);
     }
   }
 
@@ -264,7 +265,8 @@
 
         &:not(:last-child) {
           box-sizing: content-box;
-          border-right: var(--yee-picker-time-panel-title-cell-border-width) solid var(--yee-date-picker-thead-bg-color);
+          border-right: var(--yee-picker-time-panel-title-cell-border-width)
+            solid var(--yee-date-picker-thead-bg-color);
         }
       }
     }
@@ -273,12 +275,15 @@
       position: relative;
       width: var(--yee-picker-time-panel-column-width);
       // padding: 4px 0 170px 0;
-      padding-bottom: var(--yee-picker-time-panel-column-padding-bottom) !important;
+      padding-bottom: var(
+        --yee-picker-time-panel-column-padding-bottom
+      ) !important;
       overflow-y: auto;
 
       &:not(:last-child) {
         box-sizing: content-box;
-        border-right: var(--yee-picker-time-panel-column-border-width) solid var(--yee-picker-date-panel-border-color);
+        border-right: var(--yee-picker-time-panel-column-border-width) solid
+          var(--yee-picker-date-panel-border-color);
       }
 
       &::-webkit-scrollbar {
@@ -332,7 +337,8 @@
     display: flex;
     align-items: center;
     padding: var(--yee-picker-footer-padding);
-    border-top: var(--yee-picker-footer-border-width) solid var(--yee-picker-date-panel-border-color);
+    border-top: var(--yee-picker-footer-border-width) solid
+      var(--yee-picker-date-panel-border-color);
 
     &-with-preset {
       display: inline-flex;
@@ -367,8 +373,10 @@
       z-index: 2;
       width: 100%;
       height: var(--yee-picker-range-hover-after-height);
-      border-top: var(--yee-picker-range-hover-after-border-width) dashed var(--yee-rangepicker-hover-border-color);
-      border-bottom: var(--yee-picker-range-hover-after-border-width) dashed var(--yee-rangepicker-hover-border-color);
+      border-top: var(--yee-picker-range-hover-after-border-width) dashed
+        var(--yee-rangepicker-hover-border-color);
+      border-bottom: var(--yee-picker-range-hover-after-border-width) dashed
+        var(--yee-rangepicker-hover-border-color);
       transform: translateY(-50%);
       content: '';
     }
@@ -392,9 +400,14 @@
   &-range-hover-end:not(&-not-in-view) {
     &::after {
       z-index: 2;
-      border-right: var(--yee-picker-range-hover-after-border-width) dashed var(--yee-rangepicker-hover-border-color);
-      border-top-right-radius: var(--yee-picker-range-hover-after-border-radius);
-      border-bottom-right-radius: var(--yee-picker-range-hover-after-border-radius);
+      border-right: var(--yee-picker-range-hover-after-border-width) dashed
+        var(--yee-rangepicker-hover-border-color);
+      border-top-right-radius: var(
+        --yee-picker-range-hover-after-border-radius
+      );
+      border-bottom-right-radius: var(
+        --yee-picker-range-hover-after-border-radius
+      );
     }
   }
 
@@ -403,9 +416,12 @@
   &-range-hover:first-child:not(&-not-in-view) {
     &::after {
       z-index: 2;
-      border-left: var(--yee-picker-range-hover-after-border-width) dashed var(--yee-rangepicker-hover-border-color);
+      border-left: var(--yee-picker-range-hover-after-border-width) dashed
+        var(--yee-rangepicker-hover-border-color);
       border-top-left-radius: var(--yee-picker-range-hover-after-border-radius);
-      border-bottom-left-radius: var(--yee-picker-range-hover-after-border-radius);
+      border-bottom-left-radius: var(
+        --yee-picker-range-hover-after-border-radius
+      );
     }
   }
 
@@ -448,7 +464,9 @@
   &-in-range:last-child {
     &::before {
       border-top-right-radius: var(--yee-picker-in-range-before-border-radius);
-      border-bottom-right-radius: var(--yee-picker-in-range-before-border-radius);
+      border-bottom-right-radius: var(
+        --yee-picker-in-range-before-border-radius
+      );
     }
   }
 
@@ -456,7 +474,9 @@
   &-in-range:first-child {
     &::before {
       border-top-left-radius: var(--yee-picker-in-range-before-border-radius);
-      border-bottom-left-radius: var(--yee-picker-in-range-before-border-radius);
+      border-bottom-left-radius: var(
+        --yee-picker-in-range-before-border-radius
+      );
     }
   }
 

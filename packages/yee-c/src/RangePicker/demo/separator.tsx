@@ -12,7 +12,9 @@ export default () => {
       }}
     >
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>Default separator (~)</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>
+          Default separator (~)
+        </div>
         <RangePicker placeholder={['Start date', 'End date']} />
       </div>
 

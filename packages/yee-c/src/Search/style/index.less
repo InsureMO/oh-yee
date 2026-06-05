@@ -3,135 +3,135 @@
 @search-prefix-cls: ~'yee-search';
 
 .@{search-prefix-cls} {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
-    padding: var(--yee-search-padding);
-    color: var(--yee-text-color);
-    font-size: var(--yee-search-font-size);
-    background-color: var(--yee-input-content-bg-color);
-    background-image: none;
-    border: var(--yee-search-border-width) solid var(--yee-input-border-color);
-    border-radius: var(--yee-search-border-radius);
-    transition: all 0.2s;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--yee-search-padding);
+  color: var(--yee-text-color);
+  font-size: var(--yee-search-font-size);
+  background-color: var(--yee-input-content-bg-color);
+  background-image: none;
+  border: var(--yee-search-border-width) solid var(--yee-input-border-color);
+  border-radius: var(--yee-search-border-radius);
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: var(--yee-input-hover-border-color);
+  }
+
+  &:focus-within {
+    border-color: var(--yee-input-content-focus-border-color);
+    box-shadow: var(--yee-search-focus-box-shadow);
+  }
+
+  &-disabled {
+    color: var(--yee-text-color-disabled);
+    background-color: var(--yee-input-content-disabled-bg-color);
+    cursor: not-allowed;
 
     &:hover {
-        border-color: var(--yee-input-hover-border-color);
+      border-color: var(--yee-input-border-color);
     }
 
+    input {
+      color: var(--yee-text-color-disabled);
+      background-color: transparent;
+      cursor: not-allowed;
+    }
+  }
+
+  &-borderless {
+    border: none;
+    box-shadow: none;
+
     &:focus-within {
-        border-color: var(--yee-input-content-focus-border-color);
-        box-shadow: var(--yee-search-focus-box-shadow);
+      box-shadow: none;
+    }
+  }
+
+  &-small {
+    padding: var(--yee-search-small-padding);
+    font-size: var(--yee-search-small-font-size);
+    border-radius: var(--yee-search-small-border-radius);
+  }
+
+  &-large {
+    padding: var(--yee-search-large-padding);
+    font-size: var(--yee-search-large-font-size);
+    border-radius: var(--yee-search-large-border-radius);
+  }
+
+  &-input {
+    flex: auto;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    transition: all 0.2s;
+
+    &::placeholder {
+      color: var(--yee-text-color-placeholder);
     }
 
     &-disabled {
+      color: var(--yee-text-color-disabled);
+      background-color: transparent;
+      cursor: not-allowed;
+
+      &::placeholder {
         color: var(--yee-text-color-disabled);
-        background-color: var(--yee-input-content-disabled-bg-color);
-        cursor: not-allowed;
+      }
+    }
+  }
 
-        &:hover {
-            border-color: var(--yee-input-border-color);
-        }
+  &-prefix {
+    display: flex;
+    align-items: center;
+    margin-right: var(--yee-search-prefix-margin-right);
+    color: var(--yee-input-fix-icon-color);
+  }
 
-        input {
-            color: var(--yee-text-color-disabled);
-            background-color: transparent;
-            cursor: not-allowed;
-        }
+  &-suffix {
+    display: flex;
+    align-items: center;
+    margin-left: var(--yee-search-suffix-margin-left);
+    color: var(--yee-input-fix-icon-color);
+  }
+
+  &-clear-icon {
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--yee-input-fix-icon-click-hover-color);
+    }
+  }
+
+  &-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--yee-search-button-margin-left);
+    padding: var(--yee-search-button-padding);
+    color: var(--yee-text-color);
+    font-weight: var(--yee-search-button-font-weight);
+    background-color: var(--yee-color-bg-head);
+    border-radius: var(--yee-search-button-border-radius);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: var(--yee-primary-color);
     }
 
-    &-borderless {
-        border: none;
-        box-shadow: none;
+    &-disabled {
+      color: var(--yee-text-color-disabled);
+      cursor: not-allowed;
 
-        &:focus-within {
-            box-shadow: none;
-        }
+      &:hover {
+        color: var(--yee-text-color-disabled);
+      }
     }
-
-    &-small {
-        padding: var(--yee-search-small-padding);
-        font-size: var(--yee-search-small-font-size);
-        border-radius: var(--yee-search-small-border-radius);
-    }
-
-    &-large {
-        padding: var(--yee-search-large-padding);
-        font-size: var(--yee-search-large-font-size);
-        border-radius: var(--yee-search-large-border-radius);
-    }
-
-    &-input {
-        flex: auto;
-        min-width: 0;
-        background: transparent;
-        border: none;
-        outline: none;
-        transition: all 0.2s;
-
-        &::placeholder {
-            color: var(--yee-text-color-placeholder);
-        }
-
-        &-disabled {
-            color: var(--yee-text-color-disabled);
-            background-color: transparent;
-            cursor: not-allowed;
-
-            &::placeholder {
-                color: var(--yee-text-color-disabled);
-            }
-        }
-    }
-
-    &-prefix {
-        display: flex;
-        align-items: center;
-        margin-right: var(--yee-search-prefix-margin-right);
-        color: var(--yee-input-fix-icon-color);
-    }
-
-    &-suffix {
-        display: flex;
-        align-items: center;
-        margin-left: var(--yee-search-suffix-margin-left);
-        color: var(--yee-input-fix-icon-color);
-    }
-
-    &-clear-icon {
-        cursor: pointer;
-        transition: color 0.2s;
-
-        &:hover {
-            color: var(--yee-input-fix-icon-click-hover-color);
-        }
-    }
-
-    &-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: var(--yee-search-button-margin-left);
-        padding: var(--yee-search-button-padding);
-        color: var(--yee-text-color);
-        font-weight: var(--yee-search-button-font-weight);
-        background-color: var(--yee-color-bg-head);
-        border-radius: var(--yee-search-button-border-radius);
-        cursor: pointer;
-        transition: all 0.2s;
-
-        &:hover {
-            color: var(--yee-primary-color);
-        }
-
-        &-disabled {
-            color: var(--yee-text-color-disabled);
-            cursor: not-allowed;
-
-            &:hover {
-                color: var(--yee-text-color-disabled);
-            }
-        }
-    }
+  }
 }

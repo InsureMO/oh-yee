@@ -1,8 +1,8 @@
 // tab-content.tsx (optimized)
+import clsx from 'clsx';
 import React, { useContext, useMemo } from 'react';
 import { TabItemType } from './interface';
 import { TabsCtx } from './tabs';
-import clsx from 'clsx';
 
 /**
  * Flatten tabs array, handling nested items
@@ -42,7 +42,11 @@ interface TabContentProps {
   style?: React.CSSProperties;
 }
 
-const TabContent: React.FC<TabContentProps> = ({ prefixCls, className, style }) => {
+const TabContent: React.FC<TabContentProps> = ({
+  prefixCls,
+  className,
+  style,
+}) => {
   const { items, lazy, mountedKeys, activeKey } = useContext(TabsCtx);
 
   // Use useMemo to cache flattened result

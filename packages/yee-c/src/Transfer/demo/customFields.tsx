@@ -1,6 +1,6 @@
+import type { DataSource, Key } from '@rainbow-oh/yee-c';
 import { Transfer } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
-import type { Key, DataSource } from '@rainbow-oh/yee-c';
 
 const dataSource: DataSource[] = [
   { key: '1', label: '', name: 'Option 1', desc: 'Description 1' },
@@ -19,7 +19,7 @@ export default () => {
       targetKeys={targetKeys}
       onChange={(keys: Key[]) => setTargetKeys(keys)}
       titles={['Source', 'Target']}
-      rowLabel='name'
+      rowLabel="name"
     />
   );
 };

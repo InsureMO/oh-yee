@@ -1,5 +1,5 @@
-import React from 'react';
 import { Checkbox } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (

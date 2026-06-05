@@ -11,17 +11,17 @@ const useMessage = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const count = useRef(0);
 
-  const add = useCallback((props: WrapperedMessageConfig) => {
-    const id = count.current++;
-    setMessages((prevMessages) => [...prevMessages, { key: id, ...props }]);
-    return () => onDestroy(id);
-  }, []);
-
   const onDestroy = (key: string | number) => {
     setMessages((prevMessage) => [
       ...prevMessage.filter((msg) => msg.key !== key),
     ]);
   };
+
+  const add = useCallback((props: WrapperedMessageConfig) => {
+    const id = count.current++;
+    setMessages((prevMessages) => [...prevMessages, { key: id, ...props }]);
+    return () => onDestroy(id);
+  }, []);
 
   const messageApi = {
     open: (props: string | MessageConfig) => {

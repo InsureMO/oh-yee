@@ -61,7 +61,9 @@ const TabHeaderTitle: React.FC<TabsItemProps> = (props) => {
         const parent = tabRef.current?.parentElement;
         if (!parent) return [];
         return Array.from(
-          parent.querySelectorAll<HTMLElement>('[role="tab"]:not([aria-disabled="true"])'),
+          parent.querySelectorAll<HTMLElement>(
+            '[role="tab"]:not([aria-disabled="true"])',
+          ),
         );
       };
 

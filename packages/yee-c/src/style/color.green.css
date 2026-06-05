@@ -1,40 +1,39 @@
-[data-theme="green"] {
-
-  --yee-primary-color: #3CA368;
+[data-theme='green'] {
+  --yee-primary-color: #3ca368;
   --yee-primary-color-hover: #178751;
   --yee-primary-color-active: #178751;
-  --yee-link-color: #3CA368;
+  --yee-link-color: #3ca368;
   --yee-link-color-hover: #178751;
   --yee-link-color-active: #178751;
-  --yee-info-color: #337AB7;
-  --yee-info-color-hover: #2A6699;
-  --yee-info-color-active: #2A6699;
-  --yee-info-color-bg: #EFF5FA;
-  --yee-info-color-border: #CEDFEE;
+  --yee-info-color: #337ab7;
+  --yee-info-color-hover: #2a6699;
+  --yee-info-color-active: #2a6699;
+  --yee-info-color-bg: #eff5fa;
+  --yee-info-color-border: #cedfee;
   --yee-success-color: #178751;
   --yee-success-color-hover: #137143;
   --yee-success-color-active: #137143;
-  --yee-success-color-bg: #EDF6F1;
-  --yee-success-color-border: #C8E2D5;
-  --yee-warning-color: #EFC048;
-  --yee-warning-color-hover: #C8A13C;
-  --yee-warning-color-active: #C8A13C;
-  --yee-warning-color-bg: #FEFAF1;
-  --yee-warning-color-border: #FBF0D3;
-  --yee-error-color: #DE3730;
-  --yee-error-color-hover: #BA2E28;
-  --yee-error-color-active: #BA2E28;
-  --yee-error-color-bg: #FDEFEF;
-  --yee-error-color-border: #F7CFCE;
+  --yee-success-color-bg: #edf6f1;
+  --yee-success-color-border: #c8e2d5;
+  --yee-warning-color: #efc048;
+  --yee-warning-color-hover: #c8a13c;
+  --yee-warning-color-active: #c8a13c;
+  --yee-warning-color-bg: #fefaf1;
+  --yee-warning-color-border: #fbf0d3;
+  --yee-error-color: #de3730;
+  --yee-error-color-hover: #ba2e28;
+  --yee-error-color-active: #ba2e28;
+  --yee-error-color-bg: #fdefef;
+  --yee-error-color-border: #f7cfce;
   --yee-text-color: #333333;
   --yee-text-color-secondary: #616161;
-  --yee-text-color-description: #A6A6A6;
-  --yee-text-color-disabled: #B0BEC5;
-  --yee-text-color-highlight: #3CA368;
-  --yee-text-color-auxiliary: #B0BEC5;
+  --yee-text-color-description: #a6a6a6;
+  --yee-text-color-disabled: #b0bec5;
+  --yee-text-color-highlight: #3ca368;
+  --yee-text-color-auxiliary: #b0bec5;
   --yee-color-split: #e7e7e7;
-  --yee-border-color: #C5C6C9;
-  --yee-border-color-hover-focus: #3CA368;
+  --yee-border-color: #c5c6c9;
+  --yee-border-color-hover-focus: #3ca368;
   --yee-color-bg-highlight: rgba(245, 130, 32, 16%);
   --yee-color-bg-disabled: #f5f8fa;
   --yee-color-bg-head: #f8f8f8;
@@ -50,22 +49,19 @@
   --yee-color-option-hover: #39364e;
   --yee-color-option-hover-bg: #f8f8f8;
 
-
   /* 全局的弹出层box-shadow */
 
   --yee-box-shadow-color: rgba(15, 15, 15, 16%);
-
 
   /* --font-family-- */
 
   --global-font-family: 'system-ui, -apple-system, BlinkMacSystemFont, Albert Sans,思源黑体,SourceHanSansSC,Roboto-Regular​';
 
-
   /* --global-- */
 
   --yee-global-font-color: var(--yee-text-color);
   --yee-placeholder-color: var(--yee-text-color-auxiliary);
-  --yee-title-prefix-bg-color: #EFC048;
+  --yee-title-prefix-bg-color: #efc048;
   --yee-remove-icon: var(--yee-text-color-auxiliary);
   --yee-remove-icon-hover: var(--yee-text-color-auxiliary);
   --yee-remove-icon-active: var(--yee-text-color-auxiliary);
@@ -75,7 +71,6 @@
   --yee-close-icon-hover-color: var(--yee-text-color);
   --yee-mask-bg-color: var(--yee-color-bg-mask-dark);
   --yee-tab-active-border-color: #c9cafa;
-
 
   /* --Button-- */
 
@@ -172,16 +167,13 @@
   --yee-btn-danger-not-primary-active-color: var(--yee-error-color-active);
   --yee-btn-danger-not-primary-active-bg-color: #fff;
 
-
   /* ghost */
 
   --yee-btn-ghost-disabled-color: var(--yee-text-color-disabled);
   --yee-btn-ghost-disabled-border-color: var(--yee-border-color);
   --yee-btn-primary-ghost-disabled-bg-color: rgba(245, 248, 250, 0%);
   --yee-btn-default-ghost-disabled-bg-color: var(
-
     --yee-btn-primary-ghost-disabled-bg-color
-
   );
 
   --yee-btn-primary-ghost-color: var(--yee-primary-color);
@@ -198,33 +190,23 @@
   --yee-btn-default-ghost-border-color: #fff;
   --yee-btn-default-ghost-hover-color: var(--yee-btn-primary-ghost-hover-color);
   --yee-btn-default-ghost-hover-bg-color: var(
-
     --yee-btn-primary-ghost-hover-bg-color
-
   );
 
   --yee-btn-default-ghost-hover-border-color: var(
-
     --yee-btn-primary-ghost-hover-border-color
-
   );
 
   --yee-btn-default-ghost-active-color: var(
-
     --yee-btn-primary-ghost-active-color
-
   );
 
   --yee-btn-default-ghost-active-bg-color: var(
-
     --yee-btn-primary-ghost-active-bg-color
-
   );
 
   --yee-btn-default-ghost-active-border-color: var(
-
     --yee-btn-primary-ghost-active-border-color
-
   );
 
   --yee-btn-text-ghost-color: #fff;
@@ -272,7 +254,6 @@
   --yee-btn-loading-spinner-color: var(--yee-text-color-disabled);
   --yee-btn-primary-loading-spinner-color: var(--yee-text-color-disabled);
 
-
   /* --FloatButton-- */
 
   --yee-float-button-menu-bg-color: var(--yee-color-bg-elevated);
@@ -285,12 +266,10 @@
   --yee-float-btn-primary-hover-color: #fff;
   --yee-float-btn-primary-hover-bg-color: var(--yee-primary-color-hover);
 
-
   /* --Field-- */
 
   --yee-field-required-color: var(--yee-error-color);
   --yee-field-error-message-color: var(--yee-error-color);
-
 
   /* --Menu-- */
 
@@ -308,7 +287,6 @@
   --yee-menu-item-focused-bg-color: #f0f0f0;
   --yee-menu-submenu-selected-color: var(--yee-primary-color);
 
-
   /* 暂时无用 */
 
   --yee-menu-submenu-inline-open-color: var(--yee-primary-color);
@@ -319,14 +297,10 @@
   --yee-icon-warning-color: var(--yee-warning-color);
   --yee-icon-danger-color: var(--yee-error-color);
 
-
-
-
   /* --Divider-- */
 
   --yee-divider-font-color: var(--yee-text-color);
   --yee-divider-border-color: var(--yee-color-split);
-
 
   /* --SplitPanel-- */
 
@@ -340,34 +314,25 @@
   --yee-splitter-arrow-hover-color: #777af2;
   --yee-splitter-arrow-bg-hover-color: rgba(119, 122, 242, 8%);
 
-
   /* --Anchor-- */
 
   --yee-anchor-content-bg-color: var(--yee-color-bg-elevated);
-  --yee-anchor-nav-arrow-bg-color: #EFC048;
-  --yee-anchor-nav-arrow-span-font-color: #FFFFFF;
+  --yee-anchor-nav-arrow-bg-color: #efc048;
+  --yee-anchor-nav-arrow-span-font-color: #ffffff;
   --yee-anchor-nav-arrow-before-borderbottom-color: var(
-
     --yee-anchor-nav-arrow-bg-color
-
   );
 
   --yee-anchor-nav-arrow-before-borderright-color: var(
-
     --yee-anchor-nav-arrow-bg-color
-
   );
 
   --yee-anchor-nav-arrow-after-bordertop-color: var(
-
     --yee-anchor-nav-arrow-bg-color
-
   );
 
   --yee-anchor-nav-arrow-after-borderright-color: var(
-
     --yee-anchor-nav-arrow-bg-color
-
   );
 
   --yee-anchor-nav-line-bg-color: var(--yee-color-bg-rail);
@@ -378,7 +343,6 @@
   --yee-anchor-item-before-border-color: var(--yee-primary-color);
   --yee-anchor-item-before-active-bg-color: var(--yee-color-bg-elevated);
   --yee-anchor-item-active-font-color: var(--yee-primary-color);
-
 
   /* --Breadcrumb-- */
 
@@ -391,11 +355,9 @@
   --yee-breadcrumb-hover-icon-color: var(--yee-primary-color);
   --yee-breadcrumb-active-icon-color: var(--yee-primary-color);
 
-
   /* --Dropdown-- */
 
   --yee-dropdown-bg-color: var(--yee-color-bg-elevated);
-
 
   /* --List-- */
 
@@ -409,7 +371,6 @@
   --yee-list-item-active-bg-color: var(--yee-color-option-active-bg);
   --yee-list-bg-color: #fefefe;
   --yee-list-bordered-border-color: #ccc;
-
 
   /* --Pagination-- */
 
@@ -432,7 +393,6 @@
   --yee-pagination-active-disabled-bg-color: var(--yee-color-bg-disabled);
   --yee-pagination-active-disabled-color: var(--yee-text-color-disabled);
   --yee-pagination-turn-page-color: var(--yee-text-color);
-
 
   /* --Steps-- */
 
@@ -464,52 +424,39 @@
   --yee-steps-step-nav-arrow-color: var(--yee-text-color-auxiliary);
   --yee-steps-step-nav-border-color: var(--yee-color-split);
   --yee-steps-step-nav-doing-border-color: var(
-
     --yee-steps-serial-doing-bg-color
-
   );
 
   --yee-steps-step-nav-click-hover-color: var(--yee-steps-step-done-color);
   --yee-steps-step-ribbon-icon-bg-color: #fff;
   --yee-steps-step-ribbon-icon-border-color: var(
-
     --yee-steps-step-ribbon-icon-bg-color
-
   );
 
   --yee-steps-step-ribbon-done-icon-bg-color: #fff;
   --yee-steps-step-ribbon-done-icon-border-color: var(
-
     --yee-steps-step-ribbon-done-icon-bg-color
-
   );
 
   --yee-steps-step-ribbon-done-icon-color: var(--yee-steps-step-done-color);
   --yee-steps-step-ribbon-undo-icon-bg-color: #fff;
   --yee-steps-step-ribbon-undo-icon-border-color: var(
-
     --yee-steps-step-ribbon-undo-icon-bg-color
-
   );
 
   --yee-steps-step-ribbon-undo-icon-color: var(
-
     --yee-steps-step-ribbon-undo-color
-
   );
 
   --yee-steps-step-ribbon-done-color: var(--yee-steps-step-done-color);
   --yee-steps-step-ribbon-done-bg-color: var(--yee-steps-serial-done-bg-color);
   --yee-steps-step-ribbon-doing-color: var(--yee-steps-step-doing-color);
   --yee-steps-step-ribbon-doing-bg-color: var(
-
     --yee-steps-serial-doing-bg-color
-
   );
 
   --yee-steps-step-ribbon-undo-color: var(--yee-steps-step-undo-color);
   --yee-steps-step-ribbon-undo-bg-color: var(--yee-color-bg-fill);
-
 
   /* --Cascader-- */
 
@@ -528,7 +475,6 @@
   --yee-filter-menu-hover-bg-color: var(--yee-color-option-hover-bg);
   --yee-high-light-font-color: var(--yee-text-color-highlight);
 
-
   /* --Checkbox-- */
 
   --yee-checkbox-bg-color: var(--yee-color-bg-container);
@@ -541,14 +487,11 @@
   --yee-checkbox-disabled-checked-bg-color: var(--yee-color-bg-disabled);
   --yee-checkbox-disabled-checked-border-color: var(--yee-border-color);
   --yee-checkbox-disabled-checked-after-border-color: var(
-
     --yee-text-color-disabled
-
   );
 
   --yee-checkbox-border-indeterminate-color: var(--yee-primary-color);
   --yee-checkbox-bg-indeterminate-color: var(--yee-primary-color);
-
 
   /* --Datepicker--  */
 
@@ -576,21 +519,19 @@
   --yee-date-picker-time-hover-bg-color: var(--yee-color-option-hover-bg);
   --yee-date-picker-time-checked-active-color: var(--yee-color-option-active);
   --yee-date-picker-time-checked-active-bg-color: var(
-
     --yee-color-option-active-bg
-
   );
 
   --yee-date-picker-time-disabled-color: var(--yee-text-color-disabled);
   --yee-date-picker-time-disabled-bg-color: transparent;
 
-
   --yee-rangepicker-trigger-border-color: var(--yee-border-color);
-  --yee-rangepicker-trigger-hover-border-color: var(--yee-border-color-hover-focus);
+  --yee-rangepicker-trigger-hover-border-color: var(
+    --yee-border-color-hover-focus
+  );
   --yee-rangepicker-checked-bg-color: var(--yee-color-option-active-bg);
   --yee-rangepicker-hover-border-color: var(--yee-primary-color);
   --yee-rangepicker-panel-bg-color: #fff;
-
 
   /* --Timepicker-- */
 
@@ -598,20 +539,12 @@
   --yee-time-picker-header-color: var(--yee-text-color);
   --yee-time-picker-header-bg-color: var(--yee-color-bg-head);
   --yee-time-picker-container-hour-apm-active-bg-color: var(
-
     --yee-color-option-active-bg
-
   );
 
   --yee-time-picker-container-hour-apm-active-font-color: var(
-
     --yee-color-option-active
-
   );
-
-
-
-
 
   /* --Input-- */
 
@@ -634,7 +567,6 @@
   --yee-input-clear-color: #fff;
   --yee-input-clear-bg-color: #bfbfbf;
 
-
   /* --JsonViewer-- */
 
   --yee-json-view-color: #333;
@@ -647,11 +579,9 @@
   --yee-json-comma-color: #333;
   --yee-json-collapsed-color: #666;
 
-
   /* --Textarea-- */
 
   --yee-textarea-number-color: var(--yee-text-color-description);
-
 
   /* --Inputnumber-- */
 
@@ -663,7 +593,6 @@
   --yee-inputnumber-handler-hover-bg-color: #f0f0f0;
   --yee-inputnumber-handler-active-bg-color: #e6e6e6;
 
-
   /* --Radio-- */
 
   --yee-radio-inner-border-color: var(--yee-border-color);
@@ -672,9 +601,7 @@
   --yee-radio-inner-after-checked-bg-color: var(--yee-primary-color);
   --yee-radio-inner-disabled-border-color: var(--yee-border-color);
   --yee-radio-inner-disabled-after-checked-bg-color: var(
-
     --yee-text-color-disabled
-
   );
 
   --yee-radio-inner-hover-border-color: var(--yee-border-color-hover-focus);
@@ -697,12 +624,10 @@
   --yee-radio-button-disabled-arrow-border-color: #fff;
   --yee-radio-group-solid-checked-color: #fff;
 
-
   /* --Rate-- */
 
   --yee-star-icon-color: var(--yee-color-bg-fill);
   --yee-rate-star-full-icon-color: #ffc700;
-
 
   /* --Select-- */
 
@@ -721,7 +646,6 @@
   --yee-select-multi-disabled-tag-color: var(--yee-text-color-disabled);
   --yee-select-multi-disabled-tag-border-color: var(--yee-color-split);
   --yee-select-multi-disabled-tag-bg-color: var(--yee-color-split);
-
 
   /* --Slider-- */
 
@@ -749,7 +673,6 @@
   --yee-slider-disabled-handler-bg-color: #fff;
   --yee-slider-disabled-handler-border-color: #bfbfbf;
 
-
   /* --Switch-- */
 
   --yee-switchbox-switch-color: #fff;
@@ -757,18 +680,14 @@
   --yee-switchbox-switch-border-color: var(--yee-switchbox-switch-bg-color);
   --yee-switchbox-switch-bg-hover-color: #bfbfbf;
   --yee-switchbox-switch-border-hover-color: var(
-
     --yee-switchbox-switch-bg-hover-color
-
   );
 
   --yee-switchbox-switch-handle-bg-color: #fff;
   --yee-switchbox-switch-disabled-color: #fff;
   --yee-switchbox-switch-disabled-bg-color: #dee5ed;
   --yee-switchbox-switch-disabled-border-color: var(
-
     --yee-switchbox-switch-disabled-bg-color
-
   );
 
   --yee-switchbox-switch-disabled-handle-bg-color: #fff;
@@ -777,27 +696,21 @@
   --yee-switchbox-switch-checked-border-color: var(--yee-primary-color);
   --yee-switchbox-switch-checked-bg-hover-color: var(--yee-primary-color-hover);
   --yee-switchbox-switch-checked-border-hover-color: var(
-
     --yee-primary-color-hover
-
   );
 
   --yee-switchbox-switch-checked-handle-bg-color: #fff;
   --yee-switchbox-switch-checked-disabled-color: #fff;
   --yee-switchbox-switch-checked-disabled-bg-color: #a9aaf7;
   --yee-switchbox-switch-checked-disabled-border-color: var(
-
     --yee-switchbox-switch-checked-disabled-bg-color
-
   );
 
   --yee-switchbox-switch-checked-disabled-handle-bg-color: #fff;
 
-
   /* --TableSelect-- */
 
   --yee-table-select-container-bg-color: var(--yee-color-bg-elevated);
-
 
   /* --Transfer-- */
 
@@ -807,9 +720,7 @@
   --yee-transfer-list-header-bg-color: var(--yee-color-bg-container);
   --yee-transfer-list-content-item-hover-color: var(--yee-color-option-hover);
   --yee-transfer-list-content-item-hover-bg-color: var(
-
     --yee-color-option-hover-bg
-
   );
 
   --yee-transfer-list-body-disabled-color: var(--yee-text-color-disabled);
@@ -820,11 +731,9 @@
   --yee-transfer-operation-disabled-border-color: var(--yee-border-color);
   --yee-transfer-operation-disabled-bg-color: var(--yee-color-bg-disabled);
 
-
   /* --TreeSelect-- */
 
   --yee-treeselect-dropdown-bg-color: var(--yee-color-bg-elevated);
-
 
   /* --Upload-- */
 
@@ -844,9 +753,7 @@
   --yee-upload-list-item-hover-color: var(--yee-link-color-hover);
   --yee-upload-list-item-hover-bg-color: var(--yee-color-option-hover-bg);
   --yee-upload-list-item-custom-btn-text-color: var(
-
     --yee-text-color-description
-
   );
 
   --yee-upload-list-item-custom-btn-text-hover-color: var(--yee-text-color);
@@ -859,12 +766,10 @@
   --yee-upload-picture-wall-icon-color: #fff;
   --yee-upload-picture-wall-mask-color: var(--yee-mask-bg-color);
 
-
   /* --Search-- */
 
   --yee-search-result-bg-color: var(--yee-color-bg-elevated);
   --yee-search-no-result-color: var(--yee-text-color-description);
-
 
   /* --Badge-- */
 
@@ -881,14 +786,12 @@
   --yee-ribbon-anger-bg-color: var(--yee-ribbon-content-bg-color);
   --yee-badge-count-border-color: #fff;
 
-
   /* --Box-- */
 
   --yee-box-bg: var(--yee-color-bg-container);
   --yee-box-footer-bg: var(--yee-color-bg-elevated);
   --yee-top-count-title: var(--yee-text-color-description);
   --yee-top-count-after-bg-color: var(--yee-color-split);
-
 
   /* --Calendar-- */
 
@@ -904,7 +807,6 @@
   --yee-calendar-cell-selected-color: var(--yee-color-option-active);
   --yee-calendar-cell-selected-bg-color: var(--yee-color-option-active-bg);
   --yee-calendar-cell-selected-border-color: #d3d4fa;
-
 
   /* --Card-- */
 
@@ -922,7 +824,6 @@
   --yee-card-group-inner-bg-color: transparent;
   --yee-card-header-clickable-bg-color: #efefef;
 
-
   /* --Carousel-- */
 
   --yee-carousel-bar-bg-color: rgba(119, 122, 242, 45%);
@@ -933,7 +834,6 @@
   --yee-carousel-arrow-hover-color: #fff;
   --yee-carousel-arrow-hover-bg-color: var(--yee-primary-color);
   --yee-carousel-arrow-hover-border-color: var(--yee-primary-color);
-
 
   /* --Collapse-- */
 
@@ -949,15 +849,11 @@
   --yee-collapse-header-custom-btn-text-hover-color: var(--yee-primary-color);
   --yee-collapse-header-custom-btn-text-active-color: var(--yee-primary-color);
 
-
   /* --Highlight-- */
 
   --yee-highlight-color: var(--yee-primary-color);
   --yee-highlight-hover-color: #39364e;
   --yee-highlight-active-color: #39364e;
-
-
-
 
   /* --ImagePreview-- */
 
@@ -981,13 +877,11 @@
   --yee-image-preview-arrow-bg-hover-color: rgba(255, 255, 255, 16%);
   --yee-image-preview-viewer-bg-color: var(--yee-color-bg-layout);
 
-
   /* --Popover-- */
 
   --yee-popover-bg-color: var(--yee-color-bg-elevated);
   --yee-popover-header-bg-color: transparent;
   --yee-popover-confirm-icon-color: var(--yee-warning-color);
-
 
   /* --QRCode-- */
 
@@ -996,7 +890,6 @@
   --yee-qrcode-bg-color: var(--yee-color-bg-container);
   --yee-qrcode-mask-bg-color: rgba(255, 255, 255, 96%);
   --yee-qrcode-mask-font-color: var(--yee-text-color);
-
 
   /* --Table-- */
 
@@ -1008,31 +901,23 @@
   --yee-table-elevated-thead-bg-color: var(--yee-table-thead-bg-color);
   --yee-table-thead-borderbottom-color: var(--yee-color-split);
   --yee-table-elevated-thead-borderbottom-color: var(
-
     --yee-table-thead-borderbottom-color
-
   );
 
   --yee-table-tbody-td-borderbottom-color: var(--yee-color-split);
   --yee-table-elevated-tbody-td-borderbottom-color: var(
-
     --yee-table-tbody-td-borderbottom-color
-
   );
 
   --yee-table-thead-stripe-bg-color: var(--yee-color-bg-container);
   --yee-table-thead-stripe-borderbottom-color: var(
-
     --yee-table-thead-borderbottom-color
-
   );
 
   --yee-table-odd-row-bg-color: var(--yee-color-bg-container);
   --yee-table-even-row-bg-color: var(--yee-color-bg-head);
   --yee-table-elevated-thead-stripe-borderbottom-color: var(
-
     --yee-table-thead-stripe-borderbottom-color
-
   );
 
   --yee-table-elevated-odd-row-bg-color: var(--yee-table-odd-row-bg-color);
@@ -1040,9 +925,7 @@
   --yee-table-highlight-bg-color: var(--yee-color-option-hover-bg);
   --yee-table-tbody-tr-hover-bg-color: var(--yee-color-option-hover-bg);
   --yee-table-elevated-tbody-tr-hover-bg-color: var(
-
     --yee-table-tbody-tr-hover-bg-color
-
   );
 
   --yee-table-head-action-search-color: var(--yee-text-color-auxiliary);
@@ -1058,14 +941,11 @@
   --yee-table-filter-list-bg-color: var(--yee-color-bg-elevated);
   --yee-table-tbody-tr-expanded-bg-color: var(--yee-color-bg-container);
   --yee-table-elevated-tbody-tr-expanded-bg-color: var(
-
     --yee-table-tbody-tr-expanded-bg-color
-
   );
 
   --yee-table-summary-bg-color: var(--yee-color-bg-container);
   --yee-table-no-record-color: var(--yee-text-color-description);
-
 
   /* --Tabs-- */
 
@@ -1086,9 +966,7 @@
   --yee-tabitem-dropdown-title-hover-bg-color: var(--yee-color-option-hover-bg);
   --yee-tabitem-dropdown-title-active-color: var(--yee-color-option-active);
   --yee-tabitem-dropdown-title-active-bg-color: var(
-
     --yee-color-option-active-bg
-
   );
 
   --yee-tabs-card-item-bg-color: rgba(255, 255, 255, 64%);
@@ -1100,7 +978,6 @@
   --yee-tabs-header-custom-btn-text-color: var(--yee-text-color);
   --yee-tabs-header-custom-btn-text-hover-color: var(--yee-primary-color);
   --yee-tabs-header-custom-btn-text-active-color: var(--yee-primary-color);
-
 
   /* --Tag-- */
 
@@ -1135,7 +1012,6 @@
   --yee-tag-disabled-border-color: var(--yee-tag-border-color);
   --yee-tag-disabled-bg-color: var(--yee-tag-item-bg-color);
 
-
   /* --Timeline-- */
 
   --yee-timeline-item-tail-color: var(--yee-color-bg-rail);
@@ -1149,7 +1025,6 @@
   --yee-timeline-item-error: var(--yee-error-color);
   --yee-timeline-item-disabled: var(--yee-text-color-disabled);
 
-
   /* --Tooltip-- */
 
   --yee-tooltip-font-color: #fff;
@@ -1162,7 +1037,6 @@
   --yee-tooltip-warning-bg-color: var(--yee-warning-color);
   --yee-tooltip-error-color: #fff;
   --yee-tooltip-error-bg-color: var(--yee-error-color);
-
 
   /* --Tree-- */
 
@@ -1183,7 +1057,6 @@
   --yee-tree-header-custom-btn-text-hover-color: var(--yee-primary-color);
   --yee-tree-header-custom-btn-text-active-color: var(--yee-primary-color);
 
-
   /* --Alert-- */
 
   --yee-alert-font-color: var(--yee-text-color);
@@ -1201,7 +1074,6 @@
   --yee-alert-danger-bg-color: var(--yee-error-color-bg);
   --yee-alert-danger-border-color: var(--yee-error-color-border);
 
-
   /* --Dialog-- */
 
   --yee-dialog-mask-bg-color: var(--yee-color-bg-mask-dark);
@@ -1215,7 +1087,6 @@
   --yee-dialog-content-bg-color: var(--yee-color-bg-elevated);
   --yee-dialog-content-box-shadow-color: rgba(15, 15, 15, 8%);
 
-
   /* --Drawer-- */
 
   --yee-drawer-mask-bg-color: var(--yee-color-bg-mask-dark);
@@ -1224,7 +1095,6 @@
   --yee-drawer-title-color: var(--yee-text-color);
   --yee-drawer-footer-border-color: var(--yee-color-split);
 
-
   /* --Message-- */
 
   --yee-message-bg-color: var(--yee-color-bg-elevated);
@@ -1232,7 +1102,6 @@
   --yee-message-success-color: var(--yee-success-color);
   --yee-message-warning-color: var(--yee-warning-color);
   --yee-message-error-color: var(--yee-error-color);
-
 
   /* --Notification-- */
 
@@ -1261,11 +1130,9 @@
   --yee-notice-box-shadow-hover-color-3: rgba(0, 0, 0, 0.08);
   --yee-notice-bg-color: var(--yee-color-bg-elevated);
 
-
   /* --Popconfirm-- */
 
   --yee-popconfirm-bg-font-color: var(--yee-color-bg-elevated);
-
 
   /* --Progress-- */
 
@@ -1281,13 +1148,11 @@
   --yee-progress-circle-segment-progress-color: var(--yee-info-color);
   --yee-progress-circle-segment-done-color: var(--yee-success-color);
 
-
   /* --Skeleton-- */
 
   --yee-skeleton-bg-color: rgba(0, 0, 0, 4%);
   --yee-skeleton-border-color: transparent;
   --yee-skeleton-bg-active-color: rgba(0, 0, 0, 8%);
-
 
   /* --Spin-- */
 
@@ -1300,7 +1165,6 @@
   --yee-full-loading-item-bg-color: transparent;
   --yee-full-loading-mask-bg-color: var(--yee-color-bg-mask-light);
 
-
   /* --Selector-- */
 
   --yee-selector-border-color: var(--yee-border-color);
@@ -1308,11 +1172,9 @@
   --yee-selector-focus-border-color: var(--yee-primary-color);
   --yee-selector-disabled-bg-color: var(--yee-input-disabled-bg-color);
 
-
   /* --Watermark-- */
 
   --yee-watermark-color: var(--yee-text-color);
-
 
   /* --Descriptions-- */
 

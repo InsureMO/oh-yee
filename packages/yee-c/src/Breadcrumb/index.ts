@@ -2,8 +2,8 @@ import InternalBreadcrumb from './breadcrumb';
 import BreadcrumbItem from './breadcrumb-item';
 
 export type {
-  BreadcrumbProps,
   BreadcrumbItemProps,
+  BreadcrumbProps,
   BreadcrumbSemanticDOM,
 } from './interface';
 

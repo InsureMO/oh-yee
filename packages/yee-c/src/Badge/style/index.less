@@ -2,182 +2,183 @@
 @cls: .yee-ribbon;
 
 @{pls} {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--yee-color-text);
+
+  &-sup {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: var(--yee-badge-sup-z-index);
+    transform: translate(50%, -50%);
+
+    &-large {
+      @{pls}-count {
+        width: var(--yee-badge-large-count-size, 30px);
+        height: var(--yee-badge-large-count-size, 30px);
+        font-size: var(--yee-badge-large-count-font-size, 18px);
+        line-height: var(--yee-badge-large-count-line-height);
+      }
+
+      @{pls}-dot {
+        width: var(--yee-badge-large-dot-size, 12px);
+        height: var(--yee-badge-large-dot-size, 12px);
+      }
+    }
+
+    &-small {
+      @{pls}-count {
+        width: var(--yee-badge-small-count-size, 16px);
+        height: var(--yee-badge-small-count-size, 16px);
+        font-size: var(--yee-badge-small-count-font-size, 12px);
+        line-height: var(--yee-badge-small-count-line-height);
+      }
+
+      @{pls}-dot {
+        width: var(--yee-badge-small-dot-size, 8px);
+        height: var(--yee-badge-small-dot-size, 8px);
+      }
+    }
+  }
+
+  &-content {
     position: relative;
+    display: inline-block;
+    background-color: var(--yee-badge-default-color);
+  }
+
+  &-custom-content {
+    color: var(--yee-badge-default-color);
+  }
+
+  &-status-text {
+    margin-left: var(--yee-badge-status-text-margin-left);
+    font-size: var(--yee-badge-status-text-font-size);
+    line-height: var(--yee-badge-status-text-line-height);
+  }
+
+  &-count {
     display: inline-flex;
     align-items: center;
-    color: var(--yee-color-text);
+    justify-content: center;
+    min-width: var(--yee-badge-count-min-width);
+    height: var(--yee-badge-count-height);
+    color: var(--yee-badge-default-font-color);
+    font-size: var(--yee-badge-count-font-size);
+    line-height: var(--yee-badge-count-line-height);
+    text-align: center;
+    border-radius: var(--yee-badge-count-border-radius);
+    box-shadow: var(--yee-badge-count-box-shadow);
+  }
 
-    &-sup {
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: var(--yee-badge-sup-z-index);
-        transform: translate(50%, -50%);
+  &-dot {
+    width: var(--yee-badge-dot-width);
+    height: var(--yee-badge-dot-height);
+    border-radius: 50%;
+    box-shadow: var(--yee-badge-count-box-shadow);
+  }
 
-        &-large {
-            @{pls}-count {
-                width: var(--yee-badge-large-count-size, 30px);
-                height: var(--yee-badge-large-count-size, 30px);
-                font-size: var(--yee-badge-large-count-font-size, 18px);
-                line-height: var(--yee-badge-large-count-line-height);
-            }
+  &-multi {
+    padding: var(--yee-badge-multi-padding);
+  }
 
-            @{pls}-dot {
-                width: var(--yee-badge-large-dot-size, 12px);
-                height: var(--yee-badge-large-dot-size, 12px);
-            }
-        }
-
-        &-small {
-            @{pls}-count {
-                width: var(--yee-badge-small-count-size, 16px);
-                height: var(--yee-badge-small-count-size, 16px);
-                font-size: var(--yee-badge-small-count-font-size, 12px);
-                line-height: var(--yee-badge-small-count-line-height);
-            }
-
-            @{pls}-dot {
-                width: var(--yee-badge-small-dot-size, 8px);
-                height: var(--yee-badge-small-dot-size, 8px);
-            }
-        }
+  // state
+  &-status {
+    &-processing {
+      background-color: var(--yee-badge-state-info-color);
+      box-shadow: none;
     }
 
-    &-content {
-        position: relative;
-        display: inline-block;
-        background-color: var(--yee-badge-default-color);
+    &-success {
+      background-color: var(--yee-badge-state-success-color);
+      box-shadow: none;
     }
 
-    &-custom-content {
-        color: var(--yee-badge-default-color);
+    &-info {
+      background-color: var(--yee-badge-state-info-color);
+      box-shadow: none;
     }
 
-    &-status-text {
-        margin-left: var(--yee-badge-status-text-margin-left);
-        font-size: var(--yee-badge-status-text-font-size);
-        line-height: var(--yee-badge-status-text-line-height);
+    &-warning {
+      background-color: var(--yee-badge-state-warning-color);
+      box-shadow: none;
     }
 
-    &-count {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: var(--yee-badge-count-min-width);
-        height: var(--yee-badge-count-height);
-        color: var(--yee-badge-default-font-color);
-        font-size: var(--yee-badge-count-font-size);
-        line-height: var(--yee-badge-count-line-height);
-        text-align: center;
-        border-radius: var(--yee-badge-count-border-radius);
-        box-shadow: var(--yee-badge-count-box-shadow);
+    &-error {
+      background-color: var(--yee-badge-state-error-color);
+      box-shadow: none;
     }
 
-    &-dot {
-        width: var(--yee-badge-dot-width);
-        height: var(--yee-badge-dot-height);
-        border-radius: 50%;
-        box-shadow: var(--yee-badge-count-box-shadow);
+    &-disabled {
+      background-color: var(--yee-badge-state-disabled-color);
+      box-shadow: none;
     }
 
-    &-multi {
-        padding: var(--yee-badge-multi-padding);
+    &-default {
+      background-color: var(--yee-badge-state-default-color);
+      box-shadow: none;
     }
+  }
 
-    // state
-    &-status {
-        &-processing {
-            background-color: var(--yee-badge-state-info-color);
-            box-shadow: none;
-        }
-
-        &-success {
-            background-color: var(--yee-badge-state-success-color);
-            box-shadow: none;
-        }
-
-        &-info {
-            background-color: var(--yee-badge-state-info-color);
-            box-shadow: none;
-        }
-
-        &-warning {
-            background-color: var(--yee-badge-state-warning-color);
-            box-shadow: none;
-        }
-
-        &-error {
-            background-color: var(--yee-badge-state-error-color);
-            box-shadow: none;
-        }
-
-        &-disabled {
-            background-color: var(--yee-badge-state-disabled-color);
-            box-shadow: none;
-        }
-
-        &-default {
-            background-color: var(--yee-badge-state-default-color);
-            box-shadow: none;
-        }
-    }
-
-    &-active {
-        animation: breathe linear infinite 1.5s;
-    }
+  &-active {
+    animation: breathe linear infinite 1.5s;
+  }
 }
 
 // rabbon
 @{cls} {
-    &-wrapper {
-        position: relative;
-    }
+  &-wrapper {
+    position: relative;
+  }
 
-    &-content {
-        position: absolute;
-        top: var(--yee-ribbon-content-top);
-        right: var(--yee-ribbon-content-right);
-        max-width: 40%;
-        padding: var(--yee-ribbon-content-padding);
-        color: var(--yee-ribbon-content-color);
-        background-color: var(--yee-ribbon-content-bg-color);
-        border-top-left-radius: var(--yee-ribbon-content-border-radius);
-        border-top-right-radius: var(--yee-ribbon-content-border-radius);
-        border-bottom-left-radius: var(--yee-ribbon-content-border-radius);
-    }
+  &-content {
+    position: absolute;
+    top: var(--yee-ribbon-content-top);
+    right: var(--yee-ribbon-content-right);
+    max-width: 40%;
+    padding: var(--yee-ribbon-content-padding);
+    color: var(--yee-ribbon-content-color);
+    background-color: var(--yee-ribbon-content-bg-color);
+    border-top-left-radius: var(--yee-ribbon-content-border-radius);
+    border-top-right-radius: var(--yee-ribbon-content-border-radius);
+    border-bottom-left-radius: var(--yee-ribbon-content-border-radius);
+  }
 
-    &-title {
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
+  &-title {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 
-    &-anger {
-        position: absolute;
-        top: 100%;
-        width: var(--yee-ribbon-anger-width);
-        height: var(--yee-ribbon-anger-height);
-        color: currentcolor;
-        border: var(--yee-ribbon-anger-border-width) solid var(--yee-ribbon-anger-bg-color);
-        transform: scaleY(0.5);
-        transform-origin: top;
-        filter: brightness(84%);
-        inset-inline-end: 0;
-        border-inline-end-color: transparent;
-        border-block-end-color: transparent;
-    }
+  &-anger {
+    position: absolute;
+    top: 100%;
+    width: var(--yee-ribbon-anger-width);
+    height: var(--yee-ribbon-anger-height);
+    color: currentcolor;
+    border: var(--yee-ribbon-anger-border-width) solid
+      var(--yee-ribbon-anger-bg-color);
+    transform: scaleY(0.5);
+    transform-origin: top;
+    filter: brightness(84%);
+    inset-inline-end: 0;
+    border-inline-end-color: transparent;
+    border-block-end-color: transparent;
+  }
 }
 
 // animation
 @keyframes breathe {
-    from {
-        transform: scale(1);
-        opacity: 1;
-    }
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
 
-    to {
-        transform: scale(1.1);
-        opacity: 0.8;
-    }
+  to {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }

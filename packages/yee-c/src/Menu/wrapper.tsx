@@ -6,8 +6,8 @@ import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { FlatItem } from '../utils/tree2array';
 import tree2array from '../utils/tree2array';
-import Menu from './menu';
 import type { MenuItemType, MenuProps } from './interface';
+import Menu from './menu';
 
 import './style/index.less';
 
@@ -23,7 +23,7 @@ export type MenuWrapperContextType = {
   openOnly?: boolean;
   flatItems: Array<FlatItem>;
   onClick: (isLeaf: boolean, item: MenuItemType, event: MouseEvent) => void;
-  onOpenChange?: (params: { item: MenuItemType; expanded: boolean }) => void;
+  onOpenChange?: () => void;
   updateOpenKeys: (keys: string[] | ((prev: string[]) => string[])) => void;
   updateSelectedKeys: (keys: string[] | ((prev: string[]) => string[])) => void;
   footer?: React.ReactNode;
@@ -88,7 +88,9 @@ const MenuWrapper = (baseprops: MenuProps) => {
   const onArrowDown = () => {
     const items = getVisibleItems();
     if (!items.length) return;
-    const idx = items.findIndex((item) => item.key === latestFocusedKey.current);
+    const idx = items.findIndex(
+      (item) => item.key === latestFocusedKey.current,
+    );
     const nextIdx = idx < items.length - 1 ? idx + 1 : 0;
     setFocusedKey(items[nextIdx].key);
   };
@@ -96,21 +98,26 @@ const MenuWrapper = (baseprops: MenuProps) => {
   const onArrowUp = () => {
     const items = getVisibleItems();
     if (!items.length) return;
-    const idx = items.findIndex((item) => item.key === latestFocusedKey.current);
+    const idx = items.findIndex(
+      (item) => item.key === latestFocusedKey.current,
+    );
     const prevIdx = idx > 0 ? idx - 1 : items.length - 1;
     setFocusedKey(items[prevIdx].key);
   };
 
   const onArrowLeft = () => {
     if (latestOpenKeys.current.length > 0) {
-      const parentKey = latestOpenKeys.current[latestOpenKeys.current.length - 1];
+      const parentKey =
+        latestOpenKeys.current[latestOpenKeys.current.length - 1];
       setMergedOpenKeys((prev) => prev.slice(0, -1));
       setFocusedKey(parentKey);
     }
   };
 
   const onArrowRight = () => {
-    const target = flatItems.find((item) => item.key === latestFocusedKey.current);
+    const target = flatItems.find(
+      (item) => item.key === latestFocusedKey.current,
+    );
     if (target && Array.isArray(target.children) && target.children.length) {
       setMergedOpenKeys((prev) =>
         prev.includes(target.key) ? prev : [...prev, target.key],
@@ -212,7 +219,8 @@ const MenuWrapper = (baseprops: MenuProps) => {
     onClick?.({ item, key, keyPath });
   };
 
-  const handleOpenChange = (params: { item: MenuItemType; expanded: boolean }) => {
+  const handleOpenChange = () => {
+    // eslint-disable-line @typescript-eslint/no-unused-vars
     onOpenChange?.(mergedOpenKeys);
   };
 

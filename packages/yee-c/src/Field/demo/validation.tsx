@@ -1,4 +1,4 @@
-import { Field, Input, useVirtualForm, Button } from '@rainbow-oh/yee-c';
+import { Button, Field, Input, useVirtualForm } from '@rainbow-oh/yee-c';
 import React, { useLayoutEffect } from 'react';
 
 export default () => {
@@ -10,9 +10,9 @@ export default () => {
 
   const handleSubmit = () => {
     const form = getForm('validationForm');
-    console.log("form: ", form);
+    console.log('form: ', form);
     const errors = form?.submit();
-    console.log("errors: ", errors);
+    console.log('errors: ', errors);
     if (errors && errors.length === 0) {
       console.log('Submit success:', form?.getFieldsValue());
     }
@@ -37,7 +37,10 @@ export default () => {
         name="phone"
         label="Phone"
         rules={[
-          { regexp: /^1[3-9]\d{9}$/, message: 'Please enter a valid phone number' },
+          {
+            regexp: /^1[3-9]\d{9}$/,
+            message: 'Please enter a valid phone number',
+          },
         ]}
       >
         <Input placeholder="Please enter phone number" />
@@ -47,7 +50,10 @@ export default () => {
         name="age"
         label="Age"
         rules={[
-          { validator: (v) => Number(v) >= 18, message: 'Must be at least 18 years old' },
+          {
+            validator: (v) => Number(v) >= 18,
+            message: 'Must be at least 18 years old',
+          },
         ]}
       >
         <Input placeholder="Please enter age" />
@@ -57,12 +63,19 @@ export default () => {
         name="code"
         label="Verification Code"
         rules={[
-          { minLength: 6, maxLength: 6, message: 'Verification code must be 6 digits', validateTrigger: 'onBlur' },
+          {
+            minLength: 6,
+            maxLength: 6,
+            message: 'Verification code must be 6 digits',
+            validateTrigger: 'onBlur',
+          },
         ]}
       >
         <Input placeholder="Validate on blur only" />
       </Field>
-      <Button type="primary" onClick={handleSubmit}>Submit</Button>
+      <Button type="primary" onClick={handleSubmit}>
+        Submit
+      </Button>
     </div>
   );
 };

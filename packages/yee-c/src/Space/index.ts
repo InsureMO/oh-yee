@@ -1,7 +1,11 @@
 import Compact from './compact';
-import InternalSpace from './space';
 import Item from './item';
-export type { SpaceProps, SpaceItemProps, SpaceCompactProps } from './interface';
+import InternalSpace from './space';
+export type {
+  SpaceCompactProps,
+  SpaceItemProps,
+  SpaceProps,
+} from './interface';
 
 type SpaceType = typeof InternalSpace & {
   Compact: typeof Compact;

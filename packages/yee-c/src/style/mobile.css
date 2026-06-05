@@ -25,7 +25,6 @@
     /* ── Box ── */
     --yee-box-padding: 12px 16px;
 
-
     /* ── Checkbox ── */
     --yee-checkbox-inner-width: 20px;
     --yee-checkbox-inner-height: 20px;
@@ -207,6 +206,7 @@
   .yee-table-wrapper {
     -webkit-overflow-scrolling: touch;
   }
+
   .yee-table-content > table {
     min-width: 600px;
   }
@@ -228,6 +228,7 @@
     width: 100% !important;
     height: 100vh !important;
   }
+
   .yee-drawer-top .yee-drawer-content-wrapper,
   .yee-drawer-bottom .yee-drawer-content-wrapper {
     width: 100vw !important;
@@ -271,9 +272,11 @@
     width: 44px;
     height: 44px;
   }
+
   .yee-image-viewer-toolbar {
     padding: 0 16px;
   }
+
   .yee-image-viewer-toolbar .yee-btn {
     width: 32px;
     height: 32px;
@@ -283,13 +286,16 @@
   .yee-upload-dragger {
     padding: 16px;
   }
+
   .yee-upload-picture-wall-item-operate {
     opacity: 1;
   }
+
   .yee-upload-list-item,
   .yee-upload-picture-list-item {
     min-height: 44px;
   }
+
   .yee-upload-list-item-operate,
   .yee-upload-picture-list-item-operate {
     min-width: 44px;
@@ -314,6 +320,7 @@
     width: 100%;
     text-align: left;
   }
+
   .yee-timeline-item-left .yee-timeline-item-tail,
   .yee-timeline-item-left .yee-timeline-item-head,
   .yee-timeline-item-right .yee-timeline-item-tail,
@@ -321,13 +328,16 @@
     left: var(--yee-timeline-item-tail-left);
     transform: none;
   }
+
   .yee-timeline-item-right .yee-timeline-item-body {
     padding-right: 0;
     padding-left: var(--yee-timeline-item-body-padding-left);
   }
+
   .yee-timeline-item-right .yee-timeline-item-title-wrapper {
     justify-content: flex-start;
   }
+
   .yee-timeline-cross-date .cross {
     width: 100%;
   }

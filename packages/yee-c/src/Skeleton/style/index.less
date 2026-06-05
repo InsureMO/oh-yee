@@ -1,73 +1,78 @@
 @pls: .yee-skeleton;
 
-
 @{pls} {
-    width: 100%;
+  width: 100%;
 
-    &-avatar {
-        width: var(--yee-skeleton-avatar-width);
-        height: var(--yee-skeleton-avatar-height);
+  &-avatar {
+    width: var(--yee-skeleton-avatar-width);
+    height: var(--yee-skeleton-avatar-height);
 
-        &-circle {
-            border-radius: 50%;
-        }
-
-        &-square {
-            border-radius: var(--yee-skeleton-avatar-square-radius, 4px);
-        }
+    &-circle {
+      border-radius: 50%;
     }
 
-    &-title {
-        height: var(--yee-skeleton-title-height);
+    &-square {
+      border-radius: var(--yee-skeleton-avatar-square-radius, 4px);
     }
+  }
 
-    &-paragraph {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+  &-title {
+    height: var(--yee-skeleton-title-height);
+  }
 
-        li {
-            height: var(--yee-skeleton-paragraph-li-height);
+  &-paragraph {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-            &:not(:last-child) {
-                margin-bottom: var(--yee-skeleton-paragraph-li-margin-bottom);
-            }
-        }
+    li {
+      height: var(--yee-skeleton-paragraph-li-height);
+
+      &:not(:last-child) {
+        margin-bottom: var(--yee-skeleton-paragraph-li-margin-bottom);
+      }
     }
+  }
 
-    &-avatar,
-    &-title,
-    &-paragraph li {
-        background-color: var(--yee-skeleton-bg-color);
+  &-avatar,
+  &-title,
+  &-paragraph li {
+    background-color: var(--yee-skeleton-bg-color);
+  }
+
+  &-active {
+    @{pls}-avatar,
+    @{pls}-title,
+    @{pls}-paragraph li {
+      position: relative;
+      z-index: 0;
+      overflow: hidden;
+      background-color: transparent;
+
+      &::after {
+        position: absolute;
+        inset: var(--yee-skeleton-active-after-inset);
+        background: linear-gradient(
+          90deg,
+          var(--yee-skeleton-bg-color) 25%,
+          var(--yee-skeleton-bg-active-color) 37%,
+          var(--yee-skeleton-bg-color) 63%
+        );
+        animation: yee-skeleton-active
+          var(--yee-skeleton-active-animation-duration) ease infinite
+          var(--yee-skeleton-active-animation-delay);
+        content: '';
+      }
     }
-
-    &-active {
-
-        @{pls}-avatar,
-        @{pls}-title,
-        @{pls}-paragraph li {
-            position: relative;
-            z-index: 0;
-            overflow: hidden;
-            background-color: transparent;
-
-            &::after {
-                position: absolute;
-                inset: var(--yee-skeleton-active-after-inset);
-                background: linear-gradient(90deg, var(--yee-skeleton-bg-color) 25%, var(--yee-skeleton-bg-active-color) 37%, var(--yee-skeleton-bg-color) 63%);
-                animation: yee-skeleton-active var(--yee-skeleton-active-animation-duration) ease infinite var(--yee-skeleton-active-animation-delay);
-                content: "";
-            }
-        }
-    }
+  }
 }
 
 @keyframes yee-skeleton-active {
-    0% {
-        transform: translateX(var(--yee-skeleton-active-translate-start));
-    }
+  0% {
+    transform: translateX(var(--yee-skeleton-active-translate-start));
+  }
 
-    100% {
-        transform: translateX(var(--yee-skeleton-active-translate-end));
-    }
+  100% {
+    transform: translateX(var(--yee-skeleton-active-translate-end));
+  }
 }

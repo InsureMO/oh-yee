@@ -43,7 +43,7 @@ class StoreContextStorage {
       return false;
     }
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const request = indexedDB.open(
         this.dbConfig.dbName,
         this.dbConfig.dbVersion,

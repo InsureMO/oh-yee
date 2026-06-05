@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
-import deepClone from '../../utils/deepClone';
-import useDeepCompareEffect from '../../hooks/useDeepCompareEffect';
 import useDeepCompareMemo from '../../hooks/useDeepCompareMemo';
+import deepClone from '../../utils/deepClone';
 import { handleColumns } from '../util';
 
-import { ColumnProps, RowSelectionType, ExpandableType } from '../interface';
+import { ColumnProps, ExpandableType, RowSelectionType } from '../interface';
 
 export default function useColumns({
   children,
@@ -12,7 +11,9 @@ export default function useColumns({
   rowSelection,
   expandable,
 }: {
-  children?: React.ReactElement<ColumnProps> | React.ReactElement<ColumnProps>[];
+  children?:
+    | React.ReactElement<ColumnProps>
+    | React.ReactElement<ColumnProps>[];
   columns: ColumnProps[];
   rowSelection?: RowSelectionType;
   expandable?: ExpandableType;
@@ -20,21 +21,22 @@ export default function useColumns({
   const shouldRenderSelection = !!rowSelection;
   const shouldRenderExpand = !!expandable;
 
-
   const getColumnsFromChild = (
     children: React.ReactElement<ColumnProps>[],
   ): Array<ColumnProps> | null => {
     const columns: ColumnProps[] = [];
     React.Children.forEach(children, (child) => {
       if (child) {
-        columns.push({ ...child.props as ColumnProps });
+        columns.push({ ...(child.props as ColumnProps) });
       }
     });
     return columns.length ? columns : null;
   };
 
   const childColumns: Array<ColumnProps> | null = useMemo(() => {
-    return children ? getColumnsFromChild(children as React.ReactElement<ColumnProps>[]) : null;
+    return children
+      ? getColumnsFromChild(children as React.ReactElement<ColumnProps>[])
+      : null;
   }, [children]);
 
   // Wrap columns
@@ -53,7 +55,11 @@ export default function useColumns({
       const { index = 1, visible = true } = expandable;
       const loc = index ? index - 1 : rowSelection ? 1 : 0;
       if (visible !== false) {
-        result.splice(loc, 0, { width: 50, ...expandable, key: 'YEE_EXPAND_COL' });
+        result.splice(loc, 0, {
+          width: 50,
+          ...expandable,
+          key: 'YEE_EXPAND_COL',
+        });
       }
     }
     result = handleColumns(result);
@@ -71,7 +77,7 @@ export default function useColumns({
 
   const mergedColumns = useDeepCompareMemo(() => {
     return wrapColumns(childColumns || columns || []);
-  },[childColumns, columns, shouldRenderSelection, shouldRenderExpand]);
+  }, [childColumns, columns, shouldRenderSelection, shouldRenderExpand]);
 
   return {
     wrapedColumns: mergedColumns,

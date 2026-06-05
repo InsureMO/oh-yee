@@ -16,8 +16,7 @@ export default () => {
           { value: 'b', label: 'Shanghai' },
           { value: 'c', label: 'Beijing' },
         ]}
-      >
-      </Radio.Group>
+      ></Radio.Group>
 
       <Radio.Group
         value={value}
@@ -29,8 +28,7 @@ export default () => {
           { value: 'b', label: 'Shanghai' },
           { value: 'c', label: 'Beijing' },
         ]}
-      >
-      </Radio.Group>
+      ></Radio.Group>
 
       <Radio.Group
         value={value}
@@ -42,8 +40,7 @@ export default () => {
           { value: 'b', label: 'Shanghai' },
           { value: 'c', label: 'Beijing' },
         ]}
-      >
-      </Radio.Group>
+      ></Radio.Group>
     </Space>
   );
 };

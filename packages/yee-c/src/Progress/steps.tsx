@@ -1,7 +1,7 @@
 /* eslint-disable indent */
-import React from 'react';
 import clsx from 'clsx';
-import { statusList, statusColor } from './progress';
+import React from 'react';
+import { statusColor, statusList } from './progress';
 
 import type { StepsProps } from './interface';
 

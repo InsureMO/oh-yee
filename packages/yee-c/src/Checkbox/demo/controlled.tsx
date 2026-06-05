@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Checkbox } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [checked, setChecked] = useState(true);

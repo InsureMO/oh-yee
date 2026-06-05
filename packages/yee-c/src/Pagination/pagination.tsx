@@ -6,8 +6,8 @@ import Input from '../Input';
 import Select from '../Select';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
-import Items from './items';
 import type { PaginationProps } from './interface';
+import Items from './items';
 
 import './style/index.less';
 

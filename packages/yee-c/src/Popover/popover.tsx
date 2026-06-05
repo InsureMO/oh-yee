@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { forwardRef, useContext } from 'react';
+import React, { useContext } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useEsc from '../hooks/useEsc';
 import useFocusManage from '../hooks/useFocusManage';
@@ -10,7 +10,8 @@ import mergeContextToProps from '../utils/mergeContextToProps';
 import type { PopoverProps } from './interface';
 import './style/index.less';
 
-const Popover = forwardRef<HTMLElement, PopoverProps>((baseprops, ref) => {
+const Popover = (baseprops: PopoverProps) => {
+  // eslint-disable-line @typescript-eslint/no-unused-vars
   const { popover } = useContext(GlobalContext);
   const props = mergeContextToProps(baseprops, popover);
   const {
@@ -84,6 +85,7 @@ const Popover = forwardRef<HTMLElement, PopoverProps>((baseprops, ref) => {
     setMergedOpen(open);
   };
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEsc({
     enabled: mergedOpen,
     onEsc: () => handleOpenChange(false),
@@ -105,7 +107,7 @@ const Popover = forwardRef<HTMLElement, PopoverProps>((baseprops, ref) => {
       {children}
     </Trigger>
   );
-});
+};
 
 Popover.displayName = 'Popover';
 

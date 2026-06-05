@@ -29,7 +29,7 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: 'center' | 'start' | 'end' | 'baseline' | 'flex-start';
   /**
    * Whether to take up the entire row
-  */
+   */
   block?: boolean;
   /**
    * Custom class name

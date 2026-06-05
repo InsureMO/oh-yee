@@ -3,8 +3,10 @@ import { TriggerProps } from '../Trigger';
 
 export type CompositionDOM = 'header' | 'title' | 'description' | 'footer';
 
-export interface PopconfirmProps
-  extends Omit<TriggerProps, 'popup' | 'children' | 'ref'> {
+export interface PopconfirmProps extends Omit<
+  TriggerProps,
+  'popup' | 'children' | 'ref'
+> {
   /**
    * 子元素
    */

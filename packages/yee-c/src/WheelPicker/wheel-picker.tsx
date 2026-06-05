@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react';
-import WheelColumn from './wheel-column';
 import type { WheelPickerProps } from './interface';
+import WheelColumn from './wheel-column';
 
 import './style/index.less';
 

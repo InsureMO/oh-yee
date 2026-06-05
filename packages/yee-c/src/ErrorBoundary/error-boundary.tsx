@@ -1,11 +1,4 @@
-import React from 'react';
 import clsx from 'clsx';
-import Button from '../Button';
-import type { ErrorBoundaryProps } from './interface';
-import { pickDataAttrs } from '../utils/types';
-import { classifyError, CATEGORY_LABEL } from './classify';
-import { parseSourceLocation, fetchSourceSnippet } from './source-loader';
-import type { SourceSnippet, SourceLocation } from './source-loader';
 import {
   AlertTriangle,
   Check,
@@ -16,6 +9,13 @@ import {
   RefreshCw,
   X,
 } from 'lucide-react';
+import React from 'react';
+import Button from '../Button';
+import { pickDataAttrs } from '../utils/types';
+import { CATEGORY_LABEL, classifyError } from './classify';
+import type { ErrorBoundaryProps } from './interface';
+import type { SourceLocation, SourceSnippet } from './source-loader';
+import { fetchSourceSnippet, parseSourceLocation } from './source-loader';
 import './style/index.less';
 
 export interface ErrorBoundaryState {
@@ -103,7 +103,8 @@ export default class ErrorBoundary extends React.Component<
 
   handleCopySection = (section: 'callStack' | 'componentStack') => {
     const { error, errorInfo } = this.state;
-    const content = section === 'callStack' ? error?.stack : errorInfo?.componentStack;
+    const content =
+      section === 'callStack' ? error?.stack : errorInfo?.componentStack;
     if (content) {
       navigator.clipboard.writeText(content).then(() => {
         this.setState({ copiedSection: section });
@@ -178,7 +179,11 @@ export default class ErrorBoundary extends React.Component<
       const category = classifyError(error);
 
       return (
-        <div {...dataAttrs} className={clsx(prefixCls, className)} style={style}>
+        <div
+          {...dataAttrs}
+          className={clsx(prefixCls, className)}
+          style={style}
+        >
           <div className={`${prefixCls}-overlay`}>
             <div className={`${prefixCls}-container`}>
               {/* Badge */}
@@ -203,10 +208,7 @@ export default class ErrorBoundary extends React.Component<
                   <div className={`${prefixCls}-source-header`}>
                     <FileCode2 size={14} />
                     <span className={`${prefixCls}-source-file`}>
-                      {sourceLocation?.fileName
-                        ?.split('/')
-                        .slice(-2)
-                        .join('/')}
+                      {sourceLocation?.fileName?.split('/').slice(-2).join('/')}
                     </span>
                     <span className={`${prefixCls}-source-line`}>
                       :{sourceSnippet.errorLine}

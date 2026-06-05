@@ -1,5 +1,8 @@
+import type {
+  TableSelectProps,
+  TableSelectRowSelectionType,
+} from '@rainbow-oh/yee-c';
 import { TableSelect } from '@rainbow-oh/yee-c';
-import type { TableSelectRowSelectionType, TableSelectProps } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -60,7 +63,7 @@ export default () => {
   const handleChange: TableSelectProps['onChange'] = (selectedKeys) => {
     console.log('Selected keys:', selectedKeys);
     setValue(selectedKeys as string);
-  }
+  };
 
   return (
     <TableSelect

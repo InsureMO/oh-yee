@@ -18,7 +18,9 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>((baseProps, ref) => {
     ...rest
   } = props;
 
-  const componentRef = (ref as React.RefObject<HTMLDivElement>) || React.createRef<HTMLDivElement>();
+  const componentRef =
+    (ref as React.RefObject<HTMLDivElement>) ||
+    React.createRef<HTMLDivElement>();
   const headerPlaceholderRef = useRef<HTMLDivElement>(null);
   const footerPlaceholderRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<ResizeObserver | null>(null);

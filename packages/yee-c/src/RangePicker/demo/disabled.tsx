@@ -17,7 +17,9 @@ export default () => {
       </div>
 
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>Start date disabled</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>
+          Start date disabled
+        </div>
         <RangePicker
           disabled={[true, false]}
           placeholder={['Start date', 'End date']}
@@ -25,7 +27,9 @@ export default () => {
       </div>
 
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>End date disabled</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>
+          End date disabled
+        </div>
         <RangePicker
           disabled={[false, true]}
           placeholder={['Start date', 'End date']}

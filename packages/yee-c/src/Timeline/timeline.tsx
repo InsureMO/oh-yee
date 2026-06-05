@@ -6,7 +6,6 @@ import mergeContextToProps from '../utils/mergeContextToProps';
 import type { TimelineContextType, TimelineProps } from './interface';
 import './style/index.less';
 
-
 export const TimelineContext = React.createContext<TimelineContextType>(
   {} as TimelineContextType,
 );

@@ -1,7 +1,7 @@
 import Alert from './alert';
 import Cycle from './cycle';
 
-export type { AlertProps, CycleProps, AlertSemanticDOM } from './interface';
+export type { AlertProps, AlertSemanticDOM, CycleProps } from './interface';
 
 type AlertType = typeof Alert & {
   Cycle: typeof Cycle;

@@ -22,7 +22,7 @@ export interface BreadcrumbItemProps extends DataAttributeProps {
   /**
    * Click event callback
    */
-  onClick?: (params: { index: number; }) => void;
+  onClick?: (params: { index: number }) => void;
 }
 
 export interface BreadcrumbProps extends DataAttributeProps {

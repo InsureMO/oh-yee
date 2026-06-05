@@ -26,10 +26,6 @@ export default () => {
   };
 
   return (
-    <Tabs
-      defaultActiveKey="1"
-      items={items}
-      headerExtra={tabBarExtraContent}
-    />
+    <Tabs defaultActiveKey="1" items={items} headerExtra={tabBarExtraContent} />
   );
 };

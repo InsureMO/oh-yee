@@ -16,11 +16,7 @@ const data = [
 
 export default () => {
   return (
-    <CSVDownloader
-      filename="users"
-      headers={headers}
-      data={data}
-    >
+    <CSVDownloader filename="users" headers={headers} data={data}>
       Download CSV
     </CSVDownloader>
   );

@@ -77,6 +77,17 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
     };
   }
 
+  const updateFileList = (file: UploadFile) => {
+    setMergedFileList((state) => {
+      return state.map((item) => {
+        if (item.uid === file.uid) {
+          return file;
+        }
+        return item;
+      });
+    });
+  };
+
   const postFile = (file: UploadFile) => {
     const formData = new FormData();
     formData.append(name, file.raw);
@@ -134,7 +145,11 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
         const percentage = parseInt((e.loaded / e.total) * 100 + '');
         let current: UploadFile;
         if (percentage < 100) {
-          current = { ...file, status: 'uploading' as const, percent: percentage };
+          current = {
+            ...file,
+            status: 'uploading' as const,
+            percent: percentage,
+          };
         } else {
           current = { ...file, status: 'success' as const, percent: 100 };
         }
@@ -167,17 +182,6 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
           event: err,
         });
       });
-  };
-
-  const updateFileList = (file: UploadFile) => {
-    setMergedFileList((state) => {
-      return state.map((item) => {
-        if (item.uid === file.uid) {
-          return file;
-        }
-        return item;
-      });
-    });
   };
 
   const post = (file: UploadFile) => {
@@ -271,7 +275,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
       // Dropped item is a folder
       if (item?.isDirectory) {
         // @ts-ignore
-        const folderFiles = await folderScanner(item, []) as File[];
+        const folderFiles = (await folderScanner(item, [])) as File[];
         uploadFiles(folderFiles, e);
       } else if (item?.isFile) {
         uploadFiles(files, e);
@@ -314,10 +318,13 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
 
   const handleRemove = async (file: UploadFile) => {
     const promise = onRemove?.(file);
-    const shouldRemove = promise instanceof Promise ? await promise : promise !== false;
+    const shouldRemove =
+      promise instanceof Promise ? await promise : promise !== false;
 
     if (shouldRemove !== false) {
-      setMergedFileList((state) => state.filter((item) => item.uid !== file.uid));
+      setMergedFileList((state) =>
+        state.filter((item) => item.uid !== file.uid),
+      );
     }
   };
 

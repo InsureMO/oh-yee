@@ -1,5 +1,5 @@
-import { Table } from '@rainbow-oh/yee-c';
 import type { PaginationType } from '@rainbow-oh/yee-c';
+import { Table } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -31,17 +31,25 @@ export default () => {
     });
   }
 
-  const [pagination, setpagination] = useState({
+  const [, setpagination] = useState({
     current: 1,
     pageSize: 10,
     total: dataSource.length,
   });
 
   return (
-    <Table columns={columns} dataSource={dataSource} onChange={({ pagination, action }) => {
-      if (action === 'paginate') {
-        setpagination(prev => ({ ...prev, current: (pagination as PaginationType).current, pageSize: (pagination as PaginationType).pageSize }));
-      }
-    }}/>
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      onChange={({ pagination, action }) => {
+        if (action === 'paginate') {
+          setpagination((prev) => ({
+            ...prev,
+            current: (pagination as PaginationType).current,
+            pageSize: (pagination as PaginationType).pageSize,
+          }));
+        }
+      }}
+    />
   );
 };

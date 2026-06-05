@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import type { ChangeEvent } from 'react';
 import { Checkbox } from '@rainbow-oh/yee-c';
+import type { ChangeEvent } from 'react';
+import React, { useState } from 'react';
 
 export default () => {
   const [checkedList, setCheckedList] = useState(['Apple']);

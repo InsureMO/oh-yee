@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion } from 'motion/react';
 import clsx from 'clsx';
+import { motion } from 'motion/react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../Button';
 import useMergedState from '../hooks/useMergedState';
 import type { EllipsisProps } from './interface';
@@ -41,7 +41,8 @@ const Ellipsis: React.FC<EllipsisProps> = (props) => {
     if (!el) return;
 
     const computedStyle = getComputedStyle(el);
-    const lineHeight = parseInt(computedStyle.lineHeight) || DEFAULT_LINE_HEIGHT;
+    const lineHeight =
+      parseInt(computedStyle.lineHeight) || DEFAULT_LINE_HEIGHT;
     const limit = lineHeight * lines;
 
     if (el.scrollHeight > limit) {
@@ -64,9 +65,10 @@ const Ellipsis: React.FC<EllipsisProps> = (props) => {
   };
 
   const isCollapsed = !mergedExpanded && needEllipsis;
-  const isZhCN = typeof document !== 'undefined'
-    ? (document.documentElement.lang || 'zh-CN').startsWith('zh')
-    : true;
+  const isZhCN =
+    typeof document !== 'undefined'
+      ? (document.documentElement.lang || 'zh-CN').startsWith('zh')
+      : true;
 
   const buttonText = mergedExpanded
     ? (collapseText ?? (isZhCN ? '收起' : 'Collapse'))
@@ -113,15 +115,21 @@ const Ellipsis: React.FC<EllipsisProps> = (props) => {
         animate={{
           height: isCollapsed ? maxHeight : 'auto',
         }}
-        transition={animated ? { duration: animationDuration / 1000, ease: 'easeInOut' } : { duration: 0 }}
+        transition={
+          animated
+            ? { duration: animationDuration / 1000, ease: 'easeInOut' }
+            : { duration: 0 }
+        }
         style={{ overflow: 'hidden' }}
       >
         <div
           ref={textRef}
           className={`${prefixCls}-text`}
-          style={{
-            WebkitLineClamp: isCollapsed ? lines : undefined,
-          } as React.CSSProperties}
+          style={
+            {
+              WebkitLineClamp: isCollapsed ? lines : undefined,
+            } as React.CSSProperties
+          }
         >
           {children}
           {mergedExpanded && renderButton()}

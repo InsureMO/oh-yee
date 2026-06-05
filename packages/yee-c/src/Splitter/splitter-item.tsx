@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
 import clsx from 'clsx';
+import React, { useContext } from 'react';
 import { SplitterCtx } from './splitter';
 
 import type { SplitterItemProps } from './interface';

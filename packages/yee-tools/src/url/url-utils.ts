@@ -4,9 +4,50 @@
  */
 
 import { configer } from "../config/config-provider";
-import { parseBool } from "../type/type-utils";
 import { SessionContext } from "../cache/session-context";
 import { warn } from "../common/logger";
+
+/**
+ * Parses a query string into an object
+ * @param queryString - Query string to parse (without leading '?')
+ * @returns Object containing parsed parameters
+ */
+function parseQueryString(queryString: string): Record<string, string> {
+  const params: Record<string, string> = {};
+
+  // Remove leading '?' if present
+  const cleanQuery = queryString.startsWith("?")
+    ? queryString.slice(1)
+    : queryString;
+
+  if (!cleanQuery) {
+    return params;
+  }
+
+  // Split by '&' and parse each parameter
+  const pairs = cleanQuery.split("&");
+
+  for (const pair of pairs) {
+    if (!pair) continue;
+
+    const [key, value] = pair.split("=");
+
+    if (key) {
+      try {
+        // Decode URI component safely
+        params[decodeURIComponent(key)] = value
+          ? decodeURIComponent(value)
+          : "";
+      } catch (error) {
+        // If decoding fails, use raw values
+        warn(`Failed to decode URL parameter: ${pair}`, error);
+        params[key] = value || "";
+      }
+    }
+  }
+
+  return params;
+}
 
 /**
  * Parses URL query parameters into an object
@@ -66,48 +107,6 @@ export function getUrlParam(urlStr?: string): Record<string, string> {
     const queryString = urlStr.split("?")[1];
     if (queryString) {
       return parseQueryString(queryString);
-    }
-  }
-
-  return params;
-}
-
-/**
- * Parses a query string into an object
- * @param queryString - Query string to parse (without leading '?')
- * @returns Object containing parsed parameters
- */
-function parseQueryString(queryString: string): Record<string, string> {
-  const params: Record<string, string> = {};
-
-  // Remove leading '?' if present
-  const cleanQuery = queryString.startsWith("?")
-    ? queryString.slice(1)
-    : queryString;
-
-  if (!cleanQuery) {
-    return params;
-  }
-
-  // Split by '&' and parse each parameter
-  const pairs = cleanQuery.split("&");
-
-  for (const pair of pairs) {
-    if (!pair) continue;
-
-    const [key, value] = pair.split("=");
-
-    if (key) {
-      try {
-        // Decode URI component safely
-        params[decodeURIComponent(key)] = value
-          ? decodeURIComponent(value)
-          : "";
-      } catch (error) {
-        // If decoding fails, use raw values
-        warn(`Failed to decode URL parameter: ${pair}`, error);
-        params[key] = value || "";
-      }
     }
   }
 
@@ -239,6 +238,11 @@ export function normalizeURL(url: string): string {
 
   if (platform) {
     return "/api/platform" + wrappedUrl;
+  }
+
+  // If URL already starts with /api, return as-is to avoid double prefix
+  if (mark === "api") {
+    return wrappedUrl;
   }
 
   return `/api/${tenantCode}` + wrappedUrl;

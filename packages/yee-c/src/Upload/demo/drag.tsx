@@ -1,6 +1,6 @@
 import { Upload } from '@rainbow-oh/yee-c';
-import type { UploadFile } from '../interface';
 import React from 'react';
+import type { UploadFile } from '../interface';
 
 export default () => {
   const props = {

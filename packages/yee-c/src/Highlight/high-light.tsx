@@ -13,8 +13,6 @@ const Highlight = forwardRef(
       prefixCls = 'yee-highlight',
       text,
       pattern,
-      style,
-      className,
       classNames,
       styles,
       htmlTag = 'span',
@@ -26,7 +24,8 @@ const Highlight = forwardRef(
     } = props;
 
     const parts = useMemo(() => {
-      const result: Array<{ text: string; matched: boolean; index: number }> = [];
+      const result: Array<{ text: string; matched: boolean; index: number }> =
+        [];
       if (!text || !pattern) {
         result.push({ text, matched: false, index: 0 });
         return result;
@@ -94,7 +93,8 @@ const Highlight = forwardRef(
                 key: idx,
                 className: itemCls,
                 style: styles?.item,
-                onClick: (e: React.MouseEvent<HTMLElement>) => handleClick(e, part.index),
+                onClick: (e: React.MouseEvent<HTMLElement>) =>
+                  handleClick(e, part.index),
               },
               part.text,
             )

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Button, Dialog, Space } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +18,11 @@ export default () => {
               <Button type="primary" onClick={() => setOpen(false)}>
                 Save
               </Button>
-              <Button type="primary" color="danger" onClick={() => setOpen(false)}>
+              <Button
+                type="primary"
+                color="danger"
+                onClick={() => setOpen(false)}
+              >
                 Delete
               </Button>
             </Space>

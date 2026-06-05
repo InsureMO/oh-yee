@@ -1,10 +1,13 @@
-import React from 'react';
 import { Alert } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (
     <>
-      <Alert title="Message title" description="This is a basic alert description" />
+      <Alert
+        title="Message title"
+        description="This is a basic alert description"
+      />
       <br />
       <Alert description="This is a closable alert description" closable />
       <br />

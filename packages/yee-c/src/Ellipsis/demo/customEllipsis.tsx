@@ -7,10 +7,7 @@ export default () => {
   return (
     <div>
       <h3>Hide Expand Button</h3>
-      <Ellipsis
-        lines={3}
-        showExpandButton={false}
-      >
+      <Ellipsis lines={3} showExpandButton={false}>
         {longText}
       </Ellipsis>
     </div>

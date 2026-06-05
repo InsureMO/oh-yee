@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
-import { Aperture, AudioLines, PanelLeftClose, PanelLeftOpen, Settings } from 'lucide-react';
 import { Menu, Space } from '@rainbow-oh/yee-c';
+import {
+  Aperture,
+  AudioLines,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Settings,
+} from 'lucide-react';
+import React, { useState } from 'react';
 
 export default () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -28,15 +34,24 @@ export default () => {
       <Menu
         items={items}
         mode="inline"
-        style={{height: 300, backgroundColor: '#eee'}}
+        style={{ height: 300, backgroundColor: '#eee' }}
         inlineCollapsed={collapsed}
         footer={
           <Space
-            style={{ padding: '8px 16px', cursor: 'pointer', color: '#666', alignItems: 'center' }}
+            style={{
+              padding: '8px 16px',
+              cursor: 'pointer',
+              color: '#666',
+              alignItems: 'center',
+            }}
             gap={4}
             onClick={() => setCollapsed(!collapsed)}
           >
-            {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
+            {collapsed ? (
+              <PanelLeftOpen size={16} />
+            ) : (
+              <PanelLeftClose size={16} />
+            )}
             {!collapsed && 'Collapse Menu'}
           </Space>
         }

@@ -13,7 +13,9 @@ export interface SourceSnippet {
  * Parse the first user code location from error.stack
  * Format: "at functionName (http://host/path/file.js:10:5)" or "at http://host/path/file.js:10:5"
  */
-export function parseSourceLocation(stack: string | undefined): SourceLocation | null {
+export function parseSourceLocation(
+  stack: string | undefined,
+): SourceLocation | null {
   if (!stack) return null;
 
   const lines = stack.split('\n');

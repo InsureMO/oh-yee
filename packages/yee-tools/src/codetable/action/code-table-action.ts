@@ -280,7 +280,7 @@ class CodeTableActionClass {
 
     try {
       const data = await this.getCodeTable(otherParams);
-      const returnObj = data.codes.find((item: any) => item.id == CodeTableKey);
+      const returnObj = data.codes.find((item: any) => item.id === CodeTableKey);
 
       const result = returnObj ? returnObj.text : null;
       callback?.(result);
@@ -306,8 +306,7 @@ class CodeTableActionClass {
       return tmpCodeTable;
     }
 
-    try {
-      const codeTableObj = await CodeTableService.getCodeTable(params);
+    const codeTableObj = await CodeTableService.getCodeTable(params);
       const isCache = codeTableObj.BusinessCodeTable?.NeedCache;
       tmpCodeTable = CodeTableService.buildCodeTable(codeTableObj);
 
@@ -316,9 +315,6 @@ class CodeTableActionClass {
       }
 
       return tmpCodeTable;
-    } catch (error) {
-      throw error;
-    }
   }
 
   /**
@@ -328,11 +324,7 @@ class CodeTableActionClass {
    * @throws {Error} When the batch code table request fails
    */
   async getCodeTableByNames(codeTableNames: string[]): Promise<any> {
-    try {
-      return await CodeTableService.codeTableNames(codeTableNames);
-    } catch (error) {
-      throw error;
-    }
+    return await CodeTableService.codeTableNames(codeTableNames);
   }
 
   /**

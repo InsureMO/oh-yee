@@ -1,5 +1,5 @@
-import Rate from "./rate";
+import Rate from './rate';
 
 export type { RateProps } from './interface';
 
-export default Rate
+export default Rate;

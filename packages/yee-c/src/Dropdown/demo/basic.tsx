@@ -13,7 +13,7 @@ export default () => {
   );
 
   return (
-    <Dropdown popup={menu} trigger='hover'>
+    <Dropdown popup={menu} trigger="hover">
       <Button>Hover me</Button>
     </Dropdown>
   );

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React, { forwardRef, useContext } from 'react';
-import { ListCtx } from './list';
 import { ListItemProps } from './interface';
+import { ListCtx } from './list';
 
 const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) => {
   const { $key, className, disabled, label, focusedKey, ...rest } = props;
@@ -13,20 +13,20 @@ const ListItem = forwardRef<HTMLLIElement, ListItemProps>((props, ref) => {
     {
       [`${prefixCls}-item-clickable`]: onClick,
       [`${prefixCls}-item-disabled`]: disabled,
-      [`${prefixCls}-item-focused`]: focusedKey === $key
+      [`${prefixCls}-item-focused`]: focusedKey === $key,
     },
     className,
   );
 
   const handleClick = () => {
     if (disabled) return;
-    onClick?.({...props, key: $key});
+    onClick?.({ ...props, key: $key });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>) => {
     if (disabled) return;
     if (e.key === 'Enter') {
-      onClick?.({...props, key: $key});
+      onClick?.({ ...props, key: $key });
     }
   };
 

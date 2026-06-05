@@ -1,11 +1,11 @@
 import clsx from 'clsx';
+import { X } from 'lucide-react';
 import React, { createRef, forwardRef, useContext, useEffect } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { TextAreaProps } from './interface';
 import './style/index.less';
-import { X } from 'lucide-react';
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (baseprops, ref) => {
@@ -87,7 +87,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       {
         [`${prefixCls}-borderless`]: bordered === false,
         [`${prefixCls}-disabled`]: disabled,
-        [`${prefixCls}-with-clear`]: allowClear && !disabled && mergedValue
+        [`${prefixCls}-with-clear`]: allowClear && !disabled && mergedValue,
       },
       className,
     );
@@ -99,9 +99,9 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     };
 
     const onClear = (event: React.MouseEvent<HTMLSpanElement>) => {
-        setMergedValue('');
-        onChange?.('', event);
-      };
+      setMergedValue('');
+      onChange?.('', event);
+    };
 
     const renderTextArea = (props: TextAreaProps) => {
       return (
@@ -123,7 +123,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           {renderTextArea({
             className: clsx(`${prefixCls}-inner`, classNames?.input),
             style: styles?.input,
-            disabled
+            disabled,
           })}
           {showCount ? (
             <span
@@ -141,11 +141,13 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
               onClick={onClear}
               onKeyDown={(event: React.KeyboardEvent<HTMLSpanElement>) => {
                 if (event.key === 'Enter') {
-                  onClear(event as unknown as React.MouseEvent<HTMLSpanElement>);
+                  onClear(
+                    event as unknown as React.MouseEvent<HTMLSpanElement>,
+                  );
                 }
               }}
             >
-              <X size={12} strokeWidth={1}/>
+              <X size={12} strokeWidth={1} />
             </span>
           ) : null}
         </div>

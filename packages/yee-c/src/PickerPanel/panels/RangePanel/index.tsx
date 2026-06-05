@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { Dayjs } from 'dayjs';
 import PickerPanel from '../../picker-panel';
 import pickerUtils from '../../utils/pickerUtils';
-import { Dayjs } from 'dayjs';
 
 function RangePanel(props: any) {
   const {

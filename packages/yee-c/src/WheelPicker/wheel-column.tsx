@@ -20,7 +20,9 @@ const WheelColumn: FC<WheelColumnProps> = ({
 }) => {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [scrolling, setScrolling] = useState(false);
-  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
   const isInternalRef = useRef(false);
 
   const paddingCount = Math.floor(visibleItemCount / 2);

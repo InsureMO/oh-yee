@@ -35,21 +35,28 @@ const Node = (props: NodeProps) => {
   const checked = useMemo(() => {
     return mergedValue
       ? multiple
-        ? (mergedValue as Array<Array<string | number>>).some((item) => isEqual(item, path))
+        ? (mergedValue as Array<Array<string | number>>).some((item) =>
+            isEqual(item, path),
+          )
         : // eslint-disable-next-line eqeqeq
-        (mergedValue as Array<string | number>)[level] == value &&
-        isEqual((mergedValue as Array<string | number>).slice(0, level + 1), path)
+          (mergedValue as Array<string | number>)[level] == value &&
+          isEqual(
+            (mergedValue as Array<string | number>).slice(0, level + 1),
+            path,
+          )
       : false;
   }, [mergedValue, multiple, level, value, path]);
 
   const handleLoadData = () => {
     if (loadData && isLeaf === false) {
       setLoad(1);
-      loadData({ label, value, children })?.then(() => {
-        setLoad(2);
-      }).catch(() => {
-        setLoad(0);
-      });
+      loadData({ label, value, children })
+        ?.then(() => {
+          setLoad(2);
+        })
+        .catch(() => {
+          setLoad(0);
+        });
     }
   };
 

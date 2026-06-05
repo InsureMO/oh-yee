@@ -47,28 +47,42 @@ const Tag = forwardRef(
       className,
     );
 
-    const renderClose = () => closable ? (
-      <Button
-        className={clsx(`${prefixCls}-close`, classNames?.close)}
-        style={styles?.close}
-        type="text"
-        size="small"
-        onClick={onClose}
-      >
-        {typeof closable === 'boolean' ? (
-          <X size={14} strokeWidth={1} />
-        ) : (
-          closable
-        )}
-      </Button>
-    ) : null;
+    const renderClose = () =>
+      closable ? (
+        <Button
+          className={clsx(`${prefixCls}-close`, classNames?.close)}
+          style={styles?.close}
+          type="text"
+          size="small"
+          onClick={onClose}
+        >
+          {typeof closable === 'boolean' ? (
+            <X size={14} strokeWidth={1} />
+          ) : (
+            closable
+          )}
+        </Button>
+      ) : null;
 
     const closeNode = renderClose();
 
     return (
       <div {...rest} className={cls} onClick={handleClick} ref={ref}>
-        {icon && <span className={clsx(`${prefixCls}-icon`, classNames?.icon)} style={styles?.icon}>{icon}</span>}
-        {icon || closeNode ? <span className={clsx(classNames?.content)} style={styles?.content}>{children}</span> : children}
+        {icon && (
+          <span
+            className={clsx(`${prefixCls}-icon`, classNames?.icon)}
+            style={styles?.icon}
+          >
+            {icon}
+          </span>
+        )}
+        {icon || closeNode ? (
+          <span className={clsx(classNames?.content)} style={styles?.content}>
+            {children}
+          </span>
+        ) : (
+          children
+        )}
         {closeNode}
       </div>
     );

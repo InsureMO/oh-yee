@@ -1,10 +1,9 @@
 import clsx from 'clsx';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import React, { useContext } from 'react';
 import Tooltip from '../../Tooltip';
+import ArrowIcon from '../icon/arrow-icon';
 import { HeadCellProps } from '../interface';
 import Filter from './filter';
-import ArrowIcon from '../icon/arrow-icon';
 
 import { TableCtx } from '../table';
 
@@ -34,14 +33,15 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     ...rest
   } = props;
 
-  const { prefixCls, locale } = useContext(TableCtx);
+  const { prefixCls } = useContext(TableCtx);
 
   const showFilter = !!filter;
 
   // Get current sort order for this column (0 = none, 1 = ascend, -1 = descend)
   // Convert -1 to 2 for UI display (2 = descend)
   const sortOrder = (dataIndex && sorters?.[dataIndex]) || 0;
-  const displaySortOrder: 0 | 1 | 2 = sortOrder === -1 ? 2 : sortOrder as 0 | 1;
+  const displaySortOrder: 0 | 1 | 2 =
+    sortOrder === -1 ? 2 : (sortOrder as 0 | 1);
 
   const handleSort = () => {
     if (dataIndex && onSort) {
@@ -53,12 +53,10 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     const trigger = (
       <span className={`${prefixCls}-column-sorter`}>
         <ArrowIcon
-          direction='up'
+          direction="up"
           className={clsx({ active: displaySortOrder === 1 })}
         />
-        <ArrowIcon
-          className={clsx({ active: displaySortOrder === 2 })}
-        />
+        <ArrowIcon className={clsx({ active: displaySortOrder === 2 })} />
       </span>
     );
     return trigger;
@@ -97,7 +95,10 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
   const renderFilter = () => {
     if (!showFilter) return null;
     return (
-      <div className={clsx(`${prefixCls}-thead-action`, classNames?.action)} style={styles?.action}>
+      <div
+        className={clsx(`${prefixCls}-thead-action`, classNames?.action)}
+        style={styles?.action}
+      >
         <Filter
           {...rest}
           filter={filter}

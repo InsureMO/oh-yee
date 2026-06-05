@@ -1,5 +1,13 @@
+import {
+  Button,
+  Form,
+  Grid,
+  Input,
+  message,
+  Select,
+  Space,
+} from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Button, Form, Grid, Input, message, Select, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
@@ -56,7 +64,9 @@ export default () => {
         </Form.Field.Group>
       </Grid>
       <Space style={{ marginTop: 16 }}>
-        <Button type="primary" htmlType="submit">Submit</Button>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
         <Button htmlType="reset">Reset</Button>
       </Space>
     </Form>

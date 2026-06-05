@@ -3,7 +3,6 @@
  * @ohdule code-table-config
  */
 
-import { UrlUtils } from "../..";
 import { configer } from "../../config/config-provider";
 import { normalizeURL } from "../../url/url-utils";
 import { warn } from "../../common/logger";
@@ -31,6 +30,30 @@ interface CodeTableConfig {
   };
   /** Whether to use default project configuration */
   defaultProject: boolean;
+}
+
+/**
+ * Get project configuration from sessionStorage
+ * @returns The parsed project configuration object, or null if not available
+ */
+function getProjectConfig(): Record<string, any> | null {
+  if (typeof sessionStorage === "undefined") {
+    return null;
+  }
+
+  const projectKey = configer.get("storageKeys.projectConfig") || "project_config";
+
+  const configStr = sessionStorage.getItem(projectKey);
+  if (!configStr) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(configStr);
+  } catch (error) {
+    warn(`Failed to parse ${projectKey} from sessionStorage:`, error);
+    return null;
+  }
 }
 
 /**
@@ -84,30 +107,6 @@ function getCodeTableConfig(): CodeTableConfig {
     },
     defaultProject: config.DEFAULT_PROJECT || false,
   };
-}
-
-/**
- * Get project configuration from sessionStorage
- * @returns The parsed project configuration object, or null if not available
- */
-function getProjectConfig(): Record<string, any> | null {
-  if (typeof sessionStorage === "undefined") {
-    return null;
-  }
-
-  const projectKey = configer.get("storageKeys.projectConfig") || "project_config";
-
-  const configStr = sessionStorage.getItem(projectKey);
-  if (!configStr) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(configStr);
-  } catch (error) {
-    warn(`Failed to parse ${projectKey} from sessionStorage:`, error);
-    return null;
-  }
 }
 
 export { getCodeTableConfig, getProjectConfig };

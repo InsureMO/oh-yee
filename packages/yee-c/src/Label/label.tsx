@@ -7,7 +7,13 @@ import type { LabelProps } from './interface';
 const Label = forwardRef<HTMLLabelElement, LabelProps>((baseprops, ref) => {
   const { label } = useContext(GlobalContext);
   const props = mergeContextToProps(baseprops, label);
-  const { prefixCls = 'yee-label', className, style, children, ...rest } = props;
+  const {
+    prefixCls = 'yee-label',
+    className,
+    style,
+    children,
+    ...rest
+  } = props;
 
   return (
     <label

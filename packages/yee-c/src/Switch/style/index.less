@@ -1,76 +1,85 @@
 @pls: .yee-switch;
 
 @{pls} {
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    min-width: var(--m-switch-width);
-    min-height: var(--m-switch-height);
-    padding: 0;
-    border: none;
-    border-radius: calc(calc(var(--m-switch-handle-size) + var(--yee-switch-border-radius-offset)) / 2);
-    cursor: pointer;
-    transition: background 0.2s linear;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  min-width: var(--m-switch-width);
+  min-height: var(--m-switch-height);
+  padding: 0;
+  border: none;
+  border-radius: calc(
+    calc(var(--m-switch-handle-size) + var(--yee-switch-border-radius-offset)) /
+      2
+  );
+  cursor: pointer;
+  transition: background 0.2s linear;
 
-    &-handle {
-        position: absolute;
-        top: var(--yee-switch-handle-top);
-        left: var(--yee-switch-handle-left);
-        display: inline-flex;
-        transition: all 0.2s linear;
+  &-handle {
+    position: absolute;
+    top: var(--yee-switch-handle-top);
+    left: var(--yee-switch-handle-left);
+    display: inline-flex;
+    transition: all 0.2s linear;
 
-        &::after {
-            display: inline-block;
-            width: var(--m-switch-handle-size);
-            height: var(--m-switch-handle-size);
-            background-color: var(--yee-switchbox-switch-handle-bg-color);
-            border-radius: 50%;
-            content: '';
-        }
+    &::after {
+      display: inline-block;
+      width: var(--m-switch-handle-size);
+      height: var(--m-switch-handle-size);
+      background-color: var(--yee-switchbox-switch-handle-bg-color);
+      border-radius: 50%;
+      content: '';
+    }
+  }
+
+  &-inner {
+    display: block;
+    height: 100%;
+    height: var(--yee-switch-inner-height);
+    line-height: var(--yee-switch-inner-line-height);
+  }
+
+  &-large {
+    --m-switch-handle-size: var(--yee-switch-handle-large-size);
+    --m-switch-height: var(--yee-switch-large-height);
+  }
+
+  &-small {
+    --m-switch-handle-size: var(--yee-switch-handle-small-size);
+    --yee-switch-width: var(--yee-switch-small-width);
+
+    height: var(--yee-switch-small-height);
+
+    --yee-switch-height: var(--yee-switch-small-height);
+  }
+
+  &-checked {
+    background-color: var(--yee-switchbox-switch-checked-bg-color);
+
+    @{pls}-handle {
+      inset-inline-start: calc(
+        100% - var(--m-switch-handle-size) - var(--yee-switch-handle-offset)
+      );
     }
 
-    &-inner {
-        display: block;
-        height: 100%;
-        height: var(--yee-switch-inner-height);
-        line-height: var(--yee-switch-inner-line-height);
+    @{pls}-inner {
+      padding-inline-end: calc(
+        var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset)
+      );
     }
+  }
 
-    &-large {
-        --m-switch-handle-size: var(--yee-switch-handle-large-size);
-        --m-switch-height: var(--yee-switch-large-height);
+  &-unchecked {
+    background-color: var(--yee-switchbox-switch-bg-color);
+
+    @{pls}-inner {
+      padding-inline-start: calc(
+        var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset)
+      );
     }
+  }
 
-    &-small {
-        --m-switch-handle-size: var(--yee-switch-handle-small-size);
-        --yee-switch-width: var(--yee-switch-small-width);
-
-        height: var(--yee-switch-small-height);
-
-        --yee-switch-height: var(--yee-switch-small-height);
-    }
-
-    &-checked {
-        background-color: var(--yee-switchbox-switch-checked-bg-color);
-
-        @{pls}-handle {
-            inset-inline-start: calc(100% - var(--m-switch-handle-size) - var(--yee-switch-handle-offset));
-        }
-
-        @{pls}-inner {
-            padding-inline-end: calc(var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset));
-        }
-    }
-
-    &-unchecked {
-        background-color: var(--yee-switchbox-switch-bg-color);
-
-        @{pls}-inner {
-            padding-inline-start: calc(var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset));
-        }
-    }
-
-    --m-switch-handle-size: var(--yee-switch-handle-size);
-    --m-switch-width: var(--yee-switch-width);
-    --m-switch-height: var(--yee-switch-height);
+  --m-switch-handle-size: var(--yee-switch-handle-size);
+  --m-switch-width: var(--yee-switch-width);
+  --m-switch-height: var(--yee-switch-height);
 }

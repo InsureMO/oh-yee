@@ -1,11 +1,11 @@
-import dayjs, { Dayjs, QUnitType } from 'dayjs';
 import clsx from 'clsx';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import isBetween from 'dayjs/plugin/isBetween';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import localeData from 'dayjs/plugin/localeData';
+import dayjs, { Dayjs, QUnitType } from 'dayjs';
 import buddhistEra from 'dayjs/plugin/buddhistEra';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import isBetween from 'dayjs/plugin/isBetween';
+import localeData from 'dayjs/plugin/localeData';
+import quarterOfYear from 'dayjs/plugin/quarterOfYear';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(quarterOfYear);
@@ -90,12 +90,24 @@ const d = {
 
     // === Handle selected range styles (background color) ===
     // Only show when BOTH dates are selected and different
-    if (startSelectedDate && endSelectedDate && !d.isSame(startSelectedDate, endSelectedDate, unit)) {
-      const [selectedStart, selectedEnd] = startSelectedDate.isBefore(endSelectedDate)
+    if (
+      startSelectedDate &&
+      endSelectedDate &&
+      !d.isSame(startSelectedDate, endSelectedDate, unit)
+    ) {
+      const [selectedStart, selectedEnd] = startSelectedDate.isBefore(
+        endSelectedDate,
+      )
         ? [startSelectedDate, endSelectedDate]
         : [endSelectedDate, startSelectedDate];
 
-      const isInSelectedRange = d.isBetween(date, selectedStart, selectedEnd, unit, '[]');
+      const isInSelectedRange = d.isBetween(
+        date,
+        selectedStart,
+        selectedEnd,
+        unit,
+        '[]',
+      );
       const isSelectedStart = d.isSame(date, selectedStart, unit);
       const isSelectedEnd = d.isSame(date, selectedEnd, unit);
 
@@ -113,7 +125,11 @@ const d = {
     // === Handle hover range styles (dashed border) ===
     // Show when at least ONE date exists in the hover range
     // This allows showing hover preview from a selected date to hovered date
-    if (startHoverDate && endHoverDate && !d.isSame(startHoverDate, endHoverDate, unit)) {
+    if (
+      startHoverDate &&
+      endHoverDate &&
+      !d.isSame(startHoverDate, endHoverDate, unit)
+    ) {
       const [hoverStart, hoverEnd] = startHoverDate.isBefore(endHoverDate)
         ? [startHoverDate, endHoverDate]
         : [endHoverDate, startHoverDate];

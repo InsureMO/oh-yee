@@ -92,24 +92,6 @@ function isMoHeaderEnabled(projectConfig: ProjectConfig): boolean {
 }
 
 /**
- * Handle logout logic
- * @param config - Project configuration
- */
-function handleLogout(): void {
-  if (typeof window !== "undefined") {
-    sessionStorage.clear();
-  }
-}
-
-/**
- * Show error notification
- * @param message - Error message
- */
-function showError(message: string): void {
-  throw new Error(message);
-}
-
-/**
  * Build project path key
  * @returns Project path key
  */
@@ -365,7 +347,8 @@ export class I18nUtils {
    */
   static getSystemI18N(): string {
     const storageKey = getConfigValue(
-      "i18n.storageKey"
+      "i18n.storageKey",
+      "system_i18nKey",
     );
 
     let systemI18N = typeof storageKey === "string" ?
@@ -395,9 +378,12 @@ export class I18nUtils {
    */
   static setSystemI18N(value: string): void {
     const storageKey = getConfigValue(
-      "i18n.storageKey"
+      "i18n.storageKey",
+      "system_i18nKey",
     );
-    typeof storageKey === "string" && sessionStorage.setItem(storageKey, value);
+    if (typeof storageKey === "string") {
+      sessionStorage.setItem(storageKey, value);
+    }
   }
 
   /**
@@ -480,7 +466,7 @@ export class I18nUtils {
    * ```
    */
   static getMessage(message: string | null | undefined): string {
-    if (message == null || message == undefined) {
+    if (message == null) { // eslint-disable-line eqeqeq
       return "MSG Not Found";
     }
     return message;

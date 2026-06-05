@@ -11,9 +11,7 @@ export default () => {
       <Progress percent={60} />
 
       <div>Steps with Custom Colors</div>
-      <Progress
-        percent={80}
-      />
+      <Progress percent={80} />
 
       <div>Small Steps</div>
       <Progress percent={66} strokeWidth={10} />

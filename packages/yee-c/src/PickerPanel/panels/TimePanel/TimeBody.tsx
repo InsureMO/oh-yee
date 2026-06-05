@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { Dayjs } from 'dayjs';
-import TimeColumn from './TimeColumn';
-import pickerUtils from '../../utils/pickerUtils';
+import * as React from 'react';
 import panelConfig from '../../configs';
+import pickerUtils from '../../utils/pickerUtils';
+import TimeColumn from './TimeColumn';
 
 const timeList = panelConfig.timeList;
 

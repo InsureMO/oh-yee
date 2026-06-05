@@ -1,5 +1,5 @@
 import React from 'react';
-import { classifyError, CATEGORY_LABEL } from './classify';
+import { CATEGORY_LABEL, classifyError } from './classify';
 import type { ErrorCategory } from './interface';
 
 export interface GlobalErrorListenerProps {
@@ -17,9 +17,7 @@ export interface GlobalErrorListenerProps {
  * - window error (capture phase): synchronous errors in event handlers, resource load failures
  * - unhandledrejection: uncaught Promise rejections
  */
-export default class GlobalErrorListener extends React.Component<
-  GlobalErrorListenerProps
-> {
+export default class GlobalErrorListener extends React.Component<GlobalErrorListenerProps> {
   private handleErrorEvent = (event: ErrorEvent) => {
     const target = event.target as HTMLElement | null;
     // Resource load failure (img/script/link)

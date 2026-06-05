@@ -282,7 +282,6 @@
   --yee-icon-warning-color: var(--yee-warning-color);
   --yee-icon-danger-color: var(--yee-error-color);
 
-
   /* --Divider-- */
   --yee-divider-font-color: var(--yee-text-color);
   --yee-divider-border-color: var(--yee-color-split);
@@ -487,9 +486,10 @@
   );
   --yee-date-picker-time-disabled-color: var(--yee-text-color-disabled);
   --yee-date-picker-time-disabled-bg-color: transparent;
-
   --yee-rangepicker-trigger-border-color: var(--yee-border-color);
-  --yee-rangepicker-trigger-hover-border-color: var(--yee-border-color-hover-focus);
+  --yee-rangepicker-trigger-hover-border-color: var(
+    --yee-border-color-hover-focus
+  );
   --yee-rangepicker-checked-bg-color: var(--yee-color-option-active-bg);
   --yee-rangepicker-hover-border-color: var(--yee-primary-color);
   --yee-rangepicker-panel-bg-color: #fff;
@@ -504,7 +504,6 @@
   --yee-time-picker-container-hour-apm-active-font-color: var(
     --yee-color-option-active
   );
-
 
   /* --Input-- */
   --yee-input-hover-border-color: var(--yee-border-color-hover-focus);
@@ -787,7 +786,6 @@
   --yee-highlight-hover-color: #39364e;
   --yee-highlight-active-color: #39364e;
 
-
   /* --ImagePreview-- */
   --yee-image-preview-image-mask-bg-color: var(--yee-mask-bg-color);
   --yee-image-preview-mask-color: #fff;
@@ -1031,15 +1029,15 @@
   --yee-notice-error-icon-color: var(--yee-error-color);
   --yee-notice-error-bg-color: var(--yee-error-color-bg);
   --yee-notice-error-border-color: var(--yee-error-color-border);
-  --yee-notice-description-color: rgba(0, 0, 0, 0.65);
-  --yee-notice-close-color: rgba(0, 0, 0, 0.45);
-  --yee-notice-close-hover-color: rgba(0, 0, 0, 0.75);
-  --yee-notice-box-shadow-color-1: rgba(0, 0, 0, 0.08);
-  --yee-notice-box-shadow-color-2: rgba(0, 0, 0, 0.12);
-  --yee-notice-box-shadow-color-3: rgba(0, 0, 0, 0.05);
-  --yee-notice-box-shadow-hover-color-1: rgba(0, 0, 0, 0.12);
-  --yee-notice-box-shadow-hover-color-2: rgba(0, 0, 0, 0.16);
-  --yee-notice-box-shadow-hover-color-3: rgba(0, 0, 0, 0.08);
+  --yee-notice-description-color: rgba(0, 0, 0, 65%);
+  --yee-notice-close-color: rgba(0, 0, 0, 45%);
+  --yee-notice-close-hover-color: rgba(0, 0, 0, 75%);
+  --yee-notice-box-shadow-color-1: rgba(0, 0, 0, 8%);
+  --yee-notice-box-shadow-color-2: rgba(0, 0, 0, 12%);
+  --yee-notice-box-shadow-color-3: rgba(0, 0, 0, 5%);
+  --yee-notice-box-shadow-hover-color-1: rgba(0, 0, 0, 12%);
+  --yee-notice-box-shadow-hover-color-2: rgba(0, 0, 0, 16%);
+  --yee-notice-box-shadow-hover-color-3: rgba(0, 0, 0, 8%);
   --yee-notice-bg-color: var(--yee-color-bg-elevated);
 
   /* --Popconfirm-- */

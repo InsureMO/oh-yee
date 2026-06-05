@@ -36,7 +36,7 @@ export default function useEsc({ onEsc, enabled = true }: UseEscProps = {}) {
         handleEsc(event);
       }
     },
-    [handleEsc]
+    [handleEsc],
   );
 
   useEffect(() => {

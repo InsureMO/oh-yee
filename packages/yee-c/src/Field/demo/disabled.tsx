@@ -13,7 +13,12 @@ export default () => {
       <Field formName="disabledForm" name="readonly" label="Readonly Field">
         <Input value="Non-editable content" readOnly />
       </Field>
-      <Field formName="disabledForm" name="disabled" label="Disabled Field" disabled>
+      <Field
+        formName="disabledForm"
+        name="disabled"
+        label="Disabled Field"
+        disabled
+      >
         <Input placeholder="Entire Field is disabled" />
       </Field>
       <Field formName="disabledForm" name="normal" label="Normal Field">

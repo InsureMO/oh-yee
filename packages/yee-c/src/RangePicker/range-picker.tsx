@@ -1,18 +1,18 @@
+import clsx from 'clsx';
 import dayjs, { Dayjs } from 'dayjs';
 import { CalendarDays, X } from 'lucide-react';
-import clsx from 'clsx';
 import React, { FC, useMemo, useRef, useState } from 'react';
+import Button from '../Button';
 import Input from '../Input';
 import RangePanel from '../PickerPanel/panels/RangePanel';
+import { inferPicker } from '../PickerPanel/utils/infer-picker';
 import pickerUtils from '../PickerPanel/utils/pickerUtils';
+import Space from '../Space';
 import Trigger from '../Trigger';
 import useBreakpoint from '../hooks/useBreakpoint';
+import useDeepCompareEffect from '../hooks/useDeepCompareEffect';
 import useEvent from '../hooks/useEvent';
 import useMergedState from '../hooks/useMergedState';
-import useDeepCompareEffect from '../hooks/useDeepCompareEffect';
-import Button from "../Button";
-import Space from "../Space";
-import { inferPicker } from '../PickerPanel/utils/infer-picker';
 import { useLocale } from '../locale';
 import RangePickerMobile from './range-picker-mobile';
 
@@ -42,7 +42,7 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     size = 'middle',
     status,
     ranges,
-    placement="bottomLeft",
+    placement = 'bottomLeft',
     onChange,
     onStartChange,
     onEndChange,
@@ -66,7 +66,7 @@ const RangePicker: FC<RangePickerProps> = (props) => {
       let _start: string | undefined = undefined;
       let _end: string | undefined = undefined;
 
-      if (start != null) {
+      if (start !== null && start !== undefined) {
         if (typeof start === 'number') {
           _start = String(start);
         } else if (typeof start === 'string') {
@@ -79,7 +79,7 @@ const RangePicker: FC<RangePickerProps> = (props) => {
         }
       }
 
-      if (end != null) {
+      if (end !== null && end !== undefined) {
         if (typeof end === 'number') {
           _end = String(end);
         } else if (typeof end === 'string') {
@@ -96,15 +96,21 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     },
   ) as any;
 
-  const [mergedValue, setMergedValue] = useMergedState<Array<string | number | Dayjs | undefined>, Array<string | undefined> | undefined>([], {
+  const [mergedValue, setMergedValue] = useMergedState<
+    Array<string | number | Dayjs | undefined>,
+    Array<string | undefined> | undefined
+  >([], {
     value,
     defaultValue,
     handleState,
-    deepCompare: true
+    deepCompare: true,
   });
 
   const [pickerValue, setPickerValue] = useState<Array<Dayjs | undefined>>([]);
-  const [pickerView, setPickerView] = useState<[Dayjs, Dayjs]>([pickerUtils.getNow(), pickerUtils.getNow().add(1, 'month')]);
+  const [pickerView, setPickerView] = useState<[Dayjs, Dayjs]>([
+    pickerUtils.getNow(),
+    pickerUtils.getNow().add(1, 'month'),
+  ]);
   const [hoverDate, setHoverDate] = useState<Dayjs | null>(null);
 
   // Local state for input values
@@ -145,14 +151,16 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     const endView = pickerUtils.getNow().add(1, 'month');
 
     setPickerView([pickerStart || startView, pickerEnd || endView]);
-
   }, [mergedValue]);
 
   // Calculate hover range and selected range for styling
   const rangeRanges = useMemo(() => {
     const [start, end] = pickerValue;
     let hoverRange: Array<Dayjs | null | undefined> = [];
-    let selectedRange: Array<Dayjs | null | undefined> = [start ?? null, end ?? null];
+    let selectedRange: Array<Dayjs | null | undefined> = [
+      start ?? null,
+      end ?? null,
+    ];
 
     // Hover range: show dashed border preview when we have at least one selected date
     if (hoverDate) {
@@ -175,7 +183,11 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     }
 
     // Sort hover range to ensure start <= end
-    if (hoverRange[0] && hoverRange[1] && hoverRange[0].isAfter(hoverRange[1])) {
+    if (
+      hoverRange[0] &&
+      hoverRange[1] &&
+      hoverRange[0].isAfter(hoverRange[1])
+    ) {
       hoverRange = [hoverRange[1], hoverRange[0]];
     }
 
@@ -212,7 +224,9 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     setPickerValue(newValue as Dayjs[]);
 
     // Update pickerView when user selects a date
-    setPickerView(state => picking === 'start' ? [date, state[1]] : [state[0], date]);
+    setPickerView((state) =>
+      picking === 'start' ? [date, state[1]] : [state[0], date],
+    );
 
     if (picking === 'start') {
       onStartChange?.(pickerUtils.format(date, saveFormat), date);
@@ -254,110 +268,6 @@ const RangePicker: FC<RangePickerProps> = (props) => {
       ],
       [start, end],
     );
-  }
-
-  const renderPopupWithRanges = () => {
-    if (!ranges) {
-      return null;
-    }
-    return (
-      <>
-        <Space className={`${prefixCls}-panel-ranges`}>
-          {Object.entries(ranges).map(([label, rangeValue]) => (
-            <Button
-              key={label}
-              size="small"
-              className={`${prefixCls}-range-item`}
-              onClick={() => handleRangeClick(rangeValue)}
-            >
-              {label}
-            </Button>
-          ))}
-        </Space>
-        <Button type='primary' className={`${prefixCls}-panel-now-btn`} size="small" onClick={onConfirm}>{rangepicker.confirm}</Button>
-      </>
-    );
-  };
-
-  const renderPopup = () => {
-    const mode = format.includes('hh') ? 'datetime' : 'date';
-
-    return (
-      <div className={`${prefixCls}-panel`}>
-        <RangePanel
-          prefixCls="yee-picker"
-          value={pickerValue}
-          pickerView={pickerView}
-          panel={picking}
-          format={format}
-          mode={mode}
-          saveFormat={saveFormat}
-          onChange={handleChange}
-          onPanelChange={handlePanelChange}
-          onCellMouse={handleCellMouse}
-          hoverRange={rangeRanges.hoverRange}
-          selectedRange={rangeRanges.selectedRange}
-          disabledDate={disabledDate}
-        />
-        <div className={`${prefixCls}-panel-footer`}>
-          {renderPopupWithRanges()}
-          <Button type='primary' className={`${prefixCls}-panel-now-btn`} size="small" onClick={onConfirm}>confirm</Button>
-        </div>
-      </div>
-    );
-  };
-
-  const handleStartChange = (v: string) => {
-    setStartInputValue(v);
-
-    // Try to parse the input value
-    const parsedDate = pickerUtils.init(v, format);
-    if (pickerUtils.isValid(parsedDate)) {
-      const currentEnd = pickerValue[1]
-
-      // Validate: start should not be after end
-      if (endLimitStart && currentEnd && pickerUtils.isAfter(parsedDate, currentEnd)) {
-        setStartInputValue('');
-        return;
-      }
-
-      handleChange(parsedDate, 'change');
-    }
-  };
-
-  const handleEndChange = (v: string) => {
-    setEndInputValue(v);
-
-    // Try to parse the input value
-    const parsedDate = pickerUtils.init(v, format);
-    if (pickerUtils.isValid(parsedDate)) {
-      const currentStart = pickerValue[0]
-
-      // Validate: end should not be before start
-      if (endLimitStart && currentStart && pickerUtils.isAfter(currentStart, parsedDate)) {
-        return;
-      }
-
-      handleChange(parsedDate, 'change');
-    }
-  };
-
-  const handleOpenChange = (isOpen: boolean) => {
-    setOpen(isOpen);
-    if (!isOpen) {
-      setHoverDate(null);
-    }
-    onOpenChange?.(isOpen);
-  };
-
-  // Handle clear
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setMergedValue([]);
-    setStartInputValue('');
-    setEndInputValue('');
-    onChange?.([], []);
-    onClear?.();
   };
 
   // Handle range shortcuts
@@ -386,6 +296,132 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     setOpen(false);
   };
 
+  const renderPopupWithRanges = () => {
+    if (!ranges) {
+      return null;
+    }
+    return (
+      <>
+        <Space className={`${prefixCls}-panel-ranges`}>
+          {Object.entries(ranges).map(([label, rangeValue]) => (
+            <Button
+              key={label}
+              size="small"
+              className={`${prefixCls}-range-item`}
+              onClick={() => handleRangeClick(rangeValue)}
+            >
+              {label}
+            </Button>
+          ))}
+        </Space>
+        <Button
+          type="primary"
+          className={`${prefixCls}-panel-now-btn`}
+          size="small"
+          onClick={onConfirm}
+        >
+          {rangepicker.confirm}
+        </Button>
+      </>
+    );
+  };
+
+  const renderPopup = () => {
+    const mode = format.includes('hh') ? 'datetime' : 'date';
+
+    return (
+      <div className={`${prefixCls}-panel`}>
+        <RangePanel
+          prefixCls="yee-picker"
+          value={pickerValue}
+          pickerView={pickerView}
+          panel={picking}
+          format={format}
+          mode={mode}
+          saveFormat={saveFormat}
+          onChange={handleChange}
+          onPanelChange={handlePanelChange}
+          onCellMouse={handleCellMouse}
+          hoverRange={rangeRanges.hoverRange}
+          selectedRange={rangeRanges.selectedRange}
+          disabledDate={disabledDate}
+        />
+        <div className={`${prefixCls}-panel-footer`}>
+          {renderPopupWithRanges()}
+          <Button
+            type="primary"
+            className={`${prefixCls}-panel-now-btn`}
+            size="small"
+            onClick={onConfirm}
+          >
+            confirm
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  const handleStartChange = (v: string) => {
+    setStartInputValue(v);
+
+    // Try to parse the input value
+    const parsedDate = pickerUtils.init(v, format);
+    if (pickerUtils.isValid(parsedDate)) {
+      const currentEnd = pickerValue[1];
+
+      // Validate: start should not be after end
+      if (
+        endLimitStart &&
+        currentEnd &&
+        pickerUtils.isAfter(parsedDate, currentEnd)
+      ) {
+        setStartInputValue('');
+        return;
+      }
+
+      handleChange(parsedDate, 'change');
+    }
+  };
+
+  const handleEndChange = (v: string) => {
+    setEndInputValue(v);
+
+    // Try to parse the input value
+    const parsedDate = pickerUtils.init(v, format);
+    if (pickerUtils.isValid(parsedDate)) {
+      const currentStart = pickerValue[0];
+
+      // Validate: end should not be before start
+      if (
+        endLimitStart &&
+        currentStart &&
+        pickerUtils.isAfter(currentStart, parsedDate)
+      ) {
+        return;
+      }
+
+      handleChange(parsedDate, 'change');
+    }
+  };
+
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      setHoverDate(null);
+    }
+    onOpenChange?.(isOpen);
+  };
+
+  // Handle clear
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMergedValue([]);
+    setStartInputValue('');
+    setEndInputValue('');
+    onChange?.([], []);
+    onClear?.();
+  };
+
   // Handle disabled state
   const [startDisabled, endDisabled] = Array.isArray(disabled)
     ? disabled
@@ -394,7 +430,10 @@ const RangePicker: FC<RangePickerProps> = (props) => {
   // Handle placeholder
   const [startPlaceholder, endPlaceholder] = Array.isArray(placeholder)
     ? placeholder
-    : [placeholder || rangepicker.startPlaceholder, placeholder || rangepicker.endPlaceholder];
+    : [
+        placeholder || rangepicker.startPlaceholder,
+        placeholder || rangepicker.endPlaceholder,
+      ];
 
   // Check if has value
   const hasValue = useMemo(() => {
@@ -459,10 +498,7 @@ const RangePicker: FC<RangePickerProps> = (props) => {
         />
         <span className={`${prefixCls}-suffix`}>
           {allowClear && hasValue && !disabled ? (
-            <span
-              className={clsx(`${prefixCls}-clear`)}
-              onClick={handleClear}
-            >
+            <span className={clsx(`${prefixCls}-clear`)} onClick={handleClear}>
               <X size={12} strokeWidth={1} />
             </span>
           ) : null}

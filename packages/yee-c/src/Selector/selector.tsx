@@ -59,15 +59,17 @@ const Selector = React.forwardRef(
     });
 
     const tags = useMemo(() => {
-      return Array.isArray(options) ? options
-        .filter((opt) => selectedKeys.includes(opt.value))
-        .map((opt) => ({
-          ...opt,
-          children:
-            typeof optionLabelProp === 'function'
-              ? optionLabelProp(opt)
-              : opt[optionLabelProp],
-        })) : [];
+      return Array.isArray(options)
+        ? options
+            .filter((opt) => selectedKeys.includes(opt.value))
+            .map((opt) => ({
+              ...opt,
+              children:
+                typeof optionLabelProp === 'function'
+                  ? optionLabelProp(opt)
+                  : opt[optionLabelProp],
+            }))
+        : [];
     }, [options, selectedKeys, optionLabelProp]);
 
     const handleClick = () => {
@@ -159,7 +161,9 @@ const Selector = React.forwardRef(
       }
 
       const key = selectedKeys.length ? selectedKeys[0] : '';
-      const opt = Array.isArray(options) ? options.find((opt) => opt.value === key) : null;
+      const opt = Array.isArray(options)
+        ? options.find((opt) => opt.value === key)
+        : null;
       const label = (
         opt
           ? typeof optionLabelProp === 'function'
@@ -207,7 +211,7 @@ const Selector = React.forwardRef(
         <span className={`${prefixCls}-clear`} onClick={handleClear}>
           <X size={12} strokeWidth={1} />
         </span>
-      )
+      );
     };
 
     return (
@@ -227,7 +231,10 @@ const Selector = React.forwardRef(
         }}
         ref={ref}
       >
-        <div className={clsx(`${prefixCls}-content`)} onClick={ disabled? undefined : handleClick}>
+        <div
+          className={clsx(`${prefixCls}-content`)}
+          onClick={disabled ? undefined : handleClick}
+        >
           {renderContent()}
           {multi && renderSearch()}
           {renderPlaceholder()}

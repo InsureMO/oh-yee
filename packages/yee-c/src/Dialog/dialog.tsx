@@ -4,12 +4,12 @@ import { motion } from 'motion/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
-import { useLocale } from '../locale';
-import Portal from '../Portal';
 import useEsc from '../hooks/useEsc';
 import useFocusManage from '../hooks/useFocusManage';
-import usePressDrag from '../hooks/usePressDrag';
 import useLockFocus from '../hooks/useLockFocus';
+import usePressDrag from '../hooks/usePressDrag';
+import { useLocale } from '../locale';
+import Portal from '../Portal';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { DialogProps } from './interface';
 import './style/index.less';
@@ -139,7 +139,12 @@ const Dialog = (baseprops: DialogProps) => {
         }
       }}
     >
-      {showMask && delayOpen && <div className={clsx(`${prefixCls}-mask`, classNames?.mask)} style={styles?.mask}></div>}
+      {showMask && delayOpen && (
+        <div
+          className={clsx(`${prefixCls}-mask`, classNames?.mask)}
+          style={styles?.mask}
+        ></div>
+      )}
       <div
         className={`${prefixCls}-content-wrapper`}
         onClick={maskClosable ? onCancel : undefined}
@@ -154,7 +159,12 @@ const Dialog = (baseprops: DialogProps) => {
           {closable ? (
             <Button
               type="text"
-              icon={<X size={CLOSE_ICON_SIZE} strokeWidth={CLOSE_ICON_STROKE_WIDTH} />}
+              icon={
+                <X
+                  size={CLOSE_ICON_SIZE}
+                  strokeWidth={CLOSE_ICON_STROKE_WIDTH}
+                />
+              }
               className={`${prefixCls}-close`}
               aria-label="close"
               onClick={onCancel}

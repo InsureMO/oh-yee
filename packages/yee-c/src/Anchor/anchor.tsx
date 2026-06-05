@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { ChevronLeft } from 'lucide-react';
 import React, {
   createContext,
   forwardRef,
@@ -9,13 +10,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { ChevronLeft } from 'lucide-react';
-import AnchorItem from './anchor-item';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import debounce from '../utils/debounce';
 import mergeContextToProps from '../utils/mergeContextToProps';
-import type { AnchorContextType, AnchorProps, AnchorItemType } from './interface';
+import AnchorItem from './anchor-item';
+import type {
+  AnchorContextType,
+  AnchorItemType,
+  AnchorProps,
+} from './interface';
 
 import './style/index.less';
 
@@ -52,9 +56,7 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     defaultValue: defaultActiveKey,
   });
 
-  const [anchorList, setAnchorList] = useState<
-    Array<AnchorItemType>
-  >([]);
+  const [anchorList, setAnchorList] = useState<Array<AnchorItemType>>([]);
 
   const containerRef = useRef<HTMLElement | Window | null>(null);
 
@@ -68,7 +70,8 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     elements.forEach((element) => {
       const key = element.getAttribute('id') || '';
       const title = element.getAttribute('data-anchor-title') || '';
-      const status = (element.getAttribute('data-anchor-status') || undefined) as AnchorItemType['status'];
+      const status = (element.getAttribute('data-anchor-status') ||
+        undefined) as AnchorItemType['status'];
 
       if (key && title) {
         list.push({ key, title, status });
@@ -124,7 +127,10 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
       handleScroll();
 
       return () => {
-        container.removeEventListener('scroll', debouncedScroll as EventListener);
+        container.removeEventListener(
+          'scroll',
+          debouncedScroll as EventListener,
+        );
       };
     }
   }, [getContainer, handleScroll, activeKey]);
@@ -203,7 +209,10 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
       {renderNavArrow()}
       <AnchorContext.Provider value={contextValue}>
         <div className={`${prefixCls}-content-wrapper`}>
-          <ul className={clsx(`${prefixCls}-content`, classNames?.content)} style={styles?.content}>
+          <ul
+            className={clsx(`${prefixCls}-content`, classNames?.content)}
+            style={styles?.content}
+          >
             {currentItems.map((item) => (
               <AnchorItem
                 key={item.key}

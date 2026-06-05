@@ -1,6 +1,6 @@
 import Field from './Field';
-import Group from './Group';
 import InternalForm from './Form';
+import Group from './Group';
 import List from './List';
 import useForm from './useForm';
 import useWatch from './useWatch';
@@ -14,7 +14,7 @@ type FormInterface = typeof InternalForm & {
   useWatch: typeof useWatch;
   Field: FieldInterface;
   List: typeof List;
-}
+};
 
 const Form = InternalForm as FormInterface;
 Form.useForm = useForm;
@@ -24,6 +24,11 @@ FormField.Group = Group;
 Form.Field = FormField;
 Form.List = List;
 
-export type { FormInstance, FormProps, FormListProps, FieldGroupProps } from './interface';
+export type {
+  FieldGroupProps,
+  FormInstance,
+  FormListProps,
+  FormProps,
+} from './interface';
 
 export default Form;

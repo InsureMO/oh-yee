@@ -54,8 +54,9 @@ function DateBody(props: any) {
     const _year = pickerUtils.getYear(_currentDate);
     const _month = pickerUtils.getMonth(_currentDate) + 1;
     const _day = pickerUtils.getDate(_currentDate);
-    return `${_year < 1000 ? '0' + _year : _year}-${_month < 10 ? '0' + _month : _month
-      }-${_day < 10 ? '0' + _day : _day}`;
+    return `${_year < 1000 ? '0' + _year : _year}-${
+      _month < 10 ? '0' + _month : _month
+    }-${_day < 10 ? '0' + _day : _day}`;
   });
 
   const getCellClassName = useEvent((currentDate: Dayjs) => {

@@ -14,7 +14,9 @@ const COLORS = {
   array: ['#d19a66', '#c678dd', '#56b6c2', '#e06c75', '#56b6c2'],
 };
 
-const isObj = (value: unknown): value is Record<string, unknown> | unknown[] => {
+const isObj = (
+  value: unknown,
+): value is Record<string, unknown> | unknown[] => {
   return typeof value === 'object' && value !== null;
 };
 
@@ -43,8 +45,6 @@ const JsonViewer = (props: InternalJsonViewer) => {
     depth = 0,
     latest = true,
     colors,
-    className,
-    style,
     ...rest
   } = props;
 
@@ -59,7 +59,9 @@ const JsonViewer = (props: InternalJsonViewer) => {
   const renderValue = (value: unknown) => {
     const type = getType(value);
     const color = mc[type as keyof typeof COLORS];
-    const colorValue = Array.isArray(color) ? getColorByDepth(color, depth) : color;
+    const colorValue = Array.isArray(color)
+      ? getColorByDepth(color, depth)
+      : color;
     const node = (
       <span
         className={`${prefixCls}-value ${prefixCls}-${type}`}
@@ -233,10 +235,7 @@ const JsonViewer = (props: InternalJsonViewer) => {
     return (
       <div className={`${prefixCls}-property`}>
         {name && (
-          <span
-            className={`${prefixCls}-key`}
-            style={{ color: mc.key }}
-          >
+          <span className={`${prefixCls}-key`} style={{ color: mc.key }}>
             {name}
             {':'}
           </span>
@@ -248,9 +247,7 @@ const JsonViewer = (props: InternalJsonViewer) => {
 
   return (
     <div {...rest} className={`${prefixCls}-view`}>
-      <div className={`${prefixCls}-collapsible`}>
-        {renderObject(data)}
-      </div>
+      <div className={`${prefixCls}-collapsible`}>{renderObject(data)}</div>
     </div>
   );
 };

@@ -65,7 +65,7 @@ export function formatToSubmitFormat(
   date: Date | null | undefined,
   format: string = DEFAULT_DATETIME_SUBMIT_FORMAT,
 ): string | null {
-  if (date == null) {
+  if (date == null) { // eslint-disable-line eqeqeq
     return null;
   }
   return dayjs(date).format(format);
@@ -85,7 +85,7 @@ export function formatToViewFormat(
   date: Date | null | undefined,
   format: string = DEFAULT_DATETIME_VIEW_FORMAT,
 ): string | null {
-  if (date == null) {
+  if (date == null) { // eslint-disable-line eqeqeq
     return null;
   }
   return dayjs(date).format(format);

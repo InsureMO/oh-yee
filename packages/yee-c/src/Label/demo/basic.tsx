@@ -1,5 +1,5 @@
+import { Input, Label } from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Label, Input } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (
@@ -9,5 +9,5 @@ export default () => {
         <Input />
       </Label>
     </div>
-  )
+  );
 };

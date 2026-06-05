@@ -1,11 +1,11 @@
 import React, { useContext, useMemo, useState } from 'react';
+import { GlobalContext } from '../Config-Provider';
 import Selector from '../Selector';
 import Tree from '../Tree';
+import { tree2array } from '../Tree/utils/tree-tools';
 import Trigger from '../Trigger';
 import useMergedState from '../hooks/useMergedState';
-import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
-import { tree2array } from '../Tree/utils/tree-tools';
 import omit from '../utils/omit';
 import type { TreeSelectProps } from './interface';
 
@@ -31,7 +31,7 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
     value,
     defaultValue,
     checkable = false,
-    multiple = false,
+    multiple = false, // eslint-disable-line @typescript-eslint/no-unused-vars
     optionLabelProp = 'label',
     onChange,
     onFilter,
@@ -69,7 +69,11 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
 
   // Convert tree data to flat array for search and option processing
   const [, itemMap] = useMemo(
-    () => tree2array(Array.isArray(dataSource) ? dataSource : [dataSource], mergedFieldNames),
+    () =>
+      tree2array(
+        Array.isArray(dataSource) ? dataSource : [dataSource],
+        mergedFieldNames,
+      ),
     [dataSource, mergedFieldNames],
   );
 
@@ -88,8 +92,12 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
     const low = String(searchValue).toLowerCase();
     const filterTree = (nodes: T[]): T[] => {
       return nodes.reduce((acc: T[], node) => {
-        const label = String(node[mergedFieldNames.label as keyof T] || '').toLowerCase();
-        const children = node[mergedFieldNames.children as keyof T] as T[] | undefined;
+        const label = String(
+          node[mergedFieldNames.label as keyof T] || '',
+        ).toLowerCase();
+        const children = node[mergedFieldNames.children as keyof T] as
+          | T[]
+          | undefined;
 
         if (label.includes(low)) {
           // If current node matches, include the entire subtree
@@ -100,7 +108,8 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
           if (filteredChildren.length > 0) {
             acc.push({
               ...node,
-              [mergedFieldNames.children as keyof T]: filteredChildren as T[keyof T],
+              [mergedFieldNames.children as keyof T]:
+                filteredChildren as T[keyof T],
             });
           }
         }
@@ -113,20 +122,23 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
 
   // Convert selected keys to options format for Selector display
   const selectedOptions = useMemo(() => {
-    return mergedValue.map((key: string | number) => {
-      const item = itemMap.get(key as string);
-      if (!item) return null;
+    return mergedValue
+      .map((key: string | number) => {
+        const item = itemMap.get(key as string);
+        if (!item) return null;
 
-      const label = typeof optionLabelProp === 'function'
-        ? optionLabelProp(item.original)
-        : String(item[optionLabelProp as keyof typeof item] || item.label);
+        const label =
+          typeof optionLabelProp === 'function'
+            ? optionLabelProp(item.original)
+            : String(item[optionLabelProp as keyof typeof item] || item.label);
 
-      return {
-        value: key,
-        label,
-        ...item.original,
-      };
-    }).filter(Boolean);
+        return {
+          value: key,
+          label,
+          ...item.original,
+        };
+      })
+      .filter(Boolean);
   }, [mergedValue, itemMap, optionLabelProp]);
 
   const getNodes = (keys: string | number | Array<string | number>) => {
@@ -137,14 +149,14 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
       if (keys.length === 0) {
         return [];
       }
-      return keys.map(key => itemMap.get(key as string)?.original).filter((node): node is T => node !== undefined);
+      return keys
+        .map((key) => itemMap.get(key as string)?.original)
+        .filter((node): node is T => node !== undefined);
     }
     return itemMap.get(keys as string)?.original;
   };
 
-  const handleSelect = (
-    selectedKeys: Array<string | number>,
-  ) => {
+  const handleSelect = (selectedKeys: Array<string | number>) => {
     let keys;
     if (single) {
       keys = selectedKeys.length > 0 ? selectedKeys[0] : '';
@@ -160,10 +172,12 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
     onChange?.(keys, nodes);
   };
 
-  const handleCheck = (
-    checkedKeys: Array<string | number>,
-  ) => {
-    const keys = single ? (checkedKeys.length > 0 ? checkedKeys[0] : '') : checkedKeys;
+  const handleCheck = (checkedKeys: Array<string | number>) => {
+    const keys = single
+      ? checkedKeys.length > 0
+        ? checkedKeys[0]
+        : ''
+      : checkedKeys;
     setMergedValue(checkedKeys);
 
     if (single) {

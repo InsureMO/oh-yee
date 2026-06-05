@@ -1,6 +1,6 @@
 import { Button, Upload } from '@rainbow-oh/yee-c';
-import type { UploadFile } from '../interface';
 import React, { useState } from 'react';
+import type { UploadFile } from '../interface';
 
 export default () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);

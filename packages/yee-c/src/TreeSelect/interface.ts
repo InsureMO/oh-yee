@@ -1,7 +1,10 @@
 import type { TreeProps } from '../Tree/interface';
 import type { DataAttributeProps } from '../utils/types';
 
-export interface TreeSelectProps<T = any> extends Omit<TreeProps<T>, 'onSelect' | 'onCheck' | 'fieldNames'>, DataAttributeProps {
+export interface TreeSelectProps<T = any>
+  extends
+    Omit<TreeProps<T>, 'onSelect' | 'onCheck' | 'fieldNames'>,
+    DataAttributeProps {
   /**
    * Custom class name prefix
    */
@@ -42,12 +45,12 @@ export interface TreeSelectProps<T = any> extends Omit<TreeProps<T>, 'onSelect' 
    * Dropdown popup placement
    */
   placement?:
-  | 'top'
-  | 'bottom'
-  | 'topLeft'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomRight';
+    | 'top'
+    | 'bottom'
+    | 'topLeft'
+    | 'topRight'
+    | 'bottomLeft'
+    | 'bottomRight';
   /**
    * Whether searchable
    */

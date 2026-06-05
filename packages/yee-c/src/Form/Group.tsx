@@ -1,9 +1,16 @@
 import clsx from 'clsx';
 import { AnimatePresence, motion } from 'motion/react';
-import React, { useContext, useEffect, useId, useMemo, useReducer, useRef } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
+import Grid from '../Grid';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
-import Grid from '../Grid';
 import type { FieldGroupProps, NamePath, ValidateMessage } from './interface';
 
 const Group: React.FC<FieldGroupProps> = (props) => {
@@ -18,15 +25,17 @@ const Group: React.FC<FieldGroupProps> = (props) => {
   // Extract child Field names
   const childNames = useMemo(() => {
     return React.Children.toArray(children)
-      .filter((child): child is React.ReactElement<{ name?: NamePath }> =>
-        React.isValidElement<{ name?: NamePath }>(child) && child.props.name !== undefined
+      .filter(
+        (child): child is React.ReactElement<{ name?: NamePath }> =>
+          React.isValidElement<{ name?: NamePath }>(child) &&
+          child.props.name !== undefined,
       )
       .map((child) => child.props.name as string);
   }, [children]);
 
   // touched: whether any child field has been interacted with
   const touchedRef = useRef(false);
-  const [, forceValidate] = useReducer((x) => x + 1, 0);
+  const [, forceValidate] = useReducer((x) => x + 1, 0); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   // Group validation
   const validate = (force: boolean): ValidateMessage[] => {
@@ -44,7 +53,9 @@ const Group: React.FC<FieldGroupProps> = (props) => {
 
     // Required validation: error if any child field is empty
     if (required) {
-      const hasEmpty = childNames.some((name) => !values[name] && values[name] !== 0);
+      const hasEmpty = childNames.some(
+        (name) => !values[name] && values[name] !== 0,
+      );
       if (hasEmpty) {
         errors.push({
           name: childNames,
@@ -92,7 +103,7 @@ const Group: React.FC<FieldGroupProps> = (props) => {
       formInstance.subscribe(name, () => {
         touchedRef.current = true;
         runValidation();
-      })
+      }),
     );
     return () => unsubscribes.forEach((fn) => fn());
   }, [childNames, formInstance]);

@@ -3,7 +3,14 @@ import React from 'react';
 import type { GridItemProps } from './interface';
 
 const Item: React.FC<GridItemProps> = (props) => {
-  const { prefixCls = 'yee-grid', children, className, style, spanStyle, colspan, ...rest } = props;
+  const {
+    prefixCls = 'yee-grid',
+    children,
+    className,
+    style,
+    spanStyle,
+    ...rest
+  } = props;
   return (
     <div
       className={clsx(`${prefixCls}-item`, className)}

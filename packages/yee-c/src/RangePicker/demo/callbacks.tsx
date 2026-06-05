@@ -16,14 +16,17 @@ export default () => {
     <div style={{ padding: '20px' }}>
       <RangePicker
         value={value}
-        onChange={(dates, dateStrings) => {
+        onChange={(dates) => {
+          // eslint-disable-line @typescript-eslint/no-unused-vars
           addLog(`onChange - dates: ${JSON.stringify(dates)}`);
           setValue(dates as [string, string]);
         }}
-        onStartChange={(value, date) => {
+        onStartChange={(value) => {
+          // eslint-disable-line @typescript-eslint/no-unused-vars
           addLog(`onStartChange - start date: ${value}`);
         }}
-        onEndChange={(value, date) => {
+        onEndChange={(value) => {
+          // eslint-disable-line @typescript-eslint/no-unused-vars
           addLog(`onEndChange - end date: ${value}`);
         }}
         onOpenChange={(open) => {
@@ -53,7 +56,10 @@ export default () => {
             logs.map((log, index) => (
               <div
                 key={index}
-                style={{ fontSize: '12px', marginBottom: '4px' }}
+                style={{
+                  fontSize: '12px',
+                  marginBottom: '4px',
+                }}
               >
                 {log}
               </div>
@@ -62,6 +68,7 @@ export default () => {
         </div>
         {logs.length > 0 && (
           <button
+            type="button"
             onClick={() => setLogs([])}
             style={{
               marginTop: '8px',

@@ -1,26 +1,36 @@
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
+import { GlobalContext } from '../Config-Provider';
 import Portal from '../Portal';
 import useEsc from '../hooks/useEsc';
 import useLockFocus from '../hooks/useLockFocus';
-import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { ImageViewerPopupProps } from './interface';
 
-import './style/index.less';
 import useElementFocus from '../hooks/useLockFocus';
+import './style/index.less';
 
-export const PopupCtx = React.createContext({ popup: false, open: false, onClose: (() => {}) as () => void });
+export const PopupCtx = React.createContext({
+  popup: false,
+  open: false,
+  onClose: (() => {}) as () => void,
+});
 
 const CLOSE_ICON_SIZE = 20;
 const CLOSE_ICON_STROKE_WIDTH = 1.5;
 const ANIMATION_DURATION = 0.2;
 
-const Popup: React.ForwardRefRenderFunction<HTMLDivElement, ImageViewerPopupProps> = (baseprops, ref) => {
+const Popup: React.ForwardRefRenderFunction<
+  HTMLDivElement,
+  ImageViewerPopupProps
+> = (baseprops, ref) => {
   const { imageviewerpopup } = useContext(GlobalContext);
-  const props = mergeContextToProps<ImageViewerPopupProps>(baseprops, imageviewerpopup);
+  const props = mergeContextToProps<ImageViewerPopupProps>(
+    baseprops,
+    imageviewerpopup,
+  );
 
   const {
     prefixCls = 'yee-image-viewer',
@@ -35,7 +45,8 @@ const Popup: React.ForwardRefRenderFunction<HTMLDivElement, ImageViewerPopupProp
     onClose,
   } = props;
 
-  const componentRef = (ref as React.RefObject<HTMLDivElement>) || useRef<HTMLDivElement>(null);
+  const internalRef = useRef<HTMLDivElement>(null);
+  const componentRef = (ref as React.RefObject<HTMLDivElement>) || internalRef;
 
   useEsc({
     enabled: keyboard,
@@ -76,13 +87,16 @@ const Popup: React.ForwardRefRenderFunction<HTMLDivElement, ImageViewerPopupProp
         onClick={(e) => e.stopPropagation()}
       >
         <button
+          type="button"
           className={`${prefixCls}-popup-close`}
           onClick={onClose}
           aria-label="Close image preview"
         >
           <X size={CLOSE_ICON_SIZE} strokeWidth={CLOSE_ICON_STROKE_WIDTH} />
         </button>
-        <PopupCtx.Provider value={{ popup: true, open, onClose: onClose ?? (() => {}) }}>
+        <PopupCtx.Provider
+          value={{ popup: true, open, onClose: onClose ?? (() => {}) }}
+        >
           {children}
         </PopupCtx.Provider>
       </div>
@@ -90,7 +104,11 @@ const Popup: React.ForwardRefRenderFunction<HTMLDivElement, ImageViewerPopupProp
   );
 
   return (
-    <Portal open={open} destroyOnClose={destroyOnClose} getContainer={getContainer}>
+    <Portal
+      open={open}
+      destroyOnClose={destroyOnClose}
+      getContainer={getContainer}
+    >
       {node}
     </Portal>
   );

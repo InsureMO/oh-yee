@@ -1,6 +1,6 @@
-import { Button, Upload } from '@rainbow-oh/yee-c';
-import type { UploadFile } from '../interface';
+import { Upload } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
+import type { UploadFile } from '../interface';
 
 export default () => {
   const [fileList, setFileList] = useState<UploadFile[]>([
@@ -35,7 +35,5 @@ export default () => {
     onChange: handleChange,
   };
 
-  return (
-    <Upload {...props} />
-  );
+  return <Upload {...props} />;
 };

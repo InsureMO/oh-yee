@@ -14,7 +14,7 @@ export type ErrorCategory =
 export interface ErrorBoundaryProps extends DataAttributeProps {
   /**
    * Custom class name prefix
-  */
+   */
   prefixCls?: string;
   /**
    * Custom class name

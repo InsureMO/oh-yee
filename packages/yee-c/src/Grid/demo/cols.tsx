@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Grid, Slider } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [cols, setCols] = useState(3);

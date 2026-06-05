@@ -5,7 +5,9 @@ export type PickerType =
   | 'month'
   | 'quarter'
   | 'year'
-  | 'decade' | 'datetime' | 'time';
+  | 'decade'
+  | 'datetime'
+  | 'time';
 
 export type SemanticType =
   | 'prevIcon'

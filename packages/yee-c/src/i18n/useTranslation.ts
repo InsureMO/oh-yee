@@ -9,7 +9,7 @@
  * 5. Support parameter interpolation
  */
 
-import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import i18n from './i18n-manager';
 
 interface TranslationResult {
@@ -37,29 +37,34 @@ export default function useTranslation(): TranslationResult {
   /**
    * Translation function - supports interpolation
    */
-  const t = useCallback((key: string, params?: Record<string, any>): string => {
-    if (!translations) return key;
+  const t = useCallback(
+    (key: string, params?: Record<string, any>): string => {
+      if (!translations) return key;
 
-    const message = translations[key];
+      const message = translations[key];
 
-    // If translation not found
-    if (!message) {
-      // @ts-ignore
-      if (import.meta?.env?.NODE_ENV !== 'production') {
-        console.warn(`[useTranslation] Missing translation key: "${key}"`);
+      // If translation not found
+      if (!message) {
+        // @ts-ignore
+        if (import.meta?.env?.NODE_ENV !== 'production') {
+          console.warn(`[useTranslation] Missing translation key: "${key}"`);
+        }
+        return key;
       }
-      return key;
-    }
 
-    // Support interpolation
-    if (params) {
-      return message.replace(/\{(\w+)\}/g, (_, paramKey) => {
-        return params[paramKey] !== undefined ? String(params[paramKey]) : `{${paramKey}}`;
-      });
-    }
+      // Support interpolation
+      if (params) {
+        return message.replace(/\{(\w+)\}/g, (_, paramKey) => {
+          return params[paramKey] !== undefined
+            ? String(params[paramKey])
+            : `{${paramKey}}`;
+        });
+      }
 
-    return message;
-  }, [translations]);
+      return message;
+    },
+    [translations],
+  );
 
   /**
    * Switch language

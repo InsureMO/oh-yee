@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import React, { createContext, forwardRef, useContext } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
-import ListItem from './list-item';
 import type { ListCtxType, ListProps } from './interface';
+import ListItem from './list-item';
 
 import './style/index.less';
 
@@ -35,11 +35,11 @@ const List = forwardRef<HTMLUListElement, ListProps>((baseprops, ref) => {
   const itemRenders = () => {
     return Array.isArray(items)
       ? items.map((item, index) => {
-        if (typeof itemRender === 'function') {
-          return itemRender(item);
-        }
-        return <ListItem {...item} $key={item.key} key={item.key || index} />;
-      })
+          if (typeof itemRender === 'function') {
+            return itemRender(item);
+          }
+          return <ListItem {...item} $key={item.key} key={item.key || index} />;
+        })
       : null;
   };
 

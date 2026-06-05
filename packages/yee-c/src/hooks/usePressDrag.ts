@@ -1,4 +1,10 @@
-import { useCallback, useEffect, type RefObject, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
 import useEvent from './useEvent';
 
 type ElementInput = HTMLElement | RefObject<HTMLElement | null>;
@@ -20,11 +26,7 @@ export interface DragState {
   isDragging: boolean;
 }
 
-export const usePressDrag = (
-  options: UseDragOptions,
-): [
-  DragState,
-] => {
+export const usePressDrag = (options: UseDragOptions): [DragState] => {
   const {
     element,
     draggable,
@@ -60,8 +62,7 @@ export const usePressDrag = (
   const getBounds = useCallback((): DOMRect | undefined => {
     if (!bounds) return undefined;
     const el = getElement();
-    if (bounds === 'parent')
-      return el?.parentElement?.getBoundingClientRect();
+    if (bounds === 'parent') return el?.parentElement?.getBoundingClientRect();
     if (typeof bounds === 'function') return bounds().getBoundingClientRect();
     return bounds.getBoundingClientRect();
   }, [bounds, getElement]);
@@ -87,14 +88,18 @@ export const usePressDrag = (
           const elementRect = el.getBoundingClientRect();
 
           if (direction !== 'y') {
-            const minAllowedX = boundRect.left - elementRect.left + startTransform.current.x;
-            const maxAllowedX = boundRect.right - elementRect.right + startTransform.current.x;
+            const minAllowedX =
+              boundRect.left - elementRect.left + startTransform.current.x;
+            const maxAllowedX =
+              boundRect.right - elementRect.right + startTransform.current.x;
             newX = Math.max(minAllowedX, Math.min(newX, maxAllowedX));
           }
 
           if (direction !== 'x') {
-            const minAllowedY = boundRect.top - elementRect.top + startTransform.current.y;
-            const maxAllowedY = boundRect.bottom - elementRect.bottom + startTransform.current.y;
+            const minAllowedY =
+              boundRect.top - elementRect.top + startTransform.current.y;
+            const maxAllowedY =
+              boundRect.bottom - elementRect.bottom + startTransform.current.y;
             newY = Math.max(minAllowedY, Math.min(newY, maxAllowedY));
           }
         }

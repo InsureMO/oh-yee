@@ -13,9 +13,13 @@ export default () => {
         }}
       >
         <h2>Basic Text Watermark</h2>
-        <p>This is a container with a text watermark. The watermark automatically covers the entire area.</p>
         <p>
-          Try removing the watermark layer in browser DevTools — the watermark will automatically restore (anti-removal feature).
+          This is a container with a text watermark. The watermark automatically
+          covers the entire area.
+        </p>
+        <p>
+          Try removing the watermark layer in browser DevTools — the watermark
+          will automatically restore (anti-removal feature).
         </p>
       </div>
     </Watermark>

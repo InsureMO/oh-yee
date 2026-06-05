@@ -42,7 +42,7 @@
         box-sizing: border-box;
         display: block;
         border-style: solid;
-        border-color: var(--yee-color-bg-layout, rgba(0, 0, 0, 0.08));
+        border-color: var(--yee-color-bg-layout, rgba(0, 0, 0, 8%));
         border-top-color: var(
           --yee-spin-default-color,
           var(--yee-color-primary, #1677ff)
@@ -104,7 +104,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 0.4));
+    background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 40%));
   }
 
   &-mask-layer {
@@ -113,7 +113,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 0.6));
+    background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 60%));
   }
 }
 
@@ -125,7 +125,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 0.6));
+  background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 60%));
 }
 
 .yee-full-loading {
@@ -154,6 +154,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -163,6 +164,7 @@
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0.15;
   }

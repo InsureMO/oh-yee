@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import React, { useContext, useMemo } from 'react';
 import { Check, ChevronRight, X } from 'lucide-react';
-import { StepsContext } from './steps';
+import React, { useContext, useMemo } from 'react';
 import type { StepProps } from './interface';
+import { StepsContext } from './steps';
 
 const Step: React.FC<StepProps> = (props) => {
   const {
@@ -17,8 +17,14 @@ const Step: React.FC<StepProps> = (props) => {
     status: itemStatus,
   } = props;
 
-  const { prefixCls, current = 0, status, dot, type, onChange } =
-    useContext(StepsContext);
+  const {
+    prefixCls,
+    current = 0,
+    status,
+    dot,
+    type,
+    onChange,
+  } = useContext(StepsContext);
 
   const handleClick = () => {
     if (disabled) return;
@@ -42,7 +48,9 @@ const Step: React.FC<StepProps> = (props) => {
 
     if (mergedStatus === 'error' && index === current) {
       return (
-        <span className={`${prefixCls}-item-serial ${prefixCls}-item-icon-error`}>
+        <span
+          className={`${prefixCls}-item-serial ${prefixCls}-item-icon-error`}
+        >
           <X />
         </span>
       );

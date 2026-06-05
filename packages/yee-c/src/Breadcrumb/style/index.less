@@ -1,114 +1,114 @@
 @pls: .yee-breadcrumb;
 
 @{pls} {
-    display: block;
-    max-width: var(--yee-breadcrumb-max-width, 400px);
-    height: var(--yee-breadcrumb-height);
-    color: var(--yee-breadcrumb-font-color);
+  display: block;
+  max-width: var(--yee-breadcrumb-max-width, 400px);
+  height: var(--yee-breadcrumb-height);
+  color: var(--yee-breadcrumb-font-color);
 
-    // ul 容器
-    &-list {
-        display: flex;
-        align-items: center;
-        list-style: none;
-        margin: 0;
-        padding: 0;
+  // ul 容器
+  &-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // li 元素
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--yee-breadcrumb-item-padding);
+
+    &:last-child {
+      flex: 1;
+      overflow: hidden;
+    }
+  }
+
+  &-item:not(:last-child) {
+    color: var(--yee-breadcrumb-previous-font-color);
+
+    @{pls}-link {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--yee-breadcrumb-item-link-hover-font-color);
+      }
+
+      &:active {
+        color: var(--yee-breadcrumb-item-link-active-font-color);
+      }
+    }
+  }
+
+  // 分隔符
+  &-separator {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--yee-breadcrumb-item-split-padding);
+    color: var(--yee-breadcrumb-separator-color);
+    list-style: none;
+  }
+
+  // 链接
+  &-link {
+    display: inline-flex;
+    align-items: center;
+    cursor: default;
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  // 可点击项
+  &-item-clickable {
+    cursor: pointer;
+  }
+
+  // 最后一项
+  &-item-last {
+    @{pls}-link {
+      cursor: default;
+    }
+  }
+
+  // 文本
+  &-item-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  // 下拉箭头
+  &-item-dropdown-arrow {
+    margin-left: var(--yee-breadcrumb-item-dropdown-arrow-margin-left);
+  }
+
+  // 前缀图标
+  &-item-prefix-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: var(--yee-breadcrumb-item-prefix-icon-margin-right);
+  }
+
+  // 后缀图标
+  &-item-suffix-icon {
+    display: inline-flex;
+    margin-left: var(--yee-breadcrumb-item-suffix-icon-margin-left);
+    color: var(--yee-breadcrumb-icon-color);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--yee-breadcrumb-hover-icon-color);
     }
 
-    // li 元素
-    &-item {
-        display: inline-flex;
-        align-items: center;
-        padding: var(--yee-breadcrumb-item-padding);
-
-        &:last-child {
-            flex: 1;
-            overflow: hidden;
-        }
+    &:active {
+      color: var(--yee-breadcrumb-active-icon-color);
     }
-
-    &-item:not(:last-child) {
-        color: var(--yee-breadcrumb-previous-font-color);
-
-        @{pls}-link {
-            cursor: pointer;
-
-            &:hover {
-                color: var(--yee-breadcrumb-item-link-hover-font-color);
-            }
-
-            &:active {
-                color: var(--yee-breadcrumb-item-link-active-font-color);
-            }
-        }
-    }
-
-    // 分隔符
-    &-separator {
-        display: inline-flex;
-        align-items: center;
-        padding: var(--yee-breadcrumb-item-split-padding);
-        color: var(--yee-breadcrumb-separator-color);
-        list-style: none;
-    }
-
-    // 链接
-    &-link {
-        display: inline-flex;
-        align-items: center;
-        cursor: default;
-        text-decoration: none;
-        color: inherit;
-
-        &:hover {
-            text-decoration: none;
-        }
-    }
-
-    // 可点击项
-    &-item-clickable {
-        cursor: pointer;
-    }
-
-    // 最后一项
-    &-item-last {
-        @{pls}-link {
-            cursor: default;
-        }
-    }
-
-    // 文本
-    &-item-text {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
-    // 下拉箭头
-    &-item-dropdown-arrow {
-        margin-left: var(--yee-breadcrumb-item-dropdown-arrow-margin-left);
-    }
-
-    // 前缀图标
-    &-item-prefix-icon {
-        display: inline-flex;
-        align-items: center;
-        margin-right: var(--yee-breadcrumb-item-prefix-icon-margin-right);
-    }
-
-    // 后缀图标
-    &-item-suffix-icon {
-        display: inline-flex;
-        margin-left: var(--yee-breadcrumb-item-suffix-icon-margin-left);
-        color: var(--yee-breadcrumb-icon-color);
-        cursor: pointer;
-
-        &:hover {
-            color: var(--yee-breadcrumb-hover-icon-color);
-        }
-
-        &:active {
-            color: var(--yee-breadcrumb-active-icon-color);
-        }
-    }
+  }
 }

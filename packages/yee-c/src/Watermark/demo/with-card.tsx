@@ -1,5 +1,5 @@
+import { Card, Space, Watermark } from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Watermark, Card, Space } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (
@@ -13,8 +13,10 @@ export default () => {
 
       <Watermark content="Draft">
         <Card title="Draft">
-          <p>This is a draft document with a "Draft" watermark.</p>
-          <p>Draft watermarks are commonly used to mark unfinished documents.</p>
+          <p>This is a draft document with a &ldquo;Draft&rdquo; watermark.</p>
+          <p>
+            Draft watermarks are commonly used to mark unfinished documents.
+          </p>
         </Card>
       </Watermark>
     </Space>

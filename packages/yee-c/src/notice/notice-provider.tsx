@@ -3,25 +3,23 @@ import useNotice from './use-notice';
 
 const NoticeContext = createContext<any>({});
 
-export function NoticeProvider({ children }: {
-    children: React.ReactNode
-}) {
-    const { noticeApi, noticeHolders } = useNotice();
+export function NoticeProvider({ children }: { children: React.ReactNode }) {
+  const { noticeApi, noticeHolders } = useNotice();
 
-    return (
-        <NoticeContext.Provider value={noticeApi}>
-            {noticeHolders}
-            {children}
-        </NoticeContext.Provider>
-    )
+  return (
+    <NoticeContext.Provider value={noticeApi}>
+      {noticeHolders}
+      {children}
+    </NoticeContext.Provider>
+  );
 }
 
 export function useGlobalNotice() {
-    const context = useContext(NoticeContext);
+  const context = useContext(NoticeContext);
 
-    if (context === undefined) {
-        throw new Error('useGlobalNotice must be used within NoticeProvider');
-    }
+  if (context === undefined) {
+    throw new Error('useGlobalNotice must be used within NoticeProvider');
+  }
 
-    return context;
+  return context;
 }

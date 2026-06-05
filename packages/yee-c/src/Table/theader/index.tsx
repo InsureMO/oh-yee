@@ -1,10 +1,9 @@
 import clsx from 'clsx';
 import React, { memo, useContext } from 'react';
 import Checkbox from '../../Checkbox';
-import { WrapedColumnProps } from '../interface';
+import { HeadCellProps, WrapedColumnProps } from '../interface';
 import { TableCtx } from '../table';
 import HeadCell from './cell';
-import { HeadCellProps } from '../interface';
 
 export interface TableHeadProps {
   children?: React.ReactNode;
@@ -20,7 +19,7 @@ const TableHead: React.FC<any> = (props) => {
 
   const renderHeadCell = () => {
     return columns.map((column: WrapedColumnProps, index: number) => {
-      const { key, type, width, visible } = column;
+      const { key, type, visible } = column;
       if (key === 'YEE_SELECTION_COL') {
         const common = {
           className: `${prefixCls}-cell ${prefixCls}-selection-col`,

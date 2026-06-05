@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Button, Trigger } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [open, setOpen] = useState(false);

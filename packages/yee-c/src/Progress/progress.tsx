@@ -5,8 +5,8 @@ import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import { pickDataAttrs } from '../utils/types';
 import Circle from './circle';
-import Line from './line';
 import type { ProgressProps } from './interface';
+import Line from './line';
 
 import './style/index.less';
 

@@ -1,6 +1,11 @@
 import type { DataAttributeProps } from '../utils/types';
 
-export type AlertSemanticDOM = 'icon' | 'close' | 'title' | 'description' | 'content';
+export type AlertSemanticDOM =
+  | 'icon'
+  | 'close'
+  | 'title'
+  | 'description'
+  | 'content';
 
 export interface CycleProps {
   /**

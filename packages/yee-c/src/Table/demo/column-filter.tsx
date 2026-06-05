@@ -1,7 +1,14 @@
-import React, { useState, useMemo } from 'react';
-import { Table, Button, Transfer, Space, Trigger, Box } from '@rainbow-oh/yee-c';
 import type { ColumnProps } from '@rainbow-oh/yee-c';
+import {
+  Box,
+  Button,
+  Space,
+  Table,
+  Transfer,
+  Trigger,
+} from '@rainbow-oh/yee-c';
 import { Funnel, FunnelPlus } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
 
 export default () => {
   // ========== State ==========
@@ -44,10 +51,8 @@ export default () => {
   const defaultTargetKeys = ['name', 'age', 'address'];
 
   // Currently selected column keys
-  const [targetKeys, setTargetKeys] = useState<Array<string | number>>(defaultTargetKeys);
-
-  // Transfer popup visibility
-  const [transferVisible, setTransferVisible] = useState(false);
+  const [targetKeys, setTargetKeys] =
+    useState<Array<string | number>>(defaultTargetKeys);
 
   // ========== Data ==========
   const dataSource = [
@@ -86,13 +91,6 @@ export default () => {
     setTargetKeys(newTargetKeys);
   };
 
-  /**
-   * Toggle Transfer popup visibility
-   */
-  const toggleTransfer = () => {
-    setTransferVisible(!transferVisible);
-  };
-
   // ========== Computed ==========
   /**
    * Filter visible columns based on targetKeys
@@ -105,29 +103,42 @@ export default () => {
   // ========== Render ==========
   return (
     <div>
-      <Space block style={{justifyContent: 'end', padding: '8px 0'}}>
+      <Space block style={{ justifyContent: 'end', padding: '8px 0' }}>
         <Trigger
-            placement='bottomRight'
-            popup={
-                <Box>
-                    <Transfer
-                        dataSource={transferDataSource}
-                        targetKeys={targetKeys}
-                        onChange={handleTransferChange}
-                        titles={['Available', 'Selected']}
-                        searchable
-                        oneWay={true}
-                    />
-                </Box>
-            }
-            hideOnClick={false}
+          placement="bottomRight"
+          popup={
+            <Box>
+              <Transfer
+                dataSource={transferDataSource}
+                targetKeys={targetKeys}
+                onChange={handleTransferChange}
+                titles={['Available', 'Selected']}
+                searchable
+                oneWay={true}
+              />
+            </Box>
+          }
+          hideOnClick={false}
         >
-            <Button size='small' type='text' icon={ targetKeys.length ? <FunnelPlus size={16}/> : <Funnel size={16}/> } />
+          <Button
+            size="small"
+            type="text"
+            icon={
+              targetKeys.length ? (
+                <FunnelPlus size={16} />
+              ) : (
+                <Funnel size={16} />
+              )
+            }
+          />
         </Trigger>
       </Space>
 
       {/* Table */}
-      <Table columns={visibleColumns as ColumnProps[]} dataSource={dataSource} />
+      <Table
+        columns={visibleColumns as ColumnProps[]}
+        dataSource={dataSource}
+      />
     </div>
   );
 };

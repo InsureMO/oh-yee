@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { CircleAlert, CircleX, Info, X, CircleCheckBig } from 'lucide-react';
+import { CircleAlert, CircleCheckBig, CircleX, Info, X } from 'lucide-react';
 import React, { useContext } from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
@@ -63,7 +63,7 @@ const Alert: React.FC<AlertProps> = (baseprops) => {
         {title}
       </div>
     ) : null;
-  }
+  };
 
   // Description
   const renderDescription = () => {
@@ -76,7 +76,7 @@ const Alert: React.FC<AlertProps> = (baseprops) => {
         {description}
       </div>
     ) : null;
-  }
+  };
 
   return (
     <div

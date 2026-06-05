@@ -1,8 +1,23 @@
 import { Dayjs } from 'dayjs';
 import { ReactNode } from 'react';
 
-export type PickerMode = 'date' | 'datetime' | 'month' | 'year' | 'decade' | 'quarter' | 'week';
-export type PickerType = 'date' | 'datetime' | 'month' | 'year' | 'decade' | 'quarter' | 'week' | 'time';
+export type PickerMode =
+  | 'date'
+  | 'datetime'
+  | 'month'
+  | 'year'
+  | 'decade'
+  | 'quarter'
+  | 'week';
+export type PickerType =
+  | 'date'
+  | 'datetime'
+  | 'month'
+  | 'year'
+  | 'decade'
+  | 'quarter'
+  | 'week'
+  | 'time';
 
 export interface RangePanelProps {
   prefixCls?: string;

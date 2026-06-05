@@ -202,7 +202,7 @@ class Ax implements AxInstance {
    * @param pconfig - Project configuration
    * @returns Promise<any> request result
    */
-  private _xhrRequest(config: AxConfig, pconfig: any): Promise<any> {
+  private _xhrRequest(config: AxConfig, pconfig: any): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const {
@@ -328,7 +328,7 @@ class Ax implements AxInstance {
         };
       } else {
         // If onTimeout is not provided, use default timeout handling
-        xhr.ontimeout = function (event) {
+        xhr.ontimeout = function () { // eslint-disable-line @typescript-eslint/no-unused-vars
           cleanup();
           reject({ status: "timeout", error: "Request timeout" } as ErrorResponse);
         };
@@ -336,7 +336,7 @@ class Ax implements AxInstance {
 
       // Prepare request data
       let param = data || null;
-      if (param != null && !Util.isString(param) && dataFormat) {
+      if (param != null && !Util.isString(param) && dataFormat) { // eslint-disable-line eqeqeq
         param = JSON.stringify(param);
       }
 

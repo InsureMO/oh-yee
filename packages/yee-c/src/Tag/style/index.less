@@ -1,96 +1,96 @@
 @pls: .yee-tag;
 
 @{pls} {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: content-box;
+  max-width: 100%;
+  height: var(--yee-tag-height);
+  padding: var(--yee-tag-padding);
+  color: var(--yee-tag-color);
+  font-size: var(--yee-tag-font-size);
+  line-height: var(--yee-tag-line-height);
+  background-color: var(--yee-tag-item-bg-color);
+  background-clip: padding-box;
+  border: var(--yee-tag-border-width) solid var(--yee-tag-border-color);
+  border-radius: var(--yee-tag-border-radius);
+
+  &-info {
+    color: var(--yee-tag-info-color);
+    background-color: var(--yee-tag-info-bg-color);
+    border-color: var(--yee-tag-info-border-color);
+  }
+
+  &-success {
+    color: var(--yee-tag-success-color);
+    background-color: var(--yee-tag-success-bg-color);
+    border-color: var(--yee-tag-success-border-color);
+  }
+
+  &-warning {
+    color: var(--yee-tag-warning-color);
+    background-color: var(--yee-tag-warning-bg-color);
+    border-color: var(--yee-tag-warning-border-color);
+  }
+
+  &-error {
+    color: var(--yee-tag-error-color);
+    background-color: var(--yee-tag-error-bg-color);
+    border-color: var(--yee-tag-error-border-color);
+  }
+
+  &-disabled {
+    color: var(--yee-tag-disabled-color);
+    background-color: var(--yee-tag-disabled-bg-color);
+    border-color: var(--yee-tag-disabled-border-color);
+    cursor: not-allowed;
+  }
+
+  &-dashed {
+    background-color: var(--yee-tag-item-dashed-bg-color);
+    border-style: dashed;
+  }
+
+  &-icon {
+    margin-left: var(--yee-tag-icon-margin-left);
+  }
+
+  &-small {
+    height: var(--yee-tag-small-height);
+    line-height: var(--yee-tag-small-height);
+  }
+
+  &-large {
+    height: var(--yee-tag-large-height);
+    line-height: var(--yee-tag-large-height);
+  }
+
+  &-close {
     display: inline-flex;
-    align-items: center;
-    box-sizing: content-box;
-    max-width: 100%;
-    height: var(--yee-tag-height);
-    padding: var(--yee-tag-padding);
-    color: var(--yee-tag-color);
-    font-size: var(--yee-tag-font-size);
-    line-height: var(--yee-tag-line-height);
-    background-color: var(--yee-tag-item-bg-color);
-    background-clip: padding-box;
-    border: var(--yee-tag-border-width) solid var(--yee-tag-border-color);
-    border-radius: var(--yee-tag-border-radius);
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    margin-left: var(--yee-tag-close-margin-left);
+    cursor: pointer;
+  }
 
-    &-info {
-        color: var(--yee-tag-info-color);
-        background-color: var(--yee-tag-info-bg-color);
-        border-color: var(--yee-tag-info-border-color);
+  &-checkable {
+    margin: var(--yee-tag-checkable-margin);
+    color: var(--yee-tag-item-not-check-color);
+    background-color: var(--yee-tag-item-not-check-bg-color);
+    border-color: var(--yee-tag-item-not-check-border-color);
+    cursor: pointer;
+
+    &:not(@{pls}-checked):hover {
+      color: var(--yee-tag-item-check-hover-color);
+      background-color: var(--yee-tag-item-check-hover-bg-color);
+      border-color: var(--yee-tag-item-check-hover-border-color);
     }
+  }
 
-    &-success {
-        color: var(--yee-tag-success-color);
-        background-color: var(--yee-tag-success-bg-color);
-        border-color: var(--yee-tag-success-border-color);
-    }
-
-    &-warning {
-        color: var(--yee-tag-warning-color);
-        background-color: var(--yee-tag-warning-bg-color);
-        border-color: var(--yee-tag-warning-border-color);
-    }
-
-    &-error {
-        color: var(--yee-tag-error-color);
-        background-color: var(--yee-tag-error-bg-color);
-        border-color: var(--yee-tag-error-border-color);
-    }
-
-    &-disabled {
-        color: var(--yee-tag-disabled-color);
-        background-color: var(--yee-tag-disabled-bg-color);
-        border-color: var(--yee-tag-disabled-border-color);
-        cursor: not-allowed;
-    }
-
-    &-dashed {
-        background-color: var(--yee-tag-item-dashed-bg-color);
-        border-style: dashed;
-    }
-
-    &-icon {
-        margin-left: var(--yee-tag-icon-margin-left);
-    }
-
-    &-small {
-        height: var(--yee-tag-small-height);
-        line-height: var(--yee-tag-small-height);
-    }
-
-    &-large {
-        height: var(--yee-tag-large-height);
-        line-height: var(--yee-tag-large-height);
-    }
-
-    &-close {
-        display: inline-flex;
-        padding: 0;
-        width: 16px;
-        height: 16px;
-        margin-left: var(--yee-tag-close-margin-left);
-        cursor: pointer;
-    }
-
-    &-checkable {
-        margin: var(--yee-tag-checkable-margin);
-        color: var(--yee-tag-item-not-check-color);
-        background-color: var(--yee-tag-item-not-check-bg-color);
-        border-color: var(--yee-tag-item-not-check-border-color);
-        cursor: pointer;
-
-        &:not(@{pls}-checked):hover {
-            color: var(--yee-tag-item-check-hover-color);
-            background-color: var(--yee-tag-item-check-hover-bg-color);
-            border-color: var(--yee-tag-item-check-hover-border-color);
-        }
-    }
-
-    &-checked {
-        color: var(--yee-tag-item-check-active-color);
-        background-color: var(--yee-tag-item-check-active-bg-color);
-        border-color: var(--yee-tag-item-check-active-border-color);
-    }
+  &-checked {
+    color: var(--yee-tag-item-check-active-color);
+    background-color: var(--yee-tag-item-check-active-bg-color);
+    border-color: var(--yee-tag-item-check-active-border-color);
+  }
 }

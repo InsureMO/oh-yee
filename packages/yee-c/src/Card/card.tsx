@@ -29,7 +29,7 @@ const Card: FC<CardProps> = (baseprops) => {
     expandIcon,
     bordered,
     animationDuration = 0.15,
-    showHeader=true,
+    showHeader = true,
     onExpand,
     ...rest
   } = props;
@@ -55,7 +55,10 @@ const Card: FC<CardProps> = (baseprops) => {
   };
 
   const renderExpandIcon = () => {
-    const icon = typeof expandIcon === 'function' ? expandIcon?.(mergedExpanded) : expandIcon;
+    const icon =
+      typeof expandIcon === 'function'
+        ? expandIcon?.(mergedExpanded)
+        : expandIcon;
     if (icon === null) {
       return null;
     }
@@ -110,34 +113,41 @@ const Card: FC<CardProps> = (baseprops) => {
     <section
       {...rest}
       aria-labelledby={title ? headerId : undefined}
-      className={clsx(prefixCls, `${prefixCls}-${mergedExpanded ? 'expanded' : 'collapse'}`, {
-        [`${prefixCls}-bordered`]: bordered,
-      }, className)}
+      className={clsx(
+        prefixCls,
+        `${prefixCls}-${mergedExpanded ? 'expanded' : 'collapse'}`,
+        {
+          [`${prefixCls}-bordered`]: bordered,
+        },
+        className,
+      )}
     >
-      { showHeader && <div
-        className={clsx(
-          `${prefixCls}-header`,
-          { [`${prefixCls}-header-clickable`]: headerClickable },
-          classNames?.header,
-        )}
-        style={styles?.header}
-        onClick={headerClickable ? handleExpand : undefined}
-        onKeyDown={handleKeyDown}
-        tabIndex={headerClickable ? 0 : undefined}
-        role={headerClickable ? 'button' : undefined}
-      >
-        {iconPosition === 'left' ? renderExpandIcon() : null}
-        {title ? (
-          <div
-            id={headerId}
-            className={clsx(`${prefixCls}-header-title`, classNames?.title)}
-            style={styles?.title}
-          >
-            {title}
-          </div>
-        ) : null}
-        {renderHeaderActions()}
-      </div> }
+      {showHeader && (
+        <div
+          className={clsx(
+            `${prefixCls}-header`,
+            { [`${prefixCls}-header-clickable`]: headerClickable },
+            classNames?.header,
+          )}
+          style={styles?.header}
+          onClick={headerClickable ? handleExpand : undefined}
+          onKeyDown={handleKeyDown}
+          tabIndex={headerClickable ? 0 : undefined}
+          role={headerClickable ? 'button' : undefined}
+        >
+          {iconPosition === 'left' ? renderExpandIcon() : null}
+          {title ? (
+            <div
+              id={headerId}
+              className={clsx(`${prefixCls}-header-title`, classNames?.title)}
+              style={styles?.title}
+            >
+              {title}
+            </div>
+          ) : null}
+          {renderHeaderActions()}
+        </div>
+      )}
       <motion.div
         className={clsx(`${prefixCls}-content`, classNames?.content)}
         style={{ ...styles?.content, overflow: 'hidden' }}

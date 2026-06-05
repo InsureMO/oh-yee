@@ -12,7 +12,7 @@ const canUseDom = () => {
 
 const getMountedNode = (
   el: string | HTMLElement | (() => HTMLElement) | undefined,
-  triggerNode?: HTMLElement
+  triggerNode?: HTMLElement, // eslint-disable-line @typescript-eslint/no-unused-vars
 ): HTMLElement | null => {
   if (!canUseDom()) return null;
   if (typeof el === 'string') {

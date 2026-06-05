@@ -7,7 +7,10 @@ export default () => {
       <Watermark content="This is a very long watermark text that will be automatically calculated">
         <div style={{ height: 300, padding: 20, background: '#f5f5f5' }}>
           <h3>Long Text Auto-width</h3>
-          <p>The watermark text width is automatically calculated based on content and will not be truncated.</p>
+          <p>
+            The watermark text width is automatically calculated based on
+            content and will not be truncated.
+          </p>
         </div>
       </Watermark>
 

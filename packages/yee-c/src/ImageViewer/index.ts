@@ -1,7 +1,7 @@
 import InternalImageViewer from './image-viewer';
 import Popup from './popup';
 
-export type { ImageViewerProps, ImageViewerPopupProps } from './interface';
+export type { ImageViewerPopupProps, ImageViewerProps } from './interface';
 
 type ImageViewerType = typeof InternalImageViewer & {
   Popup: typeof Popup;

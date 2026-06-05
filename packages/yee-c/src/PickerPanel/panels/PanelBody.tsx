@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Dayjs } from 'dayjs';
 import clsx from 'clsx';
+import { Dayjs } from 'dayjs';
+import * as React from 'react';
 import pickerUtils from '../utils/pickerUtils';
 
 function PanelBody(props: any) {
@@ -21,7 +21,6 @@ function PanelBody(props: any) {
     prefixColumn,
     getRowClassName,
     cellRender,
-    fullCellRender,
   } = props;
 
   // Clear hover date when panel closes

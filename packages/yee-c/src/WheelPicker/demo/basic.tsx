@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { WheelPicker } from '@rainbow-oh/yee-c';
 import type { WheelColumn } from '@rainbow-oh/yee-c';
+import { WheelPicker } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 const columns: WheelColumn[] = [
   {
@@ -17,11 +17,5 @@ const columns: WheelColumn[] = [
 export default () => {
   const [value, setValue] = useState<number[]>([0]);
 
-  return (
-    <WheelPicker
-      columns={columns}
-      value={value}
-      onChange={setValue}
-    />
-  );
+  return <WheelPicker columns={columns} value={value} onChange={setValue} />;
 };

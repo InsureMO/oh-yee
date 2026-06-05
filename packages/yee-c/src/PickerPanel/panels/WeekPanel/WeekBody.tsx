@@ -2,17 +2,17 @@ import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
 import useEvent from '../../../hooks/useEvent';
+import { useLocale } from '../../../locale';
 import pickerUtils from '../../utils/pickerUtils';
 import PanelBody from '../PanelBody';
-import { useLocale } from '../../../locale';
 
 function WeekBody(props: any) {
   const { locale } = useLocale();
   const { weekpicker } = locale;
 
-  const headerCells = weekpicker.weekHeader.map(
-    (week, index) => <th key={index}>{week}</th>,
-  );
+  const headerCells = weekpicker.weekHeader.map((week, index) => (
+    <th key={index}>{week}</th>
+  ));
 
   const { prefixCls, viewDate } = props;
 

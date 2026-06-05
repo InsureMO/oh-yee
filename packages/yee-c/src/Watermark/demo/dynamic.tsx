@@ -15,7 +15,10 @@ export default () => {
       <Watermark content={text}>
         <div style={{ height: 500, padding: 20, background: '#f5f5f5' }}>
           <h2>Dynamic Watermark</h2>
-          <p>Type in the input box above and the watermark will update in real time.</p>
+          <p>
+            Type in the input box above and the watermark will update in real
+            time.
+          </p>
         </div>
       </Watermark>
     </Space>

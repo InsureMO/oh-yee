@@ -1,6 +1,6 @@
+import { FloatButton, Tooltip } from '@rainbow-oh/yee-c';
 import { Menu } from 'lucide-react';
 import React from 'react';
-import { FloatButton, Tooltip } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

@@ -48,7 +48,9 @@ const Cycle: React.FC<CycleProps> = (props) => {
 
   // Merge horizontal scroll rendering logic
   const horizontal = useMemo(() => {
-    const messageArray = Array.isArray(description) ? description : [description];
+    const messageArray = Array.isArray(description)
+      ? description
+      : [description];
 
     return (
       <div className={`${prefixCls}-horizontal-container`}>
@@ -108,6 +110,7 @@ const Cycle: React.FC<CycleProps> = (props) => {
         vRef.style.transitionDuration = '0ms';
         vRef.style.transform = 'translateY(0)';
         counter.current = 0;
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         startVertical();
       });
     }
@@ -117,7 +120,10 @@ const Cycle: React.FC<CycleProps> = (props) => {
   const startVertical = useCallback(() => {
     if (direction !== 'vertical') return;
 
-    timer.current = window.setInterval(autoScroll, speed ? speed * 1000 : DEFAULT_INTERVAL) as unknown as NodeJS.Timeout;
+    timer.current = window.setInterval(
+      autoScroll,
+      speed ? speed * 1000 : DEFAULT_INTERVAL,
+    ) as unknown as NodeJS.Timeout;
   }, [direction, speed, autoScroll]);
 
   // Optimize effect dependencies
@@ -156,7 +162,11 @@ const Cycle: React.FC<CycleProps> = (props) => {
     // Optimize click handling
     const handleClick = () => {
       timesRef.current = (timesRef.current + 1) % 2;
-      timesRef.current ? pause() : resume();
+      if (timesRef.current) {
+        pause();
+      } else {
+        resume();
+      }
     };
 
     // Optimize debounce handling

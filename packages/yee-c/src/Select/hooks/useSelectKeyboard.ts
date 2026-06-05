@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import useLatest from '../../hooks/useLatest';
 
 interface UseSelectKeyboardParams {
-  options: Array<{ value: string | number; disabled?: boolean; [key: string]: any }>;
+  options: Array<{
+    value: string | number;
+    disabled?: boolean;
+    [key: string]: any;
+  }>;
   open: boolean;
   selectedKeys: Array<string | number>;
   onSelect: (value: string | number) => void;
@@ -29,26 +33,28 @@ export default function useSelectKeyboard({
   };
 
   // Find the next enabled option index (wrapping around)
-  const findNextEnabledIndex = (startIndex: number, direction: 1 | -1): number => {
+  const findNextEnabledIndex = (
+    startIndex: number,
+    direction: 1 | -1,
+  ): number => {
     const count = options.length;
     if (direction === 1) {
       const next = startIndex + 1 >= count ? 0 : startIndex + 1;
       const option = options[next];
       if (option.disabled) {
-          return findNextEnabledIndex(next, direction);
+        return findNextEnabledIndex(next, direction);
       } else {
-          return next;
+        return next;
       }
     } else {
       const next = startIndex - 1 < 0 ? count - 1 : startIndex - 1;
       const option = options[next];
       if (option.disabled) {
-          return findNextEnabledIndex(next, direction);
+        return findNextEnabledIndex(next, direction);
       } else {
-          return next;
+        return next;
       }
     }
-    
   };
 
   // Scroll the focused option into view
@@ -150,7 +156,6 @@ export default function useSelectKeyboard({
         handleEscape();
         break;
       default:
-        
     }
   };
 
@@ -159,7 +164,9 @@ export default function useSelectKeyboard({
     if (open) {
       // Focus the first selected option, or the first enabled option
       if (selectedKeys?.length > 0) {
-        const firstSelected = options?.find((opt) => opt.value === selectedKeys[0]);
+        const firstSelected = options?.find(
+          (opt) => opt.value === selectedKeys[0],
+        );
         if (firstSelected && !firstSelected.disabled) {
           setFocusedKey(firstSelected.value);
           return;

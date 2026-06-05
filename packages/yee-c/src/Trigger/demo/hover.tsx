@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, Trigger } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (

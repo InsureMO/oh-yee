@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { Checkbox } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [value, setValue] = useState<Array<string | number>>(['Apple']);
@@ -21,13 +21,16 @@ export default () => {
       <Checkbox.Group options={options} value={value} onChange={onChange} />
       <br />
       <br />
-      <Checkbox.Group value={value} onChange={onChange} options={[
-        { value: 'A', label: 'Option A' },
-        { value: 'B', label: 'Option B' },
-        { value: 'C', label: 'Option C' },
-        { value: 'D', label: 'Option D', disabled: true },
-      ]}>
-      </Checkbox.Group>
+      <Checkbox.Group
+        value={value}
+        onChange={onChange}
+        options={[
+          { value: 'A', label: 'Option A' },
+          { value: 'B', label: 'Option B' },
+          { value: 'C', label: 'Option C' },
+          { value: 'D', label: 'Option D', disabled: true },
+        ]}
+      ></Checkbox.Group>
     </div>
   );
 };

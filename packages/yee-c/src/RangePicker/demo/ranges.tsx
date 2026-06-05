@@ -1,5 +1,5 @@
-import dayjs, { Dayjs } from 'dayjs';
 import { RangePicker } from '@rainbow-oh/yee-c';
+import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react';
 
 export default () => {
@@ -22,7 +22,8 @@ export default () => {
       <RangePicker
         value={value}
         ranges={ranges}
-        onChange={(dates, dateStrings) => {
+        onChange={(dates) => {
+          // eslint-disable-line @typescript-eslint/no-unused-vars
           console.log('Selected dates:', dates);
           setValue(dates as [string, string]);
         }}

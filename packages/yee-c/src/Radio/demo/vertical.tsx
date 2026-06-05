@@ -15,7 +15,6 @@ export default () => {
         { value: 3, label: 'Option C' },
         { value: 4, label: 'Option D' },
       ]}
-    >
-    </Radio.Group>
+    ></Radio.Group>
   );
 };

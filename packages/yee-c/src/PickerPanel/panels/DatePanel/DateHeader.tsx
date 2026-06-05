@@ -1,22 +1,15 @@
 import React from 'react';
 import Button from '../../../Button';
-import Header from '../Header';
 import useEvent from '../../../hooks/useEvent';
-import pickerUtils from '../../utils/pickerUtils';
 import { useLocale } from '../../../locale';
+import pickerUtils from '../../utils/pickerUtils';
+import Header from '../Header';
 
 export default function DateHeader(props: any) {
   const { locale, lang } = useLocale();
   const { datepicker } = locale;
 
-  const {
-    panelConfigs,
-    viewDate,
-    onViewDateChange,
-    onPanelChange,
-    offset,
-    ...reset
-  } = props;
+  const { viewDate, onViewDateChange, onPanelChange, offset, ...reset } = props;
 
   let year = pickerUtils.getYear(viewDate);
   const month = pickerUtils.getMonth(viewDate);
@@ -24,8 +17,6 @@ export default function DateHeader(props: any) {
   if (offset?.year) {
     year = year + parseInt(offset.year);
   }
-
-  const { shortMonthList } = panelConfigs;
 
   const onSuperPrevClick = useEvent(() => {
     const newViewDate = pickerUtils.addYear(viewDate, -1);
@@ -65,26 +56,33 @@ export default function DateHeader(props: any) {
             size="small"
             type="text"
             onClick={() => handlePanelChange('month')}
-          >{datepicker.shortMonthList ? datepicker.shortMonthList[month] : `${month + 1}${datepicker.monthSuffix}`}</Button>
+          >
+            {datepicker.shortMonthList
+              ? datepicker.shortMonthList[month]
+              : `${month + 1}${datepicker.monthSuffix}`}
+          </Button>
         </>
       );
     }
 
     return (
       <>
-          <Button
-            size="small"
-            type="text"
-            onClick={() => handlePanelChange('month')}
-          >{datepicker.shortMonthList ? datepicker.shortMonthList[month] : `${month + 1}${datepicker.monthSuffix}`}</Button>
-          <Button
-            size="small"
-            type="text"
-            onClick={() => handlePanelChange('year')}
-          >{`${year}${datepicker.yearSuffix}`}</Button>
-        </>
-    )
-    
+        <Button
+          size="small"
+          type="text"
+          onClick={() => handlePanelChange('month')}
+        >
+          {datepicker.shortMonthList
+            ? datepicker.shortMonthList[month]
+            : `${month + 1}${datepicker.monthSuffix}`}
+        </Button>
+        <Button
+          size="small"
+          type="text"
+          onClick={() => handlePanelChange('year')}
+        >{`${year}${datepicker.yearSuffix}`}</Button>
+      </>
+    );
   }
 
   return (

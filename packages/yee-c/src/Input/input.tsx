@@ -8,7 +8,10 @@ import type { InputProps } from './interface';
 
 import './style/index.less';
 
-type RenderInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> & {
+type RenderInputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'value' | 'onChange'
+> & {
   className?: string;
   style?: React.CSSProperties;
 };
@@ -104,7 +107,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((baseprops, ref) => {
                 onClick={onClear}
                 onKeyDown={(event: React.KeyboardEvent<HTMLSpanElement>) => {
                   if (event.key === 'Enter') {
-                    onClear(event as unknown as React.MouseEvent<HTMLSpanElement>);
+                    onClear(
+                      event as unknown as React.MouseEvent<HTMLSpanElement>,
+                    );
                   }
                 }}
               >

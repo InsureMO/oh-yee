@@ -1,39 +1,40 @@
 @pls: .yee-field;
 
 @{pls} {
-    &-vertical {
-        display: flex;
-        flex-direction: column;
-        gap: var(--yee-field-gap);
-        align-items: flex-start;
-    }
+  &-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--yee-field-gap);
+    align-items: flex-start;
+  }
 
-    &-horizontal {
-        display: flex;
-        flex-direction: row;
-        gap: var(--yee-field-gap);
-        align-items: flex-start;
-    }
+  &-horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: var(--yee-field-gap);
+    align-items: flex-start;
+  }
 
-    &-required {
-        &::after {
-            color: var(--yee-field-required-color);
-            content: '*';
-        }
+  &-required {
+    &::after {
+      color: var(--yee-field-required-color);
+      content: '*';
     }
+  }
 
-    &-content {
-        position: relative;
-        padding-bottom: var(--yee-field-content-padding-bottom);
-    }
+  &-content {
+    position: relative;
+    padding-bottom: var(--yee-field-content-padding-bottom);
+  }
 
-    &-error {
-        &-message {
-            position: absolute;
-            bottom: 0;
-            color: var(--yee-field-error-message-color);
-        }
+  &-error {
+    &-message {
+      position: absolute;
+      bottom: 0;
+      color: var(--yee-field-error-message-color);
     }
+  }
 }
 
-@{pls}-error {}
+@{pls}-error {
+}

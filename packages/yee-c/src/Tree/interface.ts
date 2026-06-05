@@ -51,8 +51,8 @@ export type TreeNode<T> = {
   path: string[];
   /**
    * Whether to show connecting lines
-  */
- lines: number[];
+   */
+  lines: number[];
   /**
    * List of child node keys
    */
@@ -119,8 +119,8 @@ export interface TreeProps<T> {
   icon?: React.ReactNode | ((props: TreeProps<T>) => React.ReactNode);
   /**
    * Expand/collapse button icon
-  */
- switcherIcon?: [React.ReactNode, React.ReactNode];
+   */
+  switcherIcon?: [React.ReactNode, React.ReactNode];
   /**
    * Whether tree nodes support multiple selection
    *  @default false

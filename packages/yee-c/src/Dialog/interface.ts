@@ -1,5 +1,5 @@
-import type { DataAttributeProps } from '../utils/types';
 import { ButtonType } from '../Button';
+import type { DataAttributeProps } from '../utils/types';
 
 export type SemanticDOM = 'content' | 'footer' | 'mask';
 

@@ -72,10 +72,16 @@ function verifyMain(rule: Rule, value: any): boolean {
   if (typeof max !== 'undefined' && !verifyRuleOfMax(max, value)) {
     return false;
   }
-  if (typeof minLength !== 'undefined' && !verifyRuleOfMinLength(minLength, value)) {
+  if (
+    typeof minLength !== 'undefined' &&
+    !verifyRuleOfMinLength(minLength, value)
+  ) {
     return false;
   }
-  if (typeof maxLength !== 'undefined' && !verifyRuleOfMaxLength(maxLength, value)) {
+  if (
+    typeof maxLength !== 'undefined' &&
+    !verifyRuleOfMaxLength(maxLength, value)
+  ) {
     return false;
   }
   if (regexp instanceof RegExp && !verifyRuleOfRegexp(regexp, value)) {
@@ -86,7 +92,6 @@ function verifyMain(rule: Rule, value: any): boolean {
   }
   return true;
 }
-
 
 function validate(rule: Rule, value: unknown): boolean {
   if (rule.required && isEmpty(value)) {

@@ -1,6 +1,6 @@
+import { Menu } from '@rainbow-oh/yee-c';
 import { Aperture, AudioLines, Barrel } from 'lucide-react';
 import React from 'react';
-import { Menu } from '@rainbow-oh/yee-c';
 
 export default () => {
   const items = [

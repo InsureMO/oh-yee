@@ -191,7 +191,7 @@ const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
     }
 
     const { flexable, expandable } = child.props || {};
-    const { expandable: nextExpandable } = next.props || {} as any;
+    const { expandable: nextExpandable } = next.props || ({} as any);
 
     const _expandable = { start: false, end: false };
 

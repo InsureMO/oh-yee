@@ -103,69 +103,69 @@ export interface Callbacks<Values = any> {
 export interface FormInstance<Values = any> {
   /**
    * Get field validation info
-  */
+   */
   getFieldValidate: (name: Name) => ValidateMessage | null;
   /**
    * Get field value
-  */
+   */
   getFieldValue: (name: Name) => StoreValue;
   /**
    * Submit form
-  */
+   */
   submit: () => ValidateMessage[];
   /**
    * Get all field values
-  */
+   */
   getFieldsValue: () => Values;
   /**
    * Set field values
-  */
+   */
   setFieldsValue: (newStore: Store, trigger?: TRIGGER) => void;
   /**
    * Set callback functions
-  */
+   */
   setCallbacks: (callbacks: Callbacks) => void;
   /**
    * Reset fields to initial values
-  */
+   */
   resetFields: (name?: Name[]) => void;
   /**
    * Clear fields
-  */
+   */
   clearFields: (name?: Name[]) => void;
   /**
    * Validate field
-  */
+   */
   validateField: (
     name: Name,
     trigger?: 'onChange' | 'onBlur',
   ) => ValidateMessage[];
   /**
    * Get callback functions
-  */
+   */
   getCallbacks: () => Callbacks;
   /**
    * Register field entity
-  */
+   */
   registerFieldEntities: (entity: FieldEntity) => void;
   /**
    * Validate fields and get error messages
-  */
+   */
   validateFields: (names?: Name[], trigger?: TRIGGER) => ValidateMessage[];
   /**
    * Initialize form - mainly used to set initial values and callbacks
-  */
+   */
   initialize: ({
     initialValues,
     callbacks,
   }: {
     /**
      * Initial values
-    */
+     */
     initialValues?: Store;
     /**
      * Callback functions
-    */
+     */
     callbacks?: Callbacks;
   }) => void;
 
@@ -174,58 +174,58 @@ export interface FormInstance<Values = any> {
    * Get list fields - mainly used for Form.List component, returns field info for current list items
    * @param name Name path of the list field
    * @returns Array of field info for current list items
-  */
+   */
   getListFields: (name: NamePath) => FormListField[];
   /**
    * Get list operations - mainly used for Form.List component, returns operation methods for current list items
    * @param name Name path of the list field
    * @returns Operation method object including add, remove, and move methods for list items
-  */
+   */
   getListOperations: (name: NamePath) => FormListOperation;
   /**
    * Subscribe to field value changes
    * @param namePath Field name path
    * @param callback Callback when value changes
    * @returns Unsubscribe function
-  */
+   */
   subscribe: (namePath?: NamePath, callback?: () => void) => () => void;
   /**
    * Register group-level validator
    * @param id Group unique identifier
    * @param entity Group validation entity
    * @returns Unregister function
-  */
+   */
   registerGroupEntity: (id: string, entity: GroupEntity) => () => void;
 }
 
 export type Rule = {
   /**
    * Whether required
-  */
+   */
   required?: boolean;
   /**
    * Field type
-  */
+   */
   type?: string;
   /**
    * Minimum value
-  */
+   */
   min?: number;
   /**
    * Maximum value
-  */
+   */
   max?: number;
   /**
    * Minimum length
-  */
+   */
   minLength?: number;
   /**
    * Maximum length
-  */
+   */
   maxLength?: number;
   /**
    * Regular expression
-  */
+   */
   regexp?: RegExp;
   /**
    * Error message
@@ -285,7 +285,14 @@ export interface FieldEntity {
   onStoreChange: () => void;
 }
 
-export type TRIGGER = 'onChange' | 'onBlur' | 'onSubmit' | 'reset' | 'clear' | 'update' | 'fill';
+export type TRIGGER =
+  | 'onChange'
+  | 'onBlur'
+  | 'onSubmit'
+  | 'reset'
+  | 'clear'
+  | 'update'
+  | 'fill';
 
 // FormList related types
 export type FormListField<T = any> = {
@@ -306,7 +313,7 @@ export type FormListProps = {
   children: (
     fields: FormListField[],
     operation: FormListOperation,
-    meta: { errors: React.ReactNode[] }
+    meta: { errors: React.ReactNode[] },
   ) => React.ReactNode;
   initialValue?: any[];
   rules?: Rule[];

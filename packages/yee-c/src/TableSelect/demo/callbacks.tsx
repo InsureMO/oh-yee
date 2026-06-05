@@ -1,10 +1,13 @@
+import type { TableSelectRowSelectionType } from '@rainbow-oh/yee-c';
 import { TableSelect } from '@rainbow-oh/yee-c';
-import type {TableSelectRowSelectionType} from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
   const [value, setValue] = useState<string>('');
-  const [selectedData, setSelectedData] = useState<Record<string, unknown> | null>(null);
+  const [selectedData, setSelectedData] = useState<Record<
+    string,
+    unknown
+  > | null>(null);
 
   const columns = [
     {
@@ -73,7 +76,10 @@ export default () => {
   const rowSelection = {
     type: 'radio' as const,
     selectedRowKeys: value,
-    onChange: (selectedKeys: string[] | number[], selectedRows: Array<Record<string, unknown>> | Record<string, unknown>) => {
+    onChange: (
+      selectedKeys: string[] | number[],
+      selectedRows: Array<Record<string, unknown>> | Record<string, unknown>,
+    ) => {
       setValue(selectedKeys as unknown as string);
       setSelectedData(selectedRows as Record<string, unknown>);
       console.log('Selection changed:', {
@@ -112,10 +118,18 @@ export default () => {
           }}
         >
           <h4>Selected Employee Details:</h4>
-          <p><strong>Name:</strong> {selectedData.name as string}</p>
-          <p><strong>Age:</strong> {selectedData.age as number}</p>
-          <p><strong>Role:</strong> {selectedData.role as string}</p>
-          <p><strong>Department:</strong> {selectedData.department as string}</p>
+          <p>
+            <strong>Name:</strong> {selectedData.name as string}
+          </p>
+          <p>
+            <strong>Age:</strong> {selectedData.age as number}
+          </p>
+          <p>
+            <strong>Role:</strong> {selectedData.role as string}
+          </p>
+          <p>
+            <strong>Department:</strong> {selectedData.department as string}
+          </p>
         </div>
       )}
     </div>

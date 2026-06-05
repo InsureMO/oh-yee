@@ -7,7 +7,6 @@ import Input from '../../Input';
 import Popover from '../../Popover';
 import Space from '../../Space';
 import Tree from '../../Tree';
-import { useLocale } from '../../locale';
 import { TableCtx } from '../table';
 
 export interface TableFilterProps {
@@ -26,9 +25,6 @@ const getStrLower = (str: any) => {
 const HeaderFilter = React.memo((props: any) => {
   const { filter, column, getContainer, onInternalFilter } = props;
   const { prefixCls } = useContext(TableCtx);
-  const {
-    locale: { table: loc = {} },
-  } = useLocale();
   const { dataIndex } = column;
 
   const inputRef = useRef<HTMLInputElement>(null);

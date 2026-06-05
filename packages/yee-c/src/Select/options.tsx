@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import React, { createContext, forwardRef, useRef } from 'react';
-import useSelectKeyboard from './hooks/useSelectKeyboard';
-import Option from './option';
 import { useLocale } from '../locale';
+import Option from './option';
 
 export const OptionsCtx = createContext({} as any);
 
@@ -21,6 +20,7 @@ const Options = forwardRef((props: any, ref: React.Ref<HTMLDivElement>) => {
     ...rest
   } = props;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const componentRef = ref || useRef<HTMLDivElement>(null);
 
   return (

@@ -43,7 +43,9 @@ export default () => {
 
   const expandable = {
     expandedRowRender: (record: object) => (
-      <p style={{ margin: 0 }}>{String((record as Record<string, unknown>).description)}</p>
+      <p style={{ margin: 0 }}>
+        {String((record as Record<string, unknown>).description)}
+      </p>
     ),
   };
 

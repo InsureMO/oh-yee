@@ -33,10 +33,12 @@ export interface ProgressProps extends DataAttributeProps {
   /**
    * Progress bar color
    */
-  strokeColor?: string | {
-    '0%': string;
-    '100%': string;
-  };
+  strokeColor?:
+    | string
+    | {
+        '0%': string;
+        '100%': string;
+      };
   /**
    * Children elements
    */

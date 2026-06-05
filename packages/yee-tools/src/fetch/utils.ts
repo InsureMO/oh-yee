@@ -15,9 +15,11 @@ export function buildHeaders(
   config: { responseType?: string; async?: boolean },
 ): void {
   for (const key in headers) {
-    const value = headers[key];
-    if (value !== undefined) {
-      xhr.setRequestHeader(key, value);
+    if (Object.prototype.hasOwnProperty.call(headers, key)) {
+      const value = headers[key];
+      if (value !== undefined) {
+        xhr.setRequestHeader(key, value);
+      }
     }
   }
 

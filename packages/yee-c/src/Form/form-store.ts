@@ -1,5 +1,10 @@
+import {
+  getNamePath,
+  parsePath,
+  setValueByPath,
+  stringifyPath,
+} from './utils/path';
 import validate from './utils/validate';
-import { stringifyPath, setValueByPath, parsePath, getNamePath, deletePath } from './utils/path';
 
 import type {
   Callbacks,
@@ -36,7 +41,8 @@ export class FormStore {
   private initialized = false;
   private initialValues: Store = {};
   // List key manager
-  private listKeyManagers: Map<string, { keys: number[]; id: number }> = new Map();
+  private listKeyManagers: Map<string, { keys: number[]; id: number }> =
+    new Map();
   // Default validation message
   private defaultValidateMessage = 'This is required field.';
   // useWatch subscription management
@@ -61,7 +67,7 @@ export class FormStore {
       this.initialized = true;
 
       if (initialValues) {
-        this.store = {  ...this.store, ...initialValues };
+        this.store = { ...this.store, ...initialValues };
         this.initialValues = JSON.parse(JSON.stringify(initialValues));
       }
 
@@ -83,7 +89,7 @@ export class FormStore {
   private getValueByPath = (path: InternalNamePath): any => {
     let current = this.store;
     for (const key of path) {
-      if (current == null) return undefined;
+      if (current == null) return undefined; // eslint-disable-line eqeqeq
       current = current[key];
     }
     return current;
@@ -111,7 +117,13 @@ export class FormStore {
       } else {
         this.callbacks?.onClear?.();
       }
-    } else if (trigger === 'update' || trigger === 'onChange' || trigger === 'onBlur' || trigger === 'onSubmit' || trigger === 'fill') {
+    } else if (
+      trigger === 'update' ||
+      trigger === 'onChange' ||
+      trigger === 'onBlur' ||
+      trigger === 'onSubmit' ||
+      trigger === 'fill'
+    ) {
       // Support nested path setting
       Object.entries(newStore).forEach(([key, value]) => {
         if (key.includes('.')) {
@@ -125,18 +137,25 @@ export class FormStore {
           };
         }
         if (trigger !== 'fill') {
-          this.callbacks?.onValuesChange?.({ [key]: value }, this.getFieldsValue());
+          this.callbacks?.onValuesChange?.(
+            { [key]: value },
+            this.getFieldsValue(),
+          );
         }
       });
     }
 
     // Validate on onChange and onBlur
-    if (trigger === 'onChange' || trigger === 'onBlur' || trigger === 'onSubmit') {
+    if (
+      trigger === 'onChange' ||
+      trigger === 'onBlur' ||
+      trigger === 'onSubmit'
+    ) {
       this.validateFields(Object.keys(newStore), trigger);
     }
 
     this.refreshField(newStore);
-  }
+  };
 
   resetFields = (name?: Name[]) => {
     if (!name) {
@@ -153,7 +172,7 @@ export class FormStore {
         if (parsedPath.length > 1) {
           let current: any = this.initialValues;
           for (const key of parsedPath) {
-            if (current == null) break;
+            if (current == null) break; // eslint-disable-line eqeqeq
             current = current[key];
           }
           initialVal = current;
@@ -196,7 +215,7 @@ export class FormStore {
       mergedRules.push({
         required: true,
         message: this.defaultValidateMessage,
-        validateTrigger: ['onChange', 'onSubmit']
+        validateTrigger: ['onChange', 'onSubmit'],
       });
     }
     if (trigger) {
@@ -231,7 +250,10 @@ export class FormStore {
     return err;
   };
 
-  validateFields = (names = Array.from(this.fieldMap.keys()), trigger?: TRIGGER) => {
+  validateFields = (
+    names = Array.from(this.fieldMap.keys()),
+    trigger?: TRIGGER,
+  ) => {
     let err: ValidateMessage[] = [];
     names.forEach((name) => {
       const messages = this.validateField(name, trigger);
@@ -263,9 +285,12 @@ export class FormStore {
     }
   };
 
-  subscribe = (namePath?: NamePath, callback?: () => void): () => void => {
+  subscribe = (namePath?: NamePath, callback?: () => void): (() => void) => {
     if (!callback) return () => {};
-    const key = namePath !== undefined ? stringifyPath(getNamePath(namePath)) : GLOBAL_WATCH_KEY;
+    const key =
+      namePath !== undefined
+        ? stringifyPath(getNamePath(namePath))
+        : GLOBAL_WATCH_KEY;
     if (!this.watchers.has(key)) {
       this.watchers.set(key, new Set());
     }
@@ -342,7 +367,7 @@ export class FormStore {
         key,
         name: index,
         isListField: true,
-        value: _
+        value: _,
       };
     });
   };
@@ -358,7 +383,11 @@ export class FormStore {
       add: (defaultValue?: any, insertIndex?: number) => {
         const currentList = (this.getValueByPath(namePath) as any[]) || [];
 
-        if (insertIndex !== undefined && insertIndex >= 0 && insertIndex <= currentList.length) {
+        if (
+          insertIndex !== undefined &&
+          insertIndex >= 0 &&
+          insertIndex <= currentList.length
+        ) {
           // Insert at specified position
           keyManager.keys = [
             ...keyManager.keys.slice(0, insertIndex),
@@ -398,7 +427,12 @@ export class FormStore {
         if (from === to) return;
         const currentList = (this.getValueByPath(namePath) as any[]) || [];
 
-        if (from < 0 || from >= currentList.length || to < 0 || to >= currentList.length) {
+        if (
+          from < 0 ||
+          from >= currentList.length ||
+          to < 0 ||
+          to >= currentList.length
+        ) {
           return;
         }
 
@@ -446,7 +480,7 @@ export class FormStore {
         if (isNested) {
           let current: any = this.initialValues;
           for (const key of parsedPath) {
-            if (current == null) break;
+            if (current == null) break; // eslint-disable-line eqeqeq
             current = current[key];
           }
           initialFromForm = current;

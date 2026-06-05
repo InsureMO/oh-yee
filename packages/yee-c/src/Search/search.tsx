@@ -84,6 +84,19 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
       }
     }, [open]);
 
+    const handleSearch = (
+      e?:
+        | React.ChangeEvent<HTMLInputElement>
+        | React.MouseEvent<HTMLSpanElement>
+        | React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+      if (disabled) return;
+      onSearch?.(searchValue);
+      if (e?.type === 'click') {
+        (e.target as HTMLElement).blur?.();
+      }
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value;
       setSearchValue(newValue);
@@ -99,25 +112,6 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
       setSearchValue('');
       onChange?.(null);
       onSearch?.('');
-    };
-
-    const handleSearch = (
-      e?:
-        | React.ChangeEvent<HTMLInputElement>
-        | React.MouseEvent<HTMLSpanElement>
-        | React.KeyboardEvent<HTMLInputElement>,
-    ) => {
-      if (disabled) return;
-      onSearch?.(searchValue);
-      if (e?.type === 'click') {
-        (e.target as HTMLElement).blur?.();
-      }
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && searchOnAction === 'enter') {
-        handleSearch(e);
-      }
     };
 
     const renderSuffix = () => {

@@ -4,7 +4,7 @@ import DecadeBody from './DecadeBody';
 import DecadeHeader from './DecadeHeader';
 
 export default function DecadePanel(props: any) {
-  const { viewDate, prefixCls, offset } = props;
+  const { prefixCls, offset } = props;
 
   let offsetYear = 0;
   if (offset?.year) {

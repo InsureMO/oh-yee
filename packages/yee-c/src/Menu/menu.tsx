@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import React, { useContext } from 'react';
+import { pickDataAttrs } from '../utils/types';
 import MenuItem from './menu-item';
 import { MenuWrapperCtx } from './wrapper';
-import { pickDataAttrs } from '../utils/types';
 
 import type {
+  MenuDividerType,
   MenuItemCommonType,
   MenuItemType,
-  MenuDividerType,
   MenuProps,
 } from './interface';
 
@@ -60,7 +60,9 @@ const Menu = (props: InnerMenuProps) => {
     styles,
   } = props;
 
-  const dataAttrs = root ? pickDataAttrs(props as unknown as Record<string, unknown>) : {};
+  const dataAttrs = root
+    ? pickDataAttrs(props as unknown as Record<string, unknown>)
+    : {};
   const { prefixCls, inlineCollapsed, footer } = useContext(MenuWrapperCtx);
 
   const renderItems = (items: MenuItemType[]) => {
@@ -101,7 +103,8 @@ const Menu = (props: InnerMenuProps) => {
     [`${prefixCls}-${mode}`],
     {
       'yee-dropdown': !root && mode !== 'inline',
-      [`${prefixCls}-inline-collapsed`]: root && mode === 'inline' && inlineCollapsed,
+      [`${prefixCls}-inline-collapsed`]:
+        root && mode === 'inline' && inlineCollapsed,
       [`${className}`]: root && className,
     },
   );

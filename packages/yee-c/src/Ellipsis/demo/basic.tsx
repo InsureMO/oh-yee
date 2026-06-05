@@ -9,9 +9,7 @@ export default () => {
   return (
     <div>
       <h3>Basic Usage</h3>
-      <Ellipsis lines={3}>
-        {longText}
-      </Ellipsis>
+      <Ellipsis lines={3}>{longText}</Ellipsis>
     </div>
   );
 };

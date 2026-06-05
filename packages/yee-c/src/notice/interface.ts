@@ -1,5 +1,3 @@
-import type { DataAttributeProps } from '../utils/types';
-
 export type NoticeConfig = {
   /**
    * test identifier
@@ -51,11 +49,11 @@ export type NoticeConfig = {
     | 'bottom';
   /**
    * Whether to show progress bar
-  */
+   */
   showProgress?: boolean;
   /**
    * Whether to pause auto close on hover
-  */
+   */
   pauseOnHover?: boolean;
   /**
    * Callback when notice is clicked

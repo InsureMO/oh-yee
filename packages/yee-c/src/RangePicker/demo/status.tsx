@@ -23,7 +23,10 @@ export default () => {
 
       <div>
         <div style={{ marginBottom: '8px', color: '#666' }}>Warning</div>
-        <RangePicker status="warning" placeholder={['Start date', 'End date']} />
+        <RangePicker
+          status="warning"
+          placeholder={['Start date', 'End date']}
+        />
       </div>
 
       <div>

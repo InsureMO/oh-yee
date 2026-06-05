@@ -78,7 +78,9 @@ export default function useMove(
         document.removeEventListener('touchend', handleTouchEnd);
       };
 
-      document.addEventListener('touchmove', handleTouchMove, { passive: false });
+      document.addEventListener('touchmove', handleTouchMove, {
+        passive: false,
+      });
       document.addEventListener('touchend', handleTouchEnd);
     },
     [moveable],
@@ -91,5 +93,11 @@ export default function useMove(
     totalY.current = 0;
   }, []);
 
-  return { onMove: handleMouseDown, onTouchStart: handleTouchStart, reset, moveX, moveY };
+  return {
+    onMove: handleMouseDown,
+    onTouchStart: handleTouchStart,
+    reset,
+    moveX,
+    moveY,
+  };
 }

@@ -106,7 +106,9 @@ const Popconfirm: React.FC<PopconfirmProps> = (baseprops) => {
         style={styles?.footer}
       >
         <Space block style={{ justifyContent: 'flex-end' }}>
-          <Button size="small" onClick={cancel}>{cancelText}</Button>
+          <Button size="small" onClick={cancel}>
+            {cancelText}
+          </Button>
           <Button size="small" type="primary" onClick={confirm} data-confirm>
             {confirmText}
           </Button>

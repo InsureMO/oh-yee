@@ -36,8 +36,6 @@ const Star: React.FC<StarProps> = (props) => {
     return character;
   };
 
-  const half = index < value && index > value - 1;
-
   return (
     <>
       {allowHalf ? (

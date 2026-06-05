@@ -6,6 +6,7 @@ export default () => {
     <Space.Compact>
       <input placeholder="Enter name" style={{ padding: '4px 11px' }} />
       <button
+        type="button"
         style={{
           background: '#1890ff',
           color: 'white',

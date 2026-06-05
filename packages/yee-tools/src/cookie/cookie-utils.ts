@@ -37,6 +37,84 @@ export interface CookieOptions {
 }
 
 /**
+ * Helper function to check if a value is a string
+ */
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+/**
+ * Helper function to check if a string is non-empty
+ */
+function isNonEmptyString(value: unknown): value is string {
+  return isString(value) && value !== "";
+}
+
+/**
+ * Validates a cookie name
+ */
+function validateCookieName(name: unknown): void {
+  if (!isNonEmptyString(name)) {
+    throw new TypeError("Cookie name must be a non-empty string");
+  }
+}
+
+/**
+ * Parses a cookie string into an object
+ * @param text - The cookie string to parse
+ * @param shouldDecode - Whether to decode the values
+ * @returns An object containing cookie name-value pairs
+ */
+function parseCookieString(
+  text: string,
+  shouldDecode: boolean,
+): Record<string, string> {
+  const cookies: Record<string, string> = {};
+
+  if (!isString(text) || text.length === 0) {
+    return cookies;
+  }
+
+  const decodeValue = shouldDecode ? decode : (s: string) => s;
+  const cookieParts = text.split(/;\s/g);
+
+  for (let i = 0; i < cookieParts.length; i++) {
+    const part = cookieParts[i];
+    if (!part) continue;
+
+    const cookieNameValue = part.match(/([^=]+)=/i);
+    let cookieName: string;
+    let cookieValue: string;
+
+    if (cookieNameValue) {
+      try {
+        cookieName = decode(cookieNameValue[1] ?? "");
+        cookieValue = decodeValue(
+          part.substring((cookieNameValue[1]?.length ?? 0) + 1),
+        );
+      } catch (ex) {
+        // Ignore malformed cookies
+        continue;
+      }
+    } else {
+      // Boolean flag cookie (no "=")
+      try {
+        cookieName = decode(part);
+        cookieValue = "";
+      } catch (ex) {
+        continue;
+      }
+    }
+
+    if (cookieName) {
+      cookies[cookieName] = cookieValue;
+    }
+  }
+
+  return cookies;
+}
+
+/**
  * Gets a cookie value by name
  * @param name - The name of the cookie
  * @param options - Optional cookie options
@@ -148,82 +226,4 @@ export function remove(name: string, options?: CookieOptions): string {
   const opts = options ?? {};
   opts.expires = new Date(0);
   return set(name, "", opts);
-}
-
-/**
- * Parses a cookie string into an object
- * @param text - The cookie string to parse
- * @param shouldDecode - Whether to decode the values
- * @returns An object containing cookie name-value pairs
- */
-function parseCookieString(
-  text: string,
-  shouldDecode: boolean,
-): Record<string, string> {
-  const cookies: Record<string, string> = {};
-
-  if (!isString(text) || text.length === 0) {
-    return cookies;
-  }
-
-  const decodeValue = shouldDecode ? decode : (s: string) => s;
-  const cookieParts = text.split(/;\s/g);
-
-  for (let i = 0; i < cookieParts.length; i++) {
-    const part = cookieParts[i];
-    if (!part) continue;
-
-    const cookieNameValue = part.match(/([^=]+)=/i);
-    let cookieName: string;
-    let cookieValue: string;
-
-    if (cookieNameValue) {
-      try {
-        cookieName = decode(cookieNameValue[1] ?? "");
-        cookieValue = decodeValue(
-          part.substring((cookieNameValue[1]?.length ?? 0) + 1),
-        );
-      } catch (ex) {
-        // Ignore malformed cookies
-        continue;
-      }
-    } else {
-      // Boolean flag cookie (no "=")
-      try {
-        cookieName = decode(part);
-        cookieValue = "";
-      } catch (ex) {
-        continue;
-      }
-    }
-
-    if (cookieName) {
-      cookies[cookieName] = cookieValue;
-    }
-  }
-
-  return cookies;
-}
-
-/**
- * Helper function to check if a value is a string
- */
-function isString(value: unknown): value is string {
-  return typeof value === "string";
-}
-
-/**
- * Helper function to check if a string is non-empty
- */
-function isNonEmptyString(value: unknown): value is string {
-  return isString(value) && value !== "";
-}
-
-/**
- * Validates a cookie name
- */
-function validateCookieName(name: unknown): void {
-  if (!isNonEmptyString(name)) {
-    throw new TypeError("Cookie name must be a non-empty string");
-  }
 }

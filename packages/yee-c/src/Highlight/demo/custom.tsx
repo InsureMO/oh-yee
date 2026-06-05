@@ -1,5 +1,5 @@
-import React from 'react';
 import { Highlight } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (
@@ -9,7 +9,11 @@ export default () => {
         <Highlight
           text="This text has custom highlight styles"
           pattern={/custom|highlight/gi}
-          style={{ color: '#ff4d4f', fontWeight: 'bold', backgroundColor: '#fff1f0' }}
+          style={{
+            color: '#ff4d4f',
+            fontWeight: 'bold',
+            backgroundColor: '#fff1f0',
+          }}
           wrapperStyle={{ padding: '8px', backgroundColor: '#f5f5f5' }}
         />
       </div>

@@ -1,5 +1,5 @@
+import { Card, Space, Spin } from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Spin, Space, Card } from '@rainbow-oh/yee-c';
 
 export default () => {
   return (
@@ -31,7 +31,9 @@ export default () => {
         >
           <Spin spinning>
             <p>Content is loading and cannot be interacted with.</p>
-            <p>The overlay prevents user actions while data is being fetched.</p>
+            <p>
+              The overlay prevents user actions while data is being fetched.
+            </p>
           </Spin>
         </div>
       </Card>

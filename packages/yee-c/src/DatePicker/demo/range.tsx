@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import { RangePicker } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [value, setValue] = useState<[string, string]>();

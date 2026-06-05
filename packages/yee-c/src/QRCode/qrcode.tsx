@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
-import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react';
 import { RefreshCw } from 'lucide-react';
-import Spin from '../Spin';
+import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
 import { useLocale } from '../locale';
+import Spin from '../Spin';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { QRCodeProps } from './interface';
 
@@ -29,136 +29,142 @@ interface QRCodePropsType {
   imageSettings?: ImageSettings;
 }
 
-const QRCode = React.forwardRef<HTMLDivElement, QRCodeProps>((baseprops, ref) => {
-  const { qrcode } = useContext(GlobalContext);
-  const { locale } = useLocale();
-  const { qrcode: qrcodeLocale } = locale;
-  const props = mergeContextToProps(baseprops, qrcode);
-  const {
-    prefixCls = 'yee-qrcode',
-    value,
-    type = 'canvas',
-    icon,
-    size = 160,
-    iconSize,
-    color,
-    bgColor = 'transparent',
-    errorLevel = 'M',
-    className,
-    style,
-    bordered = true,
-    status,
-    message,
-    onRefresh,
-    statusRender,
-    ...rest
-  } = props;
+const QRCode = React.forwardRef<HTMLDivElement, QRCodeProps>(
+  (baseprops, ref) => {
+    const { qrcode } = useContext(GlobalContext);
+    const { locale } = useLocale();
+    const { qrcode: qrcodeLocale } = locale;
+    const props = mergeContextToProps(baseprops, qrcode);
+    const {
+      prefixCls = 'yee-qrcode',
+      value,
+      type = 'canvas',
+      icon,
+      size = 160,
+      iconSize,
+      color,
+      bgColor = 'transparent',
+      errorLevel = 'M',
+      className,
+      style,
+      bordered = true,
+      status,
+      message,
+      onRefresh,
+      statusRender,
+      ...rest
+    } = props;
 
-  const [fontColor, setFontColor] = useState(color);
+    const [fontColor, setFontColor] = useState(color);
 
-  useEffect(() => {
-    if (!color) {
-      const computedStyle = getComputedStyle(document.documentElement);
-      const canvasColor = computedStyle.getPropertyValue('--yee-qrcode-fill-color').trim() || '#333';
-      setFontColor(canvasColor);
-    } else {
-      setFontColor(color);
-    }
-  }, [color]);
-
-  if (!value) {
-    return null;
-  }
-
-  const imageSettings: ImageSettings | undefined = icon
-    ? {
-        src: icon,
-        height: iconSize,
-        width: iconSize,
-        excavate: true,
+    useEffect(() => {
+      if (!color) {
+        const computedStyle = getComputedStyle(document.documentElement);
+        const canvasColor =
+          computedStyle.getPropertyValue('--yee-qrcode-fill-color').trim() ||
+          '#333';
+        setFontColor(canvasColor);
+      } else {
+        setFontColor(color);
       }
-    : undefined;
+    }, [color]);
 
-  const qrcodeProps: QRCodePropsType = {
-    value,
-    size: size - QRCODE_PADDING,
-    level: errorLevel,
-    bgColor,
-    fgColor: fontColor || '',
-    imageSettings,
-  };
-
-  const cls = clsx(
-    prefixCls,
-    {
-      [`${prefixCls}-withborder`]: bordered,
-    },
-    className
-  );
-
-  const mergedStyle = {
-    ...style,
-    width: size,
-    height: size,
-  };
-
-  const renderStatus = () => {
-    if (!status && !statusRender) {
+    if (!value) {
       return null;
     }
 
-    if (statusRender) {
-      return statusRender({ status: status || 'active', onRefresh });
-    }
+    const imageSettings: ImageSettings | undefined = icon
+      ? {
+          src: icon,
+          height: iconSize,
+          width: iconSize,
+          excavate: true,
+        }
+      : undefined;
 
-    switch (status) {
-      case 'loading':
-        return <Spin type="spinningBubbles" />;
-      case 'expired':
-        return (
-          <>
-            <p>{message || qrcodeLocale.expired}</p>
-            {onRefresh && (
-              <Button
-                variant="link"
-                size="small"
-                icon={<RefreshCw size={16} />}
-                onClick={onRefresh}
-              >
-                {qrcodeLocale.refresh}
-              </Button>
-            )}
-          </>
-        );
-      case 'scanned':
-        return <p>{message || qrcodeLocale.scanned}</p>;
-      default:
+    const qrcodeProps: QRCodePropsType = {
+      value,
+      size: size - QRCODE_PADDING,
+      level: errorLevel,
+      bgColor,
+      fgColor: fontColor || '',
+      imageSettings,
+    };
+
+    const cls = clsx(
+      prefixCls,
+      {
+        [`${prefixCls}-withborder`]: bordered,
+      },
+      className,
+    );
+
+    const mergedStyle = {
+      ...style,
+      width: size,
+      height: size,
+    };
+
+    const renderStatus = () => {
+      if (!status && !statusRender) {
         return null;
-    }
-  };
+      }
 
-  const statusContent = renderStatus();
+      if (statusRender) {
+        return statusRender({ status: status || 'active', onRefresh });
+      }
 
-  return (
-    <div
-      {...rest}
-      className={cls}
-      style={mergedStyle}
-      ref={ref}
-      role="img"
-      aria-label={`QR Code: ${value}`}
-    >
-      {statusContent && <div className={`${prefixCls}-mask`}>{statusContent}</div>}
-      {type === 'canvas' ? (
-        // @ts-ignore
-        <QRCodeCanvas {...qrcodeProps} fgColor={fontColor} />
-      ) : (
-        // @ts-ignore
-        <QRCodeSVG {...qrcodeProps} />
-      )}
-    </div>
-  );
-});
+      switch (status) {
+        case 'loading':
+          return <Spin type="spinningBubbles" />;
+        case 'expired':
+          return (
+            <>
+              <p>{message || qrcodeLocale.expired}</p>
+              {onRefresh && (
+                <Button
+                  variant="link"
+                  size="small"
+                  icon={<RefreshCw size={16} />}
+                  onClick={onRefresh}
+                >
+                  {qrcodeLocale.refresh}
+                </Button>
+              )}
+            </>
+          );
+        case 'scanned':
+          return <p>{message || qrcodeLocale.scanned}</p>;
+        default:
+          return null;
+      }
+    };
+
+    const statusContent = renderStatus();
+
+    return (
+      <div
+        {...rest}
+        className={cls}
+        style={mergedStyle}
+        ref={ref}
+        role="img"
+        aria-label={`QR Code: ${value}`}
+      >
+        {statusContent && (
+          <div className={`${prefixCls}-mask`}>{statusContent}</div>
+        )}
+        {type === 'canvas' ? (
+          // @ts-ignore
+          <QRCodeCanvas {...qrcodeProps} fgColor={fontColor} />
+        ) : (
+          // @ts-ignore
+          <QRCodeSVG {...qrcodeProps} />
+        )}
+      </div>
+    );
+  },
+);
 
 QRCode.displayName = 'QRCode';
 

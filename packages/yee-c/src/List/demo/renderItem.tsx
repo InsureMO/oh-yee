@@ -1,6 +1,6 @@
-import React from 'react';
-import { List } from '@rainbow-oh/yee-c';
 import type { ListItemProps } from '@rainbow-oh/yee-c';
+import { List } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   const users = [
@@ -14,7 +14,7 @@ export default () => {
       items={users}
       bordered
       itemRender={(item: ListItemProps) => {
-        const user = item as typeof users[0];
+        const user = item as (typeof users)[0];
         return (
           <div style={{ padding: '8px 16px' }}>
             <div style={{ fontWeight: 'bold' }}>{user.name}</div>

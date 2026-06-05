@@ -1,5 +1,5 @@
+import type { TableSelectRowSelectionType } from '@rainbow-oh/yee-c';
 import { TableSelect } from '@rainbow-oh/yee-c';
-import type {TableSelectRowSelectionType} from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {

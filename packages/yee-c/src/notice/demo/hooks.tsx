@@ -1,5 +1,5 @@
+import { Button, useNotice } from '@rainbow-oh/yee-c';
 import React from 'react';
-import { useNotice, Button } from '@rainbow-oh/yee-c';
 
 const HooksDemo = () => {
   const { noticeApi, noticeHolders } = useNotice();

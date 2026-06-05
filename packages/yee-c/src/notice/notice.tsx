@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { CircleAlert, CircleCheck, CircleX, Info, X } from 'lucide-react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Progress from '../Progress';
 import useCountdown from '../hooks/useCountdown';
 import { NoticeProps } from './interface';
@@ -32,7 +32,6 @@ const Notice: React.FC<NoticeProps & { id: string | number }> = (props) => {
     'data-testid': dataTestId,
     ...rest
   } = props;
-
 
   const { remaining, onPause, onResume } = useCountdown({
     duration,
@@ -88,7 +87,7 @@ const Notice: React.FC<NoticeProps & { id: string | number }> = (props) => {
       )}
       style={style}
       onClick={onClick}
-      onMouseEnter={pauseOnHover ? onPause: undefined}
+      onMouseEnter={pauseOnHover ? onPause : undefined}
       onMouseLeave={pauseOnHover ? onResume : undefined}
     >
       <div className={`${prefixCls}-content-wrapper`}>
@@ -98,14 +97,14 @@ const Notice: React.FC<NoticeProps & { id: string | number }> = (props) => {
           <div className={`${prefixCls}-description`}>{content}</div>
         </div>
       </div>
-      {
-        showProgress && duration > 0 && remaining > 0 && (
-          <Progress className={`${prefixCls}-progress`} 
-            showInfo={false} 
-            strokeWidth={2} 
-            percent={parseInt((remaining / duration * 100).toString())}/>
-        )
-      }
+      {showProgress && duration > 0 && remaining > 0 && (
+        <Progress
+          className={`${prefixCls}-progress`}
+          showInfo={false}
+          strokeWidth={2}
+          percent={parseInt(((remaining / duration) * 100).toString())}
+        />
+      )}
       {renderCloseButton()}
     </div>
   );

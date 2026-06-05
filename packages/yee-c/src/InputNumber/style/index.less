@@ -51,7 +51,7 @@
     background-color: transparent;
     border: none;
     outline: none;
-    
+
     &::placeholder {
       color: var(--yee-placeholder-color);
     }
@@ -62,7 +62,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--yee-input-clear-padding, 2px);
-    color: var(--yee-input-clear-color, rgba(0, 0, 0, 0.25));
+    color: var(--yee-input-clear-color, rgba(0, 0, 0, 25%));
     background-color: var(--yee-input-clear-bg-color, transparent);
     border-radius: 50%;
     visibility: hidden;
@@ -121,7 +121,7 @@
     }
 
     &-down {
-      border-radius: 0 0 4px 0;
+      border-radius: 0 0 4px;
     }
   }
 
@@ -161,7 +161,7 @@
 
   &-default {
     @{pls}-inner {
-      padding: 2px 0px 2px 0px;
+      padding: 2px 0;
     }
   }
 
@@ -175,7 +175,7 @@
     }
 
     @{pls}-inner {
-      padding: 4px 0 4px 0px;
+      padding: 4px 0;
     }
   }
 

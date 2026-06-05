@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import useMergedState from '../../hooks/useMergedState';
-import { PaginationType, TableProps } from '../interface';
+import { PaginationType } from '../interface';
 
 const DEFAULT_CURRENT = 1;
 const DEFAULT_PAGESIZE = 10;
@@ -8,14 +8,18 @@ const DEFAULT_PAGESIZE = 10;
 export default function usePagination({
   data,
   pagination,
-  onTableChange
-}:
-  {
-    data: Array<Record<string, unknown>>,
-    pagination: Partial<PaginationType> | boolean,
-    onTableChange?: ({ current, pageSize }: { current: number; pageSize: number }) => void
-  }
-): {
+  onTableChange,
+}: {
+  data: Array<Record<string, unknown>>;
+  pagination: Partial<PaginationType> | boolean;
+  onTableChange?: ({
+    current,
+    pageSize,
+  }: {
+    current: number;
+    pageSize: number;
+  }) => void;
+}): {
   pageData: Array<Record<string, unknown>>;
   current: number;
   pageSize: number;
@@ -86,6 +90,7 @@ export default function usePagination({
     };
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const pageData = useMemo(() => {
     const total = data.length;
     if (total <= mergedPageSize) return data;

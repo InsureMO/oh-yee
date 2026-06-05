@@ -34,6 +34,15 @@ export function clone<T>(obj: T): T {
 }
 
 /**
+ * Checks if a value is a plain object
+ * @param value - The value to check
+ * @returns True if the value is a plain object
+ */
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+/**
  * Extends a target object with properties from a source object
  * @param target - The target object to extend
  * @param source - The source object to copy properties from
@@ -98,15 +107,6 @@ export function extend<
   }
 
   return result;
-}
-
-/**
- * Checks if a value is a plain object
- * @param value - The value to check
- * @returns True if the value is a plain object
- */
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return Object.prototype.toString.call(value) === "[object Object]";
 }
 
 /**

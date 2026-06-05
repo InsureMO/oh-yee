@@ -7,11 +7,7 @@ export default () => {
   return (
     <div>
       <h3>Custom Expand/Collapse Text</h3>
-      <Ellipsis
-        lines={3}
-        expandText="Read more"
-        collapseText="Show less"
-      >
+      <Ellipsis lines={3} expandText="Read more" collapseText="Show less">
         {longText}
       </Ellipsis>
     </div>

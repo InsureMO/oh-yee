@@ -1,5 +1,5 @@
-import React, { ChangeEvent, createContext, useContext, useId } from 'react';
 import clsx from 'clsx';
+import React, { ChangeEvent, createContext, useContext, useId } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
@@ -12,7 +12,7 @@ export const CheckboxGroupCtx = createContext<{
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }>({
   name: '',
-  onChange: () => { },
+  onChange: () => {},
 });
 
 const CheckboxGroup = (baseprops: CheckboxGroupProps) => {

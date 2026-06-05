@@ -1,62 +1,67 @@
 @pls: .yee-float-btn;
 
 @{pls} {
+  position: fixed;
+  right: var(--yee-float-btn-right);
+  bottom: var(--yee-float-btn-bottom);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--yee-float-btn-min-height);
+  overflow: hidden;
+  border: none;
+  box-shadow: var(--yee-float-btn-box-shadow);
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  // Use double-class selector (0-2-0) to ensure min-width wins over
+  // Button's .yee-btn-circle (0-1-0) when both are applied
+  && {
+    min-width: var(--yee-float-btn-min-width);
+  }
+
+  &-icon {
+    display: inline-flex;
+  }
+
+  &-description {
+    margin-left: var(--yee-float-btn-description-margin-left);
+    font-weight: 400;
+    font-size: var(--yee-float-btn-description-font-size);
+    line-height: var(--yee-float-btn-description-line-height);
+  }
+
+  &-square {
+    border-radius: var(--yee-float-btn-square-border-radius);
+  }
+
+  &-circle {
+    border-radius: 50%;
+  }
+
+  &-default {
+    color: var(--yee-float-btn-color);
+    background-color: var(--yee-float-btn-default-bg-color);
+  }
+
+  &-group {
     position: fixed;
     right: var(--yee-float-btn-right);
     bottom: var(--yee-float-btn-bottom);
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: var(--yee-float-btn-min-width);
-    min-height: var(--yee-float-btn-min-height);
-    overflow: hidden;
-    border: none;
-    box-shadow: var(--yee-float-btn-box-shadow);
-    cursor: pointer;
-    transition: background-color 0.2s;
+    gap: var(--yee-float-btn-group-gap);
 
-    &-icon {
-        display: inline-flex;
+    &-static {
+      position: static;
     }
 
-    &-description {
-        margin-left: var(--yee-float-btn-description-margin-left);
-        font-weight: 400;
-        font-size: var(--yee-float-btn-description-font-size);
-        line-height: var(--yee-float-btn-description-line-height);
+    @{pls} {
+      position: static;
+      box-shadow: none;
     }
-
-    &-square {
-        border-radius: var(--yee-float-btn-square-border-radius);
-    }
-
-    &-circle {
-        border-radius: 50%;
-    }
-
-    &-default {
-        color: var(--yee-float-btn-color);
-        background-color: var(--yee-float-btn-default-bg-color);
-    }
-
-    &-group {
-        position: fixed;
-        right: var(--yee-float-btn-right);
-        bottom: var(--yee-float-btn-bottom);
-        display: inline-flex;
-        flex-direction: column;
-        gap: var(--yee-float-btn-group-gap);
-
-        &-static {
-            position: static;
-        }
-
-        @{pls} {
-            position: static;
-            box-shadow: none;
-        }
-    }
+  }
 }
 
 // Popup Layer
@@ -87,7 +92,6 @@
 //         }
 //     }
 // }
-
 
 // .yee-float-btn-group-circle {
 //     gap: 8px;

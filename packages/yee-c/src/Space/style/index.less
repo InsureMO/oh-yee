@@ -1,71 +1,70 @@
 @pls: .yee-space;
 
 @{pls} {
+  display: inline-flex;
+  justify-content: var(--yee-space-justify-content);
+
+  &-wrap {
+    flex-wrap: wrap;
+  }
+
+  &-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+
+    @{pls}-item {
+      width: 100%;
+    }
+  }
+
+  &-compact {
+    align-items: flex-end;
+
+    &-first-item {
+      margin-inline-end: -1px;
+
+      .yee-input-wrapper,
+      .yee-tags,
+      &.yee-btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .yee-input-wrapper-active,
+      .yee-input-wrapper-hover {
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    &-middle-item {
+      margin-inline-end: -1px;
+
+      .yee-input-wrapper,
+      .yee-tags,
+      &.yee-btn {
+        border-radius: 0;
+      }
+
+      .yee-input-wrapper-active,
+      .yee-input-wrapper-hover {
+        position: relative;
+        z-index: 1;
+      }
+    }
+  }
+
+  &-item {
+    // flex: 1 1 auto;
     display: inline-flex;
-    justify-content: var(--yee-space-justify-content);
+  }
 
-    &-wrap {
-        flex-wrap: wrap;
+  &-last-item {
+    .yee-input-wrapper,
+    .yee-tags,
+    &.yee-btn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
-
-    &-vertical {
-        flex-direction: column;
-        align-items: flex-start;
-
-        @{pls}-item {
-            width: 100%;
-        }
-    }
-
-    &-compact {
-        align-items: flex-end;
-
-        &-first-item {
-            margin-inline-end: -1px;
-
-            .yee-input-wrapper,
-            .yee-tags,
-            &.yee-btn {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-            .yee-input-wrapper-active,
-            .yee-input-wrapper-hover {
-                position: relative;
-                z-index: 1;
-            }
-        }
-
-        &-middle-item {
-            margin-inline-end: -1px;
-
-            .yee-input-wrapper,
-            .yee-tags,
-            &.yee-btn {
-                border-radius: 0;
-            }
-
-            .yee-input-wrapper-active,
-            .yee-input-wrapper-hover {
-                position: relative;
-                z-index: 1;
-            }
-        }
-    }
-
-    &-item {
-        // flex: 1 1 auto;
-        display: inline-flex;
-    }
-
-    &-last-item {
-
-        .yee-input-wrapper,
-        .yee-tags,
-        &.yee-btn {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-    }
+  }
 }

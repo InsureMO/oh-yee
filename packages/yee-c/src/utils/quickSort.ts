@@ -38,11 +38,11 @@ function qsort(
   key: string,
   flag?: boolean,
 ) {
-  end = typeof end !== 'undefined' ? end : array.length;
-  if (start < end - 1) {
-    const center = divide(array, start, end, key, flag);
+  const localEnd = typeof end !== 'undefined' ? end : array.length;
+  if (start < localEnd - 1) {
+    const center = divide(array, start, localEnd, key, flag);
     qsort(array, start, center, key, flag);
-    qsort(array, center + 1, end, key, flag);
+    qsort(array, center + 1, localEnd, key, flag);
   }
   return [...array];
 }

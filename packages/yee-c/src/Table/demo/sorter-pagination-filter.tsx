@@ -1,5 +1,5 @@
-import { Table } from '@rainbow-oh/yee-c';
 import type { ColumnProps, onChangeParams } from '@rainbow-oh/yee-c';
+import { Table } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -82,8 +82,13 @@ export default () => {
         }}
       />
       <div style={{ marginTop: 16, padding: 16, background: '#f5f5f5' }}>
-        <p><strong>Current State:</strong></p>
-        <p>Pagination: Page {tableData.pagination.current}, {tableData.pagination.pageSize} per page</p>
+        <p>
+          <strong>Current State:</strong>
+        </p>
+        <p>
+          Pagination: Page {tableData.pagination.current},{' '}
+          {tableData.pagination.pageSize} per page
+        </p>
         <p>Sorter: {JSON.stringify(tableData.sorter)}</p>
         <p>Filters: {JSON.stringify(tableData.filters)}</p>
       </div>

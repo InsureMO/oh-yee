@@ -52,10 +52,10 @@ function TimeColumn(props: any) {
           type === 'hour'
             ? pickerUtils.getHour(cell)
             : type === 'minute'
-            ? pickerUtils.getMinute(cell)
-            : type === 'second'
-            ? pickerUtils.getSecond(cell)
-            : 0;
+              ? pickerUtils.getMinute(cell)
+              : type === 'second'
+                ? pickerUtils.getSecond(cell)
+                : 0;
 
         const renderCell = cellValue < 10 ? '0' + cellValue : cellValue;
 

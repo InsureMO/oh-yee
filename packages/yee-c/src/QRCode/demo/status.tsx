@@ -1,9 +1,10 @@
-import { QRCode } from '@rainbow-oh/yee-c';
+import { Button, QRCode } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
-import { Button } from '@rainbow-oh/yee-c';
 
 export default () => {
-  const [status, setStatus] = useState<'active' | 'loading' | 'expired' | 'scanned'>('active');
+  const [status, setStatus] = useState<
+    'active' | 'loading' | 'expired' | 'scanned'
+  >('active');
 
   const handleRefresh = () => {
     setStatus('loading');
@@ -17,7 +18,13 @@ export default () => {
       <QRCode
         value="https://yee-c.example.com"
         status={status}
-        message={status === 'expired' ? 'QR code has expired' : status === 'scanned' ? 'Scanned successfully' : undefined}
+        message={
+          status === 'expired'
+            ? 'QR code has expired'
+            : status === 'scanned'
+              ? 'Scanned successfully'
+              : undefined
+        }
         onRefresh={handleRefresh}
       />
       <div>

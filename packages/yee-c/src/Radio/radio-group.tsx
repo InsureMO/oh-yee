@@ -62,7 +62,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
               disabled={disabled}
               {...rest}
               {...option}
-              checked={option.value == mergedValue}
+              checked={option.value === mergedValue}
               key={option.value || index}
             />
           ))}

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { WheelColumn } from '../../WheelPicker/interface';
 import type { PickerType } from '../interface';
 
@@ -26,7 +26,10 @@ function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month + 1, 0).getDate();
 }
 
-function findIndex(options: { value: string | number }[], value: string | number): number {
+function findIndex(
+  options: { value: string | number }[],
+  value: string | number,
+): number {
   const idx = options.findIndex((o) => o.value === value);
   return idx >= 0 ? idx : 0;
 }
@@ -112,7 +115,17 @@ function useWheelDateColumns({
       opts.push({ label: pad(d), value: d });
     }
     return opts;
-  }, [showDay, selectedYear, selectedMonth, minYear, maxYear, minMonth, maxMonth, minDay, maxDay]);
+  }, [
+    showDay,
+    selectedYear,
+    selectedMonth,
+    minYear,
+    maxYear,
+    minMonth,
+    maxMonth,
+    minDay,
+    maxDay,
+  ]);
 
   const hourOptions = useMemo(() => {
     if (!showTime) return [];
@@ -170,11 +183,22 @@ function useWheelDateColumns({
 
     return { columns: cols, indices: idx };
   }, [
-    showYear, showMonth, showDay, showTime,
-    yearOptions, monthOptions, dayOptions,
-    hourOptions, minuteOptions, secondOptions,
-    selectedYear, selectedMonth, selectedDay,
-    selectedHour, selectedMinute, selectedSecond,
+    showYear,
+    showMonth,
+    showDay,
+    showTime,
+    yearOptions,
+    monthOptions,
+    dayOptions,
+    hourOptions,
+    minuteOptions,
+    secondOptions,
+    selectedYear,
+    selectedMonth,
+    selectedDay,
+    selectedHour,
+    selectedMinute,
+    selectedSecond,
   ]);
 
   // Track latest indices in a ref so getSelectedDate always reads current values
@@ -210,7 +234,18 @@ function useWheelDateColumns({
         if (secondOpt) setSelectedSecond(secondOpt.value as number);
       }
     },
-    [showYear, showMonth, showDay, showTime, yearOptions, monthOptions, dayOptions, hourOptions, minuteOptions, secondOptions],
+    [
+      showYear,
+      showMonth,
+      showDay,
+      showTime,
+      yearOptions,
+      monthOptions,
+      dayOptions,
+      hourOptions,
+      minuteOptions,
+      secondOptions,
+    ],
   );
 
   const getSelectedDate = useCallback(() => {

@@ -1,9 +1,11 @@
-import { Table } from '@rainbow-oh/yee-c';
 import type { RowSelectionType } from '@rainbow-oh/yee-c';
+import { Table } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<Array<string | number>>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<
+    Array<string | number>
+  >([]);
 
   const columns = [
     {

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Cascader } from '@rainbow-oh/yee-c';
+import React from 'react';
 import type { Option } from '../interface';
 
 export default () => {
@@ -56,7 +56,10 @@ export default () => {
     },
   ];
 
-  const onChange = (value: Array<Array<string | number>> | Array<string | number> | undefined, selectedOptions: Option[]) => {
+  const onChange = (
+    value: Array<Array<string | number>> | Array<string | number> | undefined,
+    selectedOptions: Option[],
+  ) => {
     console.log(value, selectedOptions);
   };
 

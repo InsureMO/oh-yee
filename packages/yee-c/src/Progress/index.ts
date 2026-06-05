@@ -1,5 +1,5 @@
 import Progress from './progress';
 
-export type { ProgressProps, LineProps, CircleProps } from './interface';
+export type { CircleProps, LineProps, ProgressProps } from './interface';
 
 export default Progress;

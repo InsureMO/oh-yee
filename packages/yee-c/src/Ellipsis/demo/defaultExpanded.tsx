@@ -7,10 +7,7 @@ export default () => {
   return (
     <div>
       <h3>Default Expanded</h3>
-      <Ellipsis 
-        lines={3}
-        defaultExpanded
-      >
+      <Ellipsis lines={3} defaultExpanded>
         {longText}
       </Ellipsis>
     </div>

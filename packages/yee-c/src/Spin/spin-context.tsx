@@ -1,11 +1,11 @@
-import React, { createContext, useContext, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import useSpin from './use-spin';
+import React, { createContext, useContext, useEffect } from 'react';
 import { spinManager } from './spin-manager';
+import useSpin from './use-spin';
 
 interface SpinContextType {
-    show: (id?: string) => void;
-    hide: (id?: string) => void;
+  show: (id?: string) => void;
+  hide: (id?: string) => void;
 }
 
 const SpinContext = createContext<SpinContextType | undefined>(undefined);
@@ -14,19 +14,19 @@ const SpinContext = createContext<SpinContextType | undefined>(undefined);
  * Spin Provider - Use at the application root
  */
 export function SpinProvider({ children }: { children: ReactNode }) {
-    const { spin, spinHolder } = useSpin();
+  const { spin, spinHolder } = useSpin();
 
-    // Register to global manager to support non-component calls
-    useEffect(() => {
-        spinManager.register(spin);
-    }, [spin]);
+  // Register to global manager to support non-component calls
+  useEffect(() => {
+    spinManager.register(spin);
+  }, [spin]);
 
-    return (
-        <SpinContext.Provider value={spin}>
-            {children}
-            {spinHolder}
-        </SpinContext.Provider>
-    );
+  return (
+    <SpinContext.Provider value={spin}>
+      {children}
+      {spinHolder}
+    </SpinContext.Provider>
+  );
 }
 
 /**
@@ -38,9 +38,9 @@ export function SpinProvider({ children }: { children: ReactNode }) {
  * spin.hide();
  */
 export function useGlobalSpin() {
-    const context = useContext(SpinContext);
-    if (context === undefined) {
-        throw new Error('useGlobalSpin must be used within SpinProvider');
-    }
-    return context;
+  const context = useContext(SpinContext);
+  if (context === undefined) {
+    throw new Error('useGlobalSpin must be used within SpinProvider');
+  }
+  return context;
 }

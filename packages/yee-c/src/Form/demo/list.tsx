@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, Form, Input, Space } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   const [form] = Form.useForm();
@@ -47,10 +47,19 @@ export default () => {
                   label={`Age ${index + 1}`}
                   required
                   rules={[
-                    { type: 'number', min: 0, max: 120, message: 'Age must be between 0-120' },
+                    {
+                      type: 'number',
+                      min: 0,
+                      max: 120,
+                      message: 'Age must be between 0-120',
+                    },
                   ]}
                 >
-                  <Input type="number" placeholder="Age" style={{ width: 100 }} />
+                  <Input
+                    type="number"
+                    placeholder="Age"
+                    style={{ width: 100 }}
+                  />
                 </Form.Field>
 
                 {fields.length > 1 && (
@@ -75,7 +84,7 @@ export default () => {
             <Space style={{ marginTop: 16 }}>
               <Button
                 onClick={() => {
-                  add({ name: '', age: '' })
+                  add({ name: '', age: '' });
                 }}
               >
                 Add User

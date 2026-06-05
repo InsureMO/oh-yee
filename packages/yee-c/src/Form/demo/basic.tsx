@@ -1,5 +1,14 @@
+import {
+  Button,
+  DatePicker,
+  Form,
+  Grid,
+  Input,
+  Select,
+  Space,
+  TextArea,
+} from '@rainbow-oh/yee-c';
 import React, { useEffect } from 'react';
-import { Button, DatePicker, Form, Grid, Input, Select, Space, TextArea } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
@@ -8,7 +17,7 @@ export default () => {
     console.log('Received values:', values);
   };
 
-  const [state, setState] = React.useState({});
+  const [, setState] = React.useState({});
 
   useEffect(() => {
     setTimeout(() => {
@@ -18,9 +27,8 @@ export default () => {
             one: '123 Main St',
           },
         ],
-      })
+      });
     }, 2000);
-    
   }, []);
 
   return (
@@ -39,7 +47,11 @@ export default () => {
             name="username"
             label="Username"
             rules={[
-              { required: true, message: 'Please input your username!', validateTrigger: ['onChange', 'onSubmit'] },
+              {
+                required: true,
+                message: 'Please input your username!',
+                validateTrigger: ['onChange', 'onSubmit'],
+              },
               {
                 validateTrigger: 'onBlur',
                 validator: (value: unknown) => {
@@ -50,10 +62,10 @@ export default () => {
                   return true;
                 },
                 message: 'Username must be at least 5 characters long',
-              }
+              },
             ]}
           >
-            <Input placeholder="Please input your username"/>
+            <Input placeholder="Please input your username" />
           </Form.Field>
         </Grid.Item>
 
@@ -78,8 +90,8 @@ export default () => {
             <Select
               options={[
                 { label: 'male', value: 'male' },
-              { label: 'female', value: 'female' },
-              { label: 'other', value: 'other' },
+                { label: 'female', value: 'female' },
+                { label: 'other', value: 'other' },
               ]}
             />
           </Form.Field>
@@ -92,7 +104,11 @@ export default () => {
         </Grid.Item>
 
         <Grid.Item>
-          <Form.Field name={["address", 0, "one"]} label="Address" initialValue={"zzz"}>
+          <Form.Field
+            name={['address', 0, 'one']}
+            label="Address"
+            initialValue={'zzz'}
+          >
             <TextArea />
           </Form.Field>
         </Grid.Item>
@@ -101,10 +117,7 @@ export default () => {
         <Button type="primary" htmlType="submit" data-testid="submit-btn">
           Submit
         </Button>
-        <Button
-          htmlType="reset"
-          data-testid="reset-btn"
-        >
+        <Button htmlType="reset" data-testid="reset-btn">
           Reset
         </Button>
       </Space>

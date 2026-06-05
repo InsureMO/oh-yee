@@ -1,5 +1,3 @@
-import type { DataAttributeProps } from '../utils/types';
-
 export type MessageConfig = {
   /**
    * test identifier

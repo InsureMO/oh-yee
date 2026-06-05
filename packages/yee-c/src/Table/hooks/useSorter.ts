@@ -7,18 +7,18 @@ type SortState = {
 
 export default function useSorter({
   data,
-  columns
+  columns,
 }: {
-  data: Array<Record<string, unknown>>,
-  columns: Array<ColumnProps>
+  data: Array<Record<string, unknown>>;
+  columns: Array<ColumnProps>;
 }) {
-
   const getDefaultSorters = useCallback(() => {
     const sorters: SortState = {};
     columns.forEach((column) => {
       const { dataIndex, sorter } = column;
       if (!sorter) return;
-      const { defaultSortOrder } = typeof sorter === 'boolean' ? {} as any : sorter;
+      const { defaultSortOrder } =
+        typeof sorter === 'boolean' ? ({} as any) : sorter;
       if (dataIndex && sorter) {
         if (defaultSortOrder === 'ascend') {
           sorters[dataIndex] = 1;
@@ -70,7 +70,9 @@ export default function useSorter({
   };
 
   const sorted = useMemo(() => {
-    const activeSorters = Object.entries(sorters).filter(([_, order]) => order !== 0);
+    const activeSorters = Object.entries(sorters).filter(
+      ([, order]) => order !== 0,
+    );
 
     if (activeSorters.length === 0) {
       return data;
@@ -82,9 +84,9 @@ export default function useSorter({
         const bValue = b[dataIndex];
 
         // Handle undefined/null values
-        if (aValue == null && bValue == null) continue;
-        if (aValue == null) return 1;
-        if (bValue == null) return -1;
+        if (aValue === null && bValue === null) continue;
+        if (aValue === null || aValue === undefined) return 1;
+        if (bValue === null || bValue === undefined) return -1;
 
         // Compare values
         if (aValue < bValue) {

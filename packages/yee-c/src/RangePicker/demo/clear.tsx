@@ -15,7 +15,9 @@ export default () => {
       }}
     >
       <div>
-        <div style={{ marginBottom: '8px', color: '#666' }}>Clearable (default)</div>
+        <div style={{ marginBottom: '8px', color: '#666' }}>
+          Clearable (default)
+        </div>
         <RangePicker
           value={value1}
           onChange={(dates) => setValue1(dates)}

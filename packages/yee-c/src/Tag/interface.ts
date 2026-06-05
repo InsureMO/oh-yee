@@ -29,11 +29,11 @@ export interface TagProps extends DataAttributeProps {
   className?: string;
   /**
    * Semantic structure class names
-  */
+   */
   classNames?: Partial<Record<SemanticDOM, string>>;
   /**
    * Semantic structure styles
-  */
+   */
   styles?: Partial<Record<SemanticDOM, React.CSSProperties>>;
   /**
    * Whether closable, can also customize the close icon

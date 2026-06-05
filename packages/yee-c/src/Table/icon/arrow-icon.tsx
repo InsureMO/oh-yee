@@ -1,6 +1,11 @@
 import React from 'react';
 
-const TriangleArrow = ({ direction = 'down', className, size = 10, ...props }: {
+const TriangleArrow = ({
+  direction = 'down',
+  className,
+  size = 10,
+  ...props
+}: {
   direction?: 'up' | 'down' | 'left' | 'right';
   className?: string;
   size?: number;

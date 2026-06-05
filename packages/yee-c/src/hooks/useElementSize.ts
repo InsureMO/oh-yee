@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 // Hook specifically for getting element dimensions
 const useElementSize = <T extends HTMLElement = HTMLDivElement>() => {

@@ -16,10 +16,10 @@ import {
   useNavListMove,
   useTabScroll,
 } from '../hooks';
+import type { TabItemType } from '../interface';
 import { TabsCtx } from '../tabs';
 import DropDownTabs from './dropdown-tabs';
 import TabHeaderTitle from './tab-header-title';
-import type { TabItemType } from '../interface';
 
 type TabHeaderCtxType = {
   activetab: React.RefObject<HTMLSpanElement | null>;

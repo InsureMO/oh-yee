@@ -227,7 +227,7 @@
   &-range-hover-start:not(&-not-in-view),
   &-range-hover-end:not(&-not-in-view) {
     &::after {
-      width: ~"calc(100%)";
+      width: ~'calc(100%)';
     }
   }
 
@@ -235,14 +235,14 @@
   &-range-hover-start:not(&-not-in-view)&.yee-picker-cell-range-start {
     &::after {
       left: 12px;
-      width: ~"calc(100% - 13px)";
+      width: ~'calc(100% - 13px)';
     }
   }
 
   // When hover-end is also range-end (already selected end date)
   &-range-hover-end:not(&-not-in-view)&.yee-picker-cell-range-end {
     &::after {
-      width: ~"calc(100% - 13px)";
+      width: ~'calc(100% - 13px)';
     }
   }
 
@@ -336,7 +336,7 @@
   &-range-start {
     &::before {
       left: 12px;
-      width: ~"calc(100% - 24px)";
+      width: ~'calc(100% - 24px)';
     }
   }
 
@@ -344,14 +344,14 @@
   &-range-start&-in-range {
     &::before {
       left: 12px;
-      width: ~"calc(100% - 12px)";
+      width: ~'calc(100% - 12px)';
     }
   }
 
   // Range end background adjustment
   &-range-end:not(&-not-in-view) {
     &::before {
-      width: ~"calc(100% - 18px)";
+      width: ~'calc(100% - 18px)';
     }
   }
 }

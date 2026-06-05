@@ -7,9 +7,9 @@ export type { PickerType };
 
 export interface DatePickerProps
   extends
-  DataAttributeProps,
-  Omit<PickerPanelProps, 'value' | 'onChange' | 'cellRender'>,
-  Omit<TriggerProps, 'popup' | 'children'> {
+    DataAttributeProps,
+    Omit<PickerPanelProps, 'value' | 'onChange' | 'cellRender'>,
+    Omit<TriggerProps, 'popup' | 'children'> {
   /**
    * Custom class name prefix
    */
@@ -67,7 +67,7 @@ export interface DatePickerProps
   saveFormat?: string;
   /**
    * @description Custom native attributes for date table cells
-  */
+   */
   onCell?: (currentDate: Dayjs) => React.HTMLAttributes<HTMLTableCellElement>;
   /**
    * date change callback event

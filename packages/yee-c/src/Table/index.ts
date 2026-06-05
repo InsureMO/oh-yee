@@ -1,9 +1,15 @@
-import InternalTable from './table';
 import Column from './column';
 import Summary from './summary';
+import InternalTable from './table';
 import Head from './theader';
 
-export type { TableProps, ColumnProps, onChangeParams, PaginationType, RowSelectionType } from './interface';
+export type {
+  ColumnProps,
+  PaginationType,
+  RowSelectionType,
+  TableProps,
+  onChangeParams,
+} from './interface';
 
 type TableType = typeof InternalTable & {
   Column: typeof Column;

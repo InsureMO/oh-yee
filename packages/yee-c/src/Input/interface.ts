@@ -1,10 +1,9 @@
 export type CompositionDOM = 'prefix' | 'input' | 'suffix' | 'clear';
 
-export interface InputProps
-  extends Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    'size' | 'prefix' | 'onChange'
-  > {
+export interface InputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'prefix' | 'onChange'
+> {
   /**
    * Custom class name prefix
    */
@@ -78,4 +77,4 @@ export interface PasswordProps extends InputProps {
   visibilityToggle?: boolean;
 }
 
-export interface EmailProps extends InputProps {}
+export type EmailProps = InputProps;

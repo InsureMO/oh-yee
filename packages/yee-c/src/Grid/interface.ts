@@ -33,12 +33,12 @@ export interface GridProps {
   cols?: number | ResponsiveCols;
   /***
    * Number of rows
-  */
- rows?: number;
- /**
-  * Row and column gap
-  * @default 16
- */
+   */
+  rows?: number;
+  /**
+   * Row and column gap
+   * @default 16
+   */
   gap?: number;
   /**
    * Column gap
@@ -89,5 +89,10 @@ export interface GridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * spanStyle
    */
-  spanStyle?: { gridColumnStart?: number; gridColumnEnd?: number; gridRowStart?: number; gridRowEnd?: number };
+  spanStyle?: {
+    gridColumnStart?: number;
+    gridColumnEnd?: number;
+    gridRowStart?: number;
+    gridRowEnd?: number;
+  };
 }

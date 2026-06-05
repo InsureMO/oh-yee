@@ -1,5 +1,5 @@
+import type { TableSelectRowSelectionType } from '@rainbow-oh/yee-c';
 import { TableSelect } from '@rainbow-oh/yee-c';
-import type {TableSelectRowSelectionType} from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -81,13 +81,15 @@ export default () => {
         <TableSelect
           columns={columns}
           dataSource={dataSource}
-          rowSelection={{
-            type: 'radio',
-            selectedRowKeys: [value],
-            onChange: (selectedKeys: string[] | number[]) => {
-              setValue(selectedKeys as unknown as string);
-            },
-          } as unknown as TableSelectRowSelectionType}
+          rowSelection={
+            {
+              type: 'radio',
+              selectedRowKeys: [value],
+              onChange: (selectedKeys: string[] | number[]) => {
+                setValue(selectedKeys as unknown as string);
+              },
+            } as unknown as TableSelectRowSelectionType
+          }
           rowKey="key"
           optionLabelProp="name"
           allowClear
@@ -101,13 +103,15 @@ export default () => {
         <TableSelect
           columns={columns}
           dataSource={dataSource}
-          rowSelection={{
-            type: 'radio',
-            selectedRowKeys: [value],
-            onChange: (selectedKeys: string[] | number[]) => {
-              setValue(selectedKeys as unknown as string);
-            },
-          } as unknown as TableSelectRowSelectionType}
+          rowSelection={
+            {
+              type: 'radio',
+              selectedRowKeys: [value],
+              onChange: (selectedKeys: string[] | number[]) => {
+                setValue(selectedKeys as unknown as string);
+              },
+            } as unknown as TableSelectRowSelectionType
+          }
           rowKey="key"
           optionLabelProp="name"
           placement="topLeft"

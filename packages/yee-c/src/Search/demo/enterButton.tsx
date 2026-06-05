@@ -1,5 +1,5 @@
-import React from 'react';
 import { Search } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   const onSearch = (value: string) => {
@@ -7,7 +7,9 @@ export default () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 300 }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 300 }}
+    >
       <Search placeholder="input search text" onSearch={onSearch} />
       <Search placeholder="input search text" onSearch={onSearch} />
     </div>

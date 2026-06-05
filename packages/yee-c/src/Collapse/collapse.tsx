@@ -3,8 +3,8 @@ import React, { createContext, FC, useCallback, useContext } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
-import Panel from './panel';
 import type { CollapseProps } from './interface';
+import Panel from './panel';
 
 import './style/index.less';
 
@@ -61,11 +61,7 @@ const Collapse: FC<CollapseProps> = (baseprops) => {
           : [...keys, key];
       }
       setMergedActiveKey(expandedKeys);
-      onChange?.(
-        accordion
-          ? expandedKeys[0]
-          : expandedKeys as any
-      );
+      onChange?.(accordion ? expandedKeys[0] : (expandedKeys as any));
     },
     [mergedActiveKey, accordion, onChange],
   );

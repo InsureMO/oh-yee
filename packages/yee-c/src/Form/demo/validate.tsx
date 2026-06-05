@@ -1,5 +1,5 @@
+import { Button, Form, Grid, Input, Space } from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Button, Form, Input, Space, Grid } from '@rainbow-oh/yee-c';
 
 export default () => {
   const [form] = Form.useForm();
@@ -13,11 +13,7 @@ export default () => {
   };
 
   return (
-    <Form
-      form={form}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
+    <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
       <Grid>
         <Form.Field
           name="username"
@@ -61,11 +57,7 @@ export default () => {
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
-        <Button
-          htmlType='reset'
-        >
-          Reset
-        </Button>
+        <Button htmlType="reset">Reset</Button>
       </Space>
     </Form>
   );

@@ -1,15 +1,13 @@
-import React from 'react';
-import { ArrowRight, Download } from 'lucide-react';
 import { Card } from '@rainbow-oh/yee-c';
+import { ArrowRight, Download } from 'lucide-react';
+import React from 'react';
 
 export default () => {
   return (
     <Card
       title="Custom Expand Icon"
       style={{ width: '300px' }}
-      expandIcon={(collapsed) =>
-        collapsed ? <ArrowRight /> : <Download />
-      }
+      expandIcon={(collapsed) => (collapsed ? <ArrowRight /> : <Download />)}
       defaultExpanded={false}
     >
       <p>Card content with custom expand icon</p>

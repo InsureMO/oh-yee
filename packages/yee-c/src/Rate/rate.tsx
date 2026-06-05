@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
-import Star from './star';
 import type { RateProps } from './interface';
+import Star from './star';
 
 import './style/index.less';
 
@@ -113,7 +113,7 @@ const Rate = React.forwardRef<HTMLUListElement, RateProps>((baseprops, ref) => {
           const cls = clsx(`${prefixCls}-star`, {
             [`${prefixCls}-star-full`]: index < mergedValue,
             [`${prefixCls}-star-half-active`]:
-              allowHalf && (index + 0.5 === mergedValue),
+              allowHalf && index + 0.5 === mergedValue,
           });
 
           return (

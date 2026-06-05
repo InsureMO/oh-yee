@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, Form, Grid, Input, Radio, Space } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   const [form] = Form.useForm();
@@ -15,8 +15,7 @@ export default () => {
           { value: 'vertical', label: 'Vertical' },
           { value: 'horizontal', label: 'Horizontal' },
         ]}
-      >
-      </Radio.Group>
+      ></Radio.Group>
 
       <br />
       <br />

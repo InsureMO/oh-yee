@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
-import TabContent from './tab-content';
-import TabHeader from './tab-header';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import omit from '../utils/omit';
 import type { TabsProps } from './interface';
 import './style/index.less';
+import TabContent from './tab-content';
+import TabHeader from './tab-header';
 
 type TabsCtxType = {
   prefixCls: string;
@@ -18,7 +18,7 @@ type TabsCtxType = {
   type?: 'card' | 'editable-card';
   onEdit?: (type: 'add' | 'remove', key?: number | string) => void;
   onTabClick: (key: number | string) => void;
-}
+};
 
 export const TabsCtx = React.createContext<TabsCtxType>({} as TabsCtxType);
 
@@ -111,13 +111,17 @@ const Tabs: FC<TabsProps> = (baseprops) => {
   );
 
   return (
-    <div {...omit(rest, ["headerExtra"])} className={cls} style={style}>
+    <div {...omit(rest, ['headerExtra'])} className={cls} style={style}>
       <TabsCtx.Provider value={contextValue}>
         <TabHeader
           {...omit(props, ['children', 'className', 'style'])}
           prefixCls={prefixCls}
         />
-        <TabContent prefixCls={prefixCls} className={classNames?.content} style={styles?.content} />
+        <TabContent
+          prefixCls={prefixCls}
+          className={classNames?.content}
+          style={styles?.content}
+        />
       </TabsCtx.Provider>
     </div>
   );

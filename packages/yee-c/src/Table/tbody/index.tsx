@@ -37,7 +37,9 @@ const TableBody: React.FC<TableBodyProps> = (props) => {
     });
   };
 
-  const tbody = <tbody className={`${prefixCls}-tbody`}>{getRenderRows()}</tbody>;
+  const tbody = (
+    <tbody className={`${prefixCls}-tbody`}>{getRenderRows()}</tbody>
+  );
 
   return tbody;
 };

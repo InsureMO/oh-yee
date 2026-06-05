@@ -1,5 +1,5 @@
-import type { DataAttributeProps } from '../utils/types';
 import type { PaginationProps } from '../Pagination';
+import type { DataAttributeProps } from '../utils/types';
 
 export type Key = string | number;
 
@@ -67,24 +67,24 @@ export interface TransferProps extends DataAttributeProps {
   defaultSelectedKeys?: Array<string | number>;
   /**
    * Whether one-way transfer
-  */
+   */
   oneWay?: boolean;
   /**
    * Whether disabled
-  */
+   */
   disabled?: boolean;
   /**
    * Custom left/right transfer operation buttons
-  */
+   */
   operations?: [React.ReactNode, React.ReactNode];
   /**
    * Custom pagination
-  */
+   */
   pagination?: PaginationProps;
   searchIconPosition?: 'left' | 'right';
   /**
    * Whether draggable
-  */
+   */
   draggable?: boolean;
   /**
    * Specify the key for each item, defaults to 'key'
@@ -92,23 +92,26 @@ export interface TransferProps extends DataAttributeProps {
   rowKey?: string | ((option: DataSource) => string);
   /**
    * Specify the display text for each item, defaults to 'label'
-  */
+   */
   rowLabel?: string | ((option: DataSource) => string);
   /**
    * Callback when selection changes
-  */
+   */
   onChange?: (
     targetKeys: Array<string | number>,
     direction: 'left' | 'right',
-    moveKeys: Array<string | number>
+    moveKeys: Array<string | number>,
   ) => void;
   /**
    * Callback when selected items change
-  */
-  onSelectChange?: (source: Array<string | number>, target: Array<string | number>) => void;
+   */
+  onSelectChange?: (
+    source: Array<string | number>,
+    target: Array<string | number>,
+  ) => void;
   /**
    * Callback when dragging
-  */
+   */
   onDrop?: (dropObj: Record<string, any>, dataSource: DataSource[]) => void;
 }
 

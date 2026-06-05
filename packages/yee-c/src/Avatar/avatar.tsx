@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import React, { forwardRef, useCallback, useState, useContext } from 'react';
 import { User } from 'lucide-react';
+import React, { forwardRef, useCallback, useContext, useState } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { AvatarProps } from './interface';

@@ -1,4 +1,4 @@
 import Button from './button';
 
-export type { ButtonProps, ButtonType, ButtonSemanticDOM } from './interface';
+export type { ButtonProps, ButtonSemanticDOM, ButtonType } from './interface';
 export default Button;

@@ -1,10 +1,13 @@
-import React from 'react';
 import { Highlight } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (
     <div>
-      <Highlight text="The quick brown fox jumps over the lazy dog" pattern={/fox/gi} />
+      <Highlight
+        text="The quick brown fox jumps over the lazy dog"
+        pattern={/fox/gi}
+      />
     </div>
   );
 };

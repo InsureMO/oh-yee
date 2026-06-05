@@ -4,9 +4,9 @@ import Selector from '../Selector';
 import Trigger from '../Trigger';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
+import useSelectKeyboard from './hooks/useSelectKeyboard';
 import { Option, SelectProps } from './interface';
 import Options from './options';
-import useSelectKeyboard from './hooks/useSelectKeyboard';
 import './style/index.less';
 
 const Select = (baseprops: SelectProps) => {

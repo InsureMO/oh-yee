@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
 import { Highlight, Input, Space } from '@rainbow-oh/yee-c';
+import React, { useState } from 'react';
 
 export default () => {
   const [searchText, setSearchText] = useState('');
-  const text = "React is a JavaScript library for building user interfaces. React makes it painless to create interactive UIs.";
+  const text =
+    'React is a JavaScript library for building user interfaces. React makes it painless to create interactive UIs.';
 
-  const pattern = searchText ? new RegExp(`(${searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi') : null;
+  const pattern = searchText
+    ? new RegExp(`(${searchText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+    : null;
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>

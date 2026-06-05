@@ -62,7 +62,10 @@ export type MenuDividerType = {
   key?: string;
 };
 
-export type MenuItemCommonType = MenuItemType | MenuItemGroupType | MenuDividerType;
+export type MenuItemCommonType =
+  | MenuItemType
+  | MenuItemGroupType
+  | MenuDividerType;
 
 export type WrapperedMenuItem = MenuItemType & {
   keyPath: Array<string>;

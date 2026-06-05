@@ -9,9 +9,9 @@ import React, {
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
+import type { TreeProps } from './interface';
 import TreeNode from './tree-node';
 import { getCheckedKeys, tree2array } from './utils/tree-tools';
-import type { TreeProps } from './interface';
 
 import './style/index.less';
 
@@ -39,9 +39,9 @@ export const TreeContext = createContext<{
   selectedKeys: [],
   checkedKeys: [],
   expandedKeys: [],
-  onCheck: () => { },
-  onSelect: () => { },
-  onExpand: () => { },
+  onCheck: () => {},
+  onSelect: () => {},
+  onExpand: () => {},
 });
 
 const Tree = <T extends Record<string, unknown> = any>(

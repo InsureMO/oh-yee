@@ -1,5 +1,5 @@
-import React from 'react';
 import { FloatButton } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (
@@ -8,7 +8,7 @@ export default () => {
         icon={<span>+</span>}
         draggable
         dragLimitInWindow
-        onDragChange={(draging, ref) => {
+        onDragChange={(draging) => {
           console.log('Drag status:', draging);
         }}
       />

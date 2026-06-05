@@ -1,10 +1,10 @@
-import React, { useContext, useState, useMemo } from 'react';
 import clsx from 'clsx';
 import { Search, X } from 'lucide-react';
+import React, { useContext, useMemo, useState } from 'react';
+import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Input from '../Input';
 import Pagination from '../Pagination';
-import Button from '../Button';
 import type { DataSource, TransferListProps } from './interface';
 import { TransferContext } from './transfer';
 
@@ -48,7 +48,8 @@ const TransferList: React.FC<TransferListProps> = (props) => {
     }
 
     return currentDataSource.filter((item) => {
-      const text = typeof rowLabel === 'function' ? rowLabel(item) : item[rowLabel];
+      const text =
+        typeof rowLabel === 'function' ? rowLabel(item) : item[rowLabel];
       const lowerText = (text || '').toLowerCase();
       return lowerText.includes(searchValue.toLowerCase());
     });
@@ -58,7 +59,7 @@ const TransferList: React.FC<TransferListProps> = (props) => {
     const total = dataSource.length;
     const selected = checkedKeys.length;
     const allChecked = total > 0 && total === selected;
-    
+
     return {
       totalNumber: total,
       selectNumber: selected,
@@ -141,8 +142,10 @@ const TransferList: React.FC<TransferListProps> = (props) => {
     return (
       <ul className={`${prefixCls}-list-body`}>
         {dataList.map((data, index) => {
-          const key = typeof rowKey === 'function' ? rowKey(data) : data[rowKey];
-          const label = typeof rowLabel === 'function' ? rowLabel(data) : data[rowLabel];
+          const key =
+            typeof rowKey === 'function' ? rowKey(data) : data[rowKey];
+          const label =
+            typeof rowLabel === 'function' ? rowLabel(data) : data[rowLabel];
           const htmlTitle = title ?? label;
 
           return (
@@ -178,8 +181,9 @@ const TransferList: React.FC<TransferListProps> = (props) => {
 
     const checkboxOptions = filteredDataSource.map((item) => {
       const key = typeof rowKey === 'function' ? rowKey(item) : item[rowKey];
-      const label = typeof rowLabel === 'function' ? rowLabel(item) : item[rowLabel];
-      
+      const label =
+        typeof rowLabel === 'function' ? rowLabel(item) : item[rowLabel];
+
       return {
         label,
         value: key,

@@ -20,7 +20,8 @@
     display: inline-block;
     width: var(--yee-checkbox-inner-width);
     height: var(--yee-checkbox-inner-height);
-    border: var(--yee-checkbox-inner-border-width) solid var(--yee-checkbox-border-color);
+    border: var(--yee-checkbox-inner-border-width) solid
+      var(--yee-checkbox-border-color);
     border-radius: var(--yee-checkbox-inner-border-radius);
     transition:
       background-color 0.08s linear,
@@ -39,11 +40,14 @@
         box-sizing: border-box;
         width: var(--yee-checkbox-checked-after-width);
         height: var(--yee-checkbox-checked-after-height);
-        border: var(--yee-checkbox-checked-after-border-width) solid var(--yee-checkbox-checked-after-border-color);
+        border: var(--yee-checkbox-checked-after-border-width) solid
+          var(--yee-checkbox-checked-after-border-color);
         border-top: 0;
         transform: rotate(45deg) scale(1) translate(-50%, -50%);
         content: '';
-        inset-inline-start: var(--yee-checkbox-checked-after-inset-inline-start);
+        inset-inline-start: var(
+          --yee-checkbox-checked-after-inset-inline-start
+        );
         border-inline-start: 0;
       }
     }

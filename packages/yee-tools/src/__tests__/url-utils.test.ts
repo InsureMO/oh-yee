@@ -6,6 +6,13 @@ import {
   normalizeURL,
 } from "../url/url-utils";
 
+// Mock SessionContext for normalizeURL tests
+jest.mock("../cache/session-context", () => ({
+  SessionContext: {
+    get: jest.fn(),
+  },
+}));
+
 describe("URL Utils", () => {
   describe("getUrlParam", () => {
     it("should parse simple query string", () => {
@@ -226,17 +233,19 @@ describe("URL Utils", () => {
 
   describe("normalizeURL", () => {
     beforeEach(() => {
-      // Reset config before each test
+      // Reset config and SessionContext before each test
       const { configer } = require("../config/config-provider");
       configer.reset();
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue(null);
     });
 
-    it("should add leading slash if missing", () => {
+    it("should add leading slash if missing for /api paths", () => {
       const result = normalizeURL("api/users");
       expect(result).toBe("/api/users");
     });
 
-    it("should preserve leading slash if present", () => {
+    it("should preserve leading slash if present for /api paths", () => {
       const result = normalizeURL("/api/users");
       expect(result).toBe("/api/users");
     });
@@ -252,36 +261,36 @@ describe("URL Utils", () => {
       expect(() => normalizeURL(123 as any)).toThrow(TypeError);
     });
 
-    it("should add platform prefix when gatewayProxyWithTenant is true", () => {
-      const { configer } = require("../config/config-provider");
-      configer.setConfig({ auth: { gatewayProxyWithTenant: true } });
-
-      const result = normalizeURL("api/users");
-      expect(result).toBe("/api/platform/api/users");
-    });
-
-    it("should add platform prefix with leading slash when gatewayProxyWithTenant is true", () => {
-      const { configer } = require("../config/config-provider");
-      configer.setConfig({ auth: { gatewayProxyWithTenant: true } });
-
-      const result = normalizeURL("/api/users");
-      expect(result).toBe("/api/platform/api/users");
-    });
-
-    it("should handle absolute URLs when gatewayProxyWithTenant is true", () => {
-      const { configer } = require("../config/config-provider");
-      configer.setConfig({ auth: { gatewayProxyWithTenant: true } });
-
+    it("should return http URLs as-is", () => {
       const result = normalizeURL("http://example.com/api/users");
-      expect(result).toBe("http://example.com/api/platform/api/users");
+      expect(result).toBe("http://example.com/api/users");
     });
 
-    it("should handle absolute HTTPS URLs when gatewayProxyWithTenant is true", () => {
-      const { configer } = require("../config/config-provider");
-      configer.setConfig({ auth: { gatewayProxyWithTenant: true } });
-
+    it("should return https URLs as-is", () => {
       const result = normalizeURL("https://example.com/api/users");
-      expect(result).toBe("https://example.com/api/platform/api/users");
+      expect(result).toBe("https://example.com/api/users");
+    });
+
+    it("should add platform prefix when first segment matches UI_API_PLATFORM_PATHS", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_API_PLATFORM_PATHS: "urp,dd,i18n",
+        UI_TENANT_CODE: "",
+      });
+
+      const result = normalizeURL("urp/some-api");
+      expect(result).toBe("/api/platform/urp/some-api");
+    });
+
+    it("should add tenant code prefix for non-api non-platform paths", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_API_PLATFORM_PATHS: "",
+        UI_TENANT_CODE: "mytenant",
+      });
+
+      const result = normalizeURL("users/list");
+      expect(result).toBe("/api/mytenant/users/list");
     });
   });
 });

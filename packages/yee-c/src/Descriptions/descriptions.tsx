@@ -4,9 +4,8 @@ import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import DescriptionsItem from './descriptions-item';
 import type {
-  DescriptionsProps,
-  DescriptionsItem as DescriptionsItemType,
   DescriptionsItemProps,
+  DescriptionsProps,
   DescriptionsType,
 } from './interface';
 import './style/index.less';
@@ -20,7 +19,10 @@ interface InternalItem {
 function getItemsFromChildren(children: React.ReactNode): InternalItem[] {
   const items: InternalItem[] = [];
   React.Children.forEach(children, (child) => {
-    if (React.isValidElement<DescriptionsItemProps>(child) && child.type === DescriptionsItem) {
+    if (
+      React.isValidElement<DescriptionsItemProps>(child) &&
+      child.type === DescriptionsItem
+    ) {
       const { label, children: childContent, span = 1 } = child.props;
       items.push({
         label,
@@ -38,9 +40,10 @@ function getRows(items: InternalItem[], column: number): InternalItem[][] {
   let currentSpan = 0;
 
   for (const item of items) {
-    const itemSpan = item.span === -1
-      ? Math.max(column - currentSpan, 1)
-      : Math.min(item.span, column);
+    const itemSpan =
+      item.span === -1
+        ? Math.max(column - currentSpan, 1)
+        : Math.min(item.span, column);
 
     if (currentSpan + itemSpan > column && currentRow.length > 0) {
       rows.push(currentRow);
@@ -138,8 +141,10 @@ const Descriptions = React.forwardRef<HTMLDivElement, DescriptionsProps>(
 
     const renderRows = () => {
       if (layout === 'vertical') {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         return renderVerticalLayout();
       }
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       return renderHorizontalLayout();
     };
 
@@ -159,7 +164,10 @@ const Descriptions = React.forwardRef<HTMLDivElement, DescriptionsProps>(
                   {item.label}
                 </th>
                 <td
-                  className={clsx(`${prefixCls}-item-content`, classNames?.content)}
+                  className={clsx(
+                    `${prefixCls}-item-content`,
+                    classNames?.content,
+                  )}
                   style={styles?.content}
                   colSpan={contentColSpan}
                 >
@@ -197,7 +205,10 @@ const Descriptions = React.forwardRef<HTMLDivElement, DescriptionsProps>(
             {row.map((item, colIdx) => (
               <td
                 key={colIdx}
-                className={clsx(`${prefixCls}-item-content`, classNames?.content)}
+                className={clsx(
+                  `${prefixCls}-item-content`,
+                  classNames?.content,
+                )}
                 style={styles?.content}
                 colSpan={item.span}
               >

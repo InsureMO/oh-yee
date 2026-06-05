@@ -19,7 +19,7 @@ export interface RadioProps extends React.HtmlHTMLAttributes<HTMLInputElement> {
   classNames?: Partial<Record<SemanticDOM, string>>;
   /**
    * Semantic structure styles
-  */
+   */
   styles?: Partial<Record<SemanticDOM, React.CSSProperties>>;
   /**
    * Whether checked by default
@@ -39,7 +39,7 @@ export interface RadioProps extends React.HtmlHTMLAttributes<HTMLInputElement> {
   value?: string | number;
   /**
    * Label
-  */
+   */
   label?: React.ReactNode;
   /**
    * Children elements
@@ -47,7 +47,7 @@ export interface RadioProps extends React.HtmlHTMLAttributes<HTMLInputElement> {
   children?: React.ReactNode;
   /**
    * Whether to toggle checked state
-  */
+   */
   toggleable?: boolean;
 }
 
@@ -94,10 +94,13 @@ export interface RadioGroupProps {
   options?: Array<RadioProps & { label: React.ReactNode }>;
   /**
    * Whether to toggle checked state
-  */
+   */
   toggleable?: boolean;
   /**
    * Callback when value changes
    */
-  onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (
+    value: string,
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => void;
 }

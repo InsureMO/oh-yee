@@ -1,6 +1,6 @@
+import BackTop from './back-top';
 import InternalFloatButton from './float-button';
 import FloatButtonGroup from './float-button-group';
-import BackTop from './back-top';
 
 export type { FloatButtonProps } from './interface';
 

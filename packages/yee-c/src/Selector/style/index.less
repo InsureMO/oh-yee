@@ -5,7 +5,8 @@
   box-sizing: border-box;
   width: 100%;
   padding: var(--yee-selector-padding);
-  border: var(--yee-selector-border-width) solid var(--yee-selector-border-color);
+  border: var(--yee-selector-border-width) solid
+    var(--yee-selector-border-color);
   border-radius: var(--yee-selector-border-radius);
 
   &:focus-visible {
@@ -56,13 +57,14 @@
       box-sizing: border-box;
       display: inline-grid;
       flex: 1 1 auto;
+
       /* grid-area: 1 / 1 / 2 / 3; */
       grid-template-columns: 0 min-content;
       height: 24px;
 
       &::after {
         border: 0;
-        content: attr(data-value) " ";
+        content: attr(data-value) ' ';
         font: inherit;
         grid-area: 1 / 2 / auto / auto;
         margin: 0;
@@ -303,7 +305,6 @@
   }
 }
 
-
 // form error status
 .yee-form-item-error {
   @{pls} {
@@ -317,6 +318,6 @@
 
 .yee-form-item-warning {
   @{pls} {
-    border-color: var(--yee-warning-color)
+    border-color: var(--yee-warning-color);
   }
 }

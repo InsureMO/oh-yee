@@ -1,4 +1,8 @@
 import WheelPicker from './wheel-picker';
 
 export default WheelPicker;
-export type { WheelPickerProps, WheelColumn, WheelColumnOption } from './interface';
+export type {
+  WheelColumn,
+  WheelColumnOption,
+  WheelPickerProps,
+} from './interface';

@@ -1,8 +1,10 @@
-import type { TriggerProps } from '../Trigger';
 import type { MenuProps } from '../Menu';
+import type { TriggerProps } from '../Trigger';
 
-export interface DropdownProps
-  extends Omit<TriggerProps, 'placement' | 'popup'> {
+export interface DropdownProps extends Omit<
+  TriggerProps,
+  'placement' | 'popup'
+> {
   /**
    * Custom class name prefix
    */

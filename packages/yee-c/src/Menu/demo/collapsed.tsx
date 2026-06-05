@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { Menu } from '@rainbow-oh/yee-c';
 import { Aperture, AudioLines, Settings } from 'lucide-react';
+import React, { useState } from 'react';
 
 export default () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -34,6 +34,7 @@ export default () => {
   return (
     <div>
       <button
+        type="button"
         onClick={() => setCollapsed(!collapsed)}
         style={{ marginBottom: 16, padding: '4px 12px', cursor: 'pointer' }}
       >

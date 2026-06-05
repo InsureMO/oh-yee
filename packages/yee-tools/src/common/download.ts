@@ -61,7 +61,6 @@ export function download(
     target = "_self",
   } = options;
 
-  try {
     const link = document.createElement("a");
     link.href = url;
     link.download = filename;
@@ -78,9 +77,6 @@ export function download(
         URL.revokeObjectURL(url);
       }
     }, 100);
-  } catch (error) {
-    throw error;
-  }
 }
 
 /**
@@ -106,7 +102,6 @@ export function downloadData(
     throw new Error("[downloadData] Filename is required");
   }
 
-  try {
     let blob: Blob;
 
     if (data instanceof Blob) {
@@ -124,9 +119,6 @@ export function downloadData(
 
     const url = URL.createObjectURL(blob);
     download(url, { filename, revokeObjectURL: true });
-  } catch (error) {
-    throw error;
-  }
 }
 
 /**

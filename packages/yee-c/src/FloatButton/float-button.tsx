@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
 import usePressDrag from '../hooks/usePressDrag';
@@ -35,7 +35,7 @@ const FloatButton = React.forwardRef(
       }
     };
 
-    const [ { isDragging } ] = usePressDrag({
+    const [{ isDragging }] = usePressDrag({
       element: componentRef,
       draggable,
       direction: 'both',

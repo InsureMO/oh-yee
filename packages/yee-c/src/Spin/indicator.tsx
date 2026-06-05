@@ -26,7 +26,11 @@ const RingSpinner: React.FC<SpinProps> = (props) => {
 
   return (
     <div
-      className={clsx(`${prefixCls}-indicator`, `${prefixCls}-indicator-ring`, classNames?.indicator)}
+      className={clsx(
+        `${prefixCls}-indicator`,
+        `${prefixCls}-indicator-ring`,
+        classNames?.indicator,
+      )}
       style={{
         width: width || containerSize,
         height: height || containerSize,
@@ -63,7 +67,11 @@ const SpokesSpinner: React.FC<SpinProps> = (props) => {
 
   return (
     <div
-      className={clsx(`${prefixCls}-indicator`, `${prefixCls}-indicator-spokes`, classNames?.indicator)}
+      className={clsx(
+        `${prefixCls}-indicator`,
+        `${prefixCls}-indicator-spokes`,
+        classNames?.indicator,
+      )}
       style={{
         width: width || containerSize,
         height: height || containerSize,

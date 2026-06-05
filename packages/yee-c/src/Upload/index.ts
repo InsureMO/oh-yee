@@ -1,9 +1,9 @@
-import InternalUpload from './upload';
 import Dragger from './dragger';
+import InternalUpload from './upload';
 
 type UploadType = typeof InternalUpload & {
-    Dragger: typeof Dragger
-} 
+  Dragger: typeof Dragger;
+};
 
 const Upload = InternalUpload as UploadType;
 

@@ -1,19 +1,19 @@
+import clsx from 'clsx';
 import dayjs, { Dayjs } from 'dayjs';
 import { CalendarDays, X } from 'lucide-react';
-import clsx from 'clsx';
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import Button from '../Button';
-import Space from '../Space';
+import useWheelDateColumns from '../DatePicker/hooks/use-wheel-columns';
 import Drawer from '../Drawer';
-import Input from '../Input';
-import WheelPicker from '../WheelPicker';
+import useDeepCompareEffect from '../hooks/useDeepCompareEffect';
 import useEvent from '../hooks/useEvent';
 import useMergedState from '../hooks/useMergedState';
-import useDeepCompareEffect from '../hooks/useDeepCompareEffect';
-import pickerUtils from '../PickerPanel/utils/pickerUtils';
-import { inferPicker } from '../PickerPanel/utils/infer-picker';
-import useWheelDateColumns from '../DatePicker/hooks/use-wheel-columns';
+import Input from '../Input';
 import { useLocale } from '../locale';
+import { inferPicker } from '../PickerPanel/utils/infer-picker';
+import pickerUtils from '../PickerPanel/utils/pickerUtils';
+import Space from '../Space';
+import WheelPicker from '../WheelPicker';
 import type { RangePickerProps } from './interface';
 
 import './style/index.less';
@@ -39,11 +39,11 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
     ranges,
     onChange,
     onStartChange,
-    onEndChange,
+    onEndChange, // eslint-disable-line @typescript-eslint/no-unused-vars
     onOpenChange,
     onClear,
     endLimitStart = true,
-    disabledDate,
+    disabledDate, // eslint-disable-line @typescript-eslint/no-unused-vars
   } = props;
 
   const picker = inferPicker(format);
@@ -55,16 +55,17 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
       let _start: string | undefined;
       let _end: string | undefined;
 
-      if (start != null) {
+      if (start !== null && start !== undefined) {
         if (typeof start === 'number') _start = String(start);
         else if (typeof start === 'string') {
           const d = pickerUtils.init(start, saveFormat);
-          if (pickerUtils.isValid(d)) _start = pickerUtils.format(d, saveFormat);
+          if (pickerUtils.isValid(d))
+            _start = pickerUtils.format(d, saveFormat);
         } else if (dayjs.isDayjs(start)) {
           _start = pickerUtils.format(start, saveFormat);
         }
       }
-      if (end != null) {
+      if (end !== null && end !== undefined) {
         if (typeof end === 'number') _end = String(end);
         else if (typeof end === 'string') {
           const d = pickerUtils.init(end, saveFormat);
@@ -145,18 +146,28 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
     onChange?.([startFormatted, endFormatted], [startDate, endDate]);
     setOpen(false);
   }, [
-    startColumns, endColumns, endLimitStart, saveFormat, format, onChange, setMergedValue,
+    startColumns,
+    endColumns,
+    endLimitStart,
+    saveFormat,
+    format,
+    onChange,
+    setMergedValue,
   ]);
 
   const handleRangeClick = useCallback(
     (rangeValue: [Dayjs, Dayjs] | (() => [Dayjs, Dayjs])) => {
-      const dates = typeof rangeValue === 'function' ? rangeValue() : rangeValue;
+      const dates =
+        typeof rangeValue === 'function' ? rangeValue() : rangeValue;
       const [start, end] = dates;
       setPickerValue([start, end]);
       setStartInputValue(pickerUtils.format(start, format));
       setEndInputValue(pickerUtils.format(end, format));
       onChange?.(
-        [pickerUtils.format(start, saveFormat), pickerUtils.format(end, saveFormat)],
+        [
+          pickerUtils.format(start, saveFormat),
+          pickerUtils.format(end, saveFormat),
+        ],
         [start, end],
       );
       setOpen(false);
@@ -194,9 +205,15 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
     : [disabled, disabled];
   const [startPlaceholder, endPlaceholder] = Array.isArray(placeholder)
     ? placeholder
-    : [placeholder || rangepicker.startPlaceholder, placeholder || rangepicker.endPlaceholder];
+    : [
+        placeholder || rangepicker.startPlaceholder,
+        placeholder || rangepicker.endPlaceholder,
+      ];
 
-  const hasValue = useMemo(() => !!startInputValue || !!endInputValue, [startInputValue, endInputValue]);
+  const hasValue = useMemo(
+    () => !!startInputValue || !!endInputValue,
+    [startInputValue, endInputValue],
+  );
 
   const triggerClassName = useMemo(() => {
     const classes = [`${prefixCls}-trigger`, `${prefixCls}-trigger-${size}`];
@@ -225,7 +242,14 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
     } else {
       handleConfirm();
     }
-  }, [activeTab, startColumns, format, saveFormat, onStartChange, handleConfirm]);
+  }, [
+    activeTab,
+    startColumns,
+    format,
+    saveFormat,
+    onStartChange,
+    handleConfirm,
+  ]);
 
   return (
     <>
@@ -282,7 +306,9 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
               </Space>
             )}
             <Button block type="primary" onClick={handleTabConfirm}>
-              {activeTab === 'start' ? rangepicker?.next || 'Next' : rangepicker?.confirm || 'Confirm'}
+              {activeTab === 'start'
+                ? rangepicker?.next || 'Next'
+                : rangepicker?.confirm || 'Confirm'}
             </Button>
           </div>
         }
@@ -290,14 +316,20 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
         {/* Tab switcher for start/end */}
         <div className={`${prefixCls}-mobile-tabs`}>
           <button
-            className={clsx(`${prefixCls}-mobile-tab`, activeTab === 'start' && `${prefixCls}-mobile-tab-active`)}
+            className={clsx(
+              `${prefixCls}-mobile-tab`,
+              activeTab === 'start' && `${prefixCls}-mobile-tab-active`,
+            )}
             onClick={() => setActiveTab('start')}
             type="button"
           >
             {rangepicker?.startPlaceholder || '开始日期'}
           </button>
           <button
-            className={clsx(`${prefixCls}-mobile-tab`, activeTab === 'end' && `${prefixCls}-mobile-tab-active`)}
+            className={clsx(
+              `${prefixCls}-mobile-tab`,
+              activeTab === 'end' && `${prefixCls}-mobile-tab-active`,
+            )}
             onClick={() => setActiveTab('end')}
             type="button"
           >

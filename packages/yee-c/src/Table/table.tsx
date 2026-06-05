@@ -127,10 +127,6 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
 
   // Track previous values to determine what action triggered onChange
   const prevSortersRef = useRef<typeof sorters>({});
-  const prevPaginationRef = useRef<{ current: number; pageSize: number }>({
-    current,
-    pageSize,
-  });
 
   // Wrap onFilter to trigger onChange
   const onFilter = React.useCallback(

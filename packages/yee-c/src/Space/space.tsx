@@ -45,9 +45,12 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
     if (!children) {
       return null;
     }
-    const childs = React.Children.toArray(children).filter(child => child !== null && child !== undefined);
+    const childs = React.Children.toArray(children).filter(
+      (child) => child !== null && child !== undefined,
+    );
     return childs.map((child, index) => {
-      const isItem = React.isValidElement(child) && (child.type as any).isSpaceItem;
+      const isItem =
+        React.isValidElement(child) && (child.type as any).isSpaceItem;
       const itemClassName = isItem ? (child.props as any).className : undefined;
       const itemStyle = isItem ? (child.props as any).style : undefined;
       const itemChildren = isItem ? (child.props as any).children : child;
@@ -60,8 +63,8 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
           {itemChildren}
         </div>
       );
-    })
-  }
+    });
+  };
 
   const packed = pack();
 

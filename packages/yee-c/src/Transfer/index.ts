@@ -1,11 +1,11 @@
 import Transfer from './transfer';
 
 export type {
-  Key,
   DataSource,
-  TransferProps,
-  TransferListProps,
+  Key,
   TransferContextValue,
+  TransferListProps,
+  TransferProps,
 } from './interface';
 
 export default Transfer;

@@ -1,8 +1,13 @@
-import React, { useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import FieldContext from './FieldContext';
+import type { FormListProps, InternalNamePath } from './interface';
 import { getNamePath } from './utils/path';
-import type { FormListProps, InternalNamePath, NamePath } from './interface';
-
 
 // Helper function: move array element
 function move<T>(array: T[], from: number, to: number): T[] {
@@ -14,18 +19,17 @@ function move<T>(array: T[], from: number, to: number): T[] {
 }
 
 // Create ListNameContext for passing list name prefix
-export const ListNameContext = React.createContext<InternalNamePath | null>(null);
+export const ListNameContext = React.createContext<InternalNamePath | null>(
+  null,
+);
 
 const List: React.FC<FormListProps> = ({
   name,
   children,
   initialValue = [],
 }) => {
-  const {
-    getFieldValue,
-    setFieldsValue,
-    validateFields,
-  } = useContext(FieldContext);
+  const { getFieldValue, setFieldsValue, validateFields } =
+    useContext(FieldContext);
 
   // Normalize list name path
   const listNamePath = useMemo(() => getNamePath(name), [name]);
@@ -50,13 +54,9 @@ const List: React.FC<FormListProps> = ({
     const pathStr = prefixName.join('.');
     const currentValue = getFieldValue?.(pathStr);
     if (currentValue === undefined) {
-      setFieldsValue?.(
-        { [pathStr]: initialValue },
-        'update' as any,
-      );
-      forceUpdate(prev => prev + 1);
+      setFieldsValue?.({ [pathStr]: initialValue }, 'update' as any);
+      forceUpdate((prev) => prev + 1);
     }
-
   }, [prefixName, initialValue, getFieldValue, setFieldsValue]);
 
   // Get current list value
@@ -68,7 +68,6 @@ const List: React.FC<FormListProps> = ({
 
   // List operation methods
   const operations = useMemo(() => {
-
     const add = (defaultValue?: any, insertIndex?: number) => {
       const currentValue = getListValue();
       const pathStr = prefixName.join('.');
@@ -77,7 +76,7 @@ const List: React.FC<FormListProps> = ({
       const fieldPaths = [] as string[];
       currentValue.forEach((item: any, index: number) => {
         if (item && typeof item === 'object') {
-          Object.keys(item).forEach(key => {
+          Object.keys(item).forEach((key) => {
             const fieldPath = `${pathStr}.${index}.${key}`;
             fieldPaths.push(fieldPath);
           });
@@ -90,11 +89,15 @@ const List: React.FC<FormListProps> = ({
       // If errors exist, prevent adding and show errors
       if (errors && errors.length > 0) {
         // Trigger refresh to show errors
-        forceUpdate(prev => prev + 1);
+        forceUpdate((prev) => prev + 1);
         return;
       }
 
-      if (insertIndex !== undefined && insertIndex >= 0 && insertIndex <= currentValue.length) {
+      if (
+        insertIndex !== undefined &&
+        insertIndex >= 0 &&
+        insertIndex <= currentValue.length
+      ) {
         // Insert at specified position
         keyManager.keys = [
           ...keyManager.keys.slice(0, insertIndex),
@@ -117,7 +120,7 @@ const List: React.FC<FormListProps> = ({
         setFieldsValue?.({ [pathStr]: newList }, 'update' as any);
       }
       keyManager.id += 1;
-      forceUpdate(prev => prev + 1);
+      forceUpdate((prev) => prev + 1);
     };
 
     const remove = (index: number | number[]) => {
@@ -134,7 +137,7 @@ const List: React.FC<FormListProps> = ({
       // Update list values
       const newList = currentValue.filter((_, i) => !indexSet.has(i));
       setFieldsValue?.({ [pathStr]: newList }, 'update' as any);
-      forceUpdate(prev => prev + 1);
+      forceUpdate((prev) => prev + 1);
     };
 
     const moveFunc = (from: number, to: number) => {
@@ -142,7 +145,12 @@ const List: React.FC<FormListProps> = ({
       const currentValue = getListValue();
       const pathStr = prefixName.join('.');
 
-      if (from < 0 || from >= currentValue.length || to < 0 || to >= currentValue.length) {
+      if (
+        from < 0 ||
+        from >= currentValue.length ||
+        to < 0 ||
+        to >= currentValue.length
+      ) {
         return;
       }
 
@@ -152,7 +160,7 @@ const List: React.FC<FormListProps> = ({
       // Move list values
       const newList = move(currentValue, from, to);
       setFieldsValue?.({ [pathStr]: newList }, 'update' as any);
-      forceUpdate(prev => prev + 1);
+      forceUpdate((prev) => prev + 1);
     };
 
     return { add, remove, move: moveFunc };
@@ -177,7 +185,7 @@ const List: React.FC<FormListProps> = ({
       key,
       name: index,
       isListField: true,
-      value: _
+      value: _,
     };
   });
   const meta = { errors: [] };

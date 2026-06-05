@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import React, { useContext } from 'react';
 import Spin from '../Spin';
-import { TimelineContext } from './timeline';
 import type { TimelineItemProps } from './interface';
+import { TimelineContext } from './timeline';
 
 export type TimelineItemState =
   | 'success'

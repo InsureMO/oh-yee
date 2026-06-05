@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Selector from '../selector';
 import type { TagType } from '../interface';
+import Selector from '../selector';
 
 const options: TagType[] = [
   { label: 'Red', value: 'red' },
@@ -10,7 +10,10 @@ const options: TagType[] = [
 ];
 
 export default () => {
-  const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>(['red', 'blue']);
+  const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([
+    'red',
+    'blue',
+  ]);
 
   return (
     <Selector

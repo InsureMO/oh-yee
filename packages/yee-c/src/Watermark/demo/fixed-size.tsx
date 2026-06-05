@@ -1,16 +1,10 @@
-import React from 'react';
 import { Watermark } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <Watermark
-        content="Short"
-        width={200}
-        height={80}
-        gapX={20}
-        gapY={20}
-      >
+      <Watermark content="Short" width={200} height={80} gapX={20} gapY={20}>
         <div style={{ height: 300, padding: 20, background: '#f5f5f5' }}>
           <h3>Fixed-size Watermark (Short Text)</h3>
           <p>Forced dimensions: width=200, height=80</p>

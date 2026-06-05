@@ -25,7 +25,14 @@ const Skeleton: React.FC<SkeletonProps> = (baseprops) => {
   const renderAvatar = () => {
     if (avatar) {
       const { shape = 'circle' } = typeof avatar === 'object' ? avatar : {};
-      return <div className={clsx(`${prefixCls}-avatar`, `${prefixCls}-avatar-${shape}`)}></div>;
+      return (
+        <div
+          className={clsx(
+            `${prefixCls}-avatar`,
+            `${prefixCls}-avatar-${shape}`,
+          )}
+        ></div>
+      );
     }
   };
 

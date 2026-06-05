@@ -112,8 +112,7 @@ class CodeTableServiceClass {
       };
     }
 
-    try {
-      const response = await ax.request({
+    const response = await ax.request({
         url,
         method,
         data: method === "POST" ? requestData : undefined,
@@ -121,9 +120,6 @@ class CodeTableServiceClass {
       });
 
       return response;
-    } catch (error) {
-      throw error;
-    }
   }
 
   /**
@@ -139,15 +135,11 @@ class CodeTableServiceClass {
 
     const config = getCodeTableConfig();
 
-    try {
-      const response = await ax.post(
-        config.getCodeTablesByNameUrl,
-        codeTableNames,
-      );
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await ax.post(
+      config.getCodeTablesByNameUrl,
+      codeTableNames,
+    );
+    return response;
   }
 
   /**
@@ -279,22 +271,18 @@ class CodeTableServiceClass {
     url: string,
     data: any,
   ): Promise<BusinessCodeTable[]> {
-    try {
-      const response = await ax.post(url, data);
+    const response = await ax.post(url, data);
 
-      if (Array.isArray(response)) {
-        await this.handleCodeTableCaching(response);
-        return response;
-      }
-
-      warn(
-        "Invalid response format from code table service:",
-        response,
-      );
-      return [];
-    } catch (error) {
-      throw error;
+    if (Array.isArray(response)) {
+      await this.handleCodeTableCaching(response);
+      return response;
     }
+
+    warn(
+      "Invalid response format from code table service:",
+      response,
+    );
+    return [];
   }
 
   /**
@@ -308,7 +296,7 @@ class CodeTableServiceClass {
       CodeTableName: string;
       ConditionMap?: Record<string, any>;
     }>,
-    isAsync: boolean = true,
+    isAsync: boolean = true, // eslint-disable-line @typescript-eslint/no-unused-vars
   ): Promise<BusinessCodeTable[]> {
     if (!codeTableRequests || codeTableRequests.length === 0) {
       return [];
@@ -324,78 +312,74 @@ class CodeTableServiceClass {
     const defineUrl = UrlUtils.normalizeURL(defineListApi);
     const ctListUrlTemplate = UrlUtils.normalizeURL(defineVoListApi);
 
-    try {
-      // Step 1: Get code table definitions
-      const codeTableNames = codeTableRequests.map((req) => req.CodeTableName);
-      const codeTableDefinitions = await ax.post(defineUrl, codeTableNames);
+    // Step 1: Get code table definitions
+    const codeTableNames = codeTableRequests.map((req) => req.CodeTableName);
+    const codeTableDefinitions = await ax.post(defineUrl, codeTableNames);
 
-      if (!Array.isArray(codeTableDefinitions)) {
-        throw new Error("Invalid response from code table definition service");
+    if (!Array.isArray(codeTableDefinitions)) {
+      throw new Error("Invalid response from code table definition service");
+    }
+
+    // Step 2: Group requests by service name
+    const serviceGroups = new Map<
+      string,
+      Array<{
+        CodeTableName: string;
+        ConditionMap?: Record<string, any>;
+      }>
+    >();
+
+    const missingCodeTables: string[] = [];
+
+    codeTableDefinitions.forEach((definition, index) => {
+      if (!definition?.Name || !definition?.ServiceName) {
+        const missingName = codeTableNames[index];
+        if (missingName) {
+          missingCodeTables.push(missingName);
+        }
+        return;
       }
 
-      // Step 2: Group requests by service name
-      const serviceGroups = new Map<
-        string,
-        Array<{
-          CodeTableName: string;
-          ConditionMap?: Record<string, any>;
-        }>
-      >();
-
-      const missingCodeTables: string[] = [];
-
-      codeTableDefinitions.forEach((definition, index) => {
-        if (!definition?.Name || !definition?.ServiceName) {
-          const missingName = codeTableNames[index];
-          if (missingName) {
-            missingCodeTables.push(missingName);
-          }
-          return;
-        }
-
-        const { Name, ServiceName } = definition;
-        const originalRequest = codeTableRequests.find(
-          (req) => req.CodeTableName === Name,
-        );
-
-        if (!serviceGroups.has(ServiceName)) {
-          serviceGroups.set(ServiceName, []);
-        }
-
-        const requestItem = {
-          CodeTableName: Name,
-          ConditionMap:
-            originalRequest?.ConditionMap || definition.ConditionMap,
-        };
-
-        serviceGroups.get(ServiceName)!.push(requestItem);
-      });
-
-      // Log missing code tables
-      if (missingCodeTables.length > 0) {
-        warn(
-          "Code tables not found in definitions:",
-          missingCodeTables,
-        );
-      }
-
-      // Step 3: Load code tables from each service
-      const loadPromises = Array.from(serviceGroups.entries()).map(
-        async ([serviceName, requests]) => {
-          if (requests.length === 0) {
-            return [];
-          }
-
-          const serviceUrl = ctListUrlTemplate.replace(/dd/, serviceName);
-          return this.loadCodeTableFromService(serviceUrl, requests);
-        },
+      const { Name, ServiceName } = definition;
+      const originalRequest = codeTableRequests.find(
+        (req) => req.CodeTableName === Name,
       );
 
-      const results = await Promise.all(loadPromises);
-      return results.flat();
-    } catch (error) {
-      throw error;
+      if (!serviceGroups.has(ServiceName)) {
+        serviceGroups.set(ServiceName, []);
+      }
+
+      const requestItem = {
+        CodeTableName: Name,
+        ConditionMap:
+          originalRequest?.ConditionMap || definition.ConditionMap,
+      };
+
+      serviceGroups.get(ServiceName)!.push(requestItem);
+    });
+
+    // Log missing code tables
+    if (missingCodeTables.length > 0) {
+      warn(
+        "Code tables not found in definitions:",
+        missingCodeTables,
+      );
     }
+
+    // Step 3: Load code tables from each service
+    const loadPromises = Array.from(serviceGroups.entries()).map(
+      async ([serviceName, requests]) => {
+        if (requests.length === 0) {
+          return [];
+        }
+
+        const serviceUrl = ctListUrlTemplate.replace(/dd/, serviceName);
+        return this.loadCodeTableFromService(serviceUrl, requests);
+      },
+    );
+
+    const results = await Promise.all(loadPromises);
+    return results.flat();
   }
 
   // ---------- Optimized methods end --------------------------

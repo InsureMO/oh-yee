@@ -11,7 +11,7 @@ export default () => {
       <Radio.Group
         value={value1}
         onChange={(e) => {
-           setValue1(e)
+          setValue1(e);
         }}
         buttonStyle="outline"
         toggleable

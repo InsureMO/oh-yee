@@ -1,4 +1,3 @@
-import { TestTubeDiagonal } from 'lucide-react';
 import { TreeNode } from '../interface';
 
 export function getChildKeys<T extends Record<string, unknown>>(
@@ -40,7 +39,21 @@ export function tree2array<T extends Record<string, unknown>>(
 
   const { key, label, children } = fieldNames;
 
-  function walk({data, pKey, depth, path, isLast, lines}: {data: T, pKey: string | null, depth: number, path: string[], isLast: boolean, lines: number[]}) {
+  function walk({
+    data,
+    pKey,
+    depth,
+    path,
+    isLast,
+    lines,
+  }: {
+    data: T;
+    pKey: string | null;
+    depth: number;
+    path: string[];
+    isLast: boolean;
+    lines: number[];
+  }) {
     const _key = data[key] as string;
     const _label = data[label];
     const _children = data[children] as T[] | undefined;
@@ -71,25 +84,29 @@ export function tree2array<T extends Record<string, unknown>>(
     res.push(wrapperData);
     map.set(_key, wrapperData);
     const total = Array.isArray(_children) ? _children.length : 0;
-    _children?.forEach((node, index) => walk({ 
-      data: node, 
-      pKey: _key, 
-      depth: depth + 1, 
-      path: nextPath, 
-      isLast: index + 1 === total, 
-      lines: isLast ? lines : [...lines, depth]
-    }));
+    _children?.forEach((node, index) =>
+      walk({
+        data: node,
+        pKey: _key,
+        depth: depth + 1,
+        path: nextPath,
+        isLast: index + 1 === total,
+        lines: isLast ? lines : [...lines, depth],
+      }),
+    );
   }
 
   const total = Array.isArray(data) ? data.length : 0;
-  data.forEach((node, index) => walk({
-    data: node, 
-    pKey: null, 
-    depth: 0, 
-    path: [], 
-    isLast: index + 1 === total,
-    lines: index + 1 === total ? [] : [0]
-  }));
+  data.forEach((node, index) =>
+    walk({
+      data: node,
+      pKey: null,
+      depth: 0,
+      path: [],
+      isLast: index + 1 === total,
+      lines: index + 1 === total ? [] : [0],
+    }),
+  );
   return [res, map];
 }
 

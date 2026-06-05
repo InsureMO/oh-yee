@@ -2,7 +2,9 @@ import { Radio, Space, Tabs } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
-  const [position, setPosition] = useState<'top' | 'bottom' | 'left' | 'right'>('top');
+  const [position, setPosition] = useState<'top' | 'bottom' | 'left' | 'right'>(
+    'top',
+  );
 
   const items = [
     {
@@ -27,7 +29,9 @@ export default () => {
       <Space direction="vertical" style={{ width: '100%' }}>
         <Radio.Group
           value={position}
-          onChange={(e) => setPosition(e as 'top' | 'bottom' | 'left' | 'right')}
+          onChange={(e) =>
+            setPosition(e as 'top' | 'bottom' | 'left' | 'right')
+          }
           style={{ marginBottom: 16 }}
           options={[
             { value: 'top', label: 'Top' },
@@ -35,8 +39,7 @@ export default () => {
             { value: 'left', label: 'Left' },
             { value: 'right', label: 'Right' },
           ]}
-        >
-        </Radio.Group>
+        ></Radio.Group>
 
         <Tabs defaultActiveKey="1" items={items} position={position} />
       </Space>

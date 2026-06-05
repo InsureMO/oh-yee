@@ -19,7 +19,16 @@ function stringifyPath(path: InternalNamePath): string {
 }
 
 const Field: React.FC<FieldProps> = (props) => {
-  const { children, name, rules, label, required, disabled, valuePropName='value', formatter } = props;
+  const {
+    children,
+    name,
+    rules,
+    label,
+    required,
+    disabled,
+    valuePropName = 'value',
+    formatter,
+  } = props;
   const {
     getCallbacks,
     getFieldValidate,
@@ -30,7 +39,11 @@ const Field: React.FC<FieldProps> = (props) => {
     validateField,
   } = useContext(FieldContext);
 
-  const { prefixCls, disabled: formDisabled, name: formName } = useContext(FormContext);
+  const {
+    prefixCls,
+    disabled: formDisabled,
+    name: formName,
+  } = useContext(FormContext);
 
   // Get current List's prefixName (if any)
   const listPrefixName = useContext(ListNameContext) || [];
@@ -69,7 +82,7 @@ const Field: React.FC<FieldProps> = (props) => {
     const _value = getFieldValue?.(normalizedName) ?? undefined;
     const value = formatter ? formatter(_value) : _value;
     return {
-      ...(valuePropName === 'value' ? { value }: { [valuePropName]: value }),
+      ...(valuePropName === 'value' ? { value } : { [valuePropName]: value }),
       name: normalizedName,
       formName: formName,
       id: normalizedName,
@@ -105,20 +118,25 @@ const Field: React.FC<FieldProps> = (props) => {
       })}
     >
       <div className={clsx(`${prefixCls}-item-row`)}>
-        {label ? <label
-          htmlFor={normalizedName}
-          className={clsx(`${prefixCls}-item-label`, {
-            [`${prefixCls}-item-required`]: isRequired(),
-          })}
-        >
-          {label}
-        </label> : null}
+        {label ? (
+          <label
+            htmlFor={normalizedName}
+            className={clsx(`${prefixCls}-item-label`, {
+              [`${prefixCls}-item-required`]: isRequired(),
+            })}
+          >
+            {label}
+          </label>
+        ) : null}
         <div className={`${prefixCls}-item-control`}>
-          {
-            React.isValidElement(children) ? 
-              React.cloneElement(children as React.ReactElement, getControlled(children)) : 
-              <span>{children}</span>
-          }
+          {React.isValidElement(children) ? (
+            React.cloneElement(
+              children as React.ReactElement,
+              getControlled(children),
+            )
+          ) : (
+            <span>{children}</span>
+          )}
         </div>
       </div>
       <AnimatePresence>

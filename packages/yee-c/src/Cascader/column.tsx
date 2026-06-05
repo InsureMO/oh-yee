@@ -1,6 +1,6 @@
 import React from 'react';
-import Node from './node';
 import type { FlattenOption } from './interface';
+import Node from './node';
 
 export interface ColumnProps {
   prefixCls: string;

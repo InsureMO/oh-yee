@@ -8,15 +8,7 @@ interface InternalBreadcrumbItemProps extends BreadcrumbItemProps {
 }
 
 const BreadcrumbItem: React.FC<InternalBreadcrumbItemProps> = (props) => {
-  const {
-    className,
-    style,
-    title,
-    href,
-    index,
-    onClick,
-    ...rest
-  } = props;
+  const { className, style, title, href, index, onClick, ...rest } = props;
 
   const { prefixCls, separator, total } = useContext(BreadcrumbCtx);
 

@@ -81,11 +81,10 @@ input[type='password']::-webkit-textfield-decoration-container {
   display: none !important;
 }
 
-
 /* Chrome、Edge、Safari */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  appearance: none;
   margin: 0;
 }
 
@@ -106,6 +105,6 @@ input::placeholder {
 
 .yee-form-item-warning {
   @{pls} {
-    border-color: var(--yee-warning-color)
+    border-color: var(--yee-warning-color);
   }
 }

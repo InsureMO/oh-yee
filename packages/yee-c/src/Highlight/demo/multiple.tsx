@@ -1,5 +1,5 @@
+import { Highlight } from '@rainbow-oh/yee-c';
 import React from 'react';
-import {Highlight} from '@rainbow-oh/yee-c';
 
 export default () => {
   return (

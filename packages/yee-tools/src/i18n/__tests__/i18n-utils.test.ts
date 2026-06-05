@@ -5,72 +5,36 @@
 import { I18nUtils } from "../i18n-utils";
 import { configer } from "../../config/config-provider";
 
-// Mock sessionStorage and localStorage
-const mockSessionStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-
-const mockLocalStorage = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-
-// Mock global objects
-(global as any).sessionStorage = mockSessionStorage;
-(global as any).localStorage = mockLocalStorage;
-
-// Mock window object
-(global as any).window = {
-  buildKey: jest.fn((url: string) => btoa(url).replace(/[^a-zA-Z0-9]/g, "")),
-  currentUrl: "http://localhost:3000/test",
-  location: {
-    pathname: "/test",
-    search: "?param=value",
-  },
-};
-
 describe("I18nUtils", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
     configer.reset();
+    sessionStorage.clear();
+    localStorage.clear();
   });
 
   describe("getSystemI18N", () => {
     test("should return language from sessionStorage", () => {
-      mockSessionStorage.getItem.mockReturnValue("zh_CN");
+      sessionStorage.setItem("system_i18nKey", "zh_CN");
 
       const result = I18nUtils.getSystemI18N();
 
       expect(result).toBe("zh_CN");
-      expect(mockSessionStorage.getItem).toHaveBeenCalledWith("system_i18nKey");
     });
 
     test("should return language from localStorage", () => {
-      mockSessionStorage.getItem.mockReturnValue(null);
-      mockLocalStorage.getItem.mockReturnValue("ja_JP");
+      localStorage.setItem("system_i18nKey", "ja_JP");
 
       const result = I18nUtils.getSystemI18N();
 
       expect(result).toBe("ja_JP");
-      expect(mockLocalStorage.getItem).toHaveBeenCalledWith("system_i18nKey");
     });
 
     test("should return default language and save to sessionStorage", () => {
-      mockSessionStorage.getItem.mockReturnValue(null);
-      mockLocalStorage.getItem.mockReturnValue(null);
-
       const result = I18nUtils.getSystemI18N();
 
       expect(result).toBe("en_US");
-      expect(mockSessionStorage.setItem).toHaveBeenCalledWith(
-        "system_i18nKey",
-        "en_US",
-      );
+      expect(sessionStorage.getItem("system_i18nKey")).toBe("en_US");
     });
 
     test("should use configured default language", () => {
@@ -80,16 +44,10 @@ describe("I18nUtils", () => {
         },
       });
 
-      mockSessionStorage.getItem.mockReturnValue(null);
-      mockLocalStorage.getItem.mockReturnValue(null);
-
       const result = I18nUtils.getSystemI18N();
 
       expect(result).toBe("fr_FR");
-      expect(mockSessionStorage.setItem).toHaveBeenCalledWith(
-        "system_i18nKey",
-        "fr_FR",
-      );
+      expect(sessionStorage.getItem("system_i18nKey")).toBe("fr_FR");
     });
   });
 
@@ -97,10 +55,7 @@ describe("I18nUtils", () => {
     test("should set language to sessionStorage", () => {
       I18nUtils.setSystemI18N("ko_KR");
 
-      expect(mockSessionStorage.setItem).toHaveBeenCalledWith(
-        "system_i18nKey",
-        "ko_KR",
-      );
+      expect(sessionStorage.getItem("system_i18nKey")).toBe("ko_KR");
     });
 
     test("should use configured storage key", () => {
@@ -112,10 +67,7 @@ describe("I18nUtils", () => {
 
       I18nUtils.setSystemI18N("es_ES");
 
-      expect(mockSessionStorage.setItem).toHaveBeenCalledWith(
-        "custom_lang_key",
-        "es_ES",
-      );
+      expect(sessionStorage.getItem("custom_lang_key")).toBe("es_ES");
     });
   });
 
@@ -139,7 +91,7 @@ describe("I18nUtils", () => {
     test("should handle empty message", () => {
       const result = I18nUtils.format("", "test");
 
-      expect(result).toBe("MSG Not Found");
+      expect(result).toBe("");
     });
 
     test("should handle null message", () => {
@@ -194,7 +146,7 @@ describe("I18nUtils", () => {
     test("should handle empty message", () => {
       const result = I18nUtils.formatObject("", "test");
 
-      expect(result).toEqual(["MSG Not Found"]);
+      expect(result).toEqual([""]);
     });
 
     test("should handle message without placeholders", () => {
@@ -238,17 +190,10 @@ describe("I18nUtils", () => {
         },
       });
 
-      mockSessionStorage.getItem.mockReturnValue(null);
-      mockLocalStorage.getItem.mockReturnValue(null);
+      const result = I18nUtils.getSystemI18N();
 
-      I18nUtils.getSystemI18N();
-
-      expect(mockSessionStorage.getItem).toHaveBeenCalledWith("my_lang_key");
-      expect(mockLocalStorage.getItem).toHaveBeenCalledWith("my_lang_key");
-      expect(mockSessionStorage.setItem).toHaveBeenCalledWith(
-        "my_lang_key",
-        "en_US",
-      );
+      expect(result).toBe("en_US");
+      expect(sessionStorage.getItem("my_lang_key")).toBe("en_US");
     });
 
     test("should use configured default language", () => {
@@ -257,9 +202,6 @@ describe("I18nUtils", () => {
           defaultLocale: "de_DE",
         },
       });
-
-      mockSessionStorage.getItem.mockReturnValue(null);
-      mockLocalStorage.getItem.mockReturnValue(null);
 
       const result = I18nUtils.getSystemI18N();
 

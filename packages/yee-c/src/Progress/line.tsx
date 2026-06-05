@@ -1,6 +1,6 @@
 import React from 'react';
-import { statusList } from './progress';
 import type { LineProps } from './interface';
+import { statusList } from './progress';
 
 const Line = React.forwardRef<HTMLDivElement, LineProps>((props, ref) => {
   const {

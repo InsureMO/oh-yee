@@ -1,8 +1,8 @@
+import { useMemo, useRef } from 'react';
+import isEqual from '../utils/isEqual';
 import useEvent from './useEvent';
 import useLayoutEffect, { useLayoutUpdateEffect } from './useLayoutEffect';
 import useState from './useState';
-import { useRef, useMemo } from 'react';
-import isEqual from '../utils/isEqual';
 
 type Updater<T> = (
   updater: T | ((origin: T) => T),
@@ -32,10 +32,11 @@ export default function useMergedState<T, R = T>(
     value?: T;
     onChange?: (value: T, prevValue: T) => void;
     handleState?: (value: T) => T;
-    deepCompare?: boolean
+    deepCompare?: boolean;
   },
 ): [R, Updater<T>] {
-  const { defaultValue, value, onChange, handleState, deepCompare } = option || {};
+  const { defaultValue, value, onChange, handleState, deepCompare } =
+    option || {};
   const prevValueRef = useRef<T>(undefined);
 
   // ======================= Init =======================
@@ -102,7 +103,7 @@ export default function useMergedState<T, R = T>(
       // Use prev prev value if is in a batch update to avoid missing data
       const overridePrevValue =
         prevSource === Source.INNER &&
-          changeEventPrevRef.current !== prevPrevValue
+        changeEventPrevRef.current !== prevPrevValue
           ? prevPrevValue
           : prevValue;
 

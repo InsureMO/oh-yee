@@ -1,233 +1,235 @@
 @pls: .yee-progress;
 
 @{pls} {
-    &-text {
-        width: var(--yee-progress-text-width);
-        margin-left: var(--yee-progress-text-margin-left);
-        color: var(--yee-progress-text-color);
-        font-size: var(--yee-progress-text-font-size);
-        line-height: var(--yee-progress-text-line-height);
+  &-text {
+    width: var(--yee-progress-text-width);
+    margin-left: var(--yee-progress-text-margin-left);
+    color: var(--yee-progress-text-color);
+    font-size: var(--yee-progress-text-font-size);
+    line-height: var(--yee-progress-text-line-height);
+  }
+
+  // type === 'line'
+  &-outer {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    height: var(--yee-progress-outer-height);
+    overflow: hidden;
+
+    @{pls}-inner {
+      position: relative;
+      width: 100%;
+      background-color: var(--yee-progress-not-bg-color);
+      border-radius: var(--yee-progress-inner-border-radius);
     }
 
-    // type === 'line'
-    &-outer {
-        display: inline-flex;
-        align-items: center;
-        width: 100%;
-        height: var(--yee-progress-outer-height);
-        overflow: hidden;
+    @{pls}-bg {
+      height: 100%;
+      background-color: var(--yee-progress-default-bg-color);
+      border-radius: var(--yee-progress-bg-border-radius);
+      transition: width 0.3s linear;
+    }
+  }
 
-        @{pls}-inner {
-            position: relative;
-            width: 100%;
-            background-color: var(--yee-progress-not-bg-color);
-            border-radius: var(--yee-progress-inner-border-radius);
-        }
+  // steps
+  &-steps {
+    display: inline-flex;
+    gap: var(--yee-progress-steps-gap);
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: var(--yee-progress-steps-height);
 
-        @{pls}-bg {
-            height: 100%;
-            background-color: var(--yee-progress-default-bg-color);
-            border-radius: var(--yee-progress-bg-border-radius);
-            transition: width 0.3s linear;
-        }
+    @{pls}-text {
+      margin-left: var(--yee-progress-steps-text-margin-left);
     }
 
-    // steps
-    &-steps {
-        display: inline-flex;
-        gap: var(--yee-progress-steps-gap);
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        height: var(--yee-progress-steps-height);
-
-        @{pls}-text {
-            margin-left: var(--yee-progress-steps-text-margin-left);
-        }
-
-        @{pls}-step {
-            width: 100%;
-            min-width: var(--yee-progress-step-min-width);
-            background-color: var(--yee-progress-not-bg-color);
-        }
-
-        @{pls}-step-active {
-            background-color: var(--yee-progress-default-bg-color);
-        }
+    @{pls}-step {
+      width: 100%;
+      min-width: var(--yee-progress-step-min-width);
+      background-color: var(--yee-progress-not-bg-color);
     }
 
-    // type === 'circle'
-    &-circle {
-        position: relative;
-        display: inline-block;
-        vertical-align: bottom;
-        background-color: var(--yee-progress-circle-bg-color);
+    @{pls}-step-active {
+      background-color: var(--yee-progress-default-bg-color);
+    }
+  }
 
-        circle {
-            stroke-linecap: round;
-        }
+  // type === 'circle'
+  &-circle {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+    background-color: var(--yee-progress-circle-bg-color);
 
-        @{pls}-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: 0;
-            font-size: var(--yee-progress-circle-text-font-size);
-            line-height: var(--yee-progress-circle-text-line-height);
-            text-align: center;
-            transform: translate(-50%, -50%);
-        }
-
-        &-trail {
-            stroke: var(--yee-progress-not-bg-color);
-        }
-
-        &-path {
-            stroke: var(--yee-progress-circle-segment-progress-color);
-        }
-
-        &-segment-path2 {
-            opacity: 0;
-
-            &@{pls}-circle-segment-done {
-                opacity: 1;
-                stroke: var(--yee-progress-circle-segment-done-color);
-            }
-        }
+    circle {
+      stroke-linecap: round;
     }
 
-
-    // ------ status ---------
-    //info
-    &-info {
-        @{pls}-text {
-            color: var(--yee-progress-info-color);
-        }
-
-        @{pls}-bg {
-            background-color: var(--yee-progress-info-color);
-        }
-
-        @{pls}-circle-path {
-            stroke: var(--yee-progress-info-color);
-        }
-
-        @{pls}-step-active {
-            background-color: var(--yee-progress-info-color);
-        }
-
-        @{pls}-success-icon {
-            color: var(--yee-progress-info-color);
-
-            &.circle {
-                font-size: var(--yee-progress-success-icon-circle-font-size);
-            }
-        }
+    @{pls}-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: 0;
+      font-size: var(--yee-progress-circle-text-font-size);
+      line-height: var(--yee-progress-circle-text-line-height);
+      text-align: center;
+      transform: translate(-50%, -50%);
     }
 
-    // success
-    &-success {
-        @{pls}-text {
-            color: var(--yee-progress-success-color);
-        }
-
-        @{pls}-bg {
-            background-color: var(--yee-progress-success-color);
-        }
-
-        @{pls}-circle-path {
-            stroke: var(--yee-progress-success-color);
-        }
-
-        @{pls}-step-active {
-            background-color: var(--yee-progress-success-color);
-        }
-
-        @{pls}-success-icon {
-            color: var(--yee-progress-success-color);
-
-            &.circle {
-                font-size: var(--yee-progress-success-icon-circle-font-size);
-            }
-        }
+    &-trail {
+      stroke: var(--yee-progress-not-bg-color);
     }
 
-    &-done-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background-color: var(--yee-progress-circle-segment-done-color);
-        border-radius: var(--yee-progress-done-bg-border-radius);
+    &-path {
+      stroke: var(--yee-progress-circle-segment-progress-color);
     }
 
-    //warning
-    &-warning {
-        @{pls}-text {
-            color: var(--yee-progress-warning-color);
-        }
+    &-segment-path2 {
+      opacity: 0;
 
-        @{pls}-bg {
-            background-color: var(--yee-progress-warning-color);
-        }
+      &@{pls}-circle-segment-done {
+        opacity: 1;
+        stroke: var(--yee-progress-circle-segment-done-color);
+      }
+    }
+  }
 
-        @{pls}-circle-path {
-            stroke: var(--yee-progress-warning-color);
-        }
-
-        @{pls}-step-active {
-            background-color: var(--yee-progress-warning-color);
-        }
-
-        @{pls}-error-icon {
-            color: var(--yee-progress-warning-color);
-
-            &.circle {
-                font-size: var(--yee-progress-error-icon-circle-font-size);
-            }
-        }
+  // ------ status ---------
+  //info
+  &-info {
+    @{pls}-text {
+      color: var(--yee-progress-info-color);
     }
 
-    //error
-    &-error {
-        @{pls}-text {
-            color: var(--yee-progress-error-color);
-        }
-
-        @{pls}-bg {
-            background-color: var(--yee-progress-error-color);
-        }
-
-        @{pls}-circle-path {
-            stroke: var(--yee-progress-error-color);
-        }
-
-        @{pls}-step-active {
-            background-color: var(--yee-progress-error-color);
-        }
-
-        @{pls}-error-icon {
-            color: var(--yee-progress-error-color);
-
-            &.circle {
-                font-size: var(--yee-progress-error-icon-circle-font-size);
-            }
-        }
+    @{pls}-bg {
+      background-color: var(--yee-progress-info-color);
     }
 
+    @{pls}-circle-path {
+      stroke: var(--yee-progress-info-color);
+    }
+
+    @{pls}-step-active {
+      background-color: var(--yee-progress-info-color);
+    }
+
+    @{pls}-success-icon {
+      color: var(--yee-progress-info-color);
+
+      &.circle {
+        font-size: var(--yee-progress-success-icon-circle-font-size);
+      }
+    }
+  }
+
+  // success
+  &-success {
+    @{pls}-text {
+      color: var(--yee-progress-success-color);
+    }
+
+    @{pls}-bg {
+      background-color: var(--yee-progress-success-color);
+    }
+
+    @{pls}-circle-path {
+      stroke: var(--yee-progress-success-color);
+    }
+
+    @{pls}-step-active {
+      background-color: var(--yee-progress-success-color);
+    }
+
+    @{pls}-success-icon {
+      color: var(--yee-progress-success-color);
+
+      &.circle {
+        font-size: var(--yee-progress-success-icon-circle-font-size);
+      }
+    }
+  }
+
+  &-done-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--yee-progress-circle-segment-done-color);
+    border-radius: var(--yee-progress-done-bg-border-radius);
+  }
+
+  //warning
+  &-warning {
+    @{pls}-text {
+      color: var(--yee-progress-warning-color);
+    }
+
+    @{pls}-bg {
+      background-color: var(--yee-progress-warning-color);
+    }
+
+    @{pls}-circle-path {
+      stroke: var(--yee-progress-warning-color);
+    }
+
+    @{pls}-step-active {
+      background-color: var(--yee-progress-warning-color);
+    }
+
+    @{pls}-error-icon {
+      color: var(--yee-progress-warning-color);
+
+      &.circle {
+        font-size: var(--yee-progress-error-icon-circle-font-size);
+      }
+    }
+  }
+
+  //error
+  &-error {
+    @{pls}-text {
+      color: var(--yee-progress-error-color);
+    }
+
+    @{pls}-bg {
+      background-color: var(--yee-progress-error-color);
+    }
+
+    @{pls}-circle-path {
+      stroke: var(--yee-progress-error-color);
+    }
+
+    @{pls}-step-active {
+      background-color: var(--yee-progress-error-color);
+    }
+
+    @{pls}-error-icon {
+      color: var(--yee-progress-error-color);
+
+      &.circle {
+        font-size: var(--yee-progress-error-icon-circle-font-size);
+      }
+    }
+  }
 }
 
-
 #yee-progress-gradient-conic .yee-progress-gradient-conic-circle {
-    stroke-dasharray: var(--yee-progress-gradient-conic-stroke-dasharray);
-    transform: rotate(-90deg);
-    transform-origin: 50% 50%;
-    transition: stroke-dashoffset 0.3s, stroke-dasharray 0.3s, stroke 0.3s, stroke-width 0.06s 0.3s, opacity;
-    fill-opacity: 0%;
-    stroke-linecap: butt;
+  stroke-dasharray: var(--yee-progress-gradient-conic-stroke-dasharray);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition:
+    stroke-dashoffset 0.3s,
+    stroke-dasharray 0.3s,
+    stroke 0.3s,
+    stroke-width 0.06s 0.3s,
+    opacity;
+  fill-opacity: 0%;
+  stroke-linecap: butt;
 }
 
 @{pls}-gradient-conic-foreign {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }

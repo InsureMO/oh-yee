@@ -1,4 +1,4 @@
-import { ErrorBoundary, Button } from '@rainbow-oh/yee-c';
+import { Button, ErrorBoundary } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 const ErrorComponent = () => {
@@ -11,9 +11,7 @@ const ErrorComponent = () => {
   return (
     <div>
       <p>Count: {count}</p>
-      <Button onClick={() => setCount(count + 1)}>
-        Increase
-      </Button>
+      <Button onClick={() => setCount(count + 1)}>Increase</Button>
     </div>
   );
 };

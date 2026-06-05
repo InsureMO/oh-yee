@@ -1,5 +1,5 @@
-import { Heart, Star, ThumbsUp } from 'lucide-react';
 import { Button, message, Space } from '@rainbow-oh/yee-c';
+import { Heart, Star, ThumbsUp } from 'lucide-react';
 import React from 'react';
 
 const CustomIconDemo = () => {

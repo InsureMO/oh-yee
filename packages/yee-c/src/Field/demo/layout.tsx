@@ -17,7 +17,11 @@ export default () => {
         gap: 16,
       }}
     >
-      <Field formName="layoutForm" name="vertical" label="Vertical Layout (Default)">
+      <Field
+        formName="layoutForm"
+        name="vertical"
+        label="Vertical Layout (Default)"
+      >
         <Input placeholder="Label on top, input below" />
       </Field>
       <Field
@@ -43,7 +47,10 @@ export default () => {
         label="Semantic Styles"
         classNames={{ label: 'custom-label', content: 'custom-content' }}
       >
-        <Select options={[]} placeholder="Customize class names via classNames" />
+        <Select
+          options={[]}
+          placeholder="Customize class names via classNames"
+        />
       </Field>
     </div>
   );

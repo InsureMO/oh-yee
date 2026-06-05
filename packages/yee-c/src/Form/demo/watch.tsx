@@ -1,8 +1,15 @@
+import {
+  Button,
+  Form,
+  Grid,
+  Input,
+  Select,
+  Space,
+  Switch,
+} from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Button, Form, Grid, Input, Select, Space, Switch } from '@rainbow-oh/yee-c';
 
 const UserTypeFields = () => {
-
   // No second form instance parameter needed, provided by Form component's internal context
   const type = Form.useWatch<string>('type');
 
@@ -55,7 +62,12 @@ export default () => {
 
         <UserTypeFields />
 
-        <Form.Field name="notify" label="Enable notifications" initialValue={false} valuePropName='checked'>
+        <Form.Field
+          name="notify"
+          label="Enable notifications"
+          initialValue={false}
+          valuePropName="checked"
+        >
           <Switch />
         </Form.Field>
 
@@ -64,11 +76,12 @@ export default () => {
             <Input.Email placeholder="Notification email" />
           </Form.Field>
         )}
-
       </Grid>
 
       <Space style={{ marginTop: 16 }}>
-        <Button type="primary" htmlType="submit">Submit</Button>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
         <Button htmlType="reset">Reset</Button>
       </Space>
     </Form>

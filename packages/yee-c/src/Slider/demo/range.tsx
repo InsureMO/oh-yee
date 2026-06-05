@@ -15,7 +15,9 @@ export default () => {
           setRangeValue(val as [number, number]);
         }}
       />
-      <p>Range value: [{rangeValue[0]}, {rangeValue[1]}]</p>
+      <p>
+        Range value: [{rangeValue[0]}, {rangeValue[1]}]
+      </p>
     </div>
   );
 };

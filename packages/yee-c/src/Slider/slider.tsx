@@ -42,7 +42,7 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>((baseprops, ref) => {
   });
 
   // Track whether currently dragging
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   // Ensure value is within valid range
   const clamp = (val: number, minVal: number, maxVal: number) => {
@@ -87,10 +87,8 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>((baseprops, ref) => {
       (e: React.KeyboardEvent) => {
         if (disabled) return;
 
-        const increment =
-          e.key === 'ArrowRight' || e.key === 'ArrowUp';
-        const decrement =
-          e.key === 'ArrowLeft' || e.key === 'ArrowDown';
+        const increment = e.key === 'ArrowRight' || e.key === 'ArrowUp';
+        const decrement = e.key === 'ArrowLeft' || e.key === 'ArrowDown';
 
         if (!increment && !decrement) return;
         e.preventDefault();
@@ -114,7 +112,16 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>((baseprops, ref) => {
           ] as [number, number]);
         }
       },
-    [disabled, step, mergedValue, mergedRangeValue, handleSingleChange, handleRangeChange, onAfterChange, getStepValue],
+    [
+      disabled,
+      step,
+      mergedValue,
+      mergedRangeValue,
+      handleSingleChange,
+      handleRangeChange,
+      onAfterChange,
+      getStepValue,
+    ],
   );
 
   // Handle mouse down event

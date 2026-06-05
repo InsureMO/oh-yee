@@ -1,10 +1,9 @@
-import type { Store, NamePath, InternalNamePath} from '../interface';
-
+import type { InternalNamePath, NamePath, Store } from '../interface';
 
 /**
  * 将数组路径转换为标准化字符串路径
  * @example ['users', 0, 'name'] => 'users.0.name'
-*/
+ */
 export function getNamePath(path: NamePath): InternalNamePath {
   if (path === undefined || path === null) return [];
   if (Array.isArray(path)) return path.map(String);
@@ -36,12 +35,10 @@ export function parsePath(pathStr: string): (string | number)[] {
  * @param path 路径数组
  * @returns 对应的值，不存在返回 undefined
  */
-export function getValueByPath(
-  store: Store,
-  path: (string | number)[],
-): any {
+export function getValueByPath(store: Store, path: (string | number)[]): any {
   let current = store;
   for (const key of path) {
+    // eslint-disable-next-line eqeqeq
     if (current == null) return undefined;
     current = current[String(key)];
   }
@@ -82,16 +79,13 @@ export function setValueByPath(
  * @param path 路径数组
  * @returns 新的 store 对象
  */
-export function deletePath(
-  store: Store,
-  path: (string | number)[],
-): Store {
+export function deletePath(store: Store, path: (string | number)[]): Store {
   const newStore = { ...store };
   let current = newStore;
 
   for (let i = 0; i < path.length - 1; i++) {
     const key = String(path[i]);
-    if (current[key] == null) return newStore;
+    if (current[key] == null) return newStore; // eslint-disable-line eqeqeq
     current = current[key];
   }
 

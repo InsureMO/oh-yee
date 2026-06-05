@@ -9,11 +9,7 @@ export default () => {
   return (
     <div>
       <h3>Controlled Mode</h3>
-      <Ellipsis
-        lines={3}
-        expanded={expanded}
-        onExpand={setExpanded}
-      >
+      <Ellipsis lines={3} expanded={expanded} onExpand={setExpanded}>
         {longText}
       </Ellipsis>
       <p style={{ marginTop: 8 }}>

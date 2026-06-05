@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import { RangePicker } from '@rainbow-oh/yee-c';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 
 export default () => {
@@ -59,7 +59,10 @@ export default () => {
             <select
               value={config.size}
               onChange={(e) =>
-                setConfig({ ...config, size: e.target.value as 'small' | 'middle' | 'large' })
+                setConfig({
+                  ...config,
+                  size: e.target.value as 'small' | 'middle' | 'large',
+                })
               }
               style={{ width: '100%', padding: '4px 8px' }}
             >
@@ -84,7 +87,8 @@ export default () => {
               onChange={(e) =>
                 setConfig({
                   ...config,
-                  status: (e.target.value as 'error' | 'warning' | '') || undefined,
+                  status:
+                    (e.target.value as 'error' | 'warning' | '') || undefined,
                 })
               }
               style={{ width: '100%', padding: '4px 8px' }}
@@ -107,7 +111,10 @@ export default () => {
                 type="checkbox"
                 checked={config.disabled}
                 onChange={(e) =>
-                  setConfig({ ...config, disabled: e.target.checked })
+                  setConfig({
+                    ...config,
+                    disabled: e.target.checked,
+                  })
                 }
                 style={{ marginRight: '8px' }}
               />
@@ -127,7 +134,10 @@ export default () => {
                 type="checkbox"
                 checked={config.allowClear}
                 onChange={(e) =>
-                  setConfig({ ...config, allowClear: e.target.checked })
+                  setConfig({
+                    ...config,
+                    allowClear: e.target.checked,
+                  })
                 }
                 style={{ marginRight: '8px' }}
               />
@@ -147,7 +157,10 @@ export default () => {
                 type="checkbox"
                 checked={config.endLimitStart}
                 onChange={(e) =>
-                  setConfig({ ...config, endLimitStart: e.target.checked })
+                  setConfig({
+                    ...config,
+                    endLimitStart: e.target.checked,
+                  })
                 }
                 style={{ marginRight: '8px' }}
               />
@@ -167,8 +180,7 @@ export default () => {
           allowClear={config.allowClear}
           endLimitStart={config.endLimitStart}
           ranges={ranges}
-          onChange={(dates, dateStrings) => {
-            console.log('Selected dates:', dates);
+          onChange={(dates) => {
             setValue(dates);
           }}
           onOpenChange={(open) =>
@@ -180,11 +192,17 @@ export default () => {
       </div>
 
       <div
-        style={{ padding: '16px', background: '#f5f5f5', borderRadius: '4px' }}
+        style={{
+          padding: '16px',
+          background: '#f5f5f5',
+          borderRadius: '4px',
+        }}
       >
         <h3 style={{ marginTop: 0 }}>Current Value</h3>
         <pre style={{ margin: 0, fontSize: '12px', overflow: 'auto' }}>
-          {value.length > 0 ? JSON.stringify(value, null, 2) : 'No date selected'}
+          {value.length > 0
+            ? JSON.stringify(value, null, 2)
+            : 'No date selected'}
         </pre>
       </div>
     </div>

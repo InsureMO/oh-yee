@@ -18,7 +18,7 @@ export default () => {
       <Dialog
         title="Edit User"
         open={open}
-        onCancel={() => { 
+        onCancel={() => {
           setOpen(false);
           // form.resetFields();
         }}

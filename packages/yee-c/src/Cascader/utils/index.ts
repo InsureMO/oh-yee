@@ -33,7 +33,10 @@ const getNextQueueElement = (
       const nexts = hasChild(item)
         ? (item.children as Array<FlattenOption>).filter((c) => c.pid === value)
         : [];
-      return [nexts, { id: item.value as string | number, text: item.label as string }];
+      return [
+        nexts,
+        { id: item.value as string | number, text: item.label as string },
+      ];
     }
   }
   return [];

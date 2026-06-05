@@ -43,7 +43,12 @@ const TableCell: React.FC<BodyCellProps> = (props) => {
       return children(record, rowIndex);
     }
     return (
-      <div className={clsx(`${prefixCls}-cell-inner`, classNames?.inner)} style={styles?.inner}>{record[dataIndex || '']}</div>
+      <div
+        className={clsx(`${prefixCls}-cell-inner`, classNames?.inner)}
+        style={styles?.inner}
+      >
+        {record[dataIndex || '']}
+      </div>
     );
   };
 

@@ -2,8 +2,8 @@
  * title: Staggered Rendering
  * description: In stagger mode, all Cards are eventually rendered, but incrementally frame by frame with automatic rate adjustment to avoid first-frame jank.
  */
+import { Card, Reveal } from '@rainbow-oh/yee-c';
 import React from 'react';
-import { Reveal, Card } from '@rainbow-oh/yee-c';
 
 const items = Array.from({ length: 20 }, (_, i) => i + 1);
 

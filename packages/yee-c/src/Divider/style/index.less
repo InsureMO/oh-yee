@@ -1,77 +1,77 @@
 @pls: .yee-divider;
 
 @{pls} {
-    display: flex;
-    align-items: center;
-    margin: var(--yee-divider-margin, 24px 0);
-    color: var(--yee-divider-font-color);
-    font-weight: 400;
-    font-size: var(--yee-divider-font-size, 14px);
-    line-height: 1;
+  display: flex;
+  align-items: center;
+  margin: var(--yee-divider-margin, 24px 0);
+  color: var(--yee-divider-font-color);
+  font-weight: 400;
+  font-size: var(--yee-divider-font-size, 14px);
+  line-height: 1;
 
+  &::after,
+  &::before {
+    position: relative;
+    top: 50%;
+    width: 50%;
+    border-top: var(--yee-divider-border-width) solid
+      var(--yee-divider-border-color);
+    border-bottom: 0;
+    content: '';
+  }
+
+  &-horizontal {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  &@{pls}-with-text {
+    margin: var(--yee-divider-with-text-margin);
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  &-vertical {
+    display: inline-block;
+    width: var(--yee-divider-vertical-width, 1px);
+    height: var(--yee-divider-vertical-height, 12px);
+    margin: var(--yee-divider-vertical-margin);
+    vertical-align: text-bottom;
+    background-color: var(--yee-divider-border-color);
+  }
+
+  &-dashed {
     &::after,
     &::before {
-        position: relative;
-        top: 50%;
-        width: 50%;
-        border-top: var(--yee-divider-border-width) solid var(--yee-divider-border-color);
-        border-bottom: 0;
-        content: '';
+      border-top-style: dashed;
+    }
+  }
+
+  &-inner-text {
+    display: inline-block;
+    padding: var(--yee-divider-text-padding, 0 16px);
+    font-weight: 500;
+    font-size: var(--yee-divider-inner-text-font-size);
+    line-height: var(--yee-divider-inner-text-line-height);
+
+    &-left {
+      &::before {
+        width: var(--yee-divider-with-text-left-before-width, 5%);
+      }
+
+      &::after {
+        width: var(--yee-divider-with-text-left-after-width, 95%);
+      }
     }
 
-    &-horizontal {
-        width: 100%;
-        min-width: 100%;
+    &-right {
+      &::before {
+        width: var(--yee-divider-with-text-right-before-width, 95%);
+      }
+
+      &::after {
+        width: var(--yee-divider-with-text-right-after-width, 5%);
+      }
     }
-
-    &@{pls}-with-text {
-        margin: var(--yee-divider-with-text-margin);
-        white-space: nowrap;
-        text-align: center;
-    }
-
-    &-vertical {
-        display: inline-block;
-        width: var(--yee-divider-vertical-width, 1px);
-        height: var(--yee-divider-vertical-height, 12px);
-        margin: var(--yee-divider-vertical-margin);
-        vertical-align: text-bottom;
-        background-color: var(--yee-divider-border-color);
-    }
-
-    &-dashed {
-
-        &::after,
-        &::before {
-            border-top-style: dashed;
-        }
-    }
-
-    &-inner-text {
-        display: inline-block;
-        padding: var(--yee-divider-text-padding, 0 16px);
-        font-weight: 500;
-        font-size: var(--yee-divider-inner-text-font-size);
-        line-height: var(--yee-divider-inner-text-line-height);
-
-        &-left {
-            &::before {
-                width: var(--yee-divider-with-text-left-before-width, 5%);
-            }
-
-            &::after {
-                width: var(--yee-divider-with-text-left-after-width, 95%);
-            }
-        }
-
-        &-right {
-            &::before {
-                width: var(--yee-divider-with-text-right-before-width, 95%);
-            }
-
-            &::after {
-                width: var(--yee-divider-with-text-right-after-width, 5%);
-            }
-        }
-    }
+  }
 }

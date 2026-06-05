@@ -18,7 +18,8 @@ const DurationDemo: React.FC = () => {
 
   const showPermanentMessage = () => {
     message.info({
-      content: 'This message will not auto-close and must be dismissed manually',
+      content:
+        'This message will not auto-close and must be dismissed manually',
       duration: 0,
     });
   };

@@ -49,7 +49,8 @@ const Field: FC<FieldProps> = (props) => {
   };
 
   const getControlled = (children: React.ReactElement) => {
-    const mergedDisabled = disabled || (children as React.ReactElement<any>).props.disabled;
+    const mergedDisabled =
+      disabled || (children as React.ReactElement<any>).props.disabled;
 
     const attr = {
       value: getFieldValue?.(name),

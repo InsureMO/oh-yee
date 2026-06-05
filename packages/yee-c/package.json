@@ -2,11 +2,24 @@
   "name": "@rainbow-oh/yee-c",
   "version": "0.1.0",
   "description": "yee basic components",
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "keywords": [
+    "react",
+    "ui-components",
+    "component-library",
+    "typescript",
+    "design-system",
+    "yee"
+  ],
+  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-c#readme",
+  "bugs": {
+    "url": "https://github.com/InsureMO/oh-yee/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InsureMO/oh-yee.git",
+    "directory": "packages/yee-c"
+  },
+  "license": "MIT",
   "sideEffects": [
     "**/*.css",
     "**/*.less",
@@ -55,8 +68,10 @@
     "docs:preview": "dumi preview",
     "docs:scan": "node scripts/scan-docs.js",
     "doctor": "father doctor",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
     "lint": "npm run lint:es && npm run lint:css",
-    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
+    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\" --ignore-pattern \"src/style/color.*.css\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "dumi setup",
     "prepublishOnly": "npm run docs:scan && father doctor && node scripts/generate-version.js && npm run build",
@@ -113,9 +128,8 @@
     "prettier-plugin-packagejson": "^2.2.18",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "stylelint": "^16.26.0",
-    "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-order": "^7.0.0"
+    "stylelint": "^14.16.1",
+    "stylelint-order": "^6.0.4"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -125,23 +139,6 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/InsureMO/oh-yee.git",
-    "directory": "packages/yee-c"
-  },
-  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-c#readme",
-  "bugs": {
-    "url": "https://github.com/InsureMO/oh-yee/issues"
-  },
-  "keywords": [
-    "react",
-    "ui-components",
-    "component-library",
-    "typescript",
-    "design-system",
-    "yee"
-  ],
   "authors": [
     "InsureMO"
   ]

@@ -1,64 +1,63 @@
 @pls: .yee-rate;
 
 @{pls} {
-    display: inline-flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 
-    &.disabled {
-        cursor: not-allowed;
+  &.disabled {
+    cursor: not-allowed;
 
-        &>* {
-            pointer-events: none;
-        }
+    & > * {
+      pointer-events: none;
     }
+  }
 }
 
 @{pls}-star {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--yee-rate-star-width);
-    height: var(--yee-rate-star-height);
-    margin-right: var(--yee-rate-margin-right);
-    color: var(--yee-star-icon-color);
-    font-size: var(--yee-rate-star-font-size);
-    cursor: pointer;
-    transition: font 0.1s ease-in;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--yee-rate-star-width);
+  height: var(--yee-rate-star-height);
+  margin-right: var(--yee-rate-margin-right);
+  color: var(--yee-star-icon-color);
+  font-size: var(--yee-rate-star-font-size);
+  cursor: pointer;
+  transition: font 0.1s ease-in;
 
-    &:hover {
-        // font-size: var(--yee-rate-star-hover-font-size);
+  &:hover {
+    // font-size: var(--yee-rate-star-hover-font-size);
 
-        // @{pls}-star-first {
-        //     width: var(--yee-rate-star-first-hover-width);
-        // }
-    }
+    // @{pls}-star-first {
+    //     width: var(--yee-rate-star-first-hover-width);
+    // }
+  }
 
-    @{pls}-star-first,
-    @{pls}-star-second {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+  @{pls}-star-first,
+  @{pls}-star-second {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
-    @{pls}-star-first {
-        z-index: 1;
-        width: var(--yee-rate-star-first-width);
-        overflow: hidden;
-    }
+  @{pls}-star-first {
+    z-index: 1;
+    width: var(--yee-rate-star-first-width);
+    overflow: hidden;
+  }
 }
 
 @{pls}-star@{pls}-star-full {
-
-    &:not(@{pls}-star-half-active) {
-        color: var(--yee-rate-star-full-icon-color);
-    }
+  &:not(@{pls}-star-half-active) {
+    color: var(--yee-rate-star-full-icon-color);
+  }
 }
 
 @{pls}-star-half-active {
-    @{pls}-star-first {
-        color: var(--yee-rate-star-full-icon-color);
-    }
+  @{pls}-star-first {
+    color: var(--yee-rate-star-full-icon-color);
+  }
 }

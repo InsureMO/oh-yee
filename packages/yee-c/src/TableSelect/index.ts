@@ -1,4 +1,8 @@
-import TableSelect from "./table-select";
+import TableSelect from './table-select';
 
-export type { TableSelectProps, InternalTableProps, TableSelectRowSelectionType } from './interface'
-export default TableSelect
+export type {
+  InternalTableProps,
+  TableSelectProps,
+  TableSelectRowSelectionType,
+} from './interface';
+export default TableSelect;

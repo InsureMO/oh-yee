@@ -7,7 +7,7 @@ export default function useSelection({
   dataSource: data,
   getRowKey,
   rowSelection,
-  allKeys,
+  allKeys, // eslint-disable-line @typescript-eslint/no-unused-vars
 }: {
   pageData: Array<Record<string, unknown>>;
   dataSource: Array<Record<string, unknown>>;
@@ -32,7 +32,6 @@ export default function useSelection({
   });
 
   const onCheck = (checked: boolean, key: number | string) => {
-    const record = pageData.find((item) => getRowKey(item) === key);
     const rowKeys = checked
       ? [...mergedSelectedRowKeys, key]
       : [...mergedSelectedRowKeys.filter((k) => k !== key)];
@@ -95,13 +94,14 @@ export default function useSelection({
       .filter((record: any) => !disabledKeys.includes(getRowKey(record))) // Filter out disabled items
       .map((record: any) => getRowKey(record));
 
-    const changedRowRecords = pageData.filter((item: any) =>
-      keys.includes(getRowKey(item)),
-    );
     const rowKeys = checked
       ? // @ts-ignore
         [...new Set([...mergedSelectedRowKeys, ...keys])]
-      : [...mergedSelectedRowKeys.filter((key) => !keys.includes(key as string))];
+      : [
+          ...mergedSelectedRowKeys.filter(
+            (key) => !keys.includes(key as string),
+          ),
+        ];
 
     const rowRecords = data.filter((item: any) =>
       rowKeys.includes(getRowKey(item)),

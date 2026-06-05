@@ -1,3 +1,5 @@
-const Item = () => { return null }
+const Item = () => {
+  return null;
+};
 
 export default Item;

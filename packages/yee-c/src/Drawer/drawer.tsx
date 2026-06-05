@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
 import Portal from '../Portal';
@@ -10,8 +10,8 @@ import useLockFocus from '../hooks/useLockFocus';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { DrawerProps } from './interface';
 
-import './style/index.less';
 import useFocusManage from '../hooks/useFocusManage';
+import './style/index.less';
 
 // Default value constants
 const DEFAULT_WIDTH = 400;
@@ -113,7 +113,11 @@ const Drawer = (baseprops: DrawerProps) => {
     return (
       <Button
         type="text"
-        icon={icon ?? <X size={CLOSE_ICON_SIZE} strokeWidth={CLOSE_ICON_STROKE_WIDTH} />}
+        icon={
+          icon ?? (
+            <X size={CLOSE_ICON_SIZE} strokeWidth={CLOSE_ICON_STROKE_WIDTH} />
+          )
+        }
         className={clsx(
           `${prefixCls}-close`,
           {

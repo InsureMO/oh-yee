@@ -1,12 +1,12 @@
 :root {
   /* ── z-index 基础层级 ── */
-  --yee-z-index-fixed: 990;        /* L1 吸顶 */
-  --yee-z-index-mask: 1000;        /* L2 遮罩背景 */
-  --yee-z-index-overlay: 1010;     /* L3 遮罩内容 */
-  --yee-z-index-popup: 1050;       /* L4 弹出面板 */
-  --yee-z-index-tooltip: 1060;     /* L5 轻提示 */
-  --yee-z-index-message: 1100;     /* L6 全局反馈 */
-  --yee-z-index-max: 1110;         /* L7 最顶层 */
+  --yee-z-index-fixed: 990; /* L1 吸顶 */
+  --yee-z-index-mask: 1000; /* L2 遮罩背景 */
+  --yee-z-index-overlay: 1010; /* L3 遮罩内容 */
+  --yee-z-index-popup: 1050; /* L4 弹出面板 */
+  --yee-z-index-tooltip: 1060; /* L5 轻提示 */
+  --yee-z-index-message: 1100; /* L6 全局反馈 */
+  --yee-z-index-max: 1110; /* L7 最顶层 */
 
   /* --Alert-- */
   --yee-alert-close-top: 7px;
@@ -220,7 +220,8 @@
   --yee-dialog-content-margin-top: 10%;
   --yee-dialog-content-padding: 24px;
   --yee-dialog-content-border-radius: 6px;
-  --yee-dialog-content-box-shadow: var(--yee-dialog-content-box-shadow-color) 0 2px 40px 0;
+  --yee-dialog-content-box-shadow: var(--yee-dialog-content-box-shadow-color) 0
+    2px 40px 0;
   --yee-dialog-close-top: 12px;
   --yee-dialog-close-right: 12px;
   --yee-dialog-footer-gap: 16px;
@@ -314,8 +315,14 @@
   --yee-notice-padding: 16px 20px;
   --yee-notice-margin-bottom: 16px;
   --yee-notice-border-radius: 8px;
-  --yee-notice-box-shadow: 0 6px 16px 0 var(--yee-notice-box-shadow-color-1), 0 3px 6px -4px var(--yee-notice-box-shadow-color-2), 0 9px 28px 8px var(--yee-notice-box-shadow-color-3);
-  --yee-notice-box-shadow-hover: 0 8px 20px 0 var(--yee-notice-box-shadow-hover-color-1), 0 4px 8px -4px var(--yee-notice-box-shadow-hover-color-2), 0 12px 32px 8px var(--yee-notice-box-shadow-hover-color-3);
+  --yee-notice-box-shadow:
+    0 6px 16px 0 var(--yee-notice-box-shadow-color-1),
+    0 3px 6px -4px var(--yee-notice-box-shadow-color-2),
+    0 9px 28px 8px var(--yee-notice-box-shadow-color-3);
+  --yee-notice-box-shadow-hover:
+    0 8px 20px 0 var(--yee-notice-box-shadow-hover-color-1),
+    0 4px 8px -4px var(--yee-notice-box-shadow-hover-color-2),
+    0 12px 32px 8px var(--yee-notice-box-shadow-hover-color-3);
   --yee-notice-border-width: 1px;
   --yee-notice-content-gap: 12px;
   --yee-notice-icon-size: 20px;
@@ -357,7 +364,7 @@
   --yee-popconfirm-border-radius: 4px;
   --yee-popconfirm-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
   --yee-popconfirm-header-gap: 16px;
-  --yee-popconfirm-title-margin: 0px;
+  --yee-popconfirm-title-margin: 0;
   --yee-popconfirm-footer-margin-top: 16px;
 
   /* --Popover-- */
@@ -692,7 +699,8 @@
   --yee-tabs-tab-group-container-line-height: 32px;
   --yee-tabs-fixed-top-nav-wrapper-height: 56px;
   --yee-tabs-fixed-top-nav-wrapper-padding: 0 40px 8px;
-  --yee-tabs-fixed-top-nav-wrapper-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
+  --yee-tabs-fixed-top-nav-wrapper-box-shadow: 0 8px 24px 0
+    var(--yee-box-shadow-color);
   --yee-tabs-nav-add-height: 38px;
   --yee-tabs-nav-add-padding: 0 12px;
   --yee-tabs-nav-add-font-size: 16px;
@@ -792,7 +800,8 @@
   --yee-verification-code-item-height: 32px;
   --yee-verification-code-item-border-width: 1px;
   --yee-verification-code-item-border-radius: 4px;
-  --yee-verification-code-item-focus-box-shadow: 0 0 0 2px var(--yee-input-focus-bs-color);
+  --yee-verification-code-item-focus-box-shadow: 0 0 0 2px
+    var(--yee-input-focus-bs-color);
 
   /* --Descriptions-- */
   --yee-descriptions-font-size: 14px;

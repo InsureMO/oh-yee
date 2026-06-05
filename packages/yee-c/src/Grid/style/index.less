@@ -1,15 +1,18 @@
 @pls: .yee-grid;
 
 @{pls} {
-    display: grid;
+  display: grid;
 }
 
 .generate-columns(@n, @i: 1) when (@i <=@n) {
-    @{pls}-columns-@{i} {
-        grid-template-columns: repeat(@i, minmax(var(--yee-grid-column-min-width), 1fr));
-    }
+  @{pls}-columns-@{i} {
+    grid-template-columns: repeat(
+      @i,
+      minmax(var(--yee-grid-column-min-width), 1fr)
+    );
+  }
 
-    .generate-columns(@n, (@i + 1));
+  .generate-columns(@n, (@i + 1));
 }
 
 // Call: generate styles for 1 to 12 columns

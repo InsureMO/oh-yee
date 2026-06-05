@@ -1,9 +1,9 @@
 import Descriptions from './descriptions';
 
 export type {
-  DescriptionsProps,
   DescriptionsItem,
   DescriptionsItemProps,
+  DescriptionsProps,
   DescriptionsType,
 } from './interface';
 

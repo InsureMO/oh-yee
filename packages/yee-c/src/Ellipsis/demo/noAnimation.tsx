@@ -7,10 +7,7 @@ export default () => {
   return (
     <div>
       <h3>Disable Animation</h3>
-      <Ellipsis 
-        lines={3}
-        animated={false}
-      >
+      <Ellipsis lines={3} animated={false}>
         {longText}
       </Ellipsis>
     </div>

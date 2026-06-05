@@ -1,20 +1,17 @@
 import * as React from 'react';
 
 const canUseDom = () => {
-    return !!(
-        typeof window !== 'undefined' &&
-        window.document &&
-        window.document.createElement
-    );
-}
+  return !!(
+    typeof window !== 'undefined' &&
+    window.document &&
+    window.document.createElement
+  );
+};
 
 /**
  * Wrap `React.useLayoutEffect` which will not throw warning message in test env
  */
-const useLayoutEffect =
-  canUseDom()
-    ? React.useLayoutEffect
-    : React.useEffect;
+const useLayoutEffect = canUseDom() ? React.useLayoutEffect : React.useEffect;
 
 export default useLayoutEffect;
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, Form, Input, Space, Table } from '@rainbow-oh/yee-c';
 import type { ColumnProps } from '@rainbow-oh/yee-c';
+import { Button, Form, Input, Space, Table } from '@rainbow-oh/yee-c';
+import React from 'react';
 
 export default () => {
   const [form] = Form.useForm();
@@ -12,17 +12,18 @@ export default () => {
   return (
     <div style={{ padding: '24px' }}>
       <h2>Form + Table Dynamic Form Example</h2>
-      <Form
-        form={form}
-        onFinish={onFinish}
-        layout="vertical"
-      >
-        <Form.List name="users" initialValue={[{
-          name: '',
-          age: '',
-          address: '',
-        }]}>
-          {(fields, operations, meta) => {
+      <Form form={form} onFinish={onFinish} layout="vertical">
+        <Form.List
+          name="users"
+          initialValue={[
+            {
+              name: '',
+              age: '',
+              address: '',
+            },
+          ]}
+        >
+          {(fields, operations) => {
             // Define column config - operations are accessible here
             const columns: ColumnProps[] = [
               {
@@ -83,11 +84,13 @@ export default () => {
                 footer={() => (
                   <Button
                     type="dashed"
-                    onClick={() => operations.add({
-                      name: '',
-                      age: '',
-                      address: '',
-                    })}
+                    onClick={() =>
+                      operations.add({
+                        name: '',
+                        age: '',
+                        address: '',
+                      })
+                    }
                     block
                   >
                     + Add Row

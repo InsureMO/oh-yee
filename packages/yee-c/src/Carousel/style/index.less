@@ -66,8 +66,11 @@
     justify-content: center;
     background-color: var(--yee-carousel-arrow-bg-color);
     background-clip: padding-box;
-    border: var(--yee-carousel-arrow-border-width) solid var(--yee-carousel-arrow-border-color);
-    transition: background 0.2s linear, color 0.2s linear;
+    border: var(--yee-carousel-arrow-border-width) solid
+      var(--yee-carousel-arrow-border-color);
+    transition:
+      background 0.2s linear,
+      color 0.2s linear;
     cursor: pointer;
 
     &:hover {
@@ -228,7 +231,9 @@
     opacity: 0;
     visibility: hidden;
     z-index: 1;
-    transition: opacity 0.3s linear, visibility 0.3s linear;
+    transition:
+      opacity 0.3s linear,
+      visibility 0.3s linear;
 
     &-active {
       z-index: 2;

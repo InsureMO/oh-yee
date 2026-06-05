@@ -51,8 +51,8 @@ export interface CardProps {
    * Custom content on the right side of the header
    */
   extra?:
-  | React.ReactNode
-  | ((params: { expanded: boolean }) => React.ReactNode);
+    | React.ReactNode
+    | ((params: { expanded: boolean }) => React.ReactNode);
   /**
    * Whether the entire header can toggle expand/collapse on click
    * @default true
@@ -71,7 +71,7 @@ export interface CardProps {
   expandIcon?: ((expanded: boolean) => React.ReactNode) | null;
   /**
    * Whether to show border
-  */
+   */
   bordered?: boolean;
   /**
    * Callback when expanding/collapsing

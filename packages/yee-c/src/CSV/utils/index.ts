@@ -36,8 +36,7 @@ export const getHeaderValue = (property: any, obj: any) => {
       } else {
         return value;
       }
-    },
-    obj);
+    }, obj);
   // if at any point the nested keys passed do not exist then looks for key `property` in object obj
   return foundValue === undefined
     ? property in obj

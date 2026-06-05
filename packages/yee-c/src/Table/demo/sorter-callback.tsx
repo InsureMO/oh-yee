@@ -1,5 +1,5 @@
-import { Table } from '@rainbow-oh/yee-c';
 import type { ColumnProps, onChangeParams } from '@rainbow-oh/yee-c';
+import { Table } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {

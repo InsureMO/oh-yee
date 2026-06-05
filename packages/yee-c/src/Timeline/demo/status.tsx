@@ -16,7 +16,9 @@ export default () => {
       <Timeline.Item index={4} status="info">
         Network problems being solved 2015-09-01
       </Timeline.Item>
-      <Timeline.Item index={5} status="disabled">Disabled step 2015-09-01</Timeline.Item>
+      <Timeline.Item index={5} status="disabled">
+        Disabled step 2015-09-01
+      </Timeline.Item>
     </Timeline>
   );
 };

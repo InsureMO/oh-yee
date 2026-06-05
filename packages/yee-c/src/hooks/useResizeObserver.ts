@@ -7,11 +7,11 @@ export type UseResizeObserverOptions = {
 
 const useResizeObserver = <T extends Element>(
   callback: ResizeObserverCallback,
-  options: UseResizeObserverOptions = {}
+  options: UseResizeObserverOptions = {},
 ) => {
   const ref = useRef<T>(null);
   const { box = 'content-box' } = options;
-  
+
   // 1. Use ref to always point to the latest callback function
   // This way callback changes won't trigger useEffect re-execution
   const callbackRef = useLatest(callback);
@@ -30,9 +30,9 @@ const useResizeObserver = <T extends Element>(
     return () => {
       observer.disconnect();
     };
-  // 3. Dependency array only contains box, callback is removed
-  // This way the observer is only rebuilt when box mode changes
-  }, [box]); 
+    // 3. Dependency array only contains box, callback is removed
+    // This way the observer is only rebuilt when box mode changes
+  }, [box]);
 
   return { ref };
 };

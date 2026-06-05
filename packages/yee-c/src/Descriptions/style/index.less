@@ -1,138 +1,151 @@
 @pls: .yee-descriptions;
 
 @{pls} {
-    font-size: var(--yee-descriptions-font-size, 14px);
-    line-height: var(--yee-descriptions-line-height, 1.5714);
-    color: var(--yee-descriptions-color, var(--yee-text-color));
+  font-size: var(--yee-descriptions-font-size, 14px);
+  line-height: var(--yee-descriptions-line-height, 1.5714);
+  color: var(--yee-descriptions-color, var(--yee-text-color));
 
-    &-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: var(--yee-descriptions-header-margin-bottom, 12px);
+  &-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--yee-descriptions-header-margin-bottom, 12px);
+  }
+
+  &-title {
+    flex: 1;
+    overflow: hidden;
+    color: var(--yee-descriptions-title-color, var(--yee-text-color));
+    font-weight: var(--yee-descriptions-title-font-weight, 600);
+    font-size: var(--yee-descriptions-title-font-size, 16px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &-extra {
+    margin-left: auto;
+    color: var(--yee-descriptions-extra-color, var(--yee-text-color));
+    font-size: var(--yee-descriptions-extra-font-size, 14px);
+  }
+
+  &-table {
+    width: 100%;
+    border-collapse: separate;
+    table-layout: fixed;
+  }
+
+  // --- Horizontal layout (default) ---
+  &-horizontal &-table {
+    th&-item-label {
+      width: var(--yee-descriptions-label-width, 30%);
+    }
+  }
+
+  &-item-label {
+    padding: var(--yee-descriptions-label-padding, 12px 16px 12px 0);
+    color: var(
+      --yee-descriptions-label-color,
+      var(--yee-text-color-description)
+    );
+    font-weight: normal;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  &-item-content {
+    padding: var(--yee-descriptions-content-padding, 12px 0);
+    color: var(--yee-descriptions-content-color, var(--yee-text-color));
+    font-weight: normal;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  // --- Vertical layout ---
+  &-vertical &-item-label {
+    padding: var(--yee-descriptions-vertical-label-padding, 8px 0);
+    color: var(
+      --yee-descriptions-label-color,
+      var(--yee-text-color-description)
+    );
+  }
+
+  &-vertical &-item-content {
+    padding: var(--yee-descriptions-vertical-content-padding, 4px 0 16px);
+  }
+
+  // --- Bordered ---
+  &-bordered {
+    & &-table {
+      border-collapse: collapse;
+      border: 1px solid
+        var(--yee-descriptions-border-color, var(--yee-color-split));
+      border-radius: var(--yee-descriptions-border-radius, 8px);
+      overflow: hidden;
     }
 
-    &-title {
-        flex: 1;
-        overflow: hidden;
-        color: var(--yee-descriptions-title-color, var(--yee-text-color));
-        font-weight: var(--yee-descriptions-title-font-weight, 600);
-        font-size: var(--yee-descriptions-title-font-size, 16px);
-        white-space: nowrap;
-        text-overflow: ellipsis;
+    & &-item-label {
+      padding: var(--yee-descriptions-bordered-label-padding, 12px 16px);
+      background-color: var(
+        --yee-descriptions-bordered-label-bg,
+        var(--yee-color-fill-quaternary)
+      );
+      border-right: 1px solid
+        var(--yee-descriptions-border-color, var(--yee-color-split));
     }
 
-    &-extra {
-        margin-left: auto;
-        color: var(--yee-descriptions-extra-color, var(--yee-text-color));
-        font-size: var(--yee-descriptions-extra-font-size, 14px);
+    & &-item-content {
+      padding: var(--yee-descriptions-bordered-content-padding, 12px 16px);
+      border-right: 1px solid
+        var(--yee-descriptions-border-color, var(--yee-color-split));
     }
 
-    &-table {
-        width: 100%;
-        border-collapse: separate;
-        table-layout: fixed;
+    tr {
+      border-bottom: 1px solid
+        var(--yee-descriptions-border-color, var(--yee-color-split));
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  // --- Sizes ---
+  &-small {
+    font-size: var(--yee-descriptions-small-font-size, 13px);
+
+    &@{pls}-bordered {
+      & &-item-label,
+      & &-item-content {
+        padding: var(--yee-descriptions-small-padding, 8px 12px);
+      }
     }
 
-    // --- Horizontal layout (default) ---
-    &-horizontal &-table {
-        th&-item-label {
-            width: var(--yee-descriptions-label-width, 30%);
-        }
+    & &-item-label {
+      padding: var(--yee-descriptions-small-label-padding, 8px 12px 8px 0);
     }
 
-    &-item-label {
-        padding: var(--yee-descriptions-label-padding, 12px 16px 12px 0);
-        color: var(--yee-descriptions-label-color, var(--yee-text-color-description));
-        font-weight: normal;
-        font-size: inherit;
-        line-height: inherit;
-        text-align: left;
-        white-space: nowrap;
+    & &-item-content {
+      padding: var(--yee-descriptions-small-content-padding, 8px 0);
+    }
+  }
+
+  &-large {
+    font-size: var(--yee-descriptions-large-font-size, 16px);
+
+    &@{pls}-bordered {
+      & &-item-label,
+      & &-item-content {
+        padding: var(--yee-descriptions-large-padding, 16px 24px);
+      }
     }
 
-    &-item-content {
-        padding: var(--yee-descriptions-content-padding, 12px 0);
-        color: var(--yee-descriptions-content-color, var(--yee-text-color));
-        font-weight: normal;
-        font-size: inherit;
-        line-height: inherit;
+    & &-item-label {
+      padding: var(--yee-descriptions-large-label-padding, 16px 16px 16px 0);
     }
 
-    // --- Vertical layout ---
-    &-vertical &-item-label {
-        padding: var(--yee-descriptions-vertical-label-padding, 8px 0);
-        color: var(--yee-descriptions-label-color, var(--yee-text-color-description));
+    & &-item-content {
+      padding: var(--yee-descriptions-large-content-padding, 16px 0);
     }
-
-    &-vertical &-item-content {
-        padding: var(--yee-descriptions-vertical-content-padding, 4px 0 16px);
-    }
-
-    // --- Bordered ---
-    &-bordered {
-        & &-table {
-            border-collapse: collapse;
-            border: 1px solid var(--yee-descriptions-border-color, var(--yee-color-split));
-            border-radius: var(--yee-descriptions-border-radius, 8px);
-            overflow: hidden;
-        }
-
-        & &-item-label {
-            padding: var(--yee-descriptions-bordered-label-padding, 12px 16px);
-            background-color: var(--yee-descriptions-bordered-label-bg, var(--yee-color-fill-quaternary));
-            border-right: 1px solid var(--yee-descriptions-border-color, var(--yee-color-split));
-        }
-
-        & &-item-content {
-            padding: var(--yee-descriptions-bordered-content-padding, 12px 16px);
-            border-right: 1px solid var(--yee-descriptions-border-color, var(--yee-color-split));
-        }
-
-        tr {
-            border-bottom: 1px solid var(--yee-descriptions-border-color, var(--yee-color-split));
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-    }
-
-    // --- Sizes ---
-    &-small {
-        font-size: var(--yee-descriptions-small-font-size, 13px);
-
-        &@{pls}-bordered {
-            & &-item-label,
-            & &-item-content {
-                padding: var(--yee-descriptions-small-padding, 8px 12px);
-            }
-        }
-
-        & &-item-label {
-            padding: var(--yee-descriptions-small-label-padding, 8px 12px 8px 0);
-        }
-
-        & &-item-content {
-            padding: var(--yee-descriptions-small-content-padding, 8px 0);
-        }
-    }
-
-    &-large {
-        font-size: var(--yee-descriptions-large-font-size, 16px);
-
-        &@{pls}-bordered {
-            & &-item-label,
-            & &-item-content {
-                padding: var(--yee-descriptions-large-padding, 16px 24px);
-            }
-        }
-
-        & &-item-label {
-            padding: var(--yee-descriptions-large-label-padding, 16px 16px 16px 0);
-        }
-
-        & &-item-content {
-            padding: var(--yee-descriptions-large-content-padding, 16px 0);
-        }
-    }
+  }
 }

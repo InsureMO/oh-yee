@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import { RangePicker } from '@rainbow-oh/yee-c';
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 
 export default () => {
@@ -23,9 +23,15 @@ export default () => {
   return (
     <div style={{ padding: '20px' }}>
       <div style={{ marginBottom: '16px', display: 'flex', gap: '8px' }}>
-        <button onClick={handleSetToday}>Set to today</button>
-        <button onClick={handleSetThisMonth}>Set to this month</button>
-        <button onClick={handleReset}>Reset</button>
+        <button type="button" onClick={handleSetToday}>
+          Set to today
+        </button>
+        <button type="button" onClick={handleSetThisMonth}>
+          Set to this month
+        </button>
+        <button type="button" onClick={handleReset}>
+          Reset
+        </button>
       </div>
 
       <RangePicker
@@ -45,7 +51,9 @@ export default () => {
           borderRadius: '4px',
         }}
       >
-        <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Current value:</div>
+        <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>
+          Current value:
+        </div>
         <pre style={{ margin: 0, fontSize: '12px' }}>
           {JSON.stringify(value, null, 2)}
         </pre>

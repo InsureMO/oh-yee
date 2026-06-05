@@ -34,7 +34,7 @@ class MI18n {
   private publisher(key: string, args?: { key: string; value: any }) {
     const events = this.messages[key] || [];
     // Fix: Use forEach instead of while + shift, don't clear subscriber array
-    events.forEach(cb => cb?.(args));
+    events.forEach((cb) => cb?.(args));
   }
 
   /**
@@ -130,7 +130,9 @@ class MI18n {
       // @ts-nocheck
       // @ts-ignore
       if (import.meta?.env?.NODE_ENV !== 'production') {
-        console.warn(`[I18n] Missing translation: "${key}" for language "${this.lng}"`);
+        console.warn(
+          `[I18n] Missing translation: "${key}" for language "${this.lng}"`,
+        );
       }
       return key;
     }
@@ -138,7 +140,9 @@ class MI18n {
     // Support interpolation
     if (params) {
       return message.replace(/\{(\w+)\}/g, (_, paramKey) => {
-        return params[paramKey] !== undefined ? String(params[paramKey]) : `{${paramKey}}`;
+        return params[paramKey] !== undefined
+          ? String(params[paramKey])
+          : `{${paramKey}}`;
       });
     }
 

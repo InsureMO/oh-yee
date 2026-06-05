@@ -1,72 +1,72 @@
 @pls: .yee-alert;
 
 @{pls} {
-    position: relative;
-    display: flex;
-    padding: var(--yee-alert-padding, 7px 11px);
-    color: var(--yee-alert-font-color);
-    border: var(--yee-alert-border-width, 1px) solid var(--yee-alert-border-color);
-    border-radius: var(--yee-alert-border-radius, 4px);
+  position: relative;
+  display: flex;
+  padding: var(--yee-alert-padding, 7px 11px);
+  color: var(--yee-alert-font-color);
+  border: var(--yee-alert-border-width, 1px) solid var(--yee-alert-border-color);
+  border-radius: var(--yee-alert-border-radius, 4px);
 
-    &-close {
-        position: absolute;
-        top: var(--yee-alert-close-top);
-        right: var(--yee-alert-close-right);
-        cursor: pointer;
+  &-close {
+    position: absolute;
+    top: var(--yee-alert-close-top);
+    right: var(--yee-alert-close-right);
+    cursor: pointer;
+  }
+
+  &-icon {
+    margin-right: var(--yee-alert-icon-margin-right);
+  }
+
+  &-title {
+    font-size: var(--yee-alert-title-font-size);
+  }
+
+  &-message {
+    font-size: var(--yee-alert-message-font-size);
+  }
+
+  &-success {
+    background-color: var(--yee-alert-success-bg-color);
+    border-color: var(--yee-alert-success-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-alert-success-icon-color);
     }
+  }
 
-    &-icon {
-        margin-right: var(--yee-alert-icon-margin-right);
+  &-warning {
+    background-color: var(--yee-alert-warning-bg-color);
+    border-color: var(--yee-alert-warning-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-alert-warning-icon-color);
     }
+  }
 
-    &-title {
-        font-size: var(--yee-alert-title-font-size);
+  &-error {
+    background-color: var(--yee-alert-danger-bg-color);
+    border-color: var(--yee-alert-danger-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-alert-danger-icon-color);
     }
+  }
 
-    &-message {
-        font-size: var(--yee-alert-message-font-size);
+  &-info {
+    background-color: var(--yee-alert-info-bg-color);
+    border-color: var(--yee-alert-info-border-color);
+
+    @{pls}-icon {
+      color: var(--yee-alert-info-icon-color);
     }
+  }
 
-    &-success {
-        background-color: var(--yee-alert-success-bg-color);
-        border-color: var(--yee-alert-success-border-color);
-
-        @{pls}-icon {
-            color: var(--yee-alert-success-icon-color);
-        }
-    }
-
-    &-warning {
-        background-color: var(--yee-alert-warning-bg-color);
-        border-color: var(--yee-alert-warning-border-color);
-
-        @{pls}-icon {
-            color: var(--yee-alert-warning-icon-color);
-        }
-    }
-
-    &-error {
-        background-color: var(--yee-alert-danger-bg-color);
-        border-color: var(--yee-alert-danger-border-color);
-
-        @{pls}-icon {
-            color: var(--yee-alert-danger-icon-color);
-        }
-    }
-
-    &-info {
-        background-color: var(--yee-alert-info-bg-color);
-        border-color: var(--yee-alert-info-border-color);
-
-        @{pls}-icon {
-            color: var(--yee-alert-info-icon-color);
-        }
-    }
-
-    // banner公告模式
-    &-banner {
-        padding: var(--yee-alert-banner-padding);
-        border: none;
-        border-radius: 0;
-    }
+  // banner公告模式
+  &-banner {
+    padding: var(--yee-alert-banner-padding);
+    border: none;
+    border-radius: 0;
+  }
 }

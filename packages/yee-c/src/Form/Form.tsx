@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../Config-Provider';
-import mergeContextToProps from '../utils/mergeContextToProps';
 import useEvent from '../hooks/useEvent';
+import mergeContextToProps from '../utils/mergeContextToProps';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
 import type { FormProps } from './interface';
@@ -48,7 +48,7 @@ const Form: React.FC<FormProps> = (baseprops) => {
         onFinishFailed: _onFinishFailed,
         onValuesChange: _onValuesChange,
         onValuesBeforeChange: _onValuesBeforeChange,
-        onReset: _onReset
+        onReset: _onReset,
       },
     });
   }, []); // 空依赖数组，确保只执行一次

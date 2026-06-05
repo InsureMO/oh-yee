@@ -5,7 +5,13 @@ import {
   ChevronRight,
   ChevronUp,
 } from 'lucide-react';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useElementSize from '../hooks/useElementSize';
 import mergeContextToProps from '../utils/mergeContextToProps';
@@ -83,11 +89,14 @@ const Carousel = React.forwardRef(
       [ref, sizeRef],
     );
 
-    const goto = useCallback((index: number) => {
-      beforeChange?.(current, index);
-      setCurrent(index);
-      afterChange?.(index);
-    }, [current, beforeChange, afterChange]);
+    const goto = useCallback(
+      (index: number) => {
+        beforeChange?.(current, index);
+        setCurrent(index);
+        afterChange?.(index);
+      },
+      [current, beforeChange, afterChange],
+    );
 
     const prev = useCallback(() => {
       goto(current - 1);
@@ -212,25 +221,28 @@ const Carousel = React.forwardRef(
           )}
           style={styles?.dot}
         >
-          {new Array(React.Children.count(children)).fill(0).map((i, index: number) => {
-            return (
-              <li
-                className={clsx({
-                  active:
-                    current === index + 1 || (current === 0 && index === count),
-                })}
-                tabIndex={0}
-                onClick={() => handleIndicator(index + 1, 'click')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleIndicator(index + 1, 'click');
-                  }
-                }}
-                onMouseEnter={() => handleIndicator(index + 1, 'hover')}
-                key={`${prefixCls}-bar-${index}`}
-              ></li>
-            );
-          })}
+          {new Array(React.Children.count(children))
+            .fill(0)
+            .map((i, index: number) => {
+              return (
+                <li
+                  className={clsx({
+                    active:
+                      current === index + 1 ||
+                      (current === 0 && index === count),
+                  })}
+                  tabIndex={0}
+                  onClick={() => handleIndicator(index + 1, 'click')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleIndicator(index + 1, 'click');
+                    }
+                  }}
+                  onMouseEnter={() => handleIndicator(index + 1, 'hover')}
+                  key={`${prefixCls}-bar-${index}`}
+                ></li>
+              );
+            })}
         </ul>
       ) : null;
     };
@@ -271,15 +283,19 @@ const Carousel = React.forwardRef(
           style={
             direction === 'horizontal'
               ? {
-                width: `${realTotal * containerSize}px`,
-                transform: `translateX(-${current * containerSize}px)`,
-                transition: transition ? `transform ${(animationDuration ?? DEFAULT_ANIMATION_DURATION) / 1000}s ease` : undefined,
-              }
+                  width: `${realTotal * containerSize}px`,
+                  transform: `translateX(-${current * containerSize}px)`,
+                  transition: transition
+                    ? `transform ${(animationDuration ?? DEFAULT_ANIMATION_DURATION) / 1000}s ease`
+                    : undefined,
+                }
               : {
-                height: `${realTotal * containerSize}px`,
-                transform: `translateY(-${current * containerSize}px)`,
-                transition: transition ? `transform ${(animationDuration ?? DEFAULT_ANIMATION_DURATION) / 1000}s ease` : undefined,
-              }
+                  height: `${realTotal * containerSize}px`,
+                  transform: `translateY(-${current * containerSize}px)`,
+                  transition: transition
+                    ? `transform ${(animationDuration ?? DEFAULT_ANIMATION_DURATION) / 1000}s ease`
+                    : undefined,
+                }
           }
           ref={loopRef}
         >

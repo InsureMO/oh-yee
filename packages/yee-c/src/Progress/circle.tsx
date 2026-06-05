@@ -106,7 +106,11 @@ const Circle = React.forwardRef<HTMLDivElement, CircleProps>((props, ref) => {
   };
 
   return (
-    <div className={`${prefixCls}-circle`} style={{ width, height: width }} ref={ref}>
+    <div
+      className={`${prefixCls}-circle`}
+      style={{ width, height: width }}
+      ref={ref}
+    >
       <svg className={`${prefixCls}-circle`} viewBox="0 0 120 120">
         <circle
           className={`${prefixCls}-circle-trail`}

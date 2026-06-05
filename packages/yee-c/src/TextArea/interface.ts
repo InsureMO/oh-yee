@@ -1,7 +1,9 @@
 export type CompositionDOM = 'input' | 'clear' | 'count';
 
-export interface TextAreaProps
-  extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+export interface TextAreaProps extends Omit<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  'onChange'
+> {
   /**
    * Custom class name prefix
    */
@@ -52,6 +54,8 @@ export interface TextAreaProps
    * */
   onChange?: (
     value: string,
-    event: React.ChangeEvent<HTMLTextAreaElement> | React.MouseEvent<HTMLSpanElement>,
+    event:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.MouseEvent<HTMLSpanElement>,
   ) => void;
 }

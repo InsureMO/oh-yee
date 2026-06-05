@@ -1,312 +1,325 @@
 @pls: .yee-menu;
 
 @{pls} {
-    position: relative;
-    margin: 0;
-    padding: var(--yee-menu-padding-short);
-    color: var(--yee-color-text);
+  position: relative;
+  margin: 0;
+  padding: var(--yee-menu-padding-short);
+  color: var(--yee-color-text);
+  list-style: none;
+  background-color: var(--yee-menu-bg-color);
+
+  &-root {
+    width: var(--yee-menu-width, 256px);
+    transition: width 0.2s ease-in-out;
+  }
+
+  // -------- horizontal --------
+  &-horizontal {
+    display: flex;
+    width: 100%;
+    border-bottom: var(
+      --yee-menu-horizontal-border-bottom,
+      1px solid var(--yee-color-border)
+    );
+
+    &@{pls}-root {
+      width: 100%;
+    }
+  }
+
+  // -------- item --------
+  &-item {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--yee-menu-item-height, 40px);
+    padding: var(--yee-menu-item-padding);
+    line-height: var(--yee-menu-item-line-height, 40px);
+    background-color: var(--yee-menu-item-bg-color);
+    border-radius: var(--yee-menu-item-border-radius);
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+      background-color 0.2s linear,
+      padding 0.2s ease-in-out;
+
+    &:not(&-selected):hover {
+      background-color: var(--yee-menu-item-title-bg-color);
+    }
+
+    &-icon {
+      display: inline-flex;
+      margin-right: var(--yee-menu-item-icon-margin-right);
+    }
+
+    &-content {
+      display: inline-block;
+      width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      user-select: none;
+      transition: opacity 0.15s ease;
+    }
+
+    &-switch {
+      line-height: 1;
+    }
+
+    &-selected {
+      color: var(--yee-menu-item-selected-color);
+      background-color: var(--yee-menu-item-selected-bg-color);
+    }
+
+    &-focused {
+      background-color: var(--yee-menu-item-focused-bg-color);
+    }
+  }
+
+  // -------- item group --------
+  &-item-group {
     list-style: none;
-    background-color: var(--yee-menu-bg-color);
 
-    &-root {
-        width: var(--yee-menu-width, 256px);
-        transition: width 0.2s ease-in-out;
+    &-title {
+      padding: var(--yee-menu-item-group-title-padding, 8px 16px);
+      color: var(
+        --yee-menu-item-group-title-color,
+        var(--yee-color-text-secondary)
+      );
+      font-size: var(--yee-menu-item-group-title-font-size, 12px);
+      line-height: var(--yee-menu-item-height, 40px);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
-    // -------- horizontal --------
+    &-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  }
+
+  // -------- item divider --------
+  &-item-divider {
+    margin: var(--yee-menu-item-divider-margin, 4px 0);
+    border-top: var(
+      --yee-menu-item-divider-border,
+      1px solid var(--yee-color-border)
+    );
+  }
+
+  // -------- submenu --------
+  &-submenu {
+    box-sizing: border-box;
+    line-height: var(--yee-menu-item-line-height, 40px);
+    cursor: pointer;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--yee-menu-item-padding);
+      border-radius: var(--yee-menu-item-border-radius);
+      cursor: pointer;
+      overflow: hidden;
+      transition:
+        background-color 0.2s linear,
+        padding 0.2s ease-in-out;
+
+      &:hover {
+        background-color: var(--yee-menu-item-title-hover-bg-color);
+      }
+    }
+
+    &-selected {
+      color: var(--yee-menu-submenu-selected-color);
+    }
+
+    &-focused {
+      background-color: var(--yee-menu-item-focused-bg-color);
+    }
+
+    // horizontal submenu
     &-horizontal {
-        display: flex;
-        width: 100%;
-        border-bottom: var(--yee-menu-horizontal-border-bottom, 1px solid var(--yee-color-border));
+      @{pls}-item-switch {
+        transform: rotate(-90deg);
+      }
+    }
+  }
 
-        &@{pls}-root {
-            width: 100%;
-        }
+  // -------- inline collapsed --------
+  &-inline-collapsed {
+    width: var(--yee-menu-collapsed-width, 48px) !important;
+
+    @{pls}-item,
+    @{pls}-submenu-title {
+      justify-content: center;
+      padding: 0;
+      overflow: hidden;
+
+      @{pls}-item-content {
+        opacity: 0;
+        transition: opacity 0.15s ease;
+      }
+
+      @{pls}-item-icon {
+        margin-right: 0;
+      }
+
+      @{pls}-item-switch {
+        display: none;
+      }
     }
 
-    // -------- item --------
-    &-item {
-        display: flex;
-        align-items: center;
-        box-sizing: border-box;
-        width: 100%;
-        height: var(--yee-menu-item-height, 40px);
-        padding: var(--yee-menu-item-padding);
-        line-height: var(--yee-menu-item-line-height, 40px);
-        background-color: var(--yee-menu-item-bg-color);
-        border-radius: var(--yee-menu-item-border-radius);
-        cursor: pointer;
-        overflow: hidden;
-        transition: background-color 0.2s linear, padding 0.2s ease-in-out;
+    // 无 icon 时显示首字符
+    &@{pls}-root {
+      @{pls}-item:not(:has(.yee-menu-item-icon)),
+      @{pls}-submenu-title:not(:has(.yee-menu-item-icon)) {
+        justify-content: center;
 
-        &:not(&-selected):hover {
-            background-color: var(--yee-menu-item-title-bg-color);
+        @{pls}-item-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 24px;
+          height: 24px;
+          font-size: 14px;
+          overflow: hidden;
+          opacity: 1;
         }
-
-        &-icon {
-            display: inline-flex;
-            margin-right: var(--yee-menu-item-icon-margin-right);
-        }
-
-        &-content {
-            display: inline-block;
-            width: 100%;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            font-size: 14px;
-            user-select: none;
-            transition: opacity 0.15s ease;
-        }
-
-        &-switch {
-            line-height: 1;
-        }
-
-        &-selected {
-            color: var(--yee-menu-item-selected-color);
-            background-color: var(--yee-menu-item-selected-bg-color);
-        }
-
-        &-focused {
-            background-color: var(--yee-menu-item-focused-bg-color);
-        }
+      }
     }
+  }
 
-    // -------- item group --------
-    &-item-group {
-        list-style: none;
+  &-root&-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
-        &-title {
-            padding: var(--yee-menu-item-group-title-padding, 8px 16px);
-            color: var(--yee-menu-item-group-title-color, var(--yee-color-text-secondary));
-            font-size: var(--yee-menu-item-group-title-font-size, 12px);
-            line-height: var(--yee-menu-item-height, 40px);
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
-        &-list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
+    & > .yee-menu-footer {
+      margin-top: auto;
     }
+  }
 
-    // -------- item divider --------
-    &-item-divider {
-        margin: var(--yee-menu-item-divider-margin, 4px 0);
-        border-top: var(--yee-menu-item-divider-border, 1px solid var(--yee-color-border));
-    }
-
-    // -------- submenu --------
-    &-submenu {
-        box-sizing: border-box;
-        line-height: var(--yee-menu-item-line-height, 40px);
-        cursor: pointer;
-
-        &-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: var(--yee-menu-item-padding);
-            border-radius: var(--yee-menu-item-border-radius);
-            cursor: pointer;
-            overflow: hidden;
-            transition: background-color 0.2s linear, padding 0.2s ease-in-out;
-
-            &:hover {
-                background-color: var(--yee-menu-item-title-hover-bg-color);
-            }
-        }
-
-        &-selected {
-            color: var(--yee-menu-submenu-selected-color);
-        }
-
-        &-focused {
-            background-color: var(--yee-menu-item-focused-bg-color);
-        }
-
-        // horizontal submenu
-        &-horizontal {
-            @{pls}-item-switch {
-                transform: rotate(-90deg);
-            }
-        }
-    }
-
-    // -------- inline collapsed --------
-    &-inline-collapsed {
-        width: var(--yee-menu-collapsed-width, 48px) !important;
-
-        @{pls}-item,
-        @{pls}-submenu-title {
-            justify-content: center;
-            padding: 0;
-            overflow: hidden;
-
-            @{pls}-item-content {
-                opacity: 0;
-                transition: opacity 0.15s ease;
-            }
-
-            @{pls}-item-icon {
-                margin-right: 0;
-            }
-
-            @{pls}-item-switch {
-                display: none;
-            }
-        }
-
-        // 无 icon 时显示首字符
-        &@{pls}-root {
-            @{pls}-item:not(:has(.yee-menu-item-icon)),
-            @{pls}-submenu-title:not(:has(.yee-menu-item-icon)) {
-                justify-content: center;
-
-                @{pls}-item-content {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 24px;
-                    height: 24px;
-                    font-size: 14px;
-                    overflow: hidden;
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
-    &-root&-inline {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-
-        & > .yee-menu-footer {
-            margin-top: auto;
-        }
-    }
-
-    &-footer {
-        width: 100%;
-    }
+  &-footer {
+    width: 100%;
+  }
 }
 
 ul.yee-menu-sub:not(.yee-menu-inline) {
-    padding: var(--yee-menu-padding, 4px 0) !important;
-    border-radius: var(--yee-menu-sub-border-radius);
-    box-shadow: var(--yee-box-shadow-color);
+  padding: var(--yee-menu-padding, 4px 0) !important;
+  border-radius: var(--yee-menu-sub-border-radius);
+  box-shadow: var(--yee-box-shadow-color);
 }
 
 .yee-menu-submenu-open .yee-menu-inline {
-    padding: var(--yee-menu-padding, 4px 0) !important;
+  padding: var(--yee-menu-padding, 4px 0) !important;
 }
 
 .yee-menu-item,
 .yee-menu-submenu-title {
-    &:not(.disabled) {
-        cursor: pointer;
+  &:not(.disabled) {
+    cursor: pointer;
 
-        &:not(@{pls}-item-selected):hover {
-            color: var(--yee-menu-item-hover-color);
-            background-color: var(--yee-menu-item-hover-bg-color);
+    &:not(@{pls}-item-selected):hover {
+      color: var(--yee-menu-item-hover-color);
+      background-color: var(--yee-menu-item-hover-bg-color);
 
-            .yee-menu-item-switch {
-                color: var(--yee-menu-item-arrow-hover-color);
-            }
-        }
-
-        &@{pls}-item-selected {
-            color: var(--yee-menu-item-selected-color);
-            background-color: var(--yee-menu-item-selected-bg-color);
-
-            @{pls}-item-switch {
-                color: var(--yee-menu-item-arrow-selected-color);
-            }
-        }
+      .yee-menu-item-switch {
+        color: var(--yee-menu-item-arrow-hover-color);
+      }
     }
 
-    display: flex;
+    &@{pls}-item-selected {
+      color: var(--yee-menu-item-selected-color);
+      background-color: var(--yee-menu-item-selected-bg-color);
+
+      @{pls}-item-switch {
+        color: var(--yee-menu-item-arrow-selected-color);
+      }
+    }
+  }
+
+  display: flex;
+  align-items: center;
+  height: var(--yee-menu-item-height, 32px);
+  padding: var(--yee-menu-item-padding);
+
+  .yee-menu-item-icon {
+    display: inline-flex;
     align-items: center;
-    height: var(--yee-menu-item-height, 32px);
-    padding: var(--yee-menu-item-padding);
+    width: var(--yee-menu-item-icon-size);
+    height: var(--yee-menu-item-icon-size);
+  }
 
-    .yee-menu-item-icon {
-        display: inline-flex;
-        align-items: center;
-        width: var(--yee-menu-item-icon-size);
-        height: var(--yee-menu-item-icon-size);
-    }
+  .yee-menu-item-label {
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-inline-start: var(--yee-menu-item-label-margin-inline-start);
+  }
 
-    .yee-menu-item-label {
-        flex-grow: 1;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        margin-inline-start: var(--yee-menu-item-label-margin-inline-start);
-    }
-
-    .yee-menu-item-switch {
-        display: inline-flex;
-        margin-left: var(--yee-menu-item-switch-margin-left);
-        color: var(--yee-menu-item-arrow-color);
-    }
+  .yee-menu-item-switch {
+    display: inline-flex;
+    margin-left: var(--yee-menu-item-switch-margin-left);
+    color: var(--yee-menu-item-arrow-color);
+  }
 }
 
 .yee-menu-submenu-title {
-    position: relative;
+  position: relative;
 }
 
 // vertical
 .yee-menu-vertical {
-    width: var(--yee-menu-vertical-width);
+  min-width: var(--yee-menu-vertical-width);
 }
 
 .yee-menu-submenu-vertical {
-    position: relative;
-    transition: width 0.3s ease-in-out;
+  position: relative;
+  transition: width 0.3s ease-in-out;
 
-    .yee-menu-vertical {
-        position: absolute;
-        top: var(--yee-menu-submenu-vertical-top);
-        left: 100%;
-    }
+  .yee-menu-vertical {
+    position: absolute;
+    top: var(--yee-menu-submenu-vertical-top);
+    left: 100%;
+  }
 
-    &.yee-menu-submenu-close {
-        &>.yee-menu-vertical {
-            display: none;
-        }
+  &.yee-menu-submenu-close {
+    & > .yee-menu-vertical {
+      display: none;
     }
+  }
 
-    &.yee-menu-submenu-open {
-        &>.yee-menu-vertical {
-            display: block;
-        }
+  &.yee-menu-submenu-open {
+    & > .yee-menu-vertical {
+      display: block;
     }
+  }
 }
 
 // 子菜单关闭
 .yee-menu-submenu-close {
-    &.yee-menu-submenu-inline {
-        &>.yee-menu-submenu-title {
-            .yee-menu-item-switch>span {
-                transition: transform 0.2s linear;
-            }
-        }
+  &.yee-menu-submenu-inline {
+    & > .yee-menu-submenu-title {
+      .yee-menu-item-switch > span {
+        transition: transform 0.2s linear;
+      }
     }
+  }
 }
 
 // 子菜单打开
 .yee-menu-submenu-open {
-    &.yee-menu-submenu-inline {
-        &>.yee-menu-submenu-title {
-            .yee-menu-item-switch>span {
-                transform: rotateX(180deg);
-                transition: transform 0.2s linear;
-            }
-        }
+  &.yee-menu-submenu-inline {
+    & > .yee-menu-submenu-title {
+      .yee-menu-item-switch > span {
+        transform: rotateX(180deg);
+        transition: transform 0.2s linear;
+      }
     }
+  }
 }

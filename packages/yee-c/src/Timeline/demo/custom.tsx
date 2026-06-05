@@ -4,7 +4,9 @@ import React from 'react';
 export default () => {
   return (
     <Timeline>
-      <Timeline.Item index={1} dot="🔑">Create a services site 2015-09-01</Timeline.Item>
+      <Timeline.Item index={1} dot="🔑">
+        Create a services site 2015-09-01
+      </Timeline.Item>
       <Timeline.Item index={2} dot="🔧" color="blue">
         Solve initial network problems 2015-09-01
       </Timeline.Item>

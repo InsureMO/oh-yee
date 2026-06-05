@@ -1,16 +1,23 @@
-import React, { useMemo, forwardRef, useContext } from 'react';
 import clsx from 'clsx';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { forwardRef, useContext, useMemo } from 'react';
 import Button from '../Button';
-import TransferList from './transfer-list';
-import useMergedState from '../hooks/useMergedState';
 import { GlobalContext } from '../Config-Provider';
-import mergeContextToProps from '../utils/mergeContextToProps'
-import type { Key, DataSource, TransferProps, TransferContextValue } from './interface';
+import useMergedState from '../hooks/useMergedState';
+import mergeContextToProps from '../utils/mergeContextToProps';
+import type {
+  DataSource,
+  Key,
+  TransferContextValue,
+  TransferProps,
+} from './interface';
+import TransferList from './transfer-list';
 
 import './style/index.less';
 
-export const TransferContext = React.createContext<TransferContextValue & { prefixCls: string }>({
+export const TransferContext = React.createContext<
+  TransferContextValue & { prefixCls: string }
+>({
   rowKey: 'key',
   rowLabel: 'label',
   prefixCls: 'yee-transfer',
@@ -48,10 +55,13 @@ const Transfer = forwardRef<HTMLDivElement, TransferProps>((baseprops, ref) => {
     defaultValue: defaultTargetKeys,
   });
 
-  const [mergedSelectedKeys, setMergedSelectedKeys] = useMergedState<Key[]>([], {
-    value: selectedKeys,
-    defaultValue: defaultSelectedKeys,
-  });
+  const [mergedSelectedKeys, setMergedSelectedKeys] = useMergedState<Key[]>(
+    [],
+    {
+      value: selectedKeys,
+      defaultValue: defaultSelectedKeys,
+    },
+  );
 
   const [leftData, rightData, leftDataKeys, rightDataKeys] = useMemo(() => {
     if (!Array.isArray(dataSource) || dataSource.length === 0) {
@@ -76,7 +86,13 @@ const Transfer = forwardRef<HTMLDivElement, TransferProps>((baseprops, ref) => {
 
     if (right.length && draggable && mergedTargetKeys) {
       const sortedRight = mergedTargetKeys
-        .map((key: Key) => right.find((item: DataSource) => item[typeof rowKey === 'function' ? rowKey(item) : rowKey] === key))
+        .map((key: Key) =>
+          right.find(
+            (item: DataSource) =>
+              item[typeof rowKey === 'function' ? rowKey(item) : rowKey] ===
+              key,
+          ),
+        )
         .filter(Boolean) as DataSource[];
       return [left, sortedRight, leftKeys, mergedTargetKeys];
     }
@@ -106,7 +122,7 @@ const Transfer = forwardRef<HTMLDivElement, TransferProps>((baseprops, ref) => {
   const triggerChange = (
     newTargetKeys: Key[],
     direction: 'left' | 'right',
-    moveKeys: Key[]
+    moveKeys: Key[],
   ) => {
     setMergedTargetKeys(newTargetKeys);
     onChange?.(newTargetKeys, direction, moveKeys);
@@ -151,7 +167,9 @@ const Transfer = forwardRef<HTMLDivElement, TransferProps>((baseprops, ref) => {
   };
 
   const moveToLeft = () => {
-    const newTargetKeys = rightDataKeys.filter((k: Key) => !rightSelectedKeys.includes(k));
+    const newTargetKeys = rightDataKeys.filter(
+      (k: Key) => !rightSelectedKeys.includes(k),
+    );
     setMergedSelectedKeys([...leftSelectedKeys]);
     onSelectChange?.(leftSelectedKeys, []);
     triggerChange(newTargetKeys, 'left', rightSelectedKeys);
@@ -195,7 +213,7 @@ const Transfer = forwardRef<HTMLDivElement, TransferProps>((baseprops, ref) => {
         {
           [`${prefixCls}-disabled`]: disabled,
         },
-        className
+        className,
       )}
       style={style}
       {...rest}
@@ -241,4 +259,10 @@ const Transfer = forwardRef<HTMLDivElement, TransferProps>((baseprops, ref) => {
 Transfer.displayName = 'Transfer';
 
 export default Transfer;
-export type { Key, DataSource, TransferProps, TransferListProps, TransferContextValue } from './interface';
+export type {
+  DataSource,
+  Key,
+  TransferContextValue,
+  TransferListProps,
+  TransferProps,
+} from './interface';

@@ -1,23 +1,29 @@
 import clsx from 'clsx';
 import {
+  Download,
   FlipHorizontal,
   FlipVertical,
+  Maximize,
   RotateCcw,
   RotateCw,
-  Maximize,
   ZoomIn,
   ZoomOut,
-  Download,
 } from 'lucide-react';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import Space from '../Space';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Button from '../Button';
-import Divider from '../Divider';
 import { GlobalContext } from '../Config-Provider';
+import Divider from '../Divider';
+import Space from '../Space';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import useMove from './hooks/useMove';
-import { PopupCtx } from './popup';
 import type { ImageViewerProps } from './interface';
+import { PopupCtx } from './popup';
 
 import './style/index.less';
 
@@ -43,7 +49,7 @@ const ImageViewer: React.FC<ImageViewerProps> = (baseprops) => {
     ...rest
   } = props;
 
-  const { open, onClose, popup } = useContext(PopupCtx);
+  const { popup } = useContext(PopupCtx);
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
   const [scaleX, setScaleX] = useState(1);
@@ -54,7 +60,9 @@ const ImageViewer: React.FC<ImageViewerProps> = (baseprops) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const initRatio = useRef(0);
 
-  const { onMove, onTouchStart, moveX, moveY, reset } = useMove(imgRef, { moveable: true });
+  const { onMove, onTouchStart, moveX, moveY, reset } = useMove(imgRef, {
+    moveable: true,
+  });
 
   useEffect(() => {
     const img = imgRef.current;
@@ -117,7 +125,8 @@ const ImageViewer: React.FC<ImageViewerProps> = (baseprops) => {
     a.click();
   }, [src, name]);
 
-  const toolbarDirection = position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
+  const toolbarDirection =
+    position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
   const zoomPercent = `${(scale * 100).toFixed(0)}%`;
 
   return (
@@ -135,19 +144,67 @@ const ImageViewer: React.FC<ImageViewerProps> = (baseprops) => {
         className={clsx(`${prefixCls}-toolbar`, classNames?.toolbar)}
         style={styles?.toolbar}
       >
-        <Button type="text" icon={<FlipHorizontal size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} onClick={handleFlipX} aria-label="Flip horizontal" />
-        <Button type="text" icon={<FlipVertical size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} onClick={handleFlipY} aria-label="Flip vertical" />
-        <Button type="text" icon={<RotateCcw size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} onClick={handleRotateCcw} aria-label="Rotate counterclockwise" />
-        <Button type="text" icon={<RotateCw size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} onClick={handleRotateCw} aria-label="Rotate clockwise" />
+        <Button
+          type="text"
+          icon={
+            <FlipHorizontal size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />
+          }
+          onClick={handleFlipX}
+          aria-label="Flip horizontal"
+        />
+        <Button
+          type="text"
+          icon={
+            <FlipVertical size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />
+          }
+          onClick={handleFlipY}
+          aria-label="Flip vertical"
+        />
+        <Button
+          type="text"
+          icon={<RotateCcw size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />}
+          onClick={handleRotateCcw}
+          aria-label="Rotate counterclockwise"
+        />
+        <Button
+          type="text"
+          icon={<RotateCw size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />}
+          onClick={handleRotateCw}
+          aria-label="Rotate clockwise"
+        />
         {!popup && (
-          <Button type="text" icon={<Maximize size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} onClick={handleFullscreen} aria-label="Fullscreen" />
+          <Button
+            type="text"
+            icon={<Maximize size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />}
+            onClick={handleFullscreen}
+            aria-label="Fullscreen"
+          />
         )}
         <Divider type="vertical" />
-        <Button type="text" icon={<ZoomOut size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} disabled={scale === min} onClick={handleMinus} aria-label="Zoom out" />
-        <span className={`${prefixCls}-zoom`} role="status" aria-live="polite">{zoomPercent}</span>
-        <Button type="text" icon={<ZoomIn size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} disabled={scale === max} onClick={handlePlus} aria-label="Zoom in" />
+        <Button
+          type="text"
+          icon={<ZoomOut size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />}
+          disabled={scale === min}
+          onClick={handleMinus}
+          aria-label="Zoom out"
+        />
+        <span className={`${prefixCls}-zoom`} role="status" aria-live="polite">
+          {zoomPercent}
+        </span>
+        <Button
+          type="text"
+          icon={<ZoomIn size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />}
+          disabled={scale === max}
+          onClick={handlePlus}
+          aria-label="Zoom in"
+        />
         <Divider type="vertical" />
-        <Button type="text" icon={<Download size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />} onClick={handleDownload} aria-label="Download image" />
+        <Button
+          type="text"
+          icon={<Download size={ICON_SIZE} strokeWidth={ICON_STROKE_WIDTH} />}
+          onClick={handleDownload}
+          aria-label="Download image"
+        />
       </Space>
       <div
         className={clsx(`${prefixCls}-wrapper`, classNames?.wrapper)}

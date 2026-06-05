@@ -1,4 +1,4 @@
-import { Button, Dialog, Space, Divider } from '@rainbow-oh/yee-c';
+import { Button, Dialog, Divider, Space } from '@rainbow-oh/yee-c';
 import React, { useState } from 'react';
 
 export default () => {
@@ -20,7 +20,9 @@ export default () => {
             onCancel={() => setOpen1(false)}
             onConfirm={() => setOpen1(false)}
           >
-            <p>Drag this dialog, it will be constrained within the window bounds.</p>
+            <p>
+              Drag this dialog, it will be constrained within the window bounds.
+            </p>
             <p>Default: dragLimitInWindow = true</p>
           </Dialog>
 
@@ -33,7 +35,9 @@ export default () => {
             onCancel={() => setOpen2(false)}
             onConfirm={() => setOpen2(false)}
           >
-            <p>This dialog can be dragged to any position outside the window.</p>
+            <p>
+              This dialog can be dragged to any position outside the window.
+            </p>
             <p>Setting: dragLimitInWindow = false</p>
           </Dialog>
         </Space>

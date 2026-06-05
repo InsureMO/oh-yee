@@ -50,10 +50,15 @@ const InternalBadge: React.FC<BadgeProps> = (baseprops) => {
 
       return (
         <span
-          className={clsx(cls, `${prefixCls}-count`, {
-            [`${prefixCls}-multi`]: count > 9,
-            [`${prefixCls}-sup-${size}`]: size,
-          }, classNames?.badge)}
+          className={clsx(
+            cls,
+            `${prefixCls}-count`,
+            {
+              [`${prefixCls}-multi`]: count > 9,
+              [`${prefixCls}-sup-${size}`]: size,
+            },
+            classNames?.badge,
+          )}
           style={{ backgroundColor: color, ...styles?.badge }}
         >
           {count > overflowCount ? `${overflowCount}+` : count}
@@ -98,9 +103,13 @@ const InternalBadge: React.FC<BadgeProps> = (baseprops) => {
 
       return (
         <sup
-          className={clsx(`${prefixCls}-sup`, {
-            [`${prefixCls}-sup-${size}`]: size,
-          }, classNames?.sup)}
+          className={clsx(
+            `${prefixCls}-sup`,
+            {
+              [`${prefixCls}-sup-${size}`]: size,
+            },
+            classNames?.sup,
+          )}
           title={supTitle}
           style={{ ...supStyle, ...styles?.sup }}
         >

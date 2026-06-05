@@ -8,7 +8,11 @@ export default () => {
 
   return (
     <div style={{ width: 300 }}>
-      <Search placeholder="input search text" bordered={false} onSearch={onSearch} />
+      <Search
+        placeholder="input search text"
+        bordered={false}
+        onSearch={onSearch}
+      />
     </div>
   );
 };

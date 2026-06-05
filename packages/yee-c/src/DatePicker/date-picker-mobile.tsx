@@ -1,15 +1,15 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { Calendar } from 'lucide-react';
 import React, { FC, useCallback, useEffect, useState } from 'react';
+import Button from '../Button';
+import Drawer from '../Drawer';
 import useEvent from '../hooks/useEvent';
 import useMergedState from '../hooks/useMergedState';
 import Input from '../Input';
+import { useLocale } from '../locale';
 import pickerUtils from '../PickerPanel/utils/pickerUtils';
-import Drawer from '../Drawer';
-import Button from '../Button';
 import WheelPicker from '../WheelPicker';
 import useWheelDateColumns from './hooks/use-wheel-columns';
-import { useLocale } from '../locale';
 import type { DatePickerProps } from './interface';
 
 // import './style/mobile.less';
@@ -45,7 +45,8 @@ const DatePickerMobile: FC<DatePickerProps> = (props) => {
         if (pickerUtils.isValid(d)) return _date;
       }
       if (dayjs.isDayjs(_date)) {
-        if (pickerUtils.isValid(_date)) return pickerUtils.format(_date, saveFormat);
+        if (pickerUtils.isValid(_date))
+          return pickerUtils.format(_date, saveFormat);
       }
     },
   );
@@ -64,11 +65,12 @@ const DatePickerMobile: FC<DatePickerProps> = (props) => {
     if (mergedValue) {
       const date = pickerUtils.init(mergedValue as string, saveFormat);
       setPickerValue(date);
-      const show = picker === 'week'
-        ? `${date.year()}-${date.week()}`
-        : picker === 'quarter'
-          ? `Q${date.quarter()}`
-          : pickerUtils.format(date, format);
+      const show =
+        picker === 'week'
+          ? `${date.year()}-${date.week()}`
+          : picker === 'quarter'
+            ? `Q${date.quarter()}`
+            : pickerUtils.format(date, format);
       setInputValue(show as string);
     } else {
       setPickerValue(undefined);
@@ -118,10 +120,7 @@ const DatePickerMobile: FC<DatePickerProps> = (props) => {
 
   return (
     <>
-      <div
-        className={`${prefixCls}-trigger`}
-        onClick={handleOpen}
-      >
+      <div className={`${prefixCls}-trigger`} onClick={handleOpen}>
         <Input
           readOnly
           value={inputValue}

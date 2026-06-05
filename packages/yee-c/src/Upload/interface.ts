@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import type { DataAttributeProps } from '../utils/types';
 
 export type UploadFile = {
@@ -119,15 +119,17 @@ export interface UploadProps extends DataAttributeProps {
    * Whether to show the uploaded file list
    * @default true
    */
-  showUploadList?: boolean | {
-    showTooltip?: boolean;
-    showRemoveIcon?: boolean;
-    showReload?: boolean;
-    showPreviewIcon?: boolean;
-    removeIcon?: React.ReactNode;
-    reloadIcon?: React.ReactNode;
-    previewIcon?: React.ReactNode;
-  };
+  showUploadList?:
+    | boolean
+    | {
+        showTooltip?: boolean;
+        showRemoveIcon?: boolean;
+        showReload?: boolean;
+        showPreviewIcon?: boolean;
+        removeIcon?: React.ReactNode;
+        reloadIcon?: React.ReactNode;
+        previewIcon?: React.ReactNode;
+      };
   /**
    * Custom upload list item render
    */
