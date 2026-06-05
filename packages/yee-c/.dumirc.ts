@@ -2,8 +2,8 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   outputPath: 'docs-dist',
-  base: '/',
-  publicPath: '/',
+  base: '/oh-yee/',
+  publicPath: '/oh-yee/',
 
   // Register custom plugins: support .md suffix and ?md=raw parameter
   plugins: ['./.dumi/plugin-md-raw.ts', './.dumi/plugin-theme-css.ts'],
