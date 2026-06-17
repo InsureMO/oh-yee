@@ -2,8 +2,8 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   outputPath: 'docs-dist',
-  base: '/oh-yee/',
-  publicPath: '/oh-yee/',
+  base: '/oh-yee/yee-c',
+  publicPath: '/oh-yee/yee-c',
 
   // Register custom plugins: support .md suffix and ?md=raw parameter
   plugins: ['./.dumi/plugin-md-raw.ts', './.dumi/plugin-theme-css.ts'],
@@ -31,7 +31,7 @@ export default defineConfig({
     },
 
     socialLinks: {
-      github: 'https://github.com/InsureMO/oh-yee'
+      github: 'https://github.com/InsureMO/oh-yee',
     },
   },
 

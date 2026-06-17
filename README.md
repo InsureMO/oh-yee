@@ -44,6 +44,12 @@ import { AIRenderer, Bubble, Markdown, Sender } from '@rainbow-oh/yee-x';
 import { FetchUtils, DateUtils, StringUtils } from '@rainbow-oh/yee-tools';
 ```
 
+## Document
+
+- [@rainbow-oh/yee-c](https://insuremo.github.io/oh-yee/yee-c)
+- [@rainbow-oh/yee-x](https://insuremo.github.io/oh-yee/yee-x)
+
+
 ## Development
 
 ```bash
