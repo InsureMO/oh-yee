@@ -48,8 +48,7 @@
   "files": [
     "dist",
     "src",
-    "README.md",
-    "agents.md"
+    "README.md"
   ],
   "scripts": {
     "build": "node scripts/generate-version.js && rm -rf dist && father build",
