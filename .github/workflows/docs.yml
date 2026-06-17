@@ -34,10 +34,22 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build yee-c docs
-        run: cd packages/yee-c && npx dumi build
+        run: pnpm --filter @rainbow-oh/yee-c docs:build
 
       - name: Build yee-x docs
-        run: cd packages/yee-x && npx dumi build
+        run: pnpm --filter @rainbow-oh/yee-x docs:build
+
+      - name: Verify docs output
+        run: |
+          for pkg in yee-c yee-x; do
+            echo "::group::ls packages/$pkg (expecting docs-dist/)"
+            ls -la packages/$pkg/docs-dist >/dev/null 2>&1 || {
+              echo "ERROR: packages/$pkg/docs-dist missing. Build output dirs:";
+              ls -d packages/$pkg/* 2>/dev/null;
+              exit 1;
+            }
+            echo "::endgroup::"
+          done
 
       - name: Merge docs into site
         run: |
