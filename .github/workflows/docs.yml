@@ -59,7 +59,7 @@ jobs:
       - name: Merge docs into site
         run: |
           mkdir -p _site/yee-c
-          cp -r packages/yee-c/docs-dist/* _site/yee-c/
+          cp -r packages/yee-c/docs-dist/* _site/
           mkdir -p _site/yee-x
           cp -r packages/yee-x/docs-dist/* _site/yee-x/
 
