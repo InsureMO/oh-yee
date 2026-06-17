@@ -1,0 +1,22 @@
+@pls: .yee-process;
+
+@{pls} {
+  display: inline-block;
+
+  &-wrapper {
+    overflow: hidden;
+    height: 22px;
+
+    &-mask {
+      display: inline-flex;
+      flex-direction: column;
+    }
+  }
+
+  &-message {
+    display: inline-block;
+    line-height: 22px;
+    font-size: 14px;
+    color: var(--yee-process-message-color);
+  }
+}

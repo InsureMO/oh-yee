@@ -1,24 +1,48 @@
 name: Release
 
+# Triggered by pushing an independent-package tag, e.g. @rainbow-oh/yee-c@0.2.0
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
-    branches: [main]
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+  push:
+    tags:
+      - '@rainbow-oh/*@*'
 
 permissions:
   contents: write
-  pull-requests: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release:
-    name: Release
+    name: Publish package
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Parse tag
+        id: tag
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          echo "Tag: $tag"
+          pkg="${tag%@*}"        # @rainbow-oh/yee-c
+          version="${tag##*@}"   # 0.2.0
+          if [ -z "$pkg" ] || [ -z "$version" ] || [ "$pkg" = "$tag" ]; then
+            echo "::error::Tag '$tag' is not in @scope/name@version form"
+            exit 1
+          fi
+          echo "package=$pkg" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure tag is on main
+        run: |
+          git fetch origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::Tag ${{ steps.tag.outputs.package }}@${{ steps.tag.outputs.version }} is not reachable from main"
+            exit 1
+          fi
 
       - uses: pnpm/action-setup@v4
 
@@ -31,18 +55,28 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Verify package version matches tag
+        run: |
+          pkg="${{ steps.tag.outputs.package }}"
+          want="${{ steps.tag.outputs.version }}"
+          found=$(node -e 'const fs=require("fs");for(const d of fs.readdirSync("packages")){try{const p=require("./packages/"+d+"/package.json");if(p.name===process.argv[1]){process.stdout.write(p.version);break;}}catch{}}' "$pkg")
+          if [ -z "$found" ]; then echo "::error::package $pkg not found under packages/*"; exit 1; fi
+          if [ "$found" != "$want" ]; then echo "::error::$pkg version is $found, but tag says $want"; exit 1; fi
+          echo "Version OK: $pkg@$found"
+
       - name: Build
         run: pnpm build
 
-      - name: Create Release Pull Request or Publish
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: pnpm release
-          version: "pnpm version"
-          title: "chore(release): version packages"
-          commit: "chore(release): version packages"
+      - name: Publish to npm
+        run: pnpm publish --filter "${{ steps.tag.outputs.package }}" --access public --no-git-checks
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ steps.tag.outputs.package }}@${{ steps.tag.outputs.version }}" \
+            --generate-notes \
+            --verify-tag
