@@ -4,7 +4,7 @@ import { GlobalContext } from '../Config-Provider';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import SplitterHandler from './splitter-handler';
 
-import type { SplitterItemProps, SplitterProps } from './interface';
+import type { PanelRect, SplitterItemProps, SplitterProps } from './interface';
 import './style/index.less';
 
 type SplitterWrapperCtxType = {
@@ -13,7 +13,7 @@ type SplitterWrapperCtxType = {
 
 type SplitterCtxType = {
   prefixCls: string;
-  onResize?: (sizes: number[]) => void;
+  onResize?: (sizes: PanelRect[]) => void;
 };
 
 export const SplitterWrapperCtx = React.createContext<SplitterWrapperCtxType>({
@@ -23,14 +23,6 @@ export const SplitterWrapperCtx = React.createContext<SplitterWrapperCtxType>({
 export const SplitterCtx = React.createContext<SplitterCtxType>({
   prefixCls: '',
 });
-
-export type PanelRect = {
-  type: 'default' | 'percent' | 'auto';
-  size: number;
-  currentSize: number;
-  min?: string | number;
-  max?: string | number;
-};
 
 const getPanelSize = (
   children: React.ReactNode,
@@ -156,63 +148,66 @@ const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
   const arr = React.Children.toArray(children);
 
   React.Children.forEach(children, (child, index) => {
-    const n = index + 1;
-    const { style } = child.props || {};
-    let currentSize;
-    let min = undefined;
-    let max = undefined;
-    if (itemsSize && itemsSize[index]) {
-      ({ currentSize, min, max } = itemsSize[index]);
+    if (React.isValidElement(child)) {
+      const n = index + 1;
+      const { style } = child.props || ({} as any);
+      let currentSize;
+      let min = undefined;
+      let max = undefined;
+      if (itemsSize && itemsSize[index]) {
+        ({ currentSize, min, max } = itemsSize[index]);
+      }
+
+      wrappered.push(
+        React.cloneElement(child, {
+          // @ts-ignore
+          style: {
+            ...style, // If there is a border or other size-related design, it may cause calculation issues
+            flexBasis: currentSize,
+          },
+          min,
+          max,
+          index: n,
+          key: n,
+          ref: (el: HTMLDivElement) => {
+            refs.current[`item${n}`] = {
+              el: el,
+              props: child.props as SplitterItemProps,
+              size: { min, max },
+            };
+          },
+        }),
+      );
+      const next = arr[index + 1];
+
+      if (!next || !React.isValidElement(next)) {
+        return;
+      }
+
+      const { flexable, expandable } = child.props || ({} as any);
+      const { expandable: nextExpandable } = next.props || ({} as any);
+
+      const _expandable = { start: false, end: false };
+
+      if (expandable) {
+        _expandable.start = true;
+      }
+
+      if (nextExpandable) {
+        _expandable.end = true;
+      }
+
+      wrappered.push(
+        <SplitterHandler
+          {...props}
+          index={n}
+          flexable={flexable}
+          expandable={_expandable}
+          onClick={onClick}
+          key={`handler-${n}`}
+        />,
+      );
     }
-
-    wrappered.push(
-      React.cloneElement(child, {
-        style: {
-          ...style, // If there is a border or other size-related design, it may cause calculation issues
-          flexBasis: currentSize,
-        },
-        min,
-        max,
-        index: n,
-        key: n,
-        ref: (el: HTMLDivElement) => {
-          refs.current[`item${n}`] = {
-            el: el,
-            props: child.props,
-            size: { min, max },
-          };
-        },
-      }),
-    );
-    const next = arr[index + 1];
-
-    if (!next || !React.isValidElement(next)) {
-      return;
-    }
-
-    const { flexable, expandable } = child.props || {};
-    const { expandable: nextExpandable } = next.props || ({} as any);
-
-    const _expandable = { start: false, end: false };
-
-    if (expandable) {
-      _expandable.start = true;
-    }
-
-    if (nextExpandable) {
-      _expandable.end = true;
-    }
-
-    wrappered.push(
-      <SplitterHandler
-        {...props}
-        index={n}
-        flexable={flexable}
-        expandable={_expandable}
-        onClick={onClick}
-        key={`handler-${n}`}
-      />,
-    );
   });
 
   return (

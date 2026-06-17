@@ -15,13 +15,13 @@ export default () => {
       <Form form={form} onFinish={onFinish} layout="vertical">
         <Form.List
           name="users"
-          initialValue={[
-            {
-              name: '',
-              age: '',
-              address: '',
-            },
-          ]}
+          // initialValue={[
+          //   {
+          //     name: '',
+          //     age: '',
+          //     address: '',
+          //   },
+          // ]}
         >
           {(fields, operations) => {
             // Define column config - operations are accessible here

@@ -98,6 +98,11 @@ export interface CheckboxGroupProps {
    */
   options?: Array<CheckboxOption>;
   /**
+   * group layout
+   * @default horizontal
+   */
+  layout?: 'horizontal' | 'vertical';
+  /**
    * Callback when value changes
    */
   onChange?: (value: Array<string | number>) => void;

@@ -10,8 +10,18 @@
       var(--yee-splitter-border-color);
   }
 
+  &-horizontal {
+    @{pls}-handler {
+      cursor: e-resize;
+    }
+  }
+
   &-vertical {
     flex-direction: column;
+
+    @{pls}-handler {
+      cursor: n-resize;
+    }
   }
 }
 
@@ -77,7 +87,18 @@
       transition:
         background 0.2s ease-in-out,
         opacity 0.2s ease-in-out;
+      border-radius: 2px;
       content: '';
+    }
+
+    &:hover {
+      &::after {
+        background-color: color-mix(
+          in srgb,
+          var(--yee-splitter-handler-color),
+          black 20%
+        );
+      }
     }
   }
 

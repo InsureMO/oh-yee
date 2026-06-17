@@ -17,6 +17,7 @@ Anchor component for linking to specific sections within a page.
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Anchor"></code>
 <code src="./demo/direction.tsx" title="Direction" description="Vertical and horizontal directions"></code>
 <code src="./demo/controlled.tsx" title="Controlled" description="Controlled mode with activeKey"></code>
+<code src="./demo/auto.tsx" title="Auto" description="Generate the anchor list from the DOM"></code>
 
 ## API
 
@@ -68,6 +69,22 @@ Anchor component for linking to specific sections within a page.
 | Type |
 | --- |
 | `'item' \| 'active' \| 'content'` |
+
+## Auto mode
+
+When `auto` is set together with `name`, the component scans the DOM for elements tagged with `data-anchor-group="<name>"` and generates the anchor list automatically. Each target element must be annotated with:
+
+| Attribute | Description |
+| --- | --- |
+| `data-anchor-group` | Group name, must equal `name` |
+| `id` | Used as the anchor key and scroll target (required) |
+| `data-anchor-title` | Nav item label (required; a section without it is skipped) |
+| `data-anchor-status` | Optional status, `success` / `error` / `warning` |
+
+Notes:
+
+- `auto` and `items` are mutually exclusive; when both are provided, the `auto` scan result wins and `items` is ignored.
+- The DOM is scanned once on mount. If the target sections are rendered asynchronously, make sure they exist in the DOM at mount time, otherwise they will not be picked up.
 
 ## Notes
 

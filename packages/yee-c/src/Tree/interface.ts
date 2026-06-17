@@ -1,5 +1,9 @@
 export type SemanticType = '';
 
+export type DragPosition = 'before' | 'after' | 'inside';
+
+export type { MoveInfo } from './utils/tree-tools';
+
 export type TreeNode<T> = {
   /**
    * uid
@@ -104,6 +108,30 @@ export interface TreeProps<T> {
    * Whether to allow dragging
    */
   draggable?: boolean;
+  /**
+   * Whether to allow dropping a dragged node at the given position.
+   * Return false to forbid the drop (cursor shows "no-drop").
+   */
+  allowDrop?: (info: {
+    dragNode: T;
+    dropNode: T;
+    position: DragPosition;
+  }) => boolean;
+  /**
+   * Callback after a node is dropped. Pure controlled: the Tree does not
+   * mutate dataSource — reorder it yourself (e.g. with `moveTreeNode`).
+   */
+  onDrop?: (info: {
+    /** Original data of the dragged node */
+    dragNode: T;
+    /** Original data of the target node */
+    dropNode: T;
+    dragKey: string | number;
+    dropKey: string | number;
+    position: DragPosition;
+    /** Convenience flag: true when position is 'before' or 'after' */
+    dropToGap: boolean;
+  }) => void;
   /**
    * Whether to show connecting lines
    */

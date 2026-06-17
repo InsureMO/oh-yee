@@ -10,4 +10,8 @@ export interface TooltipProps extends Omit<TriggerProps, 'popup'> {
    * @default 0.1
    */
   mouseEnterDelay?: number;
+  /***
+   * Tooltip custom background color
+   * */
+  color?: string;
 }

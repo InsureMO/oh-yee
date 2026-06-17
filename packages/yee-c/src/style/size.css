@@ -8,10 +8,17 @@
   --yee-z-index-message: 1100; /* L6 全局反馈 */
   --yee-z-index-max: 1110; /* L7 最顶层 */
 
+  /* common size */
+  --yee-popup-arrow-width: 8px;
+  --yee-popup-arrow-height: 8px;
+  --yee-popup-border-radius: 4px;
+  --yee-popup-arrow-translate-y: 50%;
+  --yee-popup-arrow-rotate: -135deg;
+
   /* --Alert-- */
   --yee-alert-close-top: 7px;
   --yee-alert-close-right: 11px;
-  --yee-alert-icon-margin-right: 6px;
+  --yee-alert-icon-margin-right: 12px;
   --yee-alert-title-font-size: 16px;
   --yee-alert-message-font-size: 14px;
   --yee-alert-banner-padding: 8px 12px;
@@ -26,7 +33,7 @@
   --yee-anchor-static-content-padding: 8px 0;
   --yee-anchor-static-item-active-width: 2px;
   --yee-anchor-static-item-active-height: 22px;
-  --yee-anchor-vertical-line-left: 4px;
+  --yee-anchor-vertical-line-left: 0;
   --yee-anchor-horizontal-item-padding: 6px 12px;
   --yee-anchor-nav-arrow-left: -8px;
   --yee-anchor-nav-arrow-height: 80px;
@@ -376,6 +383,8 @@
   --yee-popover-header-font-weight: 500;
   --yee-popover-header-font-size: 16px;
   --yee-popover-header-line-height: 24px;
+  --yee-popover-arrow-width: var(--yee-popup-arrow-width);
+  --yee-popover-arrow-height: var(--yee-popup-arrow-height);
 
   /* --Progress-- */
   --yee-progress-text-width: 48px;
@@ -768,8 +777,8 @@
   --yee-tooltip-z-index: var(--yee-z-index-tooltip);
   --yee-tooltip-padding: 8px 12px;
   --yee-tooltip-border-radius: 4px;
-  --yee-tooltip-arrow-width: 8px;
-  --yee-tooltip-arrow-height: 8px;
+  --yee-tooltip-arrow-width: var(--yee-popup-arrow-width);
+  --yee-tooltip-arrow-height: var(--yee-popup-arrow-height);
   --yee-tooltip-arrow-border-radius: 0 0 2px 0;
   --yee-tooltip-arrow-translate-y: 50%;
   --yee-tooltip-arrow-rotate: -135deg;

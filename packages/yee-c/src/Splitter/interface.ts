@@ -1,5 +1,13 @@
 import type { DataAttributeProps } from '../utils/types';
 
+export type PanelRect = {
+  type: 'default' | 'percent' | 'auto';
+  size: number;
+  currentSize: number;
+  min?: string | number;
+  max?: string | number;
+};
+
 export interface SplitterItemProps {
   /**
    * custom item element class name prefix
@@ -65,14 +73,13 @@ export interface SplitterProps extends DataAttributeProps {
   /**
    * children
    */
-  children?: React.ReactElement[];
+  children?: Array<React.ReactElement | null>;
   /**
    * display border or not
    * */
   bordered?: boolean;
-  itemPadding?: number | string;
   /**
    * panel size change event
    * */
-  onResize?: (sizes: number[]) => void;
+  onResize?: (sizes: PanelRect[]) => void;
 }

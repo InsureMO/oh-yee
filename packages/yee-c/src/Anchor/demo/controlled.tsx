@@ -1,27 +1,31 @@
 import { Anchor } from '@rainbow-oh/yee-c';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 export default () => {
   const [activeKey, setActiveKey] = useState('part1');
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const onChange = (key: string) => {
     console.log('Anchor changed to:', key);
     setActiveKey(key);
   };
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: '200px' }}>
-        <Anchor
-          items={[
-            { key: 'part1', title: 'Part 1' },
-            { key: 'part2', title: 'Part 2' },
-            { key: 'part3', title: 'Part 3' },
-          ]}
-          activeKey={activeKey}
-          onChange={onChange}
-        />
-      </div>
+    <div
+      style={{ display: 'flex', height: '200px', overflow: 'auto' }}
+      ref={containerRef}
+    >
+      <Anchor
+        items={[
+          { key: 'part1', title: 'Part 1' },
+          { key: 'part2', title: 'Part 2' },
+          { key: 'part3', title: 'Part 3' },
+        ]}
+        direction="vertical"
+        affix={false}
+        activeKey={activeKey}
+        onChange={onChange}
+        getContainer={() => containerRef.current!}
+      />
       <div style={{ flex: 1, padding: '20px' }}>
         <div
           id="part1"

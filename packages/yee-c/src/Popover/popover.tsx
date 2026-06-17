@@ -19,7 +19,7 @@ const Popover = (baseprops: PopoverProps) => {
     children,
     title,
     content,
-    arrow = true,
+    arrow = { className: `${prefixCls}-arrow` },
     placement = 'top',
     trigger = 'hover',
     style,

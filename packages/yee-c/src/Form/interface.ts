@@ -1,3 +1,4 @@
+import type { TooltipProps } from '../Tooltip';
 import type { DataAttributeProps } from '../utils/types';
 
 export type StoreValue = any;
@@ -230,7 +231,7 @@ export type Rule = {
   /**
    * Error message
    */
-  message: string;
+  message?: string;
   /**
    * Custom validation function, returns true for pass, false or throw for fail
    */
@@ -253,12 +254,46 @@ export type ValidateMessage = {
   status: 'error' | 'success' | 'warning' | 'info';
 };
 
+export type FieldConfigurableTooltip = Omit<TooltipProps, 'children'> & {
+  /**
+   * Custom trigger icon (defaults to a built-in help icon)
+   */
+  icon?: React.ReactNode;
+};
+
+export type FieldTooltip = React.ReactNode | FieldConfigurableTooltip;
+
 export type FieldProps = {
+  /**
+   * Child nodes
+   * */
   children: React.ReactElement;
+  /**
+   * Field name
+   * */
   name: NamePath;
+  /**
+   * Validation rules
+   * */
   rules?: Rule[];
+  /***
+   * Field label
+   */
   label?: React.ReactNode;
+  /**
+   * Tooltip shown next to the label (a help icon).
+   * Pass a string/node to use the default icon, or an object to customize the icon.
+   * */
+  tooltip?: FieldTooltip;
+  /**
+   * Whether required (shows required mark)
+   * */
   required?: boolean;
+  /**
+   * Layout of label and control
+   * @default 'vertical'
+   * */
+  layout?: 'vertical' | 'horizontal';
   /**
    * Format value before passing to children
    * */

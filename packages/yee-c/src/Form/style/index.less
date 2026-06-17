@@ -18,17 +18,32 @@
     // padding-bottom: var(--yee-form-item-padding-bottom);
 
     &-label {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
       margin-bottom: var(--yee-form-item-label-mb, 4px);
       line-height: var(--yee-form-item-label-line-height);
     }
 
-    &-required {
-      &::after {
-        color: var(--yee-input-required-font-color);
-        content: '*';
-        margin-inline-start: var(--yee-form-item-required-margin-inline-start);
-      }
+    // The required asterisk is rendered as a real node via &-required-mark so it
+    // stays glued to the label text regardless of what else sits inside the label.
+    // The `item-required` className is still applied to the label (see Field/Group)
+    // as an opt-in styling hook; the mark itself lives in &-required-mark below.
+    &-required-mark {
+      color: var(--yee-input-required-font-color);
+      margin-inline-start: var(--yee-form-item-required-margin-inline-start);
+      line-height: 1;
+    }
+
+    &-tooltip-icon {
+      display: inline-flex;
+      align-items: center;
+      margin-inline-start: 4px;
+      color: var(
+        --yee-form-item-tooltip-icon-color,
+        var(--yee-text-color-secondary, #999)
+      );
+      cursor: pointer;
     }
 
     &-control {

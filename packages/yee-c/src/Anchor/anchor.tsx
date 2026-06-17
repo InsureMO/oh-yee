@@ -59,13 +59,22 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
   const [anchorList, setAnchorList] = useState<Array<AnchorItemType>>([]);
 
   const containerRef = useRef<HTMLElement | Window | null>(null);
+  const activeKeyRef = useRef(mergedActiveKey);
+  useEffect(() => {
+    activeKeyRef.current = mergedActiveKey;
+  }, [mergedActiveKey]);
 
   // Auto-generate anchor list from DOM
   const generateAnchorList = useCallback(() => {
     if (!auto || !name) return;
 
     const list: Array<AnchorItemType> = [];
-    const elements = document.querySelectorAll(`[data-anchor-group="${name}"]`);
+    // Escape `name` before interpolating into the attribute selector: a raw
+    // value containing quotes / brackets / backslashes would either break the
+    // selector (throwing) or open an injection vector.
+    const elements = document.querySelectorAll(
+      `[data-anchor-group="${CSS.escape(name)}"]`,
+    );
 
     elements.forEach((element) => {
       const key = element.getAttribute('id') || '';
@@ -87,6 +96,19 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     }
   }, [auto, generateAnchorList]);
 
+  const getTargetOffsetTop = useCallback((target: HTMLElement) => {
+    const container = containerRef.current;
+    const containerTop =
+      container === window
+        ? 0
+        : (container as HTMLElement).getBoundingClientRect().top;
+    const currentScroll =
+      container === window
+        ? window.scrollY
+        : (container as HTMLElement).scrollTop;
+    return currentScroll + (target.getBoundingClientRect().top - containerTop);
+  }, []);
+
   // Handle scroll to update active key
   const handleScroll = useCallback(() => {
     const container = containerRef.current;
@@ -107,33 +129,31 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
       const target = document.getElementById(item.key);
 
       if (target) {
-        const targetTop = target.offsetTop;
+        const targetTop = getTargetOffsetTop(target);
         if (scrollTop + offsetTop >= targetTop) {
-          setMergedActiveKey(item.key);
-          onChange?.(item.key);
+          if (activeKeyRef.current !== item.key) {
+            setMergedActiveKey(item.key);
+            onChange?.(item.key);
+          }
           break;
         }
       }
     }
-  }, [auto, anchorList, items, offsetTop, onChange]);
+  }, [auto, anchorList, items, offsetTop, onChange, getTargetOffsetTop]);
 
   useEffect(() => {
-    const container = getContainer ? getContainer() : window;
-    containerRef.current = container;
+    const container = containerRef.current;
+    if (!container) return;
 
-    if (container && typeof activeKey === 'undefined') {
-      const debouncedScroll = debounce(handleScroll, 100);
-      container.addEventListener('scroll', debouncedScroll as EventListener);
-      handleScroll();
+    const debouncedScroll = debounce(handleScroll, 100);
+    container.addEventListener('scroll', debouncedScroll as EventListener);
+    handleScroll();
 
-      return () => {
-        container.removeEventListener(
-          'scroll',
-          debouncedScroll as EventListener,
-        );
-      };
-    }
-  }, [getContainer, handleScroll, activeKey]);
+    return () => {
+      container.removeEventListener('scroll', debouncedScroll as EventListener);
+      debouncedScroll.cancel();
+    };
+  }, [getContainer, handleScroll]);
 
   // Scroll to target when activeKey changes
   const scrollToAnchor = useCallback(
@@ -144,7 +164,7 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
       const container = containerRef.current;
       if (!container) return;
 
-      const targetTop = target.offsetTop - offsetTop;
+      const targetTop = getTargetOffsetTop(target) - offsetTop;
 
       if (container === window) {
         window.scrollTo({ top: targetTop, behavior: 'smooth' });
@@ -155,8 +175,12 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
         });
       }
     },
-    [offsetTop],
+    [offsetTop, getTargetOffsetTop],
   );
+
+  useLayoutEffect(() => {
+    containerRef.current = getContainer ? getContainer() : window;
+  }, [getContainer]);
 
   useLayoutEffect(() => {
     if (defaultActiveKey) {
@@ -190,6 +214,8 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     prefixCls,
     activeKey: mergedActiveKey,
     onClick: handleItemClick,
+    classNames,
+    styles,
   };
 
   const renderNavArrow = () => {

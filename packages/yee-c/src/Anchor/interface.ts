@@ -123,4 +123,6 @@ export interface AnchorContextType {
   prefixCls: string;
   activeKey?: string;
   onClick?: (key: string) => void;
+  classNames?: Partial<Record<AnchorSemanticDOM, string>>;
+  styles?: Partial<Record<AnchorSemanticDOM, React.CSSProperties>>;
 }

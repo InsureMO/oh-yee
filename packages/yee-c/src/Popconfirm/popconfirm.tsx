@@ -27,7 +27,7 @@ const Popconfirm: React.FC<PopconfirmProps> = (baseprops) => {
     defaultOpen,
     title,
     description,
-    arrow = true,
+    arrow = { className: `${prefixCls}-arrow` },
     placement = 'top',
     confirmText = popconfirmLocale.okText,
     cancelText = popconfirmLocale.cancelText,

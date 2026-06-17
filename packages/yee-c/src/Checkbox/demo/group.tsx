@@ -24,6 +24,7 @@ export default () => {
       <Checkbox.Group
         value={value}
         onChange={onChange}
+        layout="vertical"
         options={[
           { value: 'A', label: 'Option A' },
           { value: 'B', label: 'Option B' },

@@ -1,4 +1,4 @@
-import { Space, Table } from '@rainbow-oh/yee-c';
+import { Table } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {
@@ -42,12 +42,12 @@ export default () => {
   ];
 
   return (
-    <Space direction="vertical" style={{ width: '100%' }}>
+    <div>
       <Table columns={columns} dataSource={dataSource} size="small" />
 
       <Table columns={columns} dataSource={dataSource} size="default" />
 
       <Table columns={columns} dataSource={dataSource} size="large" />
-    </Space>
+    </div>
   );
 };

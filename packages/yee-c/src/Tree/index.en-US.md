@@ -20,6 +20,7 @@ Tree is a hierarchical data display component.
 <code src="./demo/icon.tsx" title="Icon" description="Tree with custom icons"></code>
 <code src="./demo/line.tsx" title="Line" description="Tree with connecting lines"></code>
 <code src="./demo/expanded.tsx" title="Expanded" description="Controlled expanded tree"></code>
+<code src="./demo/draggable.tsx" title="Draggable" description="Drag and drop to reorder"></code>
 
 ## API
 
@@ -36,6 +37,8 @@ Tree is a hierarchical data display component.
 | expandedKeys | `string[]` | Controlled expanded tree nodes | - |
 | disabled | `boolean` | Disabled | - |
 | draggable | `boolean` | Whether allow drag | - |
+| allowDrop | `(info: { dragNode: T; dropNode: T; position: 'before' \| 'after' \| 'inside' }) => boolean` | Whether to allow dropping at the given position; return false to forbid (shows no-drop cursor) | - |
+| onDrop | `(info: { dragNode: T; dropNode: T; dragKey: string \| number; dropKey: string \| number; position: 'before' \| 'after' \| 'inside'; dropToGap: boolean }) => void` | Callback after a node is dropped. Controlled: reorder `dataSource` yourself, e.g. with the exported `moveTreeNode` helper. When dropping `inside` while `expandedKeys` is controlled, add the `dropKey` to the expanded set yourself | - |
 | showLine | `boolean` | Show connecting lines | - |
 | showIcon | `boolean` | Show node icons | `true` |
 | icon | `React.ReactNode \| ((props: TreeProps<T>) => React.ReactNode)` | Icon before title (requires showIcon) | - |

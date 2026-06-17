@@ -17,7 +17,7 @@ yee-c is a modern, high-quality React component library that provides a rich set
 ## Installation
 
 ```bash
-npm install yee-c
+npm install @rainbow-oh/yee-c
 # or
 yarn add yee-c
 # or
@@ -30,12 +30,12 @@ pnpm add yee-c
 import { Button, Alert } from 'yee-c';
 
 function App() {
-  return (
-    <div>
-      <Button type="primary">Click Me</Button>
-      <Alert type="success" message="Operation successful!" />
-    </div>
-  );
+    return (
+        <div>
+            <Button type="primary">Click Me</Button>
+            <Alert type="success" message="Operation successful!" />
+        </div>
+    );
 }
 ```
 
@@ -55,11 +55,11 @@ Customize the theme by overriding CSS variables:
 
 ```css
 :root {
-  --yee-primary-color: #1890ff;
-  --yee-success-color: #52c41a;
-  --yee-warning-color: #faad14;
-  --yee-error-color: #f5222d;
-  --yee-border-radius: 4px;
+    --yee-primary-color: #1890ff;
+    --yee-success-color: #52c41a;
+    --yee-warning-color: #faad14;
+    --yee-error-color: #f5222d;
+    --yee-border-radius: 4px;
 }
 ```
 
@@ -67,8 +67,8 @@ Customize the theme by overriding CSS variables:
 
 ```css
 [data-theme='dark'] {
-  --yee-bg-color: #1f1f1f;
-  --yee-text-color: #ffffff;
+    --yee-bg-color: #1f1f1f;
+    --yee-text-color: #ffffff;
 }
 ```
 

@@ -20,6 +20,7 @@ const Dropdown: FC<DropdownProps> = (baseprops) => {
     menu,
     open,
     defaultOpen,
+    arrow = { className: `${prefixCls}-arrow` },
     onOpenChange,
     ...rest
   } = props;
@@ -54,6 +55,7 @@ const Dropdown: FC<DropdownProps> = (baseprops) => {
   return (
     <Trigger
       {...rest}
+      arrow={arrow}
       popup={renderPopup() as any}
       placement={placement}
       popupClassName={`${prefixCls}-popup`}

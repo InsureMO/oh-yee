@@ -28,6 +28,7 @@ A simple text popup tip.
 | --- | --- | --- | --- |
 | title | `React.ReactNode \| (() => React.ReactNode)` | Tooltip content | - |
 | mouseEnterDelay | `number` | Mouse enter delay time (seconds) | `0.1` |
+| color | `string` | Custom tooltip background color (applies to both the bubble and the arrow) | - |
 
 Other properties are inherited from [Trigger](/components/trigger), including:
 

@@ -9,6 +9,7 @@ export default () => {
         { key: '2', label: 'Option 2' },
         { key: '3', label: 'Option 3' },
       ]}
+      keyboard
     />
   );
 

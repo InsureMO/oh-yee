@@ -14,6 +14,7 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
     gap = 16,
     direction = 'horizontal',
     align = direction === 'horizontal' ? 'center' : undefined,
+    justify,
     wrap,
     className,
     style,
@@ -45,25 +46,47 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
     if (!children) {
       return null;
     }
+
+    const loop = (childs: React.ReactNode[]) => {
+      let res = [] as React.ReactElement[];
+
+      childs.forEach((child, index) => {
+        const isItem =
+          React.isValidElement(child) && (child.type as any).isSpaceItem;
+        const itemClassName = isItem
+          ? (child.props as any).className
+          : undefined;
+        const itemStyle = isItem ? (child.props as any).style : undefined;
+        const itemChildren = isItem ? (child.props as any).children : child;
+
+        if (React.isValidElement(child) && child.type === React.Fragment) {
+          res = res.concat(
+            loop(React.Children.toArray((child.props as any).children)),
+          );
+        } else {
+          res.push(
+            <div
+              className={clsx(
+                `${prefixCls}-item`,
+                classNames?.item,
+                itemClassName,
+              )}
+              style={{ ...styles?.item, ...itemStyle }}
+              key={index}
+            >
+              {itemChildren}
+            </div>,
+          );
+        }
+      });
+      return res;
+    };
+
     const childs = React.Children.toArray(children).filter(
       (child) => child !== null && child !== undefined,
     );
-    return childs.map((child, index) => {
-      const isItem =
-        React.isValidElement(child) && (child.type as any).isSpaceItem;
-      const itemClassName = isItem ? (child.props as any).className : undefined;
-      const itemStyle = isItem ? (child.props as any).style : undefined;
-      const itemChildren = isItem ? (child.props as any).children : child;
-      return (
-        <div
-          className={clsx(`${prefixCls}-item`, classNames?.item, itemClassName)}
-          style={{ ...styles?.item, ...itemStyle }}
-          key={index}
-        >
-          {itemChildren}
-        </div>
-      );
-    });
+
+    return loop(childs);
   };
 
   const packed = pack();
@@ -76,6 +99,7 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
         width: block ? '100%' : undefined,
         gap: gap + 'px',
         alignItems: getAlign(),
+        justifyContent: justify,
         ...style,
       }}
       ref={componentRef}

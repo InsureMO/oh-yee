@@ -27,6 +27,10 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
    * Alignment
    */
   align?: 'center' | 'start' | 'end' | 'baseline' | 'flex-start';
+  /***
+   * Justify content
+   * */
+  justify?: 'start' | 'end' | 'center' | 'space-around' | 'space-between';
   /**
    * Whether to take up the entire row
    */

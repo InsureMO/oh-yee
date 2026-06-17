@@ -7,7 +7,7 @@
 ### Q: 如何安装 yee-c？
 
 ```bash
-npm install yee-c
+npm install @rainbow-oh/yee-c
 # 或
 yarn add yee-c
 # 或
@@ -32,13 +32,16 @@ import { Button } from 'yee-c';
 
 ```json
 {
-  "plugins": [
-    ["import", {
-      "libraryName": "yee-c",
-      "libraryDirectory": "es",
-      "style": true
-    }]
-  ]
+    "plugins": [
+        [
+            "import",
+            {
+                "libraryName": "yee-c",
+                "libraryDirectory": "es",
+                "style": true
+            }
+        ]
+    ]
 }
 ```
 
@@ -50,11 +53,11 @@ import { Button } from 'yee-c';
 
 ```css
 :root {
-  --yee-primary-color: #1890ff;
-  --yee-success-color: #52c41a;
-  --yee-warning-color: #faad14;
-  --yee-error-color: #f5222d;
-  --yee-border-radius: 4px;
+    --yee-primary-color: #1890ff;
+    --yee-success-color: #52c41a;
+    --yee-warning-color: #faad14;
+    --yee-error-color: #f5222d;
+    --yee-border-radius: 4px;
 }
 ```
 
@@ -62,8 +65,8 @@ import { Button } from 'yee-c';
 
 ```css
 [data-theme='dark'] {
-  --yee-bg-color: #1f1f1f;
-  --yee-text-color: #ffffff;
+    --yee-bg-color: #1f1f1f;
+    --yee-text-color: #ffffff;
 }
 ```
 
@@ -144,8 +147,8 @@ import { ConfigProvider } from 'yee-c';
 import zhCN from 'yee-c/es/locale/zh_CN';
 
 <ConfigProvider locale={zhCN}>
-  <App />
-</ConfigProvider>
+    <App />
+</ConfigProvider>;
 ```
 
 ## 性能优化

@@ -35,9 +35,16 @@ const Node = <T extends Record<string, unknown> = any>(
     checkedKeys,
     expandedKeys,
     switcherIcon,
+    draggable,
+    draggingKey,
+    dropState,
     onCheck,
     onSelect,
     onExpand,
+    onNodeDragStart,
+    onNodeDragOver,
+    onNodeDragLeave,
+    onNodeDrop,
   } = useContext(TreeContext);
 
   const expanded = expandedKeys.includes(key);
@@ -138,16 +145,35 @@ const Node = <T extends Record<string, unknown> = any>(
     ));
   };
 
+  const isDropTarget = dropState?.key === key;
+  const dropPosition = isDropTarget ? dropState.position : null;
+
+  const dragProps =
+    draggable && !disabled
+      ? {
+          draggable: true as const,
+          onDragStart: (e: React.DragEvent) => onNodeDragStart(key, e),
+          onDragOver: (e: React.DragEvent) => onNodeDragOver(key, e),
+          onDragLeave: (e: React.DragEvent) => onNodeDragLeave(key, e),
+          onDrop: (e: React.DragEvent) => onNodeDrop(key, e),
+        }
+      : {};
+
   return (
     <div
       className={clsx(`${prefixCls}-node`, {
         [`${prefixCls}-node-with-line`]: showLine,
         [`${prefixCls}-leaf-node`]: isLeaf,
         [`${prefixCls}-last-node`]: isLast,
+        [`${prefixCls}-node-dragging`]: draggingKey === key,
+        [`${prefixCls}-node-drag-over-before`]: dropPosition === 'before',
+        [`${prefixCls}-node-drag-over-after`]: dropPosition === 'after',
+        [`${prefixCls}-node-drag-over-inside`]: dropPosition === 'inside',
       })}
       // style={{
       //   paddingLeft: depth * 28 + (isLeaf && checkable ? 24 : 0),
       // }}
+      {...dragProps}
     >
       {renderEmptyNodes(depth)}
       {renderExpandedIcon()}

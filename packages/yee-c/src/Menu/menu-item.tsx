@@ -88,24 +88,24 @@ const MenuItem = (props: MenuItemProps) => {
     );
   }
 
-  const onExpandCallback = (expanded: boolean) => {
-    onOpenChange?.();
+  const onExpandCallback = (openKeys: string[]) => {
+    onOpenChange?.(openKeys);
   };
 
   const handleExpand = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     if (!expandedOnHover && !disabled && hasChildren) {
       let expandedKeys = [];
-      const expanded = openKeys.includes(key) ? false : true;
+      const expanded = openKeys.includes(key);
       if (openOnly || mode === 'vertical') {
-        expandedKeys = openKeys.includes(key) ? [] : [key];
+        expandedKeys = expanded ? [] : [key];
       } else {
-        expandedKeys = openKeys.includes(key)
+        expandedKeys = expanded
           ? [...openKeys.filter((k: string) => k !== key)]
           : [...openKeys, key];
       }
       updateOpenKeys(expandedKeys);
-      onExpandCallback(expanded);
+      onExpandCallback(expandedKeys);
     }
   };
 
@@ -113,13 +113,13 @@ const MenuItem = (props: MenuItemProps) => {
     const target = flatItems.find((item: FlatItem) => item.key === key);
     const keyPath = target ? target.keyPath : [key];
     if (open) {
-      const expanded = openKeys.includes(key) ? false : true;
       updateOpenKeys(keyPath);
-      onExpandCallback(expanded);
+      onExpandCallback(keyPath);
     } else {
       updateOpenKeys((keys: string[]) => [
         ...keys.filter((key) => !keyPath.includes(key)),
       ]);
+      onExpandCallback([]);
     }
   };
 
