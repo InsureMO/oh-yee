@@ -33,6 +33,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # yee-x docs demos import @rainbow-oh/yee-c, whose main/module point at
+      # packages/yee-c/dist — so the libraries must be built before the docs.
+      - name: Build libraries
+        run: pnpm build
+
       - name: Build yee-c docs
         run: pnpm --filter @rainbow-oh/yee-c docs:build
 
