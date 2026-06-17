@@ -76,7 +76,7 @@ const Group: React.FC<FieldGroupProps> = (props) => {
               name: childNames,
               status: 'error',
               value: values,
-              message: rule.message,
+              message: rule.message || '',
             });
           }
         }
@@ -145,6 +145,9 @@ const Group: React.FC<FieldGroupProps> = (props) => {
             })}
           >
             {label}
+            {required ? (
+              <span className={`${itemCls}-required-mark`}>*</span>
+            ) : null}
           </label>
         )}
         <div className={`${itemCls}-control`}>{content}</div>

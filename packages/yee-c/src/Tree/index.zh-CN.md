@@ -20,6 +20,7 @@ toc: 'content'
 <code src="./demo/icon.tsx" title="自定义图标" description="带自定义图标的树"></code>
 <code src="./demo/line.tsx" title="连接线" description="带连接线的树"></code>
 <code src="./demo/expanded.tsx" title="受控展开" description="受控展开的树"></code>
+<code src="./demo/draggable.tsx" title="拖拽排序" description="拖拽节点进行排序"></code>
 
 ## API
 
@@ -36,6 +37,8 @@ toc: 'content'
 | expandedKeys | `string[]` | 受控展开的树节点 | - |
 | disabled | `boolean` | 禁用 | - |
 | draggable | `boolean` | 是否允许拖拽 | - |
+| allowDrop | `(info: { dragNode: T; dropNode: T; position: 'before' \| 'after' \| 'inside' }) => boolean` | 是否允许在指定位置放置，返回 false 则禁止（显示禁止符） | - |
+| onDrop | `(info: { dragNode: T; dropNode: T; dragKey: string \| number; dropKey: string \| number; position: 'before' \| 'after' \| 'inside'; dropToGap: boolean }) => void` | 拖拽完成回调。受控模式需自行重排 `dataSource`，可配合导出的 `moveTreeNode` 工具。当 `expandedKeys` 受控且以 `inside` 方式放置时，需自行把 `dropKey` 加入展开集合 | - |
 | showLine | `boolean` | 是否显示连接线 | - |
 | showIcon | `boolean` | 是否显示节点图标 | `true` |
 | icon | `React.ReactNode \| ((props: TreeProps<T>) => React.ReactNode)` | 标题前的图标，需设置showIcon为true | - |

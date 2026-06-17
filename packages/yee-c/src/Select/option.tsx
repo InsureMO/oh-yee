@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { OptionsCtx } from './options';
 
 const Option = (props: any) => {
-  const { label, value, disabled, title } = props;
+  const { label, value, disabled, title, dataTestId } = props;
   const { prefixCls, selectedKeys, focusedKey, onSelect } =
     useContext(OptionsCtx);
 
@@ -37,6 +37,7 @@ const Option = (props: any) => {
       role="option"
       tabIndex={disabled ? undefined : 0}
       title={htmlTitle}
+      data-testid={dataTestId}
     >
       {label}
     </div>

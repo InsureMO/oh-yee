@@ -49,7 +49,15 @@ export interface TabHeaderProps {
 
 const TabHeader: React.FC<TabHeaderProps> = (props) => {
   const { items, activeKey } = useContext(TabsCtx);
-  const { prefixCls, type, position = 'top', headerExtra, onEdit } = props;
+  const {
+    prefixCls,
+    type,
+    position = 'top',
+    headerExtra,
+    classNames,
+    styles,
+    onEdit,
+  } = props;
 
   const direction =
     position === 'top' || position === 'bottom' ? 'horizontal' : 'vertical';
@@ -135,6 +143,7 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
   const cls = clsx(
     `${prefixCls}-nav-wrapper`,
     `${prefixCls}-nav-wrapper-${position}`,
+    classNames?.header,
   );
 
   const contextValue = {
@@ -147,12 +156,20 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
   } as TabHeaderCtxType;
 
   return (
-    <div className={cls}>
+    <div className={cls} style={styles?.header}>
       {renderPrefixExtra()}
 
       <TabHeaderCtx.Provider value={contextValue}>
-        <div className={`${prefixCls}-nav-wrap`} ref={navContainer}>
-          <div className={`${prefixCls}-nav-list`} ref={navList}>
+        <div
+          className={clsx(`${prefixCls}-nav-wrap`, classNames?.track)}
+          style={styles?.track}
+          ref={navContainer}
+        >
+          <div
+            className={clsx(`${prefixCls}-nav-list`, classNames?.list)}
+            style={styles?.list}
+            ref={navList}
+          >
             {items?.map((item: TabItemType, index: number) => (
               <TabHeaderTitle
                 {...item}
@@ -164,7 +181,11 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
 
             {!type && (
               <div
-                className={`${prefixCls}-active-bar`}
+                className={clsx(
+                  `${prefixCls}-active-bar`,
+                  classNames?.activeBar,
+                )}
+                style={styles?.activeBar}
                 ref={activebar}
                 aria-hidden="true"
               />

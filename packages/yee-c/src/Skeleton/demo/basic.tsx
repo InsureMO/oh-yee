@@ -1,9 +1,9 @@
-import { Card, Skeleton, Space } from '@rainbow-oh/yee-c';
+import { Card, Skeleton } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {
   return (
-    <Space direction="vertical" gap={16} style={{ width: '100%' }}>
+    <div>
       <Card title="Basic Placeholder">
         <Skeleton />
       </Card>
@@ -19,6 +19,6 @@ export default () => {
           paragraph={{ rows: 3, width: ['100%', '80%', '60%'] }}
         />
       </Card>
-    </Space>
+    </div>
   );
 };

@@ -17,7 +17,10 @@ const AnchorItem: React.FC<AnchorItemProps> = (props) => {
     ...rest
   } = props;
 
-  const { prefixCls, activeKey, onClick } = useContext(AnchorContext);
+  const { prefixCls, activeKey, onClick, classNames, styles } =
+    useContext(AnchorContext);
+
+  const isActive = targetKey === activeKey;
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -28,14 +31,16 @@ const AnchorItem: React.FC<AnchorItemProps> = (props) => {
   const cls = clsx(
     `${prefixCls}-item`,
     {
-      [`${prefixCls}-item-active`]: targetKey === activeKey,
+      [`${prefixCls}-item-active`]: isActive,
       [`${prefixCls}-item-${status}`]: status,
     },
     className,
+    isActive && classNames?.active,
   );
 
   const itemStyle = {
     ...style,
+    ...(isActive ? styles?.active : undefined),
     paddingLeft: `${level * INDENT_WIDTH}px`,
   };
 

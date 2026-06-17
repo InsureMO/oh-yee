@@ -8,6 +8,23 @@
     display: none;
   }
 
+  &-arrow {
+    &::after {
+      position: absolute;
+      bottom: 0;
+      z-index: 0;
+      width: var(--yee-popup-arrow-width);
+      height: var(--yee-popup-arrow-height);
+      margin: auto;
+      border-radius: var(--yee-popup-arrow-border-radius);
+      box-shadow: var(--yee-box-shadow-popover-arrow);
+      transform: translateY(var(--yee-popup-arrow-translate-y))
+        rotate(var(--yee-popup-arrow-rotate));
+      content: '';
+      inset-inline: 0;
+    }
+  }
+
   &-topLeft,
   &-top,
   &-topRight {

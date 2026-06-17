@@ -17,8 +17,16 @@ const Tooltip = (baseprops: TooltipProps) => {
     placement = 'top',
     trigger = ['hover', 'focus'],
     mouseEnterDelay = 0.1,
+    color,
+    popupStyle,
+    hideOnClick = false,
     ...rest
   } = props;
+
+  const mergedPopupStyle = {
+    ...(color ? { ['--yee-tooltip-bg-color']: color } : null),
+    ...popupStyle,
+  } as React.CSSProperties;
 
   const popup = (
     <span className={`${prefixCls}-content`} role="tooltip">
@@ -34,7 +42,8 @@ const Tooltip = (baseprops: TooltipProps) => {
       popup={popup}
       arrow={arrow}
       placement={placement}
-      hideOnClick={false}
+      hideOnClick={hideOnClick}
+      popupStyle={mergedPopupStyle}
       mouseEnterDelay={mouseEnterDelay}
     >
       {children}

@@ -15,6 +15,7 @@ High performance form component with data scope management.
 ## Code Demo
 
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Form"></code>
+<code src="./demo/tooltip.tsx" title="Label Tooltip" description="Show a help icon next to the label, with a customizable trigger icon"></code>
 <code src="./demo/group.tsx" title="Field Group" description="Field.Group with shared label and group-level validation"></code>
 <code src="./demo/watch.tsx" title="Field Watch" description="useWatch monitors field value changes for conditional rendering"></code>
 <code src="./demo/layout.tsx" title="Layout" description="Different form layouts"></code>
@@ -92,6 +93,7 @@ High performance form component with data scope management.
 | name     | `NamePath` | Field name       | -       |
 | rules    | [Rule\[\]](#rule)     | Validation rules | -       |
 | label    | `React.ReactNode`     | Label            | -       |
+| tooltip  | `ReactNode \| (Omit<TooltipProps, 'children'> & { icon?: ReactNode })` | Help tooltip next to the label. Pass a string/node to use the default icon; pass an object to customize `icon` — all other props (`title`, `color`, `placement`, ...) are forwarded to Tooltip | -       |
 | required | `boolean`             | Whether required | -       |
 | disabled | `boolean`             | Whether disabled | -       |
 | initialValue | `unknown`          | Initial value    | -      |

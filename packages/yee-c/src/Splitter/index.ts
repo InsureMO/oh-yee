@@ -1,7 +1,11 @@
 import InternalSplitter from './splitter';
 import Item from './splitter-item';
 
-export type { SplitterItemProps, SplitterProps } from './interface';
+export type {
+  SplitterItemProps,
+  PanelRect as SplitterPanelRect,
+  SplitterProps,
+} from './interface';
 
 type SplitterType = typeof InternalSplitter & {
   Item: typeof Item;

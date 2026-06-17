@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useContext, useRef } from 'react';
 import useMove from './hooks/useMove';
-import { PanelRect, SplitterCtx, SplitterWrapperCtx } from './splitter';
+import type { PanelRect } from './interface';
+import { SplitterCtx, SplitterWrapperCtx } from './splitter';
 
 interface SplitterHandlerProps {
   layout: 'horizontal' | 'vertical';
@@ -37,7 +38,7 @@ const SplitterHandler = ({
   const cref = useRef<HTMLDivElement>(null);
   const handler = useRef<HTMLDivElement | null>(null);
   const { refs } = useContext(SplitterWrapperCtx);
-  const { prefixCls } = useContext(SplitterCtx);
+  const { prefixCls, onResize } = useContext(SplitterCtx);
 
   const status = records[index - 1] || {};
   const next = records[index] || {};
@@ -85,6 +86,7 @@ const SplitterHandler = ({
         currentSize: s,
       };
       newState[index] = { ...newState[index], size: e, currentSize: e };
+      onResize?.(newState);
       return newState;
     });
   };

@@ -1,5 +1,112 @@
 import { TreeNode } from '../interface';
 
+export type DragPosition = 'before' | 'after' | 'inside';
+
+export interface MoveInfo {
+  dragKey: string | number;
+  dropKey: string | number;
+  position: DragPosition;
+}
+
+/**
+ * Reorder the nested dataSource immutably after a drag.
+ *
+ * Two phases: detach the dragged subtree, then insert it at the drop target.
+ * Only the modified path gets new arrays + shallow-cloned wrappers; untouched
+ * nodes are reused by reference (data may carry non-cloneable values like
+ * React elements / functions in `icon`).
+ *
+ * Returns a brand-new root array; returns the input unchanged if dragKey is
+ * not found or drag and drop resolve to the same location.
+ */
+export function moveTreeNode<T extends Record<string, unknown>>(
+  tree: T | T[],
+  info: MoveInfo,
+  fieldNames: { key: keyof T; children: keyof T },
+): T[] {
+  if (!tree || (Array.isArray(tree) && tree.length === 0)) return [];
+
+  const { key: K, children: C } = fieldNames;
+  const { dragKey, dropKey, position } = info;
+  const root = Array.isArray(tree) ? tree : [tree];
+
+  // Phase 1: detach the drag node subtree (immutably).
+  // Returns the rebuilt array (without the drag node) plus the detached node.
+  const detach = (
+    nodes: T[],
+  ): { found: T | null; nodes: T[] } => {
+    let found: T | null = null;
+    const next: T[] = [];
+    for (const n of nodes) {
+      if (n[K] === dragKey) {
+        found = n; // keep the original subtree reference intact
+        continue;
+      }
+      const kids = n[C] as T[] | undefined;
+      if (Array.isArray(kids)) {
+        const r = detach(kids);
+        if (r.found) {
+          found = r.found;
+          next.push({ ...n, [C]: r.nodes });
+        } else {
+          next.push(n); // unchanged branch: reuse original ref
+        }
+      } else {
+        next.push(n);
+      }
+    }
+    return { found, nodes: next };
+  };
+
+  const { found: dragNode, nodes: withoutDrag } = detach(root);
+  if (!dragNode) return root; // dragKey not found: no-op
+
+  // Phase 2: insert per position into the tree that no longer contains the drag node.
+  // Note: do NOT short-circuit with an early return once inserted — siblings that
+  // follow the matched subtree must still be copied (by reference) or they'd be lost.
+  const insert = (nodes: T[]): { inserted: boolean; nodes: T[] } => {
+    const next: T[] = [];
+    let inserted = false;
+    for (const n of nodes) {
+      if (!inserted && position === 'inside' && n[K] === dropKey) {
+        const oldKids = (Array.isArray(n[C]) ? n[C] : []) as T[];
+        next.push({ ...n, [C]: [...oldKids, dragNode] });
+        inserted = true;
+        continue;
+      }
+      if (!inserted && position === 'before' && n[K] === dropKey) {
+        next.push(dragNode, n);
+        inserted = true;
+        continue;
+      }
+      if (!inserted && position === 'after' && n[K] === dropKey) {
+        next.push(n, dragNode);
+        inserted = true;
+        continue;
+      }
+      const kids = n[C] as T[] | undefined;
+      if (inserted || !Array.isArray(kids)) {
+        // Already inserted, or a leaf with no subtree to search: keep by ref.
+        next.push(n);
+      } else {
+        const r = insert(kids);
+        if (r.inserted) {
+          next.push({ ...n, [C]: r.nodes });
+          inserted = true;
+        } else {
+          next.push(n);
+        }
+      }
+    }
+    return { inserted, nodes: next };
+  };
+
+  const { inserted, nodes: result } = insert(withoutDrag);
+  // If the drop target wasn't found, nothing should change — return the
+  // original (drag node stays put) rather than silently dropping it.
+  return inserted ? result : root;
+}
+
 export function getChildKeys<T extends Record<string, unknown>>(
   data: T,
   fieldNames: {

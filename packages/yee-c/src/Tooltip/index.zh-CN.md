@@ -28,6 +28,7 @@ toc: 'content'
 | --- | --- | --- | --- |
 | title | `React.ReactNode \| (() => React.ReactNode)` | 提示文字 | - |
 | mouseEnterDelay | `number` | 鼠标移入后延时多少秒才显示 Tooltip | `0.1` |
+| color | `string` | 自定义提示背景色（同时作用于气泡和箭头） | - |
 
 其他属性继承自 [Trigger](/components/trigger)，包括：
 

@@ -140,6 +140,7 @@ const Select = (baseprops: SelectProps) => {
       options={filteredOpts}
       focusedKey={focusedKey}
       selectedKeys={mergedValue}
+      dataTestId={rest['data-testid']}
       onSelect={handleSelect}
       onClose={() => setOpen(false)}
       ref={popupRef}

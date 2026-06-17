@@ -16,6 +16,7 @@ const Options = forwardRef((props: any, ref: React.Ref<HTMLDivElement>) => {
     popupStyle,
     selectedKeys,
     focusedKey,
+    dataTestId,
     onSelect,
     ...rest
   } = props;
@@ -37,8 +38,12 @@ const Options = forwardRef((props: any, ref: React.Ref<HTMLDivElement>) => {
         <OptionsCtx.Provider
           value={{ prefixCls, selectedKeys, focusedKey, onSelect }}
         >
-          {options.map((option: any) => (
-            <Option {...option} key={option.value} />
+          {options.map((option: any, index: number) => (
+            <Option
+              {...option}
+              key={option.value}
+              dataTestId={`${dataTestId}-${index}`}
+            />
           ))}
         </OptionsCtx.Provider>
       )}

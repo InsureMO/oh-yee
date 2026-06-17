@@ -9,15 +9,9 @@
     gap: var(--yee-radio-group-gap);
 
     &-small {
-      @{pls} {
-        padding: var(--yee-radio-small-padding, 2px 4px);
-      }
     }
 
     &-large {
-      @{pls} {
-        padding: var(--yee-radio-large-padding, 6px 12px);
-      }
     }
 
     &-solid {
@@ -64,6 +58,19 @@
           border-width: var(--yee-radio-cornermark-border-width);
           border-right-color: var(--yee-radio-inner-checked-border-color);
           border-bottom-color: var(--yee-radio-inner-checked-border-color);
+          content: '';
+        }
+
+        &::before {
+          position: absolute;
+          z-index: 1;
+          right: 5px;
+          top: 14px;
+          width: 4px;
+          height: 8px;
+          border: 2px solid #fff;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
           content: '';
         }
 

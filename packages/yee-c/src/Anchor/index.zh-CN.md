@@ -17,6 +17,7 @@ toc: 'content'
 <code src="./demo/basic.tsx" title="基础用法" description="Anchor的基础用法"></code>
 <code src="./demo/direction.tsx" title="方向" description="垂直和水平方向"></code>
 <code src="./demo/controlled.tsx" title="受控模式" description="通过activeKey控制激活项"></code>
+<code src="./demo/auto.tsx" title="自动生成" description="从 DOM 自动生成锚点列表"></code>
 
 ## API
 
@@ -68,6 +69,22 @@ toc: 'content'
 | 类型 |
 | --- |
 | `'item' \| 'active' \| 'content'` |
+
+## 自动生成模式（auto）
+
+设置 `auto` 并提供 `name` 时，组件会从 DOM 中扫描带 `data-anchor-group="<name>"` 的元素，自动生成锚点列表。每个目标元素需标注以下属性：
+
+| 属性 | 说明 |
+| --- | --- |
+| `data-anchor-group` | 分组名，必须等于 `name` |
+| `id` | 作为锚点 key 与滚动目标（必填） |
+| `data-anchor-title` | 导航项标题（必填，缺失则该项被跳过） |
+| `data-anchor-status` | 可选状态，`success` / `error` / `warning` |
+
+注意事项：
+
+- `auto` 与 `items` 互斥，同时传入时以 `auto` 扫描结果为准，`items` 被忽略。
+- 组件在挂载时扫描一次 DOM；若目标区块为异步渲染，请保证其在组件挂载时已存在于 DOM 中，否则扫描不到。
 
 ## 注意事项
 

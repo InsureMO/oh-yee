@@ -1,10 +1,17 @@
 import clsx from 'clsx';
+import { HelpCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useLayoutEffect, useMemo, useReducer } from 'react';
+import Tooltip from '../Tooltip';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
 import { ListNameContext } from './List';
-import type { FieldProps, InternalNamePath, NamePath } from './interface';
+import type {
+  FieldConfigurableTooltip,
+  FieldProps,
+  InternalNamePath,
+  NamePath,
+} from './interface';
 
 // Helper function: convert NamePath to InternalNamePath
 function getNamePath(path: NamePath): InternalNamePath {
@@ -24,9 +31,11 @@ const Field: React.FC<FieldProps> = (props) => {
     name,
     rules,
     label,
+    tooltip,
     required,
     disabled,
     valuePropName = 'value',
+    layout = 'vertical',
     formatter,
   } = props;
   const {
@@ -77,6 +86,29 @@ const Field: React.FC<FieldProps> = (props) => {
 
   const validate = getFieldValidate?.(normalizedName);
 
+  // Normalize tooltip into { icon, ...tooltipProps }, or null when not provided.
+  // Everything except `icon` is forwarded to <Tooltip>, so any Tooltip prop
+  // (title, color, placement, ...) is supported automatically.
+  const tooltipConfig = useMemo<
+    | { icon: React.ReactNode; tooltipProps: Omit<FieldConfigurableTooltip, 'icon'> }
+    | null
+  >(() => {
+    if (tooltip === undefined || tooltip === null || tooltip === false)
+      return null;
+    if (
+      typeof tooltip === 'object' &&
+      !React.isValidElement(tooltip) &&
+      'title' in (tooltip as object)
+    ) {
+      const { icon, ...rest } = tooltip as FieldConfigurableTooltip;
+      return { icon: icon ?? <HelpCircle size={14} />, tooltipProps: rest };
+    }
+    return {
+      icon: <HelpCircle size={14} />,
+      tooltipProps: { title: tooltip as React.ReactNode },
+    };
+  }, [tooltip]);
+
   const getControlled = (children: React.ReactElement) => {
     const props = children.props as any;
     const _value = getFieldValue?.(normalizedName) ?? undefined;
@@ -113,12 +145,12 @@ const Field: React.FC<FieldProps> = (props) => {
   };
   return (
     <div
-      className={clsx(`${prefixCls}-item`, {
+      className={clsx(`${prefixCls}-item`, `${prefixCls}-item-${layout}`, {
         [`${prefixCls}-item-${validate?.status}`]: validate && validate.status,
       })}
     >
       <div className={clsx(`${prefixCls}-item-row`)}>
-        {label ? (
+        {label || tooltipConfig ? (
           <label
             htmlFor={normalizedName}
             className={clsx(`${prefixCls}-item-label`, {
@@ -126,6 +158,16 @@ const Field: React.FC<FieldProps> = (props) => {
             })}
           >
             {label}
+            {isRequired() ? (
+              <span className={`${prefixCls}-item-required-mark`}>*</span>
+            ) : null}
+            {tooltipConfig ? (
+              <Tooltip {...tooltipConfig.tooltipProps}>
+                <span className={`${prefixCls}-item-tooltip-icon`}>
+                  {tooltipConfig.icon}
+                </span>
+              </Tooltip>
+            ) : null}
           </label>
         ) : null}
         <div className={`${prefixCls}-item-control`}>

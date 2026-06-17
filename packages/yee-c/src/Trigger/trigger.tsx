@@ -26,6 +26,7 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
     mouseLeaveDelay = 0.2,
     arrow,
     forceRender = false,
+    popupStyle,
     onOpenChange,
     zIndex,
     ...rest
@@ -130,6 +131,7 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
       onOpenChange?.(false);
     }
   };
+
   return (
     <RcTrigger
       {...rest}
@@ -156,7 +158,7 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
         motionAppear: true,
         motionEnter: true,
       }}
-      popupStyle={{ pointerEvents: 'auto' }}
+      popupStyle={{ pointerEvents: 'auto', ...popupStyle }}
       {...(zIndex !== undefined ? { zIndex } : {})}
       getPopupClassNameFromAlign={getPopupClassNameFromAlign}
       onOpenChange={handlePopupOpenChange}

@@ -239,7 +239,7 @@ export class FormStore {
           status: 'error',
           value,
           ...rule,
-        });
+        } as ValidateMessage);
       }
     });
     if (err.length > 0) {

@@ -6,29 +6,29 @@ export default () => {
 
   const treeData = [
     {
-      title: 'parent 1',
+      label: 'parent 1',
       key: '0-0',
       children: [
         {
-          title: 'parent 1-0',
+          label: 'parent 1-0',
           key: '0-0-0',
           children: [
             {
-              title: 'leaf',
+              label: 'leaf',
               key: '0-0-0-0',
             },
             {
-              title: 'leaf',
+              label: 'leaf',
               key: '0-0-0-1',
             },
           ],
         },
         {
-          title: 'parent 1-1',
+          label: 'parent 1-1',
           key: '0-0-1',
           children: [
             {
-              title: 'leaf',
+              label: 'leaf',
               key: '0-0-1-0',
             },
           ],
@@ -39,7 +39,7 @@ export default () => {
 
   const handleExpandAll = () => {
     type TreeNodeData = {
-      title: string;
+      label: string;
       key: string;
       children?: TreeNodeData[];
     };

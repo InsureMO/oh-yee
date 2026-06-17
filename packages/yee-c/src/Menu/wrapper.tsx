@@ -23,7 +23,7 @@ export type MenuWrapperContextType = {
   openOnly?: boolean;
   flatItems: Array<FlatItem>;
   onClick: (isLeaf: boolean, item: MenuItemType, event: MouseEvent) => void;
-  onOpenChange?: () => void;
+  onOpenChange?: (openKeys: string[]) => void;
   updateOpenKeys: (keys: string[] | ((prev: string[]) => string[])) => void;
   updateSelectedKeys: (keys: string[] | ((prev: string[]) => string[])) => void;
   footer?: React.ReactNode;
@@ -219,9 +219,8 @@ const MenuWrapper = (baseprops: MenuProps) => {
     onClick?.({ item, key, keyPath });
   };
 
-  const handleOpenChange = () => {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
-    onOpenChange?.(mergedOpenKeys);
+  const handleOpenChange = (openKeys: string[]) => {
+    onOpenChange?.(openKeys);
   };
 
   return (

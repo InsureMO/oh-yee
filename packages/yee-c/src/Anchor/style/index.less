@@ -53,7 +53,7 @@
           width: var(--yee-anchor-static-item-active-width);
           height: var(--yee-anchor-static-item-active-height);
           border: none;
-          border-radius: 0;
+          border-radius: var(--yee-anchor-static-item-active-width);
           background-color: var(--yee-anchor-item-active-font-color);
         }
       }
@@ -165,7 +165,7 @@
 
   &-item {
     position: relative;
-    padding: var(--yee-anchor-item-padding);
+    margin: var(--yee-anchor-item-padding);
     white-space: nowrap;
     color: var(--yee-anchor-item-font-color);
     cursor: pointer;

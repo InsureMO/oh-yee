@@ -10,10 +10,16 @@ import './style/index.less';
 const ICON_STROKE_WIDTH = 1.5; // Icon stroke width
 
 const iconMap = {
-  info: { small: <Info />, large: <Info /> },
-  success: { small: <CircleCheckBig />, large: <CircleCheckBig /> },
-  warning: { small: <CircleAlert />, large: <CircleAlert /> },
-  error: { small: <CircleX />, large: <CircleX /> },
+  info: { small: <Info size={16} />, large: <Info size={24} /> },
+  success: {
+    small: <CircleCheckBig size={16} />,
+    large: <CircleCheckBig size={24} />,
+  },
+  warning: {
+    small: <CircleAlert size={16} />,
+    large: <CircleAlert size={24} />,
+  },
+  error: { small: <CircleX size={16} />, large: <CircleX size={24} /> },
 };
 
 const Alert: React.FC<AlertProps> = (baseprops) => {

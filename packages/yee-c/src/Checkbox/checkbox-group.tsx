@@ -34,6 +34,7 @@ const CheckboxGroup = (baseprops: CheckboxGroupProps) => {
     options,
     buttonStyle,
     disabled,
+    layout = 'horizontal',
     onChange,
   } = props;
 
@@ -44,6 +45,7 @@ const CheckboxGroup = (baseprops: CheckboxGroupProps) => {
 
   const cls = clsx(
     prefixCls,
+    [`${prefixCls}-${layout}`],
     {
       [`${prefixCls}-${buttonStyle}`]: buttonStyle,
       [`${prefixCls}-disabled`]: disabled,
@@ -71,7 +73,9 @@ const CheckboxGroup = (baseprops: CheckboxGroupProps) => {
             {...option}
             checked={mergedValue.includes(option.value)}
             key={option.value || index}
-          />
+          >
+            {option.label}
+          </Checkbox>
         ))}
       </CheckboxGroupCtx.Provider>
     </div>

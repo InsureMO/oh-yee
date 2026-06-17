@@ -20,7 +20,13 @@ export default () => {
   return (
     <div
       id="basic-container"
-      style={{ display: 'flex', height: '100vh', overflow: 'auto' }}
+      style={{
+        position: 'relative',
+        display: 'flex',
+        height: '100vh',
+        overflow: 'auto',
+        transform: 'scale(1)',
+      }}
     >
       <Anchor
         items={items}

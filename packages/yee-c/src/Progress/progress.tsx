@@ -75,13 +75,13 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     let progress;
     if (type === 'line') {
       progress = (
-        <Line prefixCls={prefixCls} percent={percent}>
+        <Line {...rest} prefixCls={prefixCls} percent={percent}>
           {progressInfo}
         </Line>
       );
     } else {
       progress = (
-        <Circle prefixCls={prefixCls} percent={percent}>
+        <Circle {...rest} prefixCls={prefixCls} percent={percent}>
           {progressInfo}
         </Circle>
       );

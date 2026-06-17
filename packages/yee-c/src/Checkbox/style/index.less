@@ -33,6 +33,10 @@
       background-color: var(--yee-checkbox-checked-bg-color);
       border-color: var(--yee-checkbox-checked-border-color);
 
+      --ye-checkbox-checked-border-color: var(
+        --yee-checkbox-checked-after-border-color
+      );
+
       &::after {
         position: absolute;
         top: 50%;
@@ -41,7 +45,7 @@
         width: var(--yee-checkbox-checked-after-width);
         height: var(--yee-checkbox-checked-after-height);
         border: var(--yee-checkbox-checked-after-border-width) solid
-          var(--yee-checkbox-checked-after-border-color);
+          var(--ye-checkbox-checked-border-color);
         border-top: 0;
         transform: rotate(45deg) scale(1) translate(-50%, -50%);
         content: '';
@@ -57,6 +61,14 @@
     @{pls}-inner {
       background-color: var(--yee-checkbox-disabled-unchecked-bg-color);
       border-color: var(--yee-checkbox-border-color);
+    }
+
+    &&-checked {
+      @{pls}-inner {
+        --ye-checkbox-checked-border-color: var(
+          --yee-checkbox-disabled-checked-border-color
+        );
+      }
     }
 
     @{pls}-input {
@@ -98,6 +110,14 @@
         border-radius: var(--yee-checkbox-indeterminate-after-border-radius);
         background-color: var(--yee-checkbox-bg-indeterminate-color);
       }
+    }
+  }
+
+  &-group {
+    &-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
   }
 }
