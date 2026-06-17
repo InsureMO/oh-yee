@@ -21,6 +21,12 @@ A collection of React UI components, AI workflow components, and TypeScript util
 - **Tree-shakeable** — Modular exports for optimal bundle size
 - **Theming** — CSS variables and 10+ built-in color themes
 
+## Document
+
+- [@rainbow-oh/yee-c](https://insuremo.github.io/oh-yee/yee-c)
+- [@rainbow-oh/yee-x](https://insuremo.github.io/oh-yee/yee-x)
+
+
 ## Quick Start
 
 Install the packages you need:
