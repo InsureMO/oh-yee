@@ -1,0 +1,37 @@
+@pls: .yee-resize;
+
+@{pls} {
+  position: relative;
+  box-sizing: border-box;
+
+  &-handler {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    cursor: ew-resize;
+    background-color: var(--yee-resize-handler-color, var(--yee-primary-color));
+    transition: opacity 0.2s linear;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &-right {
+      padding-right: 4px;
+
+      @{pls}-handler {
+        right: 0;
+      }
+    }
+
+    &-left {
+      padding-left: 4px;
+
+      @{pls}-handler {
+        left: 0;
+      }
+    }
+  }
+}

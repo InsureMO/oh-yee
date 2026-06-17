@@ -1,0 +1,49 @@
+@pls: .yee-prompts;
+
+@{pls} {
+  &-title {
+    font-weight: 500;
+  }
+
+  &-list {
+    display: flex;
+    gap: 16px;
+
+    &-vertical {
+      flex-direction: column;
+    }
+
+    &-wrap {
+      flex-wrap: wrap;
+    }
+  }
+
+  &-item {
+    display: inline-flex;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border: 1px solid var(--yee-prompts-item-border-color, #eee);
+    padding: var(--yee-prompts-item-padding, 6px 16px);
+    border-radius: var(--yee-prompts-item-border-radius, 6px);
+    background-color: var(--yee-prompts-item-bg-color);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--yee-prompts-item-hover-bg-color, #f5f5f5);
+    }
+
+    &-icon {
+      margin-inline-end: 8px;
+    }
+
+    &-label {
+      color: var(--yee-prompts-item-label-color, #333);
+    }
+
+    &-desc {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--yee-prompts-item-desc-color, #666);
+    }
+  }
+}

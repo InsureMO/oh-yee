@@ -1,0 +1,137 @@
+{
+  "name": "@rainbow-oh/yee-x",
+  "version": "0.1.0",
+  "description": "React components for building AI-powered conversational interfaces",
+  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-x#readme",
+  "bugs": {
+    "url": "https://github.com/InsureMO/oh-yee/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InsureMO/oh-yee.git",
+    "directory": "packages/yee-x"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "ai",
+    "chat",
+    "chatbot",
+    "conversation",
+    "streaming",
+    "markdown",
+    "components",
+    "ui",
+    "yee-x"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.less",
+    "**/style/*"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./umd/*": "./dist/umd/*"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "agents.md"
+  ],
+  "scripts": {
+    "build": "node scripts/generate-version.js && rm -rf dist && father build",
+    "build:release": "dumi build",
+    "build:watch": "father dev",
+    "dev": "dumi dev",
+    "docs:build": "dumi build",
+    "docs:preview": "dumi preview",
+    "docs:scan": "node scripts/scan-docs.js",
+    "doctor": "father doctor",
+    "lint": "npm run lint:es && npm run lint:css",
+    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\" --ignore-pattern \"src/Markdown/style/*.css\"",
+    "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "dumi setup",
+    "prepublishOnly": "npm run docs:scan && father doctor && npm run build",
+    "start": "npm run dev",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,less,json}\""
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{css,less}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@rc-component/trigger": "^2.2.6",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
+    "lucide-react": "^0.468.0",
+    "motion": "^11.15.0",
+    "react-loading": "^2.0.3",
+    "react-markdown": "^9.0.1",
+    "rehype-highlight": "^7.0.1",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@umijs/lint": "^4.5.3",
+    "dumi": "^2.4.13",
+    "eslint": "^8.23.0",
+    "father": "^4.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-plugin-organize-imports": "^3.0.0",
+    "prettier-plugin-packagejson": "^2.2.18",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "stylelint": "^14.16.1",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "jsdom": "^25.0.0",
+    "vitest": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@rainbow-oh/yee-c": "workspace:^",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  }
+}
