@@ -143,3 +143,8 @@ vite.config.ts.timestamp-*
 .vite/
 node_modules
 .DS_Store
+
+.claude
+template
+aeon
+design
