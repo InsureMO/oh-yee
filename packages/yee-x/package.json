@@ -1,17 +1,7 @@
 {
   "name": "@rainbow-oh/yee-x",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React components for building AI-powered conversational interfaces",
-  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-x#readme",
-  "bugs": {
-    "url": "https://github.com/InsureMO/oh-yee/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/InsureMO/oh-yee.git",
-    "directory": "packages/yee-x"
-  },
-  "license": "MIT",
   "keywords": [
     "react",
     "ai",
@@ -24,10 +14,16 @@
     "ui",
     "yee-x"
   ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-x#readme",
+  "bugs": {
+    "url": "https://github.com/InsureMO/oh-yee/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InsureMO/oh-yee.git",
+    "directory": "packages/yee-x"
+  },
+  "license": "MIT",
   "sideEffects": [
     "**/*.css",
     "**/*.less",
@@ -59,6 +55,8 @@
     "docs:preview": "dumi preview",
     "docs:scan": "node scripts/scan-docs.js",
     "doctor": "father doctor",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
     "lint": "npm run lint:es && npm run lint:css",
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\" --ignore-pattern \"src/Markdown/style/*.css\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
@@ -66,10 +64,8 @@
     "prepublishOnly": "npm run docs:scan && father doctor && npm run build",
     "start": "npm run dev",
     "test": "vitest run",
-    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,less,json}\""
+    "test:watch": "vitest"
   },
   "commitlint": {
     "extends": [
@@ -109,6 +105,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.0.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@umijs/lint": "^4.5.3",
@@ -116,6 +114,7 @@
     "eslint": "^8.23.0",
     "father": "^4.1.0",
     "husky": "^8.0.1",
+    "jsdom": "^25.0.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.0.0",
@@ -123,14 +122,15 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "stylelint": "^14.16.1",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/jest-dom": "^6.6.0",
-    "jsdom": "^25.0.0",
     "vitest": "^3.0.0"
   },
   "peerDependencies": {
     "@rainbow-oh/yee-c": "workspace:^",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
