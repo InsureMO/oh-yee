@@ -5,7 +5,7 @@ export default () => {
   return (
     <div>
       <Carousel
-        style={{ width: '500px', height: '300px', marginBottom: '20px' }}
+        style={{ width: '100%', height: '300px', marginBottom: '20px' }}
         dotPosition="top"
         dots
       >

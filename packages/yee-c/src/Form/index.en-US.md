@@ -89,6 +89,10 @@ High performance form component with data scope management.
 
 | Property | Type                  | Description      | Default |
 | -------- | --------------------- | ---------------- | ------- |
+| className | `string`             | Custom field root class name | -       |
+| style | `React.CSSProperties` | Custom field root style | -       |
+| classNames | `Partial<Record<'label' \| 'control', string>>` | Semantic structure class names | -       |
+| styles | `Partial<Record<'label' \| 'control', React.CSSProperties>>` | Semantic structure styles | -       |
 | children | `React.ReactElement`  | Child element    | -       |
 | name     | `NamePath` | Field name       | -       |
 | rules    | [Rule\[\]](#rule)     | Validation rules | -       |

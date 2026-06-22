@@ -26,6 +26,7 @@ export default () => {
         value={value2}
         onChange={(e) => setValue2(e)}
         buttonStyle="solid"
+        gap={8}
         options={[
           { value: 'a', label: 'Hangzhou' },
           { value: 'b', label: 'Shanghai' },

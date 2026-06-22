@@ -29,7 +29,6 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     onHeaderCell,
     onSort,
     onInternalFilter,
-    render,
     ...rest
   } = props;
 
@@ -117,14 +116,8 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
         className={`${prefixCls}-thead-cell`}
         style={{ justifyContent: align }}
       >
-        {render ? (
-          render(props, 0)
-        ) : (
-          <>
-            {renderTitle()}
-            {renderFilter()}
-          </>
-        )}
+        {renderTitle()}
+        {renderFilter()}
       </div>
     );
   };

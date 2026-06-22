@@ -53,6 +53,9 @@ export * from './Radio';
 export { default as Radio } from './Radio';
 export * from './Select';
 export { default as Select } from './Select';
+
+export * from './Segmented';
+export { default as Segmented } from './Segmented';
 export * from './Skeleton';
 export { default as Skeleton } from './Skeleton';
 export * from './Space';
@@ -98,6 +101,9 @@ export { default as Steps } from './Steps';
 
 export * from './Tooltip';
 export { default as Tooltip } from './Tooltip';
+
+export * from './Tour';
+export { default as Tour } from './Tour';
 
 export * from './Table';
 export { default as Table } from './Table';

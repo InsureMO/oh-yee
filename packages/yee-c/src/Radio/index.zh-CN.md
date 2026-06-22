@@ -54,4 +54,6 @@ toc: 'content'
 | disabled | `boolean` | 是否禁用所有选项 | - |
 | buttonStyle | `'outline' \| 'solid' \| 'cornermark'` | 按钮风格 | - |
 | options | `Array<RadioProps & { label: React.ReactNode }>` | 选项，以配置形式 | - |
+| toggleable | `boolean` | 是否允许切换选中状态（再次点击取消选中） | - |
+| gap | `number` | 设置单选框之间的间距 | - |
 | onChange | `(value: string, event: React.ChangeEvent<HTMLInputElement>) => void` | 值改变时的回调 | - |

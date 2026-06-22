@@ -72,6 +72,7 @@ GlobalCtxType contains configuration for all components. Here are some examples:
 | rate | [RateProps](/components/rate) | Rate component configuration |
 | search | [SearchProps](/components/search) | Search component configuration |
 | select | [SelectProps](/components/select) | Select component configuration |
+| segmented | [SegmentedProps](/components/segmented) | Segmented component configuration |
 | skeleton | [SkeletonProps](/components/skeleton) | Skeleton component configuration |
 | slider | [SliderProps](/components/slider) | Slider component configuration |
 | space | [SpaceProps](/components/space) | Space component configuration |
@@ -88,6 +89,7 @@ GlobalCtxType contains configuration for all components. Here are some examples:
 | timeline | [TimelineProps](/components/timeline) | Timeline component configuration |
 | highlight | [HighlightProps](/components/highlight) | Highlight component configuration |
 | tooltip | [TooltipProps](/components/tooltip) | Tooltip component configuration |
+| tour | [TourProps](/components/tour) | Tour component configuration |
 | tree | [TreeProps](/components/tree) | Tree component configuration |
 | treeselect | [TreeSelectProps](/components/tree-select) | TreeSelect component configuration |
 | trigger | [TriggerProps](/components/trigger) | Trigger component configuration |

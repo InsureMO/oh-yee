@@ -64,7 +64,7 @@ const Step: React.FC<StepProps> = (props) => {
 
     return index < current ? (
       <span className={`${prefixCls}-item-serial ${prefixCls}-item-icon-check`}>
-        <Check />
+        <Check size={18} strokeWidth={3} />
       </span>
     ) : (
       <span className={`${prefixCls}-item-serial`}>{index + 1}</span>

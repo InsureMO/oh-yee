@@ -41,18 +41,18 @@
     border: none;
 
     &:not(@{pls}-disabled):hover {
-      background-color: var(--m-btn-hover-color);
+      background-color: var(--m-btn-hover-bg-color);
     }
 
     &:not(@{pls}-disabled):active {
-      background-color: var(--m-btn-active-color);
+      background-color: var(--m-btn-active-bg-color);
     }
   }
 
   &-dashed {
     color: var(--m-btn-color);
     background-color: transparent;
-    border: var(--yee-btn-border-width) dashed var(--m-btn-color);
+    border: var(--yee-btn-border-width) dashed var(--m-btn-border-color);
 
     &:not(@{pls}-disabled):hover {
       color: var(--m-btn-hover-color);
@@ -84,7 +84,19 @@
   &-outlined {
     color: var(--m-btn-color);
     background-color: transparent;
-    border: var(--yee-btn-border-width) solid var(--m-btn-color);
+    border: var(--yee-btn-border-width) solid var(--m-btn-border-color);
+
+    &:not(@{pls}-disabled) {
+      &:hover {
+        color: var(--m-btn-hover-color);
+        border-color: var(--m-btn-border-hover-color);
+      }
+
+      &:active {
+        color: var(--m-btn-active-color);
+        border-color: var(--m-btn-border-active-color);
+      }
+    }
   }
 
   &-ghost {
@@ -134,11 +146,14 @@
   // ---- color ------
   &-default {
     --m-btn-color: var(--yee-text-color);
-    --m-btn-hover-color: var(--yee-text-color-auxiliary);
-    --m-btn-active-color: var(--yee-btn-default-active-color);
+    --m-btn-hover-color: var(--yee-primary-color);
+    --m-btn-border-color: var(--yee-border-color);
+    --m-btn-border-hover-color: var(--yee-primary-color);
     --m-btn-bg-color: var(--yee-btn-default-bg-color);
-    --m-btn-hover-bg-color: var(--yee-btn-default-bg-color);
-    --m-btn-active-bg-color: var(--yee-btn-default-bg-color);
+    --m-btn-hover-bg-color: var(--yee-text-color-auxiliary);
+    --m-btn-border-active-color: var(--yee-primary-color-active);
+    --m-btn-active-color: var(--yee-primary-color-active);
+    --m-btn-active-bg-color: var(--yee-text-color-auxiliary);
   }
 
   &-primary {

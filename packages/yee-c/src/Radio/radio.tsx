@@ -16,6 +16,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
       prefixCls = 'yee-radio',
       className,
       classNames,
+      style,
       styles,
       label,
       children,
@@ -66,7 +67,7 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     );
 
     return (
-      <label className={cls} onClick={handleClick}>
+      <label className={cls} style={style} onClick={handleClick}>
         <span
           className={clsx(prefixCls, {
             [`${prefixCls}-disabled`]: disabled,

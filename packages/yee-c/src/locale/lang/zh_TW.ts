@@ -107,6 +107,13 @@ const locale: Locale = {
     cancelText: '取消',
   },
 
+  tour: {
+    previous: '上一步',
+    next: '下一步',
+    finish: '完成',
+    skip: '跳過',
+  },
+
   popconfirm: {
     okText: '確定',
     cancelText: '取消',

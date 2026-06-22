@@ -1,0 +1,103 @@
+@pls: .yee-tour;
+
+@{pls} {
+  position: fixed;
+  inset: 0;
+  z-index: var(--yee-tour-mask-z-index);
+  pointer-events: none;
+
+  // ① click-intercept layer (box-shadow receives no pointer events, so a
+  //    transparent full-screen layer is needed to lock interaction + carry maskClosable)
+  &-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: auto;
+    background-color: transparent;
+
+    // No target to cut out → the mask itself becomes the full-screen dim layer.
+    &-full {
+      background-color: var(--yee-tour-mask-color);
+    }
+  }
+
+  // ② highlight cutout via a huge box-shadow; top/left/width/height come from
+  //    motion inline styles, position/shape/visuals from here
+  &-highlight {
+    position: fixed;
+    box-sizing: border-box;
+    border-radius: var(--yee-tour-highlight-border-radius);
+    box-shadow: 0 0 0 9999px var(--yee-tour-mask-color);
+    z-index: 1;
+    pointer-events: none;
+  }
+}
+
+// card
+.yee-tour-content {
+  position: fixed;
+  z-index: 2;
+  pointer-events: auto;
+  box-sizing: border-box;
+  width: var(--yee-tour-content-width);
+  max-width: calc(100vw - 48px);
+  padding: var(--yee-tour-content-padding);
+  background-color: var(--yee-tour-content-bg-color);
+  border-radius: var(--yee-tour-content-border-radius);
+  box-shadow: var(--yee-tour-content-box-shadow);
+
+  .yee-tour-close {
+    position: absolute;
+    top: var(--yee-tour-close-top);
+    inset-inline-end: var(--yee-tour-close-right);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--yee-tour-close-color);
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity var(--yee-tour-transition-duration) linear;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .yee-tour-header {
+    margin-bottom: var(--yee-tour-header-margin-bottom);
+    padding-inline-end: var(--yee-tour-close-size);
+    color: var(--yee-tour-title-color);
+    font-size: var(--yee-tour-title-font-size);
+    font-weight: var(--yee-tour-title-font-weight);
+    line-height: var(--yee-tour-title-line-height);
+  }
+
+  .yee-tour-body {
+    color: var(--yee-tour-description-color);
+    font-size: var(--yee-tour-description-font-size);
+    line-height: var(--yee-tour-description-line-height);
+  }
+
+  .yee-tour-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--yee-tour-button-gap);
+    margin-top: var(--yee-tour-footer-margin-top);
+  }
+
+  .yee-tour-indicators {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--yee-tour-indicator-gap);
+  }
+
+  .yee-tour-buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--yee-tour-button-gap);
+    margin-left: auto;
+  }
+}

@@ -38,6 +38,7 @@ A table displays rows of data.
 | columns | `ColumnProps[]` | Table column configuration | - |
 | children | `Array<React.ReactElement<ColumnProps>> | React.ReactElement<ColumnProps>` | Children elements | - |
 | locale | `Record<string, string>` | Locale messages | - |
+| noData | `React.ReactNode` | Content displayed when no data is available | - |
 | dataSource | `Array<Record<string, any>>` | Data source | - |
 | footer | `React.ReactNode \| (() => React.ReactNode)` | Table footer | - |
 | loading | `boolean` | Loading state | - |

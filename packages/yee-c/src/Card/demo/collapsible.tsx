@@ -8,6 +8,7 @@ export default () => {
       expanded={false}
       extra={<a href="#">More</a>}
       style={{ width: 300 }}
+      bordered
     >
       <p>Card content</p>
       <p>Card content</p>

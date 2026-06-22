@@ -15,6 +15,10 @@
   cursor: pointer;
   transition: background 0.2s linear;
 
+  &-spin {
+    position: absolute;
+  }
+
   &-handle {
     position: absolute;
     top: var(--yee-switch-handle-top);
@@ -67,12 +71,24 @@
         var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset)
       );
     }
+
+    @{pls}-spin {
+      inset-inline-end: calc(
+        var(--m-switch-handle-size) + var(--yee-switch-handle-offset)
+      );
+    }
   }
 
   &-unchecked {
     background-color: var(--yee-switchbox-switch-bg-color);
 
     @{pls}-inner {
+      padding-inline-start: calc(
+        var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset)
+      );
+    }
+
+    @{pls}-spin {
       padding-inline-start: calc(
         var(--m-switch-handle-size) + var(--yee-switch-inner-padding-offset)
       );

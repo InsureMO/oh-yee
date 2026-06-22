@@ -418,6 +418,10 @@
   --yee-radio-inner-border-width: 1px;
   --yee-radio-inner-after-width: 10px;
   --yee-radio-inner-after-height: 10px;
+  --yee-radio-font-small-size: 12px;
+  --yee-radio-small-padding: 2px;
+  --yee-radio-font-large-size: 16px;
+  --yee-radio-large-padding: 6px;
 
   /* --Rate-- */
   --yee-rate-star-width: 24px;
@@ -492,6 +496,20 @@
   --yee-skeleton-active-animation-delay: 0.1s;
   --yee-skeleton-active-translate-start: -37.5%;
   --yee-skeleton-active-translate-end: 37.5%;
+
+  /* --Segmented-- */
+  --yee-segmented-padding: 2px;
+  --yee-segmented-border-radius: 8px;
+  --yee-segmented-item-padding: 4px 12px;
+  --yee-segmented-item-border-radius: 6px;
+  --yee-segmented-item-gap: 6px;
+  --yee-segmented-font-size: 14px;
+  --yee-segmented-item-small-padding: 2px 8px;
+  --yee-segmented-font-small-size: 12px;
+  --yee-segmented-item-large-padding: 6px 16px;
+  --yee-segmented-font-large-size: 16px;
+  --yee-segmented-thumb-border-radius: 6px;
+  --yee-segmented-transition-duration: 0.2s;
 
   /* --Slider-- */
   --yee-slider-height: 12px;
@@ -782,6 +800,26 @@
   --yee-tooltip-arrow-border-radius: 0 0 2px 0;
   --yee-tooltip-arrow-translate-y: 50%;
   --yee-tooltip-arrow-rotate: -135deg;
+
+  /* --Tour-- */
+  --yee-tour-mask-z-index: var(--yee-z-index-mask);
+  --yee-tour-content-width: 400px;
+  --yee-tour-content-padding: 16px;
+  --yee-tour-content-border-radius: 8px;
+  --yee-tour-highlight-border-radius: 6px;
+  --yee-tour-close-top: 12px;
+  --yee-tour-close-right: 12px;
+  --yee-tour-close-size: 20px;
+  --yee-tour-header-margin-bottom: 8px;
+  --yee-tour-title-font-size: 16px;
+  --yee-tour-title-font-weight: 600;
+  --yee-tour-title-line-height: 24px;
+  --yee-tour-description-font-size: 14px;
+  --yee-tour-description-line-height: 22px;
+  --yee-tour-footer-margin-top: 16px;
+  --yee-tour-indicator-gap: 6px;
+  --yee-tour-button-gap: 8px;
+  --yee-tour-transition-duration: 0.2s;
 
   /* --Tree-- */
   --yee-tree-node-height: 32px;

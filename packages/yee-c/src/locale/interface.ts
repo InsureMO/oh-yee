@@ -109,6 +109,14 @@ export interface LocaleForm {
   defaultValidateMessage?: string; // "Invalid format"
 }
 
+// Tour component
+export interface LocaleTour {
+  previous: string; // "Previous"
+  next: string; // "Next"
+  finish: string; // "Finish"
+  skip: string; // "Skip"
+}
+
 export interface Locale {
   locale: string;
   global: LocaleGlobal;
@@ -125,6 +133,7 @@ export interface Locale {
   popconfirm: LocalePopconfirm;
   qrcode: LocaleQRCode;
   form: LocaleForm;
+  tour: LocaleTour;
 }
 
 // ============ Translation key type inference ============

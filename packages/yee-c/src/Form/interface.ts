@@ -6,7 +6,7 @@ export type Store = Record<string, StoreValue>;
 export type Name = string;
 export type NamePath = string | string[] | number | (string | number)[];
 
-export type SemanticDOM = 'label' | 'control';
+export type FieldSemanticDOM = 'label' | 'control';
 
 // Internal name path type, always a string array
 export type InternalNamePath = (string | number)[];
@@ -264,6 +264,22 @@ export type FieldConfigurableTooltip = Omit<TooltipProps, 'children'> & {
 export type FieldTooltip = React.ReactNode | FieldConfigurableTooltip;
 
 export type FieldProps = {
+  /**
+   * custom field root className
+   * */
+  className?: string;
+  /**
+   * custom field root style
+   * */
+  style?: React.CSSProperties;
+  /**
+   * Semantic DOM className
+   * */
+  classNames?: Partial<Record<FieldSemanticDOM, string>>;
+  /**
+   * Semantic DOM style
+   * */
+  styles?: Partial<Record<FieldSemanticDOM, React.CSSProperties>>;
   /**
    * Child nodes
    * */

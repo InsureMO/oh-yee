@@ -3,7 +3,7 @@ import React from 'react';
 
 export default () => {
   return (
-    <Carousel style={{ width: '500px', height: '300px' }} arrows="always">
+    <Carousel style={{ width: '100%', height: '300px' }} arrows="always">
       <div
         style={{
           backgroundColor: '#f5f5f5',

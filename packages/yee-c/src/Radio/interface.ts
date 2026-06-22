@@ -97,6 +97,10 @@ export interface RadioGroupProps {
    */
   toggleable?: boolean;
   /**
+   * Set the interval between radios
+   * */
+  gap?: number;
+  /**
    * Callback when value changes
    */
   onChange?: (

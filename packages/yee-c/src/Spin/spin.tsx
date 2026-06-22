@@ -55,6 +55,7 @@ const Spin: FC<SpinProps> = (baseprops) => {
         styles={styles}
         size={size}
         variant={variant}
+        color={color}
       />
       {tip && (
         <span

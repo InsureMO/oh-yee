@@ -4,13 +4,13 @@ import React from 'react';
 export default () => {
   return (
     <Space direction="vertical">
-      <Space>
+      <Space block>
         <Tag size="small">Small</Tag>
         <Tag size="default">Default</Tag>
         <Tag size="large">Large</Tag>
       </Space>
 
-      <Space>
+      <Space block>
         <Tag size="small" status="success">
           Small Success
         </Tag>

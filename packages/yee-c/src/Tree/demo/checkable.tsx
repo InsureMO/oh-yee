@@ -7,29 +7,29 @@ export default () => {
   const treeData = [
     {
       label: 'parent 1',
-      key: '0-0',
+      key: 1,
       children: [
         {
           label: 'parent 1-0',
-          key: '0-0-0',
+          key: 10,
           children: [
             {
               label: 'leaf',
-              key: '0-0-0-0',
+              key: 100,
             },
             {
               label: 'leaf',
-              key: '0-0-0-1',
+              key: 101,
             },
           ],
         },
         {
           label: 'parent 1-1',
-          key: '0-0-1',
+          key: 20,
           children: [
             {
               label: 'leaf',
-              key: '0-0-1-0',
+              key: 201,
             },
           ],
         },

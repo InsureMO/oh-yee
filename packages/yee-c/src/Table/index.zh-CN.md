@@ -43,6 +43,7 @@ toc: 'content'
 | columns           | `ColumnProps[]`                                                             | 表格列的配置信息                     | -      |
 | children          | `Array<React.ReactElement<ColumnProps>> \| React.ReactElement<ColumnProps>` | 子元素                               | -      |
 | locale            | `Record<string, string>`                                                    | 提示信息                             | -      |
+| noData            | `React.ReactNode`                                                           | 无数据时展示的内容                   | -      |
 | dataSource        | `Array<Record<string, any>>`                                                | 数据                                 | -      |
 | footer            | `React.ReactNode \| (() => React.ReactNode)`                                | 表格底部                             | -      |
 | loading           | `boolean`                                                                   | 加载状态                             | -      |

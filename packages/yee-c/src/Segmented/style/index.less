@@ -1,0 +1,104 @@
+@pls: .yee-segmented;
+
+@{pls} {
+  display: inline-flex;
+  box-sizing: border-box;
+  padding: var(--yee-segmented-padding);
+  border-radius: var(--yee-segmented-border-radius);
+  background-color: var(--yee-segmented-bg-color);
+
+  &-block {
+    display: flex;
+    width: 100%;
+
+    @{pls}-item {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+  }
+
+  &-item {
+    position: relative;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: var(--yee-segmented-item-padding);
+    border-radius: var(--yee-segmented-item-border-radius);
+    font-size: var(--yee-segmented-font-size);
+    color: var(--yee-segmented-item-color);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--yee-segmented-transition-duration) linear;
+
+    &:hover:not(&-disabled):not(&-selected) {
+      color: var(--yee-segmented-item-hover-color);
+    }
+  }
+
+  &-item-inner {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--yee-segmented-item-gap);
+  }
+
+  &-item-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &-item-selected {
+    color: var(--yee-segmented-item-selected-color);
+    cursor: default;
+  }
+
+  &-item-disabled {
+    color: var(--yee-segmented-item-disabled-color);
+    cursor: not-allowed;
+  }
+
+  &-thumb {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--yee-segmented-thumb-border-radius);
+    background-color: var(--yee-segmented-thumb-bg-color);
+    box-shadow: var(--yee-segmented-thumb-box-shadow);
+  }
+
+  &-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  &-item:has(&-input:focus-visible) {
+    box-shadow: 0 0 0 2px var(--yee-primary-color);
+  }
+
+  &-small {
+    @{pls}-item {
+      padding: var(--yee-segmented-item-small-padding);
+      font-size: var(--yee-segmented-font-small-size);
+    }
+  }
+
+  &-large {
+    @{pls}-item {
+      padding: var(--yee-segmented-item-large-padding);
+      font-size: var(--yee-segmented-font-large-size);
+    }
+  }
+}

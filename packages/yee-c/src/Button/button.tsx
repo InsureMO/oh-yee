@@ -42,7 +42,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     if (type) {
       switch (type) {
         case 'default':
-          mergedColor = 'primary';
+          mergedColor = 'default';
           mergedVariant = 'outlined';
           break;
         case 'primary':
@@ -50,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
           mergedVariant = 'solid';
           break;
         case 'dashed':
-          mergedColor = 'primary';
+          mergedColor = 'default';
           mergedVariant = 'dashed';
           break;
         case 'link':

@@ -144,7 +144,8 @@ vite.config.ts.timestamp-*
 node_modules
 .DS_Store
 
+.playwright-mcp
 .claude
 template
-aeon
-design
+aeon-crm-ui
+li-pd-ui

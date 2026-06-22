@@ -22,6 +22,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
     const {
       prefixCls = 'yee-radio-group',
       className,
+      style,
       name = uid,
       value,
       defaultValue,
@@ -29,6 +30,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
       buttonStyle,
       disabled,
       size,
+      gap,
       onChange,
       ...rest
     } = props;
@@ -43,6 +45,7 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
       {
         [`${prefixCls}-${buttonStyle}`]: buttonStyle,
         [`${prefixCls}-${size}`]: size,
+        [`${prefixCls}-with-gap`]: gap,
       },
       className,
     );
@@ -53,7 +56,12 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
     };
 
     return (
-      <div className={cls} ref={ref} role="radiogroup">
+      <div
+        className={cls}
+        style={{ ...style, gap: gap }}
+        ref={ref}
+        role="radiogroup"
+      >
         <GroupCtx.Provider
           value={{ name, buttonStyle, onChange: handleChange }}
         >

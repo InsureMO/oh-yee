@@ -267,7 +267,7 @@ export interface ColumnProps {
    * Custom render cell content
    */
   render?: (
-    record: HeadCellProps | Record<string, unknown>,
+    record: Record<string, unknown>,
     rowIndex: number,
   ) => React.ReactNode;
 }
@@ -492,6 +492,10 @@ export interface TableProps
    * Locale text, including sort and empty data hints
    */
   locale?: Record<string, string>;
+  /**
+   * Content displayed when no data is available
+   * */
+  noData?: React.ReactNode;
   /**
    * Data
    */

@@ -58,7 +58,7 @@ const Switch = (baseprops: SwitchProps) => {
       role="switch"
       aria-checked={mergedChecked}
       className={cls}
-      disabled={disabled}
+      disabled={disabled || loading}
       onClick={onClick}
       style={style}
     >
@@ -71,11 +71,19 @@ const Switch = (baseprops: SwitchProps) => {
           bounce: 0.2,
         }}
       >
-        {loading ? (
-          <Spin size="small" />
-        ) : (
-          <span className={clsx(`${prefixCls}-handle-inner`)}></span>
-        )}
+        {/* {loading ? (
+          
+        ) : ( */}
+        <span className={clsx(`${prefixCls}-handle-inner`)}>
+          {loading ? (
+            <Spin
+              size="small"
+              className={`${prefixCls}-spin`}
+              color={checked ? '#fff' : undefined}
+            />
+          ) : null}
+        </span>
+        {/* )} */}
       </motion.span>
       <span
         className={clsx(`${prefixCls}-inner`, classNames?.inner)}

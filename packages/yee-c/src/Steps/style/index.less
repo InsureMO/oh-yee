@@ -142,7 +142,7 @@
         background-color: var(--yee-steps-serial-done-bg-color, #fff);
         background-clip: padding-box;
         border-color: var(--yee-steps-serial-done-border-color, #1890ff);
-        color: var(--yee-steps-serial-done-color, #1890ff);
+        color: var(--yee-steps-step-done-color);
       }
 
       @{pls}-item-title {
@@ -283,9 +283,15 @@
       margin-bottom: 8px;
       padding-left: 0;
 
+      &-title {
+        &::after {
+          display: none;
+        }
+      }
+
       &-content {
         align-items: flex-start;
-        margin-left: 8px;
+        margin-left: 12px;
       }
 
       &-icon {

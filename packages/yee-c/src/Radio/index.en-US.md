@@ -54,4 +54,6 @@ Radio button for selecting one option from a set of options.
 | disabled | `boolean` | Disable all options | - |
 | buttonStyle | `'outline' \| 'solid' \| 'cornermark'` | Button style | - |
 | options | `Array<RadioProps & { label: React.ReactNode }>` | Options in configuration form | - |
+| toggleable | `boolean` | Whether selection can be toggled (click again to deselect) | - |
+| gap | `number` | Set the interval between radios | - |
 | onChange | `(value: string, event: React.ChangeEvent<HTMLInputElement>) => void` | Callback when value changes | - |

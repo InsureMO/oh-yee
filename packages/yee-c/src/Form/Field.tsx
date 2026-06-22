@@ -27,6 +27,10 @@ function stringifyPath(path: InternalNamePath): string {
 
 const Field: React.FC<FieldProps> = (props) => {
   const {
+    style,
+    className,
+    styles,
+    classNames,
     children,
     name,
     rules,
@@ -89,10 +93,10 @@ const Field: React.FC<FieldProps> = (props) => {
   // Normalize tooltip into { icon, ...tooltipProps }, or null when not provided.
   // Everything except `icon` is forwarded to <Tooltip>, so any Tooltip prop
   // (title, color, placement, ...) is supported automatically.
-  const tooltipConfig = useMemo<
-    | { icon: React.ReactNode; tooltipProps: Omit<FieldConfigurableTooltip, 'icon'> }
-    | null
-  >(() => {
+  const tooltipConfig = useMemo<{
+    icon: React.ReactNode;
+    tooltipProps: Omit<FieldConfigurableTooltip, 'icon'>;
+  } | null>(() => {
     if (tooltip === undefined || tooltip === null || tooltip === false)
       return null;
     if (
@@ -145,17 +149,29 @@ const Field: React.FC<FieldProps> = (props) => {
   };
   return (
     <div
-      className={clsx(`${prefixCls}-item`, `${prefixCls}-item-${layout}`, {
-        [`${prefixCls}-item-${validate?.status}`]: validate && validate.status,
-      })}
+      className={clsx(
+        `${prefixCls}-item`,
+        `${prefixCls}-item-${layout}`,
+        {
+          [`${prefixCls}-item-${validate?.status}`]:
+            validate && validate.status,
+        },
+        className,
+      )}
+      style={style}
     >
       <div className={clsx(`${prefixCls}-item-row`)}>
         {label || tooltipConfig ? (
           <label
             htmlFor={normalizedName}
-            className={clsx(`${prefixCls}-item-label`, {
-              [`${prefixCls}-item-required`]: isRequired(),
-            })}
+            className={clsx(
+              `${prefixCls}-item-label`,
+              {
+                [`${prefixCls}-item-required`]: isRequired(),
+              },
+              classNames?.label,
+            )}
+            style={styles?.label}
           >
             {label}
             {isRequired() ? (
@@ -170,7 +186,10 @@ const Field: React.FC<FieldProps> = (props) => {
             ) : null}
           </label>
         ) : null}
-        <div className={`${prefixCls}-item-control`}>
+        <div
+          className={clsx(`${prefixCls}-item-control`, classNames?.control)}
+          style={styles?.control}
+        >
           {React.isValidElement(children) ? (
             React.cloneElement(
               children as React.ReactElement,

@@ -30,7 +30,7 @@
   --yee-text-color-description: #7c7c7c;
   --yee-text-color-disabled: #bfbfbf;
   --yee-text-color-highlight: #f58220;
-  --yee-text-color-auxiliary: #bfbfbf;
+  --yee-text-color-auxiliary: #f5f5f5;
   --yee-color-split: #e7e7e7;
   --yee-border-color: #cbd6e2;
   --yee-border-color-hover-focus: #75b9f0;
@@ -598,6 +598,15 @@
   --yee-select-multi-disabled-tag-border-color: var(--yee-color-split);
   --yee-select-multi-disabled-tag-bg-color: var(--yee-color-split);
 
+  /* --Segmented-- */
+  --yee-segmented-bg-color: var(--yee-color-bg-layout);
+  --yee-segmented-item-color: var(--yee-text-color);
+  --yee-segmented-item-hover-color: var(--yee-primary-color);
+  --yee-segmented-item-selected-color: var(--yee-text-color);
+  --yee-segmented-item-disabled-color: var(--yee-text-color-disabled);
+  --yee-segmented-thumb-bg-color: var(--yee-color-bg-container);
+  --yee-segmented-thumb-box-shadow: 0 2px 8px var(--yee-box-shadow-color);
+
   /* --Slider-- */
   --yee-slider-track-bg-color: var(--yee-primary-color);
   --yee-slider-track-bg-hover-color: var(--yee-primary-color-hover);
@@ -953,6 +962,14 @@
   --yee-tooltip-warning-bg-color: var(--yee-warning-color);
   --yee-tooltip-error-color: #fff;
   --yee-tooltip-error-bg-color: var(--yee-error-color);
+
+  /* --Tour-- */
+  --yee-tour-mask-color: rgba(0, 0, 0, 45%);
+  --yee-tour-content-bg-color: var(--yee-color-bg-container);
+  --yee-tour-content-box-shadow: 0 6px 16px var(--yee-box-shadow-color);
+  --yee-tour-close-color: var(--yee-text-color);
+  --yee-tour-title-color: var(--yee-text-color);
+  --yee-tour-description-color: var(--yee-text-color-description);
 
   /* --Tree-- */
   --yee-tree-node-text-hover-bg-color: var(--yee-color-option-hover-bg);

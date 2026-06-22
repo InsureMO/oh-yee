@@ -72,6 +72,7 @@ GlobalCtxType 包含所有组件的配置。以下是一些示例：
 | rate | [RateProps](/components/rate) | Rate 组件配置 |
 | search | [SearchProps](/components/search) | Search 组件配置 |
 | select | [SelectProps](/components/select) | Select 组件配置 |
+| segmented | [SegmentedProps](/components/segmented) | Segmented 组件配置 |
 | skeleton | [SkeletonProps](/components/skeleton) | Skeleton 组件配置 |
 | slider | [SliderProps](/components/slider) | Slider 组件配置 |
 | space | [SpaceProps](/components/space) | Space 组件配置 |
@@ -88,6 +89,7 @@ GlobalCtxType 包含所有组件的配置。以下是一些示例：
 | timeline | [TimelineProps](/components/timeline) | Timeline 组件配置 |
 | highlight | [HighlightProps](/components/highlight) | Highlight 组件配置 |
 | tooltip | [TooltipProps](/components/tooltip) | Tooltip 组件配置 |
+| tour | [TourProps](/components/tour) | Tour 组件配置 |
 | tree | [TreeProps](/components/tree) | Tree 组件配置 |
 | treeselect | [TreeSelectProps](/components/tree-select) | TreeSelect 组件配置 |
 | trigger | [TriggerProps](/components/trigger) | Trigger 组件配置 |

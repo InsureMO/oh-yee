@@ -88,6 +88,10 @@ toc: 'content'
 
 | 属性名        | 类型                 | 描述                 | 默认值    |
 | ------------- | -------------------- | -------------------- | --------- |
+| className     | `string`             | 自定义字段根类名     | -         |
+| style         | `React.CSSProperties` | 自定义字段根样式    | -         |
+| classNames    | `Partial<Record<'label' \| 'control', string>>` | 语义化结构类名 | -  |
+| styles        | `Partial<Record<'label' \| 'control', React.CSSProperties>>` | 语义化结构样式 | - |
 | children      | `React.ReactElement` | 子元素               | -         |
 | name          | `NamePath`           | 字段名               | -         |
 | rules         | [Rule\[\]](#rule)    | 校验规则             | -         |
