@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.3.0
+
+### Minor Changes
+
+- b25925c: feat: add Segmented component and Tour feature with demos
+
 ## 0.2.0
 
 ### Minor Changes
