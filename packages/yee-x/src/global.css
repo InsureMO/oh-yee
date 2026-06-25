@@ -1,0 +1,6 @@
+/* Global stylesheet for the yee-x dumi site (auto-loaded by umi/dumi).
+ * Loads yee-c's design-token layer so the yee-c components rendered in yee-x
+ * demos pick up their CSS variables. yee-x itself must NOT re-import this from
+ * its library entry — that is the consumer's job — so it lives here, scoped to
+ * the docs site only. */
+@import '@rainbow-oh/yee-c/variables.css';

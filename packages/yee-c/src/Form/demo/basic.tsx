@@ -8,7 +8,7 @@ import {
   Space,
   TextArea,
 } from '@rainbow-oh/yee-c';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export default () => {
   const [form] = Form.useForm();
@@ -17,30 +17,8 @@ export default () => {
     console.log('Received values:', values);
   };
 
-  const [, setState] = React.useState({});
-
-  useEffect(() => {
-    setTimeout(() => {
-      form.setFieldsValue({
-        address: [
-          {
-            one: '123 Main St',
-          },
-        ],
-      });
-    }, 2000);
-  }, []);
-
   return (
-    <Form
-      form={form}
-      onFinish={onFinish}
-      layout="vertical"
-      data-testid="basic-form"
-      onValuesChange={(field) => {
-        setState(field);
-      }}
-    >
+    <Form form={form} onFinish={onFinish} data-testid="basic-form">
       <Grid>
         <Grid.Item>
           <Form.Field

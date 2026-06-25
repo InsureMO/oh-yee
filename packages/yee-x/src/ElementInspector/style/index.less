@@ -1,0 +1,234 @@
+@pls: .yee-element-inspector;
+
+// Force a picking cursor over the app content while active, but NOT over the
+// picker's own chrome (toggle button, popover) — those keep their normal
+// cursors so buttons still look clickable and the prompt text stays selectable.
+// Declared at the top level (the class is applied to <body>).
+@{pls}-picking,
+@{pls}-picking
+  *:not(@{pls}-toggle):not(@{pls}-toggle *):not(@{pls}-popover):not(
+    @{pls}-popover *
+  ) {
+  cursor: crosshair !important;
+}
+
+@{pls} {
+  &-toggle {
+    transition: box-shadow 0.2s, background-color 0.2s, color 0.2s;
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 20%);
+    }
+  }
+
+  &-highlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999998;
+    margin: 0;
+    padding: 0;
+    border: 2px solid #1677ff;
+    border-radius: 4px;
+    background-color: rgba(22, 119, 255, 8%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+    will-change: transform, width, height;
+  }
+
+  &-popover {
+    position: fixed;
+    z-index: 999999;
+    width: 360px;
+    max-width: calc(100vw - 16px);
+    border: 1px solid rgba(0, 0, 0, 12%);
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 18%);
+    color: #1f1f1f;
+    font-size: 13px;
+    overflow: hidden;
+  }
+
+  &-popover-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 6%);
+  }
+
+  &-popover-title {
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: #555;
+  }
+
+  &-popover-prompt {
+    margin: 0;
+    padding: 10px 12px;
+    max-height: 220px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: ui-monospace, sfmono-regular, menlo, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fafafa;
+    user-select: text;
+  }
+
+  &-popover-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 10px;
+    border-top: 1px solid rgba(0, 0, 0, 6%);
+  }
+
+  &-popover-copy-done {
+    background-color: #52c41a;
+    border-color: #52c41a;
+
+    &:hover {
+      background-color: #73d13d;
+      border-color: #73d13d;
+    }
+  }
+
+  &-menu {
+    position: fixed;
+    z-index: 999999;
+    min-width: 180px;
+    padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 12%);
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 18%);
+    color: #1f1f1f;
+    font-size: 13px;
+  }
+
+  &-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background-color: rgba(22, 119, 255, 8%);
+    }
+
+    &.is-disabled {
+      color: #bbb;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &.is-danger {
+      color: #ff4d4f;
+
+      &:hover {
+        background-color: rgba(255, 77, 79, 8%);
+      }
+    }
+  }
+
+  &-menu-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &-menu-divider {
+    height: 1px;
+    margin: 4px 2px;
+    background-color: rgba(0, 0, 0, 6%);
+  }
+
+  // Theme
+  &-theme-dark {
+    &@{pls}-toggle {
+      background-color: #2a2a2c;
+      color: #fefefe;
+      border-color: rgba(255, 255, 255, 10%);
+
+      &:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 40%);
+      }
+    }
+
+    &@{pls}-toggle-active {
+      background-color: #0958d9;
+      border-color: #0958d9;
+    }
+
+    &@{pls}-highlight {
+      border-color: #3b82f6;
+      background-color: rgba(59, 130, 246, 10%);
+    }
+
+    &@{pls}-popover {
+      background-color: #2a2a2c;
+      border-color: rgba(255, 255, 255, 12%);
+      color: #fefefe;
+
+      @{pls}-popover-header {
+        border-bottom-color: rgba(255, 255, 255, 10%);
+      }
+
+      @{pls}-popover-title {
+        color: #bbb;
+      }
+
+      @{pls}-popover-close {
+        color: #aaa;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 10%);
+          color: #fefefe;
+        }
+      }
+
+      @{pls}-popover-prompt {
+        background-color: #1f1f21;
+        color: #e6e6e6;
+      }
+
+      @{pls}-popover-footer {
+        border-top-color: rgba(255, 255, 255, 10%);
+      }
+    }
+
+    &@{pls}-menu {
+      background-color: #2a2a2c;
+      border-color: rgba(255, 255, 255, 12%);
+      color: #fefefe;
+
+      @{pls}-menu-item {
+        &:hover {
+          background-color: rgba(255, 255, 255, 10%);
+        }
+
+        &.is-disabled {
+          color: #666;
+        }
+
+        &.is-danger {
+          color: #ff7875;
+        }
+      }
+
+      @{pls}-menu-divider {
+        background-color: rgba(255, 255, 255, 10%);
+      }
+    }
+  }
+}

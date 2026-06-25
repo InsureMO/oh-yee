@@ -1,5 +1,13 @@
 import type { ColumnProps } from '@rainbow-oh/yee-c';
-import { Button, Form, Input, Space, Table } from '@rainbow-oh/yee-c';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Space,
+  Table,
+  TextArea,
+} from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {
@@ -13,16 +21,7 @@ export default () => {
     <div style={{ padding: '24px' }}>
       <h2>Form + Table Dynamic Form Example</h2>
       <Form form={form} onFinish={onFinish} layout="vertical">
-        <Form.List
-          name="users"
-          // initialValue={[
-          //   {
-          //     name: '',
-          //     age: '',
-          //     address: '',
-          //   },
-          // ]}
-        >
+        <Form.List name="users">
           {(fields, operations) => {
             // Define column config - operations are accessible here
             const columns: ColumnProps[] = [
@@ -44,7 +43,11 @@ export default () => {
                 width: '20%',
                 render: (_record, index) => (
                   <Form.Field name={[index, 'age']} required>
-                    <Input placeholder="Please enter age" type="number" />
+                    <InputNumber
+                      controls={false}
+                      placeholder="Please enter age"
+                      type="number"
+                    />
                   </Form.Field>
                 ),
               },
@@ -55,7 +58,7 @@ export default () => {
                 width: '40%',
                 render: (_record, index) => (
                   <Form.Field name={[index, 'address']}>
-                    <Input placeholder="Please enter address" />
+                    <TextArea placeholder="Please enter address" />
                   </Form.Field>
                 ),
               },

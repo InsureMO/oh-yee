@@ -1,5 +1,7 @@
 export { version } from './version';
 
+export * from './ElementInspector';
+export { default as ElementInspector } from './ElementInspector';
 export * from './AIRenderer';
 export { default as AIRender } from './AIRenderer';
 export * from './Attachments';

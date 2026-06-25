@@ -57,7 +57,7 @@
 
   /* --global-- */
   --yee-global-font-color: var(--yee-text-color);
-  --yee-placeholder-color: var(--yee-text-color-auxiliary);
+  --yee-placeholder-color: var(--yee-text-color-secondary);
   --yee-title-prefix-bg-color: var(--yee-primary-color);
   --yee-remove-icon: var(--yee-text-color-auxiliary);
   --yee-remove-icon-hover: var(--yee-text-color-auxiliary);
