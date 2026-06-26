@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.4.0
+
+### Minor Changes
+
+- 02374ef: add variant support for Tag and Segmented components, update styles and documentation
+
 ## 0.3.0
 
 ### Minor Changes
