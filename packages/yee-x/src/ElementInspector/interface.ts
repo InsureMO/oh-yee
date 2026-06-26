@@ -17,14 +17,25 @@ export interface ElementInfo {
    */
   componentName?: string;
   /**
-   * Source file of the region's markup. Only present in dev builds where the
-   * JSX source transform is active (Vite/Next/CRA dev by default).
+   * Source file of the region's markup. Only present in dev builds. The form
+   * depends on how the source was resolved:
+   *   - **Source plugin installed** (preferred): project-root-relative path
+   *     (`src/App.tsx`), with the matching original {@link lineNumber}.
+   *   - React ≤18 (`_debugSource`): absolute on-disk path.
+   *   - React 19+ (`_debugStack` parse): server-relative URL (`/src/x.tsx`),
+   *     absolute only when {@link ElementInspectorProps.projectRoot} is supplied.
    */
   fileName?: string;
   /**
    * Source line number (1-based) corresponding to {@link fileName}.
    */
   lineNumber?: number;
+  /**
+   * Source column number (1-based) corresponding to {@link fileName}. Only
+   * populated when the consuming app installs the ElementInspector source
+   * plugin (dataset path); fallback sources don't carry it.
+   */
+  columnNumber?: number;
   /**
    * Value of the nearest `data-testid` ancestor, when present.
    */
@@ -126,11 +137,24 @@ export interface ElementInspectorProps {
   menuItems?: (info: ElementInfo) => InspectorMenuItem[];
   /**
    * Override the "Jump to source" action used by the default menu items.
-   * Defaults to opening `vscode://file/<path>:<line>`; pass the ready-made
-   * helpers (`openInCursor`, `openInJetBrains`) for other editors, or `false`
-   * to drop the item entirely.
+   * Defaults to {@link openInViteDevServer} — the running Vite dev server's
+   * `/__open-in-editor` middleware, which launches the editor configured for
+   * the dev server and accepts project-root-relative paths directly. For a
+   * non-Vite setup, pass `openInVSCode` / `openInCursor` / `openInJetBrains`,
+   * or `false` to drop the item entirely.
    */
   editorOpener?: ((info: ElementInfo) => void) | false;
+  /**
+   * Absolute filesystem root of the consuming app, e.g.
+   * `/Users/me/projects/my-app`. Only relevant for the React 19 fallback path
+   * (when the consuming app does NOT install the ElementInspector source
+   * plugin): React 19 stores source info as a debug stack whose frames only
+   * carry the dev-server URL (`/src/x.tsx`), so we re-join it with
+   * `projectRoot` to recover an absolute path. With the source plugin
+   * installed (preferred), source coordinates are already accurate and this
+   * prop is unnecessary.
+   */
+  projectRoot?: string;
   /**
    * Color theme for the floating toggle and highlight.
    * @default 'light'

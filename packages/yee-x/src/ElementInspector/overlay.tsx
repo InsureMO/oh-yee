@@ -14,6 +14,7 @@ export interface PickerOverlayProps {
     info: ElementInfo,
     point: { x: number; y: number },
   ) => void;
+  projectRoot?: string;
 }
 
 /**
@@ -33,6 +34,7 @@ const PickerOverlay: React.FC<PickerOverlayProps> = ({
   onPick,
   contextMenu,
   onContextMenu,
+  projectRoot,
 }) => {
   const highlightRef = React.useRef<HTMLDivElement | null>(null);
   const boundaryRef = React.useRef<HTMLElement | null>(null);
@@ -45,6 +47,10 @@ const PickerOverlay: React.FC<PickerOverlayProps> = ({
   // Keep the latest onContextMenu without re-binding the document listeners.
   const onContextMenuRef = React.useRef(onContextMenu);
   onContextMenuRef.current = onContextMenu;
+
+  // Keep the latest projectRoot without re-binding the document listeners.
+  const projectRootRef = React.useRef(projectRoot);
+  projectRootRef.current = projectRoot;
 
   const paint = React.useCallback(() => {
     const box = highlightRef.current;
@@ -112,7 +118,7 @@ const PickerOverlay: React.FC<PickerOverlayProps> = ({
       if (!boundary) {
         return;
       }
-      onPickRef.current(harvest(boundary));
+      onPickRef.current(harvest(boundary, { projectRoot: projectRootRef.current }));
     };
 
     const handleContextMenu = (event: MouseEvent) => {
@@ -128,10 +134,13 @@ const PickerOverlay: React.FC<PickerOverlayProps> = ({
       event.preventDefault();
       event.stopPropagation();
       const boundary = findTestidBoundary(event.target);
-      onContextMenuRef.current?.(harvest(boundary), {
-        x: event.clientX,
-        y: event.clientY,
-      });
+      onContextMenuRef.current?.(
+        harvest(boundary, { projectRoot: projectRootRef.current }),
+        {
+          x: event.clientX,
+          y: event.clientY,
+        },
+      );
     };
 
     const handleReposition = () => schedulePaint();

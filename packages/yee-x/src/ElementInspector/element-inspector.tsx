@@ -78,6 +78,7 @@ const ElementInspector: React.FC<ElementInspectorProps> = (props) => {
     contextMenu = false,
     menuItems,
     editorOpener,
+    projectRoot,
   } = props;
 
   const isControlled = controlledActive !== undefined;
@@ -191,6 +192,7 @@ const ElementInspector: React.FC<ElementInspectorProps> = (props) => {
         onPick={handlePick}
         contextMenu={contextMenu}
         onContextMenu={handleContextMenu}
+        projectRoot={projectRoot}
       />
 
       {picked ? (

@@ -17,7 +17,7 @@ toc: 'content'
 ## 工作方式
 
 - **边界吸附**：hover / 采集都以最近的 `data-testid` 祖先为边界——点表格里的按钮时，识别到的是外层 `data-testid="user-table"` 容器及其所属组件，而不是 `Button`。
-- **信息采集**：通过 React fiber 读取源码位置（`_debugSource`）与组件名（`fiber.elementType.name`）。默认提示词只输出源码位置 + 选择器，两者都通过 `ElementInfo` 暴露给自定义 `promptTemplate`。源码位置仅在开启了 JSX source 的 dev 构建中可得（Vite / Next / CRA dev 默认开启），缺失时降级为只输出选择器，对有 repo 的 AI 依然可用。
+- **信息采集**：通过 React fiber 读取源码位置与组件名（`fiber.elementType.name`）。React ≤18 读 `_debugSource`；React 19+ 移除了该字段，改为解析 fiber 上的 `_debugStack`（创建元素时捕获的 Error 栈）。默认提示词只输出源码位置 + 选择器，两者都通过 `ElementInfo` 暴露给自定义 `promptTemplate`。源码位置仅在 dev 构建中可得，缺失时降级为只输出选择器，对有 repo 的 AI 依然可用。
 - **Popover 输出**：点击后在元素旁弹出一个只读 popover 展示提示词（自动避让，不遮挡所选元素），带「复制」按钮，复制成功后自动收起；也可用 `onCopy` 接管复制行为，或用 `promptTemplate` 自定义提示词。
 - **右键菜单**：开启 `contextMenu` 后，采集时右键元素弹出菜单——在编辑器打开源码（默认 `vscode://`，可传 `openInCursor` / `openInJetBrains` 或自定义 `editorOpener`）、复制 `file:line`、复制选择器、复制测试选择器（`getByTestId(...)`）。可用 `menuItems` 完全自定义。
 
@@ -30,6 +30,7 @@ toc: 'content'
 - 建议在应用根节点包一层 `<ElementInspector>`，开发期常驻。
 - 想在 prod 构建中彻底移除，可在消费侧条件渲染：`{process.env.NODE_ENV !== 'production' && <ElementInspector>}`。
 - 若源码位置（`Location`）缺失，通常是目标 app 的 dev 构建未开启 JSX source；标准 Vite / Next / CRA dev 默认都开。
+- **React 19 + Jump to source**：React 19 的源码栈只带 dev-server URL（`/src/x.tsx`），需传 `projectRoot`（应用绝对根目录）才能拼出 `vscode://file/…` 能打开的绝对路径。未传时路径保持 server-relative（复制功能仍可用，编辑器跳转可能失效）。
 
 ## API
 
@@ -51,6 +52,7 @@ toc: 'content'
 | contextMenu   | `boolean`                                     | 开启采集时的右键上下文菜单                            | `false`           |
 | menuItems     | `(info: ElementInfo) => InspectorMenuItem[]`  | 自定义菜单项；不传用内置默认项                        | 内置默认项        |
 | editorOpener  | `((info: ElementInfo) => void) \| false`      | 默认项的「Jump to source」动作；传 `false` 移除该项   | `openInVSCode`    |
+| projectRoot   | `string`                                      | 应用绝对根目录；React 19+ 下「Jump to source」需要它拼出绝对路径 | -                 |
 
 ### ElementInfo
 

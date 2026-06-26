@@ -11,6 +11,9 @@ interface DevOnlyFiber {
   elementType?: unknown;
   type?: unknown;
   _debugSource?: { fileName?: string; lineNumber?: number } | null;
+  // React 19 removed `_debugSource`; source is now carried as an Error stack
+  // on the fiber (an Error object, or its `.stack` string).
+  _debugStack?: unknown;
   _debugOwner?: DevOnlyFiber | null;
   return?: DevOnlyFiber | null;
 }
@@ -18,6 +21,7 @@ interface DevOnlyFiber {
 interface SourceLocation {
   fileName?: string;
   lineNumber?: number;
+  columnNumber?: number;
 }
 
 // React attaches fibers to host nodes under version-specific random-suffixed
@@ -106,17 +110,94 @@ function findOwningComponent(fiber: DevOnlyFiber | null): DevOnlyFiber | null {
 }
 
 /**
+ * Normalize a parsed stack frame's URL path into a file path. React ≤18's
+ * `_debugSource.fileName` is already an absolute on-disk path, but React 19's
+ * `_debugStack` only yields the dev-server URL (`/src/x.tsx`). When a
+ * `projectRoot` is supplied we re-join it into an absolute path so editor
+ * openers (`vscode://file/…`) resolve; otherwise the server-relative path is
+ * returned (still useful for copy actions).
+ */
+function resolveFramePath(pathname: string, projectRoot?: string): string {
+  const clean = decodeURIComponent(pathname);
+  if (!projectRoot) {
+    return clean;
+  }
+  return `${projectRoot.replace(/\/$/, '')}${clean}`;
+}
+
+/**
+ * React 19 dropped the per-fiber `_debugSource` object and instead stores
+ * source info as an Error stack on `_debugStack`, captured at element creation.
+ * Parse the first frame that resolves to an application source file. Returns
+ * `undefined` when the stack is absent or only references React internals.
+ *
+ * Note: the line number reflects the transformed module served by the dev
+ * server, so it may be off by a few lines from the original source; it gets
+ * you to the right file and the right neighborhood.
+ */
+function parseStackSource(
+  raw: unknown,
+  projectRoot?: string,
+): SourceLocation | undefined {
+  const stack =
+    typeof raw === 'string'
+      ? raw
+      : raw && typeof raw === 'object' && 'stack' in raw
+        ? String((raw as { stack: unknown }).stack)
+        : undefined;
+  if (!stack) {
+    return undefined;
+  }
+  for (const line of stack.split('\n')) {
+    // A frame's dev-server URL is always absolute with a scheme, so anchor on
+    // it — this is engine-agnostic and avoids leaking the function-name prefix
+    // (V8's `at Foo (http://…:l:c)` vs SpiderMonkey's `Foo@http://…:l:c`):
+    //   /(scheme://…):line:col/
+    const m = line.match(/([a-z][a-z0-9+.-]*:\/\/[^\s()[\]]+):(\d+):(\d+)/i);
+    if (!m) {
+      continue;
+    }
+    let path: string;
+    try {
+      path = new URL(m[1], window.location.href).pathname;
+    } catch {
+      continue;
+    }
+    // Only application source — skip React internals and bundled deps.
+    if (!/\.[tj]sx?$/.test(path) || path.includes('/node_modules/')) {
+      continue;
+    }
+    return {
+      fileName: resolveFramePath(path, projectRoot),
+      lineNumber: Number(m[2]),
+    };
+  }
+  return undefined;
+}
+
+/**
  * Read the source location, preferring the host fiber's own markup location
  * (the file/line the picked JSX was written in) and falling back up the owner
  * chain (usage site) when it is unavailable.
+ *
+ * Supports both React ≤18, which attaches a `_debugSource` object directly to
+ * the fiber, and React 19+, which dropped that field and now stores source
+ * info as an Error stack on `_debugStack` (parsed by {@link parseStackSource}).
  */
-function readSource(fiber: DevOnlyFiber | null): SourceLocation {
+function readSource(
+  fiber: DevOnlyFiber | null,
+  projectRoot?: string,
+): SourceLocation {
   let current: DevOnlyFiber | null = fiber;
   let depth = 0;
   while (current && depth < MAX_WALK) {
     const src = current._debugSource;
     if (src && (src.fileName || src.lineNumber)) {
       return { fileName: src.fileName, lineNumber: src.lineNumber };
+    }
+    const fromStack = parseStackSource(current._debugStack, projectRoot);
+    if (fromStack) {
+      return fromStack;
     }
     current = current._debugOwner ?? current.return ?? null;
     depth += 1;
@@ -154,24 +235,72 @@ export function findTestidBoundary(element: HTMLElement): HTMLElement {
   return element;
 }
 
+export interface HarvestOptions {
+  /**
+   * Absolute filesystem root of the consuming app. React 19's source stack
+   * only yields server-relative URLs (`/src/x.tsx`); joining with `projectRoot`
+   * restores the absolute path `vscode://file/…` openers need. Omit to leave
+   * stack-derived paths server-relative.
+   *
+   * Not needed when the consuming app installs the ElementInspector source
+   * plugin (which injects original source coordinates as `data-inspector-*`
+   * attributes) — the dataset path is already accurate and preferred.
+   */
+  projectRoot?: string;
+}
+
+/**
+ * Read source coordinates injected at compile time by the ElementInspector
+ * Vite plugin (`data-inspector-path/line/column`). This is the most accurate
+ * source — original lines, no transform offset, no sourcemap needed, and the
+ * path is absolute so editor openers (`vscode://file/…`) work without a
+ * `projectRoot` or `code`-in-PATH. Returns `undefined` when the plugin isn't
+ * installed (the boundary element carries no `data-inspector-path`).
+ */
+function readDatasetSource(boundary: HTMLElement): SourceLocation | undefined {
+  const { inspectorPath, inspectorLine, inspectorColumn } = boundary.dataset;
+  if (!inspectorPath || !inspectorLine) {
+    return undefined;
+  }
+  const lineNumber = Number(inspectorLine);
+  if (!Number.isFinite(lineNumber)) {
+    return undefined;
+  }
+  return {
+    fileName: inspectorPath,
+    lineNumber,
+    columnNumber: inspectorColumn ? Number(inspectorColumn) : undefined,
+  };
+}
+
 /**
  * Harvest identifying info for a picked boundary element. Never throws — any
  * field that cannot be resolved is left `undefined`.
+ *
+ * Source resolution is a three-tier fallback:
+ *   1. `data-inspector-*` dataset (compile-time injected, most accurate)
+ *   2. React 19 `fiber._debugStack` (Error-stack parse; server-relative path)
+ *   3. React ≤18 `fiber._debugSource`
  */
-export function harvest(boundary: HTMLElement): ElementInfo {
+export function harvest(
+  boundary: HTMLElement,
+  options: HarvestOptions = {},
+): ElementInfo {
   const testId = boundary.getAttribute('data-testid') ?? undefined;
-  const fiber = getFiber(boundary);
-  const owner = findOwningComponent(fiber);
+  const source =
+    readDatasetSource(boundary) ??
+    readSource(getFiber(boundary), options.projectRoot);
+  const owner = findOwningComponent(getFiber(boundary));
   const componentName = owner
     ? nameOfType(owner.elementType ?? owner.type)
     : undefined;
-  const source = readSource(fiber);
 
   return {
     element: boundary,
     componentName,
     fileName: source.fileName,
     lineNumber: source.lineNumber,
+    columnNumber: source.columnNumber,
     testId,
     selector: buildSelector(boundary, testId),
   };

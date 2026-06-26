@@ -6,6 +6,7 @@ export type {
 } from './interface';
 export {
   defaultMenuItems,
+  openInViteDevServer,
   openInVSCode,
   openInCursor,
   openInJetBrains,

@@ -26,13 +26,14 @@ at the code to change.
 - **Boundary snapping**: hover and pick target the nearest `data-testid`
   ancestor — clicking a button inside a table identifies the outer
   `data-testid="user-table"` container and its component, not the `Button`.
-- **Harvesting**: source location (`_debugSource`) and component name
-  (`fiber.elementType.name`) are read from the React fiber. The default prompt
-  carries only the source location + selector; both fields are also exposed via
-  `ElementInfo` for custom `promptTemplate`s. Source location is only available
-  in dev builds with the JSX source transform active (default in Vite / Next /
-  CRA dev); when absent the prompt falls back to just the selector, still useful
-  for a repo-aware AI.
+- **Harvesting**: source location and component name (`fiber.elementType.name`)
+  are read from the React fiber. React ≤18 exposes a `_debugSource` object;
+  React 19+ removed it and stores source info as an Error stack on `_debugStack`
+  (captured when the element is created), which we parse back into a file/line.
+  The default prompt carries only the source location + selector; both fields
+  are also exposed via `ElementInfo` for custom `promptTemplate`s. Source
+  location is only available in dev builds; when absent the prompt falls back
+  to just the selector, still useful for a repo-aware AI.
 - **Popover output**: on click a read-only popover appears beside the element
   (auto-positioned so it never covers what you picked) with a Copy button that
   auto-dismisses on success. Use `onCopy` to take over the copy action, or
@@ -55,6 +56,11 @@ at the code to change.
   side: `{process.env.NODE_ENV !== 'production' && <ElementInspector>}`.
 - If `Location` is missing from the prompt, the target app's dev build likely
   does not enable JSX source — standard Vite / Next / CRA dev do so by default.
+- **React 19 + Jump to source**: React 19's source stack only carries the
+  dev-server URL (`/src/x.tsx`), so pass `projectRoot` (your app's absolute root)
+  to reconstruct the absolute path `vscode://file/…` openers need. Without it
+  the path stays server-relative (copy actions still work; the editor opener may
+  not resolve).
 
 ## API
 
@@ -76,6 +82,7 @@ at the code to change.
 | contextMenu   | `boolean`                                     | Enable the right-click context menu while picking                                            | `false`           |
 | menuItems     | `(info: ElementInfo) => InspectorMenuItem[]`  | Custom context-menu items; omit for built-in defaults                                        | built-in defaults |
 | editorOpener  | `((info: ElementInfo) => void) \| false`      | "Jump to source" action for default items; `false` removes it                                | `openInVSCode`    |
+| projectRoot   | `string`                                      | App's absolute root dir; required on React 19+ for "Jump to source" to resolve an absolute path | -              |
 
 ### ElementInfo
 
