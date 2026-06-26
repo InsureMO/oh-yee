@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-x
 
+## 0.3.1
+
+### Patch Changes
+
+- 26f6c77: update ElementInspector
+
 ## 0.3.0
 
 ### Minor Changes
