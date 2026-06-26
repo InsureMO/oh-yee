@@ -18,6 +18,7 @@ Displays a group of mutually exclusive options, with the selected item highlight
 <code src="./demo/disabled.tsx" title="Disabled" description="Disable a single option or the whole group"></code>
 <code src="./demo/size.tsx" title="Size" description="small / default / large"></code>
 <code src="./demo/block.tsx" title="Block & Icon" description="block fills the container width, options can carry icons"></code>
+<code src="./demo/variant.tsx" title="Variant" description="pill style: selected item highlighted as a colored capsule, no container background"></code>
 
 ## API
 
@@ -36,6 +37,7 @@ Displays a group of mutually exclusive options, with the selected item highlight
 | onChange | `(value: string \| number) => void` | Callback when selected value changes | - |
 | disabled | `boolean` | Whether to disable all options | - |
 | size | `'small' \| 'default' \| 'large'` | Size | - |
+| variant | `'default' \| 'pill'` | Visual style variant, `pill` renders a capsule style | `default` |
 | block | `boolean` | Whether to fill the container width, options share the space equally | - |
 | name | `string` | Name of the underlying radio input, for form grouping | - |
 

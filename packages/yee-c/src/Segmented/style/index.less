@@ -88,6 +88,30 @@
     box-shadow: 0 0 0 2px var(--yee-primary-color);
   }
 
+  // 变体：胶囊风格，选中项以主色胶囊高亮，容器无底色
+  &-pill {
+    padding: 0;
+    background-color: transparent;
+    gap: var(--yee-segmented-item-gap);
+
+    @{pls}-item {
+      border-radius: 999px;
+    }
+
+    @{pls}-item-selected {
+      color: var(--yee-segmented-pill-color, #fff);
+    }
+
+    @{pls}-thumb {
+      border-radius: 999px;
+      background-color: var(
+        --yee-segmented-pill-bg-color,
+        var(--yee-primary-color)
+      );
+      box-shadow: none;
+    }
+  }
+
   &-small {
     @{pls}-item {
       padding: var(--yee-segmented-item-small-padding);

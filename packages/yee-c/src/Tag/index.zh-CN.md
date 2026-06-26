@@ -16,6 +16,7 @@ toc: 'content'
 
 <code src="./demo/basic.tsx" title="基础用法" description="Tag的基础用法"></code>
 <code src="./demo/type.tsx" title="类型" description="不同类型的标签"></code>
+<code src="./demo/variant.tsx" title="变体" description="三种风格的标签：filled、solid、outlined"></code>
 <code src="./demo/closable.tsx" title="可关闭" description="可关闭的标签"></code>
 <code src="./demo/size.tsx" title="尺寸" description="不同尺寸的标签"></code>
 <code src="./demo/checkable.tsx" title="可选择" description="可选择的标签"></code>
@@ -37,6 +38,7 @@ toc: 'content'
 | closable | `boolean \| React.ReactNode` | 是否可关闭，也可自定义关闭图标 | - |
 | status | `TagType` | 内置状态 | - |
 | dashed | `boolean` | 是否为虚线 | - |
+| variant | `'filled' \| 'solid' \| 'outlined'` | 标签风格变体 | `filled` |
 | size | `'small' \| 'default' \| 'large'` | 尺寸 | `default` |
 | icon | `React.ReactNode` | 设置图标 | - |
 | checkable | `boolean` | 是否可选中 | - |

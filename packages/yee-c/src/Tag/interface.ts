@@ -60,6 +60,11 @@ export interface TagProps extends DataAttributeProps {
    */
   checkable?: boolean;
   /**
+   * tag variant
+   * @default filled
+   * */
+  variant?: 'filled' | 'solid' | 'outlined';
+  /**
    * Set checked state
    */
   checked?: boolean;

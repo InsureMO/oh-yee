@@ -77,6 +77,11 @@ export interface SegmentedProps extends DataAttributeProps {
    */
   size?: 'small' | 'default' | 'large';
   /**
+   * Visual style variant. `pill` renders the selected item as a colored capsule with no container background
+   * @default default
+   */
+  variant?: 'default' | 'pill';
+  /**
    * Whether to fill the container width, options share the space equally
    */
   block?: boolean;

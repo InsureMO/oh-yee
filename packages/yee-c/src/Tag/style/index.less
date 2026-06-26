@@ -8,45 +8,128 @@
   white-space: nowrap;
   height: var(--yee-tag-height);
   padding: var(--yee-tag-padding);
-  color: var(--yee-tag-color);
   font-size: var(--yee-tag-font-size);
   line-height: var(--yee-tag-line-height);
-  background-color: var(--yee-tag-item-bg-color);
   background-clip: padding-box;
   border: var(--yee-tag-border-width) solid var(--yee-tag-border-color);
   border-radius: var(--yee-tag-border-radius);
 
-  &-info {
-    color: var(--yee-tag-info-color);
-    background-color: var(--yee-tag-info-bg-color);
-    border-color: var(--yee-tag-info-border-color);
+  // ============ 变体 variant ============
+  // filled：浅色底 + 彩色字（默认）
+  &-filled {
+    color: var(--yee-tag-color);
+    background-color: var(--yee-tag-item-bg-color);
+    border-color: var(--yee-tag-border-color);
+
+    &@{pls}-info {
+      color: var(--yee-tag-info-color);
+      background-color: var(--yee-tag-info-bg-color);
+      border-color: var(--yee-tag-info-border-color);
+    }
+
+    &@{pls}-success {
+      color: var(--yee-tag-success-color);
+      background-color: var(--yee-tag-success-bg-color);
+      border-color: var(--yee-tag-success-border-color);
+    }
+
+    &@{pls}-warning {
+      color: var(--yee-tag-warning-color);
+      background-color: var(--yee-tag-warning-bg-color);
+      border-color: var(--yee-tag-warning-border-color);
+    }
+
+    &@{pls}-error {
+      color: var(--yee-tag-error-color);
+      background-color: var(--yee-tag-error-bg-color);
+      border-color: var(--yee-tag-error-border-color);
+    }
+
+    &@{pls}-disabled {
+      color: var(--yee-tag-disabled-color);
+      background-color: var(--yee-tag-disabled-bg-color);
+      border-color: var(--yee-tag-disabled-border-color);
+      cursor: not-allowed;
+    }
   }
 
-  &-success {
-    color: var(--yee-tag-success-color);
-    background-color: var(--yee-tag-success-bg-color);
-    border-color: var(--yee-tag-success-border-color);
+  // solid：纯色底 + 白字
+  &-solid {
+    color: var(--yee-tag-solid-color, #fff);
+    background-color: var(--yee-tag-color);
+    border-color: transparent;
+
+    &@{pls}-info {
+      color: var(--yee-tag-solid-color, #fff);
+      background-color: var(--yee-tag-info-color);
+      border-color: transparent;
+    }
+
+    &@{pls}-success {
+      color: var(--yee-tag-solid-color, #fff);
+      background-color: var(--yee-tag-success-color);
+      border-color: transparent;
+    }
+
+    &@{pls}-warning {
+      color: var(--yee-tag-solid-color, #fff);
+      background-color: var(--yee-tag-warning-color);
+      border-color: transparent;
+    }
+
+    &@{pls}-error {
+      color: var(--yee-tag-solid-color, #fff);
+      background-color: var(--yee-tag-error-color);
+      border-color: transparent;
+    }
+
+    &@{pls}-disabled {
+      color: var(--yee-tag-solid-color, #fff);
+      background-color: var(--yee-tag-disabled-color);
+      border-color: transparent;
+      cursor: not-allowed;
+    }
   }
 
-  &-warning {
-    color: var(--yee-tag-warning-color);
-    background-color: var(--yee-tag-warning-bg-color);
-    border-color: var(--yee-tag-warning-border-color);
+  // outlined：透明底 + 彩色字 + 彩色描边
+  &-outlined {
+    color: var(--yee-tag-color);
+    background-color: transparent;
+    border-color: var(--yee-tag-border-color);
+
+    &@{pls}-info {
+      color: var(--yee-tag-info-color);
+      background-color: transparent;
+      border-color: var(--yee-tag-info-color);
+    }
+
+    &@{pls}-success {
+      color: var(--yee-tag-success-color);
+      background-color: transparent;
+      border-color: var(--yee-tag-success-color);
+    }
+
+    &@{pls}-warning {
+      color: var(--yee-tag-warning-color);
+      background-color: transparent;
+      border-color: var(--yee-tag-warning-color);
+    }
+
+    &@{pls}-error {
+      color: var(--yee-tag-error-color);
+      background-color: transparent;
+      border-color: var(--yee-tag-error-color);
+    }
+
+    &@{pls}-disabled {
+      color: var(--yee-tag-disabled-color);
+      background-color: transparent;
+      border-color: var(--yee-tag-disabled-color);
+      cursor: not-allowed;
+    }
   }
 
-  &-error {
-    color: var(--yee-tag-error-color);
-    background-color: var(--yee-tag-error-bg-color);
-    border-color: var(--yee-tag-error-border-color);
-  }
-
-  &-disabled {
-    color: var(--yee-tag-disabled-color);
-    background-color: var(--yee-tag-disabled-bg-color);
-    border-color: var(--yee-tag-disabled-border-color);
-    cursor: not-allowed;
-  }
-
+  // ============ 其他修饰 ============
   &-dashed {
     background-color: var(--yee-tag-item-dashed-bg-color);
     border-style: dashed;

@@ -40,6 +40,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
       defaultValue,
       disabled,
       size,
+      variant = 'default',
       block,
       name = uid,
       onChange,
@@ -64,6 +65,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
       prefixCls,
       {
         [`${prefixCls}-${size}`]: size,
+        [`${prefixCls}-${variant}`]: variant && variant !== 'default',
         [`${prefixCls}-block`]: block,
         [`${prefixCls}-disabled`]: disabled,
       },

@@ -146,6 +146,4 @@ node_modules
 
 .playwright-mcp
 .claude
-template
-aeon-crm-ui
-li-pd-ui
+release-step.md

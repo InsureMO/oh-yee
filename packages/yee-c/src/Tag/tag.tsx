@@ -24,6 +24,7 @@ const Tag = forwardRef(
       icon,
       classNames,
       styles,
+      variant = 'filled',
       onClose,
       onChange,
       ...rest
@@ -37,6 +38,7 @@ const Tag = forwardRef(
 
     const cls = clsx(
       prefixCls,
+      [`${prefixCls}-${variant}`],
       {
         [`${prefixCls}-${status}`]: status,
         [`${prefixCls}-dashed`]: dashed,

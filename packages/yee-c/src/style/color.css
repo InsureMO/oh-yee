@@ -264,8 +264,8 @@
   --yee-menu-item-hover-color: var(--yee-color-option-hover);
   --yee-menu-item-selected-color: var(--yee-color-option-active);
   --yee-menu-item-selected-bg-color: var(--yee-color-option-active-bg);
-  --yee-menu-item-arrow-color: var(--yee-text-color-auxiliary);
-  --yee-menu-item-arrow-hover-color: var(--yee-text-color-auxiliary);
+  --yee-menu-item-arrow-color: var(--yee-text-color);
+  --yee-menu-item-arrow-hover-color: var(--yee-text-color-secondary);
   --yee-menu-item-arrow-selected-color: var(--yee-primary-color);
   --yee-menu-item-bg-color: #fff;
   --yee-menu-item-title-bg-color: #f0f0f0;

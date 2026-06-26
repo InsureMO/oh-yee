@@ -16,6 +16,7 @@ Tag for categorizing or markup.
 
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Tag"></code>
 <code src="./demo/type.tsx" title="Type" description="Different types of Tag"></code>
+<code src="./demo/variant.tsx" title="Variant" description="Three tag styles: filled, solid, outlined"></code>
 <code src="./demo/closable.tsx" title="Closable" description="Closable Tag"></code>
 <code src="./demo/size.tsx" title="Size" description="Different sizes of Tag"></code>
 <code src="./demo/checkable.tsx" title="Checkable" description="Checkable Tag"></code>
@@ -37,6 +38,7 @@ Tag for categorizing or markup.
 | closable | `boolean \| React.ReactNode` | Whether closable or custom close icon | - |
 | status | `TagType` | Built-in status | - |
 | dashed | `boolean` | Whether dashed border | - |
+| variant | `'filled' \| 'solid' \| 'outlined'` | Tag style variant | `filled` |
 | size | `'small' \| 'default' \| 'large'` | Size | `default` |
 | icon | `React.ReactNode` | Icon | - |
 | checkable | `boolean` | Whether checkable | - |

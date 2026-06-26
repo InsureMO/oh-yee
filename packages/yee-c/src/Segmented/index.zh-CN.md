@@ -18,6 +18,7 @@ toc: 'content'
 <code src="./demo/disabled.tsx" title="禁用" description="禁用单个选项或整组"></code>
 <code src="./demo/size.tsx" title="尺寸" description="small / default / large 三种尺寸"></code>
 <code src="./demo/block.tsx" title="撑满与图标" description="block 撑满容器宽度，选项可带图标"></code>
+<code src="./demo/variant.tsx" title="变体" description="pill 胶囊风格：选中项以主色胶囊高亮，容器无底色"></code>
 
 ## API
 
@@ -36,6 +37,7 @@ toc: 'content'
 | onChange | `(value: string \| number) => void` | 值改变时的回调 | - |
 | disabled | `boolean` | 是否禁用所有选项 | - |
 | size | `'small' \| 'default' \| 'large'` | 尺寸 | - |
+| variant | `'default' \| 'pill'` | 视觉风格变体，`pill` 为胶囊药丸风格 | `default` |
 | block | `boolean` | 是否撑满容器宽度，选项等分 | - |
 | name | `string` | 底层 radio input 的 name，用于表单分组 | - |
 

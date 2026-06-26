@@ -67,6 +67,36 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Rewrite workspace ranges for publish
+        run: |
+          pkg="${{ steps.tag.outputs.package }}"
+          # Locate the package dir by name, then rewrite every `workspace:*`
+          # (workspace:^ / workspace:~ / workspace:*) to a loose floor so the
+          # published package.json carries a real npm range instead of the
+          # workspace-only protocol. Local dev still uses workspace linking
+          # because the source package.json keeps `workspace:`.
+          node -e '
+            const fs = require("fs");
+            const path = require("path");
+            const pkg = process.argv[1];
+            const FLOOR = ">=0.1.0";
+            let dir = null;
+            for (const d of fs.readdirSync("packages")) {
+              const p = path.join("packages", d, "package.json");
+              try { if (JSON.parse(fs.readFileSync(p, "utf8")).name === pkg) { dir = path.join("packages", d); break; } } catch {}
+            }
+            if (!dir) { console.error("package not found:", pkg); process.exit(1); }
+            const file = path.join(dir, "package.json");
+            const before = fs.readFileSync(file, "utf8");
+            const after = before.replace(/"workspace:(\^|~|\*)"/g, `"${FLOOR}"`);
+            if (before !== after) {
+              fs.writeFileSync(file, after);
+              console.log("Rewrote workspace: ranges to", FLOOR, "in", file);
+            } else {
+              console.log("No workspace: ranges to rewrite in", file);
+            }
+          ' "$pkg"
+
       - name: Publish to npm
         run: pnpm publish --filter "${{ steps.tag.outputs.package }}" --access public --no-git-checks
         env:
