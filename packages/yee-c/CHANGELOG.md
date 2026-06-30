@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.4.1
+
+### Patch Changes
+
+- ab1821c: simplify Anchor component scroll handling
+
 ## 0.4.0
 
 ### Minor Changes
