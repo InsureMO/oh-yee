@@ -6,13 +6,11 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
-import debounce from '../utils/debounce';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import AnchorItem from './anchor-item';
 import type {
@@ -124,6 +122,8 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     // Empty array guard
     if (!currentItems || currentItems.length === 0) return;
 
+    // Pick the last anchor whose top has crossed the activation line.
+    let nextActiveKey: string | undefined;
     for (let i = currentItems.length - 1; i >= 0; i--) {
       const item = currentItems[i];
       const target = document.getElementById(item.key);
@@ -131,27 +131,50 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
       if (target) {
         const targetTop = getTargetOffsetTop(target);
         if (scrollTop + offsetTop >= targetTop) {
-          if (activeKeyRef.current !== item.key) {
-            setMergedActiveKey(item.key);
-            onChange?.(item.key);
-          }
+          nextActiveKey = item.key;
           break;
         }
       }
     }
+
+    // Scrolled above the first anchor — reset to the top item.
+    if (nextActiveKey === undefined) {
+      const first = currentItems.find(
+        (item) => document.getElementById(item.key),
+      );
+      nextActiveKey = first?.key;
+    }
+
+    if (nextActiveKey && activeKeyRef.current !== nextActiveKey) {
+      setMergedActiveKey(nextActiveKey);
+      onChange?.(nextActiveKey);
+    }
   }, [auto, anchorList, items, offsetTop, onChange, getTargetOffsetTop]);
 
   useEffect(() => {
-    const container = containerRef.current;
+    // Resolve in a passive effect: parent-owned refs passed via `getContainer`
+    // aren't attached until after child layout effects run.
+    const container = getContainer ? getContainer() : window;
+    containerRef.current = container;
     if (!container) return;
 
-    const debouncedScroll = debounce(handleScroll, 100);
-    container.addEventListener('scroll', debouncedScroll as EventListener);
+    // rAF throttle so the active key tracks scroll live.
+    let rafId: ReturnType<typeof requestAnimationFrame> | null = null;
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        handleScroll();
+      });
+    };
+    container.addEventListener('scroll', onScroll as EventListener);
     handleScroll();
 
     return () => {
-      container.removeEventListener('scroll', debouncedScroll as EventListener);
-      debouncedScroll.cancel();
+      container.removeEventListener('scroll', onScroll as EventListener);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, [getContainer, handleScroll]);
 
@@ -178,11 +201,7 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     [offsetTop, getTargetOffsetTop],
   );
 
-  useLayoutEffect(() => {
-    containerRef.current = getContainer ? getContainer() : window;
-  }, [getContainer]);
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (defaultActiveKey) {
       scrollToAnchor(defaultActiveKey);
     }
