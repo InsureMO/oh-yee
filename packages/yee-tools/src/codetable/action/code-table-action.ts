@@ -5,24 +5,7 @@ import { LocalContext } from "../../cache/local-context";
 import { getCodeTableConfig } from "../config/code-table-config";
 import { ax } from "../../fetch";
 import { warn } from "../../common/logger";
-
-interface CodeTableParams {
-  CodeTableId?: string | number;
-  ConditionMap?: Record<string, any>;
-  CodeTableName?: string;
-  CodeTableUrl?: {
-    url: string;
-    param?: any;
-    setting?: any;
-  };
-  IncludedValueList?: any[];
-  KeyWord?: string;
-}
-
-interface CodeTableResult {
-  codes: any[];
-  common?: any[];
-}
+import type { CodeTableParams, CodeTableResult } from "../types";
 
 /**
  * Code table action class providing methods for fetching, caching, and managing code table data

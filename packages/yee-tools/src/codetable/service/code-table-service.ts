@@ -11,60 +11,11 @@ import { StoreContext } from "../../cache/store-context";
 import * as UrlUtils from "../../url/url-utils";
 import { ax } from "../../fetch";
 import { warn } from "../../common/logger";
-
-/**
- * Parameters for code table requests
- */
-interface CodeTableParams {
-  /** Code table ID */
-  CodeTableId?: string | number;
-  /** Condition map for filtering */
-  ConditionMap?: Record<string, any>;
-  /** Code table name */
-  CodeTableName?: string;
-  /** Custom URL for fetching code table data */
-  CodeTableUrl?: {
-    url: string;
-    param?: any;
-    setting?: any;
-  };
-  /** List of values to include */
-  IncludedValueList?: any[];
-  /** Keyword for filtering */
-  KeyWord?: string;
-  /** Language ID */
-  LangId?: string;
-}
-
-/**
- * Business code table data structure
- */
-interface BusinessCodeTable {
-  /** List of code table values */
-  BusinessCodeTableValueList: any[];
-  /** Business code table metadata */
-  BusinessCodeTable?: {
-    /** Whether caching is needed ('Y' or 'N') */
-    NeedCache?: string;
-    /** Whether user-defined values are used ('Y' or 'N') */
-    UserSign?: string;
-    /** Code table name */
-    Name?: string;
-    /** Service name for routing */
-    ServiceName?: string;
-  };
-  /** Whether there are more records available */
-  HasMoreRecords?: boolean;
-  /** Condition map used for the query */
-  ConditionMap?: Record<string, any>;
-}
-
-/**
- * Code table value entry
- */
-interface CodeTableValue {
-  [key: string]: any;
-}
+import type {
+  CodeTableParams,
+  BusinessCodeTable,
+  CodeTableValue,
+} from "../types";
 
 /**
  * CodeTable service for handling data operations
