@@ -27,10 +27,17 @@ function useWatch<T = any>(
             Array.isArray(namePath) ? namePath.join('.') : (namePath as string),
           );
 
-    const unsubscribe = formInstance.subscribe(namePath, () => {
+    const update = () => {
       const newValue = getWatchedValue();
       setValue((prev) => (prev === newValue ? prev : newValue));
-    });
+    };
+
+    const unsubscribe = formInstance.subscribe(namePath, update);
+    // Re-read immediately after subscribing: the parent's useWatch captured its
+    // initial snapshot before child Form.Field wrote its initialValue, and the
+    // subscription may not yet exist when that write happens. This covers the gap.
+    update();
+
     return unsubscribe;
   }, [formInstance, namePath]);
 

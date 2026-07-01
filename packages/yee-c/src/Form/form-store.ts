@@ -494,6 +494,10 @@ export class FormStore {
         } else {
           this.store = { ...this.store, [normalizedName]: value };
         }
+        // When value is not undefined, notify watchers to trigger re-rendering of useWatch
+        if (value !== undefined) {
+          this.notifyWatchers(normalizedName);
+        }
       }
     }
     entity.onStoreChange?.();

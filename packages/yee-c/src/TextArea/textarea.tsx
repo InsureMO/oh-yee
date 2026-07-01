@@ -36,8 +36,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       defaultValue,
     });
 
-    console.log('mergedValue: ', mergedValue, value);
-
     useEffect(() => {
       const ele = componentRef.current;
       if (ele && autoSize) {
