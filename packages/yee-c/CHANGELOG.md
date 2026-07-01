@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.4.3
+
+### Patch Changes
+
+- cfc183e: feat: enhance form store to notify watchers on value change and update useWatch subscription logic
+
 ## 0.4.2
 
 ### Patch Changes
