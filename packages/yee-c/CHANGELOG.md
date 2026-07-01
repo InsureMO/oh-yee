@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.4.2
+
+### Patch Changes
+
+- 8e767a1: feat: refactor form hooks and add localization support
+
 ## 0.4.1
 
 ### Patch Changes
