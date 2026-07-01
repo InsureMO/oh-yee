@@ -71,7 +71,9 @@ High performance form component with data scope management.
 
 | Method          | Type                                                    | Description                              |
 | --------------- | ------------------------------------------------------- | ---------------------------------------- |
+| Form.useForm     | `(form?: FormInstance) => [FormInstance]`                    | Create a Form instance; pass an external form for controlled usage |
 | Form.useWatch   | `(namePath?: NamePath, form?: FormInstance) => T \| undefined` | Watch form field value changes, omit namePath to get all values |
+| Form.useFormInstance | `() => FormInstance` | Get the nearest Form instance from context, must be used inside a `<Form>` |
 
 ### Field.GroupProps
 

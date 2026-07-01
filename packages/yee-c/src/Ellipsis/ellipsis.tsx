@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../Button';
 import useMergedState from '../hooks/useMergedState';
+import { useLocale } from '../locale';
 import type { EllipsisProps } from './interface';
 
 import './style/index.less';
@@ -31,6 +32,9 @@ const Ellipsis: React.FC<EllipsisProps> = (props) => {
   const textRef = useRef<HTMLDivElement>(null);
   const [needEllipsis, setNeedEllipsis] = useState(false);
   const [maxHeight, setMaxHeight] = useState<number>(0);
+
+  const { locale } = useLocale();
+  const { ellipsis: ellipsisLocale } = locale;
 
   const [mergedExpanded, setMergedExpanded] = useMergedState(defaultExpanded, {
     value: controlledExpanded,
@@ -65,14 +69,10 @@ const Ellipsis: React.FC<EllipsisProps> = (props) => {
   };
 
   const isCollapsed = !mergedExpanded && needEllipsis;
-  const isZhCN =
-    typeof document !== 'undefined'
-      ? (document.documentElement.lang || 'zh-CN').startsWith('zh')
-      : true;
 
   const buttonText = mergedExpanded
-    ? (collapseText ?? (isZhCN ? '收起' : 'Collapse'))
-    : (expandText ?? (isZhCN ? '展开' : 'Expand'));
+    ? (collapseText ?? ellipsisLocale.collapse)
+    : (expandText ?? ellipsisLocale.expand);
 
   const renderButton = () => {
     if (!showExpandButton || !needEllipsis) return null;

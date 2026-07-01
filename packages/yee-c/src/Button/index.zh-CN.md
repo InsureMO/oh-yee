@@ -17,6 +17,7 @@ demo:
 ## 代码演示
 
 <code src="./demo/basic.tsx" title="基础用法" description="Button的基础用法"></code>
+<code src="./demo/variant.tsx" title="变体与颜色" description="type / color / variant 的全部组合"></code>
 <code src="./demo/size.tsx" title="尺寸" description="不同尺寸的按钮"></code>
 <code src="./demo/disabled.tsx" title="禁用" description="禁用状态的按钮"></code>
 <code src="./demo/loading.tsx" title="加载中" description="加载状态的按钮"></code>

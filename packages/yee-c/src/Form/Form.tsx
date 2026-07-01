@@ -5,8 +5,8 @@ import useEvent from '../hooks/useEvent';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
+import useForm from './hooks/useForm';
 import type { FormProps } from './interface';
-import useForm from './useForm';
 
 import './style/index.less';
 

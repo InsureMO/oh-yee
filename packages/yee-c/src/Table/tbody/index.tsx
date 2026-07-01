@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocale } from '../../locale';
 import { TableBodyProps } from '../interface';
 import { TableCtx } from '../table';
 import LazyRow from './lazy-row';
@@ -8,11 +9,13 @@ const TableBody: React.FC<TableBodyProps> = (props) => {
   const { columns, pageData, lazyLoad, ...rest } = props;
 
   const { prefixCls } = React.useContext(TableCtx);
+  const { locale } = useLocale();
+  const { table: tableLocale } = locale;
 
   const empty = (
     <tbody className={`${prefixCls}-tbody`}>
       <tr className={`${prefixCls}-no-record`}>
-        <td colSpan={999}>{'There is no record.'}</td>
+        <td colSpan={999}>{tableLocale.emptyText}</td>
       </tr>
     </tbody>
   );

@@ -20,7 +20,7 @@ const Compact = forwardRef<HTMLDivElement, SpaceCompactProps>((props, ref) => {
     (child: React.ReactElement, index) => {
       if (React.isValidElement(child)) {
         const first = index === 0;
-        const middle = index > 0 && index < total;
+        const middle = index > 0 && index < total - 1;
         const last = index > 0 && index === total - 1;
         const props = child.props as any;
         return React.cloneElement(child as any, {

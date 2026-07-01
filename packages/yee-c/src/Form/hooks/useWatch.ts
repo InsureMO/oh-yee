@@ -1,6 +1,6 @@
 import { useContext, useLayoutEffect, useState } from 'react';
-import FieldContext from './FieldContext';
-import type { FormInstance, NamePath } from './interface';
+import FieldContext from '../FieldContext';
+import type { FormInstance, NamePath } from '../interface';
 
 function useWatch<T = any>(
   namePath?: NamePath,

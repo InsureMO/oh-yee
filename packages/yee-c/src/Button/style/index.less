@@ -66,19 +66,28 @@
     background-color: var(--m-btn-color);
 
     &:not(@{pls}-disabled):hover {
-      background-color: var(--m-btn-hover-color);
+      background-color: color-mix(in srgb, var(--m-btn-color), black 12%);
     }
 
     &:not(@{pls}-disabled):active {
-      background-color: var(--m-btn-active-color);
-      box-shadow: var(--yee-btn-solid-active-box-shadow);
+      background-color: color-mix(in srgb, var(--m-btn-color), black 20%);
+      box-shadow: var(--yee-btn-solid-active-box-shadow)
+        var(--m-btn-active-shadow-color);
     }
   }
 
   // 字体颜色，背景是字体颜色的浅色
   &-filled {
-    color: var(--yee-btn-primary-color);
-    background-color: var(--m-btn-color);
+    color: var(--m-btn-color);
+    background-color: color-mix(in srgb, var(--m-btn-color) 10%, transparent);
+
+    &:not(@{pls}-disabled):hover {
+      background-color: color-mix(in srgb, var(--m-btn-color) 16%, transparent);
+    }
+
+    &:not(@{pls}-disabled):active {
+      background-color: color-mix(in srgb, var(--m-btn-color) 22%, transparent);
+    }
   }
 
   &-outlined {
@@ -154,27 +163,56 @@
     --m-btn-border-active-color: var(--yee-primary-color-active);
     --m-btn-active-color: var(--yee-primary-color-active);
     --m-btn-active-bg-color: var(--yee-text-color-auxiliary);
+    --m-btn-active-shadow-color: var(--yee-primary-color-active);
   }
 
   &-primary {
     --m-btn-color: var(--yee-primary-color);
     --m-btn-hover-color: var(--yee-primary-color-hover);
     --m-btn-active-color: var(--yee-primary-color-active);
-    --m-btn-bg-color: var(--yee-btn-success-bg-color);
-    --m-btn-hover-bg-color: var(--yee-btn-success-bg-color);
-    --m-btn-active-bg-color: var(--yee-btn-success-bg-color);
+    --m-btn-bg-color: var(--yee-btn-primary-bg-color);
+    --m-btn-hover-bg-color: var(--yee-primary-color-hover);
+    --m-btn-active-bg-color: var(--yee-primary-color-active);
+    --m-btn-border-color: var(--yee-primary-color);
+    --m-btn-border-hover-color: var(--yee-primary-color-hover);
+    --m-btn-border-active-color: var(--yee-primary-color-active);
+    --m-btn-active-shadow-color: var(--yee-primary-color-active);
   }
 
   &-success {
-    --m-btn-color: var(--yee-btn-success-color);
+    --m-btn-color: var(--yee-success-color);
+    --m-btn-hover-color: var(--yee-success-color-hover);
+    --m-btn-active-color: var(--yee-success-color-active);
+    --m-btn-border-color: var(--yee-success-color);
+    --m-btn-border-hover-color: var(--yee-success-color-hover);
+    --m-btn-border-active-color: var(--yee-success-color-active);
+    --m-btn-hover-bg-color: var(--yee-success-color-hover);
+    --m-btn-active-bg-color: var(--yee-success-color-active);
+    --m-btn-active-shadow-color: var(--yee-success-color-active);
   }
 
   &-danger {
-    --m-btn-color: var(--yee-btn-danger-color);
+    --m-btn-color: var(--yee-error-color);
+    --m-btn-hover-color: var(--yee-error-color-hover);
+    --m-btn-active-color: var(--yee-error-color-active);
+    --m-btn-border-color: var(--yee-error-color);
+    --m-btn-border-hover-color: var(--yee-error-color-hover);
+    --m-btn-border-active-color: var(--yee-error-color-active);
+    --m-btn-hover-bg-color: var(--yee-error-color-hover);
+    --m-btn-active-bg-color: var(--yee-error-color-active);
+    --m-btn-active-shadow-color: var(--yee-error-color-active);
   }
 
   &-warning {
-    --m-btn-color: var(--yee-btn-warning-color);
+    --m-btn-color: var(--yee-warning-color);
+    --m-btn-hover-color: var(--yee-warning-color-hover);
+    --m-btn-active-color: var(--yee-warning-color-active);
+    --m-btn-border-color: var(--yee-warning-color);
+    --m-btn-border-hover-color: var(--yee-warning-color-hover);
+    --m-btn-border-active-color: var(--yee-warning-color-active);
+    --m-btn-hover-bg-color: var(--yee-warning-color-hover);
+    --m-btn-active-bg-color: var(--yee-warning-color-active);
+    --m-btn-active-shadow-color: var(--yee-warning-color-active);
   }
 
   &-disabled {

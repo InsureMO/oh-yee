@@ -63,6 +63,20 @@ const locale: Locale = {
     noData: '暫無資料',
   },
 
+  input: {
+    showPassword: '顯示密碼',
+    hidePassword: '隱藏密碼',
+  },
+
+  ellipsis: {
+    expand: '展開',
+    collapse: '收合',
+  },
+
+  transfer: {
+    searchPlaceholder: '搜尋',
+  },
+
   weekpicker: {
     weekHeader: ['', '日', '一', '二', '三', '四', '五', '六'],
   },
@@ -72,6 +86,7 @@ const locale: Locale = {
     filterConfirm: '確定',
     filterReset: '重置',
     filterEmptyText: '無篩選條件',
+    filterAll: '全部',
     selectAll: '全選',
     selectInvert: '反選',
     selectNone: '清空選擇',

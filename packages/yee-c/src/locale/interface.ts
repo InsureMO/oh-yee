@@ -41,6 +41,23 @@ export interface LocaleSelect {
   noData: string; // "No data"
 }
 
+// Input component
+export interface LocaleInput {
+  showPassword: string; // "Show password"
+  hidePassword: string; // "Hide password"
+}
+
+// Ellipsis component
+export interface LocaleEllipsis {
+  expand: string; // "Expand"
+  collapse: string; // "Collapse"
+}
+
+// Transfer component
+export interface LocaleTransfer {
+  searchPlaceholder: string; // "Search"
+}
+
 // WeekPicker component
 export interface LocaleWeekPicker {
   weekHeader: string[]; // ['', 'Su', 'Mo', 'Tu', ...]
@@ -52,6 +69,7 @@ export interface LocaleTable {
   filterConfirm: string; // "OK"
   filterReset: string; // "Reset"
   filterEmptyText: string; // "No filter conditions"
+  filterAll: string; // "All"
   selectAll?: string; // "Select all"
   selectInvert?: string; // "Invert selection"
   selectNone?: string; // "Clear selection"
@@ -125,6 +143,9 @@ export interface Locale {
   datepicker: LocaleDatePicker;
   rangepicker: LocaleRangePicker;
   select: LocaleSelect;
+  input: LocaleInput;
+  ellipsis: LocaleEllipsis;
+  transfer: LocaleTransfer;
   weekpicker: LocaleWeekPicker;
   table: LocaleTable;
   pagination: LocalePagination;

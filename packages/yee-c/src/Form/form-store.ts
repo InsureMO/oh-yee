@@ -43,8 +43,8 @@ export class FormStore {
   // List key manager
   private listKeyManagers: Map<string, { keys: number[]; id: number }> =
     new Map();
-  // Default validation message
-  private defaultValidateMessage = 'This is required field.';
+  // Default validation message (overridden by useForm via locale)
+  private defaultValidateMessage = '';
   // useWatch subscription management
   private watchers: Map<string, Set<() => void>> = new Map();
   // Field.Group group validators

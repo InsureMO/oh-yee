@@ -18,12 +18,22 @@
   }
 
   &-compact {
+    display: inline-flex;
     align-items: flex-end;
 
     &-first-item {
       margin-inline-end: -1px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+
+      &:hover,
+      &:active {
+        position: relative;
+        z-index: 1;
+      }
 
       .yee-input-wrapper,
+      .yee-input,
       .yee-tags,
       &.yee-btn {
         border-top-right-radius: 0;
@@ -39,6 +49,13 @@
 
     &-middle-item {
       margin-inline-end: -1px;
+      border-radius: 0;
+
+      &:hover,
+      &:active {
+        position: relative;
+        z-index: 1;
+      }
 
       .yee-input-wrapper,
       .yee-tags,
@@ -52,19 +69,22 @@
         z-index: 1;
       }
     }
+
+    &-last-item {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      .yee-input-wrapper,
+      .yee-tags,
+      &.yee-btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
   }
 
   &-item {
     // flex: 1 1 auto;
     display: inline-flex;
-  }
-
-  &-last-item {
-    .yee-input-wrapper,
-    .yee-tags,
-    &.yee-btn {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
   }
 }

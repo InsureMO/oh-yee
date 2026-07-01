@@ -96,7 +96,7 @@
   --yee-btn-border-radius: 4px;
   --yee-btn-loading-margin-inline-end: 6px;
   --yee-btn-border-width: 1px;
-  --yee-btn-solid-active-box-shadow: 0 0 2px 2px rgba(64, 169, 255, 30%);
+  --yee-btn-solid-active-box-shadow: 0 0 4px 0;
   --yee-btn-circle-min-width: 32px;
   --yee-btn-icon-gap: 4px;
   --yee-btn-disabled-opacity: 0.5;

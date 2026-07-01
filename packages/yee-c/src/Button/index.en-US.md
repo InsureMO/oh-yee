@@ -17,6 +17,7 @@ Buttons are used to start an immediate action.
 ## Code Demo
 
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Button"></code>
+<code src="./demo/variant.tsx" title="Variant & Color" description="All combinations of type / color / variant"></code>
 <code src="./demo/size.tsx" title="Size" description="Different button sizes"></code>
 <code src="./demo/disabled.tsx" title="Disabled" description="Disabled button"></code>
 <code src="./demo/loading.tsx" title="Loading" description="Loading button"></code>

@@ -70,7 +70,9 @@ toc: 'content'
 
 | 方法名        | 类型                                                           | 描述                                         |
 | ------------- | -------------------------------------------------------------- | -------------------------------------------- |
+| Form.useForm | `(form?: FormInstance) => [FormInstance]` | 创建 Form 实例，传入外部 form 可受控使用 |
 | Form.useWatch | `(namePath?: NamePath, form?: FormInstance) => T \| undefined` | 监听表单字段值变化，不传 namePath 返回所有值 |
+| Form.useFormInstance | `() => FormInstance` | 获取当前上下文中最近的 Form 实例，须在 `<Form>` 内调用 |
 
 ### Field.GroupProps
 

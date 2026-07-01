@@ -47,6 +47,8 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
       return null;
     }
 
+    let loopCount = 1;
+
     const loop = (childs: React.ReactNode[]) => {
       let res = [] as React.ReactElement[];
 
@@ -60,6 +62,7 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
         const itemChildren = isItem ? (child.props as any).children : child;
 
         if (React.isValidElement(child) && child.type === React.Fragment) {
+          loopCount++;
           res = res.concat(
             loop(React.Children.toArray((child.props as any).children)),
           );
@@ -72,7 +75,7 @@ const Space = forwardRef<HTMLDivElement, SpaceProps>((baseprops, ref) => {
                 itemClassName,
               )}
               style={{ ...styles?.item, ...itemStyle }}
-              key={index}
+              key={`${loopCount}-${index}`}
             >
               {itemChildren}
             </div>,

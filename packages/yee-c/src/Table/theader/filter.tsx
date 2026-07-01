@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { Filter, Search } from 'lucide-react';
+import { ListFilter, Search } from 'lucide-react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Button from '../../Button';
 import Divider from '../../Divider';
@@ -7,6 +7,7 @@ import Input from '../../Input';
 import Popover from '../../Popover';
 import Space from '../../Space';
 import Tree from '../../Tree';
+import { useLocale } from '../../locale';
 import { TableCtx } from '../table';
 
 export interface TableFilterProps {
@@ -25,6 +26,8 @@ const getStrLower = (str: any) => {
 const HeaderFilter = React.memo((props: any) => {
   const { filter, column, getContainer, onInternalFilter } = props;
   const { prefixCls } = useContext(TableCtx);
+  const { locale } = useLocale();
+  const { table: tableLocale } = locale;
   const { dataIndex } = column;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -86,6 +89,7 @@ const HeaderFilter = React.memo((props: any) => {
           ok('search');
         }
       }}
+      size="small"
       ref={inputRef}
     />
   ) : null;
@@ -106,7 +110,7 @@ const HeaderFilter = React.memo((props: any) => {
       dataSource = [
         {
           key: 'all',
-          label: 'All',
+          label: tableLocale.filterAll,
           children: filteredItems,
         },
       ];
@@ -122,17 +126,14 @@ const HeaderFilter = React.memo((props: any) => {
           multiple
           checkedKeys={selectNodes}
           onCheck={(keys) => setSelectNodes(keys as Array<string | number>)}
-          //   selectedKeys={selectNodes}
-          //   multiple
-          //   onSelect={handleSelect}
         />
         <Divider style={{ margin: '8px 0' }} />
         <Space block style={{ justifyContent: 'flex-end' }}>
           <Button size="small" onClick={reset}>
-            Reset
+            {tableLocale.filterReset}
           </Button>
           <Button size="small" onClick={() => ok('filter')} type="primary">
-            Confirm
+            {tableLocale.filterConfirm}
           </Button>
         </Space>
       </div>
@@ -145,10 +146,10 @@ const HeaderFilter = React.memo((props: any) => {
           style={{ marginTop: 12, justifyContent: 'flex-end', width: '100%' }}
         >
           <Button size="small" onClick={reset}>
-            Reset
+            {tableLocale.filterReset}
           </Button>
           <Button size="small" onClick={() => ok('search')} type="primary">
-            Confirm
+            {tableLocale.filterConfirm}
           </Button>
         </Space>
       </div>
@@ -169,11 +170,13 @@ const HeaderFilter = React.memo((props: any) => {
         <Button
           icon={
             items ? (
-              <Filter size={16} strokeWidth={1.5} />
+              <ListFilter size={14} strokeWidth={1.5} />
             ) : (
-              <Search size={16} strokeWidth={1.5} />
+              <Search size={14} strokeWidth={1.5} />
             )
           }
+          // variant={selectNodes.length ? 'filled' : undefined}
+          color="info"
           type="text"
           size="small"
         />

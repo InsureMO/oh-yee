@@ -4,6 +4,7 @@ import React, { useContext, useMemo, useState } from 'react';
 import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Input from '../Input';
+import { useLocale } from '../locale';
 import Pagination from '../Pagination';
 import type { DataSource, TransferListProps } from './interface';
 import { TransferContext } from './transfer';
@@ -22,6 +23,8 @@ const TransferList: React.FC<TransferListProps> = (props) => {
   } = props;
 
   const { rowKey, rowLabel, disabled, prefixCls } = useContext(TransferContext);
+  const { locale } = useLocale();
+  const { transfer: transferLocale } = locale;
   const [searchValue, setSearchValue] = useState('');
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(pagination?.pageSize ?? 5);
@@ -129,7 +132,7 @@ const TransferList: React.FC<TransferListProps> = (props) => {
       <div className={`${prefixCls}-search`}>
         <Input
           prefix={<Search size={16} />}
-          placeholder="Search"
+          placeholder={transferLocale.searchPlaceholder}
           onChange={handleSearch}
         />
       </div>

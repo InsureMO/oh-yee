@@ -72,6 +72,20 @@ const locale: Locale = {
     noData: 'データなし',
   },
 
+  input: {
+    showPassword: 'パスワードを表示',
+    hidePassword: 'パスワードを非表示',
+  },
+
+  ellipsis: {
+    expand: '展開',
+    collapse: '折りたたむ',
+  },
+
+  transfer: {
+    searchPlaceholder: '検索',
+  },
+
   weekpicker: {
     weekHeader: ['', '日', '月', '火', '水', '木', '金', '土'],
   },
@@ -81,6 +95,7 @@ const locale: Locale = {
     filterConfirm: '確認',
     filterReset: 'リセット',
     filterEmptyText: 'フィルターなし',
+    filterAll: 'すべて',
     selectAll: 'すべて選択',
     selectInvert: '選択を反転',
     selectNone: '選択をクリア',

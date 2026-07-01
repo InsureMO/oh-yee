@@ -174,9 +174,9 @@
 // }
 
 import { useRef } from 'react';
-import { useLocale } from '../locale';
-import { FormStore } from './form-store';
-import { FormInstance } from './interface';
+import { useLocale } from '../../locale';
+import { FormStore } from '../form-store';
+import { FormInstance } from '../interface';
 
 export default function useForm<Values = any>(
   form?: FormInstance<Values>,
@@ -189,9 +189,7 @@ export default function useForm<Values = any>(
     } else {
       const formStore = new FormStore();
       // 设置默认验证消息
-      formStore.setDefaultValidateMessage(
-        locale.form?.defaultRequiredMessage || '该项为必填项',
-      );
+      formStore.setDefaultValidateMessage(locale.form.defaultRequiredMessage);
       formRef.current = formStore.getForm();
     }
   }

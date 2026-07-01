@@ -5,6 +5,7 @@ import { GlobalContext } from '../Config-Provider';
 import Input from '../Input';
 import Select from '../Select';
 import useMergedState from '../hooks/useMergedState';
+import { useLocale } from '../locale';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import type { PaginationProps } from './interface';
 import Items from './items';
@@ -15,6 +16,8 @@ const Pagination = React.forwardRef(
   (baseprops: PaginationProps, ref: React.Ref<HTMLUListElement>) => {
     const { pagination } = useContext(GlobalContext);
     const props = mergeContextToProps(baseprops, pagination);
+    const { locale } = useLocale();
+    const { pagination: paginationLocale } = locale;
     const {
       prefixCls = 'yee-pagination',
       disabled,
@@ -235,7 +238,7 @@ const Pagination = React.forwardRef(
 
       return (
         <li className={`${prefixCls}-quick-jumper`} key="quick-jumper">
-          <span>{'Go to'}</span>
+          <span>{paginationLocale.jumpTo}</span>
           {renderNumber(clear)}
         </li>
       );

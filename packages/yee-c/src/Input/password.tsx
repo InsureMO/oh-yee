@@ -1,6 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import React, { forwardRef, useContext } from 'react';
 import { GlobalContext } from '../Config-Provider';
+import { useLocale } from '../locale';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import Input from './input';
 import type { PasswordProps } from './interface';
@@ -11,6 +12,8 @@ const Password = forwardRef<HTMLInputElement, PasswordProps>(
   (baseProps, ref) => {
     const { password } = useContext(GlobalContext);
     const props = mergeContextToProps(baseProps, password);
+    const { locale } = useLocale();
+    const { input: inputLocale } = locale;
 
     const {
       visibilityToggle = true,
@@ -45,7 +48,7 @@ const Password = forwardRef<HTMLInputElement, PasswordProps>(
           onKeyDown={handleKeyDown}
           tabIndex={0}
           role="button"
-          aria-label="隐藏密码"
+          aria-label={inputLocale.hidePassword}
         />
       ) : (
         <Eye
@@ -55,7 +58,7 @@ const Password = forwardRef<HTMLInputElement, PasswordProps>(
           onKeyDown={handleKeyDown}
           tabIndex={0}
           role="button"
-          aria-label="显示密码"
+          aria-label={inputLocale.showPassword}
         />
       );
 

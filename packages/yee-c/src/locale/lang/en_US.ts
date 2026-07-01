@@ -72,6 +72,20 @@ const locale: Locale = {
     noData: 'No Data',
   },
 
+  input: {
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
+  },
+
+  ellipsis: {
+    expand: 'Expand',
+    collapse: 'Collapse',
+  },
+
+  transfer: {
+    searchPlaceholder: 'Search',
+  },
+
   weekpicker: {
     weekHeader: ['', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   },
@@ -81,6 +95,7 @@ const locale: Locale = {
     filterConfirm: 'Confirm',
     filterReset: 'Reset',
     filterEmptyText: 'No filters',
+    filterAll: 'All',
     selectAll: 'Select All',
     selectInvert: 'Invert Selection',
     selectNone: 'Clear Selection',

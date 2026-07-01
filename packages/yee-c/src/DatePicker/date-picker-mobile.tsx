@@ -139,7 +139,7 @@ const DatePickerMobile: FC<DatePickerProps> = (props) => {
         height="auto"
         footer={
           <Button block type="primary" onClick={handleConfirm}>
-            {datepicker?.confirm || 'Confirm'}
+            {datepicker.confirm}
           </Button>
         }
       >

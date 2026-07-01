@@ -307,8 +307,8 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
             )}
             <Button block type="primary" onClick={handleTabConfirm}>
               {activeTab === 'start'
-                ? rangepicker?.next || 'Next'
-                : rangepicker?.confirm || 'Confirm'}
+                ? rangepicker.next
+                : rangepicker.confirm}
             </Button>
           </div>
         }
@@ -323,7 +323,7 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
             onClick={() => setActiveTab('start')}
             type="button"
           >
-            {rangepicker?.startPlaceholder || '开始日期'}
+            {rangepicker.startPlaceholder}
           </button>
           <button
             className={clsx(
@@ -333,7 +333,7 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
             onClick={() => setActiveTab('end')}
             type="button"
           >
-            {rangepicker?.endPlaceholder || '结束日期'}
+            {rangepicker.endPlaceholder}
           </button>
         </div>
 
