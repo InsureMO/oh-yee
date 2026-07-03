@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.4.4
+
+### Patch Changes
+
+- b47f0b0: feat: enhance Cascader component with flattened options and improved type safety
+
 ## 0.4.3
 
 ### Patch Changes
