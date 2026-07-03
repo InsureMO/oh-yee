@@ -16,70 +16,104 @@ export function hasChild(
 }
 
 /**
- * Get the next queue element for navigation
- * @internal
+ * Separator used to build a node's `uid` from its value path. A control
+ * character is used on purpose so it can never appear inside a user value —
+ * this prevents collisions like value `"a-1"` vs path `["a", "1"]` that a plain
+ * `'-'` separator would produce.
  */
-const getNextQueueElement = (
-  data: Array<FlattenOption>,
-  value: string | number,
-): [FlattenOption[], { id: string | number; text: string }] | [] => {
-  if (!Array.isArray(data)) {
-    return [];
-  }
-
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i];
-    if (item.uid === value) {
-      const nexts = hasChild(item)
-        ? (item.children as Array<FlattenOption>).filter((c) => c.pid === value)
-        : [];
-      return [
-        nexts,
-        { id: item.value as string | number, text: item.label as string },
-      ];
-    }
-  }
-  return [];
-};
+export const UID_SEP = '';
 
 /**
- * Populate data into input fields and dropdown lists from a value array
- * @param arr - The value array representing the selected path
+ * Build the canonical uid for a value path. Use this everywhere a path needs
+ * to be turned into a key (nodeMap lookups, selected keys, comparisons) so the
+ * format stays consistent with the `uid`/`pid` produced by `flattenOptions`.
+ * @param path - The value path
+ */
+export const pathToUid = (path: Array<string | number>): string =>
+  path.map(String).join(UID_SEP);
+
+/**
+ * Get the direct flattened children of the node identified by `uid`.
+ *
+ * Flattened nodes intentionally do not carry a `children` reference (it used to
+ * point at the raw, un-flattened subtree and caused type lies). Derive children
+ * from the flat list via `pid` instead — single source of truth.
+ * @param data - The flattened options data
+ * @param uid - The parent node's uid
+ */
+export const getChildren = (
+  data: Array<FlattenOption>,
+  uid: string,
+): FlattenOption[] => data.filter((item) => item.pid === uid);
+
+/**
+ * Find the node in `data` whose parent is `pid` and whose value is `value`.
+ * @internal
+ */
+const findInColumn = (
+  data: Array<FlattenOption>,
+  pid: string,
+  value: string | number,
+): FlattenOption | undefined =>
+  data.find((item) => item.pid === pid && item.value === value);
+
+/**
+ * Reconstruct cascade columns and the highlight path from a value path.
+ *
+ * Walks the flattened options level by level, matching each value segment
+ * against the correct parent column via `pid` + `value`. Returns:
+ *  - `queue`: the columns to render (column 0 = root, then each matched
+ *    node's children column).
+ *  - `path`: the highlight breadcrumb shaped as `{ key: uid, label }`, so it
+ *    aligns with `expandedPath[level].key === uid` in the node view.
+ *
+ * Stops safely at the last valid segment if the value path does not exist in
+ * the data source.
+ *
+ * @param arr - The selected path. In `multiple` mode the value is an array of
+ *   paths; the first path is used to drive which columns get expanded.
  * @param data - The flattened options data
  * @param options - Optional configuration
- * @returns A tuple of [queue, path] where queue is the column data and path is the selected path info
+ * @returns A tuple of `[queue, path]`
  */
 export const changeToView = (
-  arr: Array<string | number>,
+  arr: Array<string | number> | Array<Array<string | number>>,
   data: Array<FlattenOption>,
   options?: {
-    needNext?: boolean;
     multiple?: boolean;
   },
-) => {
-  const { needNext, multiple } = options || {};
-  const _queue: FlattenOption[][] = [];
-  const _path: Array<{ id: string | number; text: string }> = [];
+): [FlattenOption[][], Array<{ key: string; label: string }>] => {
+  const { multiple } = options || {};
+  const queue: FlattenOption[][] = [];
+  const path: Array<{ key: string; label: string }> = [];
 
-  if (Array.isArray(arr)) {
-    let i = 0;
-    let _arr = arr;
-    if (multiple) {
-      _arr = Array.isArray(arr[0]) ? arr[0] : arr;
-    }
-    let _data = data.filter((item) => item.level === 0);
-    do {
-      _queue.push(_data);
-      const result = getNextQueueElement(_data, _arr[i]);
-      if (result.length) {
-        const [_dataNext, _pathItem] = result;
-        _data = _dataNext;
-        _path.push(_pathItem);
-      }
-      i++;
-    } while (needNext ? i <= _arr.length : i < _arr.length);
+  // Column 0 (root level) is always present so the popup can open even with
+  // no selection.
+  queue.push(data.filter((item) => item.level === 0));
+
+  if (!Array.isArray(arr) || arr.length === 0) {
+    return [queue, path];
   }
-  return [_queue, _path];
+
+  // In multiple mode the value is an array of paths; use the first one to
+  // drive column expansion.
+  const segments: Array<string | number> =
+    multiple && Array.isArray(arr[0])
+      ? (arr[0] as Array<string | number>)
+      : (arr as Array<string | number>);
+
+  let currentPid = '';
+  for (let i = 0; i < segments.length; i++) {
+    const matched = findInColumn(data, currentPid, segments[i]);
+    if (!matched) break; // value path doesn't exist in the data source
+    path.push({ key: matched.uid, label: matched.label as string });
+    if (!matched.isLeaf) {
+      queue.push(getChildren(data, matched.uid));
+    }
+    currentPid = matched.uid;
+  }
+
+  return [queue, path];
 };
 
 // Assemble Tags Options
@@ -302,11 +336,11 @@ export const changeToView = (
 // }
 
 /**
- * Format a path array into a key string
+ * Format a value path into a key string. Alias of `pathToUid` so all path→key
+ * conversions share one collision-safe format.
  * @param val - The path array
- * @returns A string key joined by '-'
  */
-export const formatKey = (val: Array<string | number>) => val.join('-');
+export const formatKey = (val: Array<string | number>): string => pathToUid(val);
 
 /**
  * Check if a path has the same prefix as another path
@@ -330,14 +364,16 @@ export const isSamePrefixPath = (
  * Determine if a node is fully selected or half selected (indeterminate)
  * @param value - The selected value paths
  * @param item - The flatten option node to check
+ * @param children - The node's direct flattened children (derive via `getChildren`)
  * @returns A tuple [checkedAll, indeterminate]
  */
 export function isHalfChecked(
   value: Array<Array<string | number>>,
   item: FlattenOption,
+  children: FlattenOption[],
 ) {
-  if (!hasChild(item)) return [false, false];
-  const total = item.children!.length;
+  if (!children.length) return [false, false];
+  const total = children.length;
   const prefixPath = item.path;
 
   const filtered = value.filter((path) => isSamePrefixPath(prefixPath, path));
@@ -348,14 +384,29 @@ export function isHalfChecked(
 }
 
 /**
- * Flatten a tree structure into an array for easier searching and traversal
+ * Default maximum tree depth accepted by `flattenOptions`. Guards against
+ * stack overflow on pathological/deeply-nested input.
+ */
+const DEFAULT_MAX_DEPTH = 100;
+
+/**
+ * Flatten a tree structure into an array for easier searching and traversal.
+ *
+ * The flattened nodes intentionally do NOT carry a `children` field — use
+ * `getChildren(data, uid)` to read a node's children. `uid`/`pid` are built
+ * via `pathToUid` (collision-safe). Includes a depth cap and a cycle guard so
+ * malformed input (very deep or self-referencing trees) cannot overflow the
+ * stack.
+ *
  * @param tree - The tree data to flatten
  * @param fieldNames - Custom field names for label, value, and children
+ * @param maxDepth - Maximum nesting depth (default 100)
  * @returns An array of flattened options with additional metadata
  */
 export const flattenOptions = (
   tree: Array<Record<string, unknown>>,
-  fieldNames: FieldNames,
+  fieldNames?: FieldNames,
+  maxDepth: number = DEFAULT_MAX_DEPTH,
 ): FlattenOption[] => {
   const res: FlattenOption[] = [];
   const {
@@ -363,29 +414,40 @@ export const flattenOptions = (
     value = 'value',
     children = 'children',
   } = fieldNames || {};
+  // Object-identity set of nodes on the current DFS path, for cycle detection.
+  const seen = new Set<Record<string, unknown>>();
   const dfs = (
     nodes: Array<Record<string, unknown>>,
     parents: Array<string | number> = [],
+    labelParents: string[] = [],
   ) => {
     nodes.forEach((node: Record<string, unknown>) => {
-      const wrappered = {
-        $source: node,
-        label: node[label],
-        value: node[value],
-        children: node[children],
-      } as Option;
-      const path = [...parents, wrappered['value']] as Array<string | number>;
-      const uid = path.join('-');
-      const pid = parents.join('-');
+      if (parents.length >= maxDepth) return; // depth guard
+      if (seen.has(node)) return; // cycle guard (back-edge to an ancestor)
+      const nodeLabel = node[label] as string;
+      const path = [...parents, node[value]] as Array<string | number>;
+      const labelPath = [...labelParents, nodeLabel];
+      const uid = pathToUid(path);
       res.push({
-        ...wrappered,
-        pid,
+        $source: node as Option,
+        label: nodeLabel,
+        value: node[value] as string | number,
+        pid: pathToUid(parents),
         uid,
         path,
+        labelPath,
         level: parents.length,
-        isLeaf: !hasChild(wrappered),
-      } as FlattenOption);
-      if (wrappered['children']) dfs(wrappered['children'] as Option[], path);
+        isLeaf: !hasChild(node, children),
+      });
+      if (hasChild(node, children)) {
+        seen.add(node);
+        dfs(
+          node[children] as Array<Record<string, unknown>>,
+          path,
+          labelPath,
+        );
+        seen.delete(node);
+      }
     });
   };
   dfs(tree);

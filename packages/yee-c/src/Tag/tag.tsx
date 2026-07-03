@@ -38,7 +38,6 @@ const Tag = forwardRef(
 
     const cls = clsx(
       prefixCls,
-      [`${prefixCls}-${variant}`],
       {
         [`${prefixCls}-${status}`]: status,
         [`${prefixCls}-dashed`]: dashed,
@@ -46,6 +45,7 @@ const Tag = forwardRef(
         [`${prefixCls}-${size}`]: size,
         [`${prefixCls}-checkable`]: checkable,
       },
+      [`${prefixCls}-${variant}`],
       className,
     );
 

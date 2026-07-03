@@ -521,6 +521,10 @@ export interface TableProps
    */
   rowClassName?: (record: object) => string;
   /**
+   * Row style, unlike styles, this prop can be set dynamically via a function
+   */
+  rowStyle?: (record: object) => React.CSSProperties;
+  /**
    * Pagination config
    */
   pagination?: Partial<PaginationType> | boolean;

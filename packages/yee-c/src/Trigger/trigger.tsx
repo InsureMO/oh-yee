@@ -135,7 +135,7 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
   return (
     <RcTrigger
       {...rest}
-      prefixCls="yee-trigger"
+      prefixCls={prefixCls}
       mouseEnterDelay={mouseEnterDelay}
       mouseLeaveDelay={mouseLeaveDelay}
       arrow={arrow}

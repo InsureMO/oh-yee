@@ -24,11 +24,27 @@ export type FieldNames = {
   children: string;
 };
 
-export type FlattenOption = Option & {
+/**
+ * Flattened representation of a tree node.
+ *
+ * Deliberately a concrete type (not `Option & ...`) so that:
+ *  - `.label` / `.value` / `.isLeaf` resolve to their precise types (an index
+ *    signature on `Option` would otherwise widen them to `unknown`),
+ *  - `.children` is a compile error — flattened nodes intentionally do not
+ *    carry children; use `getChildren(data, uid)` instead.
+ * Dynamic/extra-field access should go through `$source` (the raw node).
+ */
+export type FlattenOption = {
+  $source: Option;
+  label: string;
+  value: string | number;
   pid: string;
   uid: string;
   path: Array<string | number>;
-  $source: Option;
+  labelPath: string[];
+  level: number;
+  isLeaf: boolean;
+  disabled?: boolean;
 };
 
 export type NodeProps = FlattenOption & {
@@ -104,6 +120,7 @@ export interface CascaderProps extends Omit<
   multiple?: boolean;
   /**
    * Is it searchable
+   * @default true
    */
   searchable?: boolean;
   /**

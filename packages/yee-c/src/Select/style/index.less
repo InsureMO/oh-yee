@@ -9,11 +9,19 @@
   }
 
   &-option {
+    display: flex;
     padding: var(--yee-select-option-padding);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
+
+    &-content {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
     &:not(&-disabled):hover {
       background-color: var(--yee-select-option-hover-bg-color);

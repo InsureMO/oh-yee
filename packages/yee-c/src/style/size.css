@@ -278,6 +278,14 @@
   --yee-input-border-width: 1px;
   --yee-input-suffix-gap: 4px;
   --yee-input-clear-padding: 1px;
+  --yee-input-small-font-size: 12px;
+  --yee-input-small-line-height: 20px;
+  --yee-input-small-height: 24px;
+  --yee-input-small-padding: 0 6px;
+  --yee-input-large-font-size: 16px;
+  --yee-input-large-line-height: 24px;
+  --yee-input-large-height: 40px;
+  --yee-input-large-padding: 4px 12px;
 
   /* --JsonViewer-- */
   --yee-json-view-font-size: 14px;
@@ -651,7 +659,7 @@
   --yee-table-bordered-cell-border-width: 1px;
   --yee-table-bordered-thead-border-width: 1px;
   --yee-table-thead-action-gap: 8px;
-  --yee-table-filter-popup-padding: 16px;
+  --yee-table-filter-popup-padding: 8px;
   --yee-table-content-border-radius: 6px 6px 0 0;
   --yee-table-cell-padding: 13px 16px;
   --yee-table-cell-line-height: 22px;
@@ -740,7 +748,7 @@
   --yee-tag-font-size: 12px;
   --yee-tag-line-height: 22px;
   --yee-tag-border-width: 1px;
-  --yee-tag-border-radius: 2px;
+  --yee-tag-border-radius: 4px;
   --yee-tag-icon-margin-left: 4px;
   --yee-tag-small-height: 16px;
   --yee-tag-large-height: 28px;

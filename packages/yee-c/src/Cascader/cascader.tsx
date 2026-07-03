@@ -17,7 +17,13 @@ import isEqual from '../utils/isEqual';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import Column from './column';
 import SearchList from './search-list';
-import { changeToView, flattenOptions, hasChild } from './utils';
+import {
+  changeToView,
+  flattenOptions,
+  getChildren,
+  isSamePrefixPath,
+  pathToUid,
+} from './utils';
 
 import type {
   CascaderContextValue,
@@ -41,7 +47,7 @@ const Cascader = (baseprops: CascaderProps) => {
     options,
     placement = 'bottomLeft',
     popupClassName,
-    searchable,
+    searchable = true,
     fieldNames = {
       label: 'label',
       value: 'value',
@@ -97,11 +103,10 @@ const Cascader = (baseprops: CascaderProps) => {
         currentValue || [],
         flatOptions,
         {
-          needNext: true, // Set to true to expand to full path
           multiple,
         },
       );
-      setColumns(newQueue as any);
+      setColumns(newQueue);
       setExpandedPath(newPath);
     },
     [flatOptions, multiple],
@@ -126,9 +131,9 @@ const Cascader = (baseprops: CascaderProps) => {
 
   // node mouse evt
   const onNodeMouseEnter = (item: FlattenOption, level: number) => {
-    if (expandTrigger === 'hover' && hasChild(item)) {
+    if (expandTrigger === 'hover' && !item.isLeaf) {
       const queue = columns.slice(0, level + 1);
-      queue.push(item.children as FlattenOption[]);
+      queue.push(getChildren(flatOptions, item.uid));
       setColumns(queue);
       // Also update expandedPath to maintain highlight state
       setExpandedPath((prev) => [
@@ -139,7 +144,6 @@ const Cascader = (baseprops: CascaderProps) => {
   };
 
   // Helper function to get all descendant paths of a node
-  // Note: For very deep trees, consider adding maxDepth parameter or prevent stack overflow
   const getAllDescendantPaths = useCallback(
     (
       node: FlattenOption,
@@ -148,17 +152,17 @@ const Cascader = (baseprops: CascaderProps) => {
       const paths: Array<Array<string | number>> = [];
       const traverse = (currentNode: FlattenOption, depth: number) => {
         if (depth > maxDepth) return; // Prevent stack overflow
-        if (!hasChild(currentNode)) {
+        if (currentNode.isLeaf) {
           paths.push(currentNode.path);
           return;
         }
-        const children = currentNode.children as FlattenOption[];
+        const children = getChildren(flatOptions, currentNode.uid);
         children.forEach((child) => traverse(child, depth + 1));
       };
       traverse(node, 0);
       return paths;
     },
-    [],
+    [flatOptions],
   );
 
   // cascader node click
@@ -177,18 +181,17 @@ const Cascader = (baseprops: CascaderProps) => {
         // Check if current path is already selected
         const isSelected = currentValue.some((v) => isEqual(v, item.path));
 
-        if (hasChild(item)) {
+        if (!item.isLeaf) {
           // Parent node: select/deselect all descendants
           const descendantPaths = getAllDescendantPaths(item, 50); // Limit to depth 50 to prevent performance issues
-          const descendantPathStrs = descendantPaths.map((p) => p.join('-'));
 
           // Filter out all descendant paths from current value
-          let filteredValue = currentValue.filter((v) => {
-            const pathStr = v.join('-');
-            return !descendantPathStrs.some((descPathStr) =>
-              pathStr.startsWith(descPathStr),
-            );
-          });
+          let filteredValue = currentValue.filter(
+            (v) =>
+              !descendantPaths.some((descPath) =>
+                isSamePrefixPath(descPath, v),
+              ),
+          );
 
           if (!isSelected) {
             // Add all descendant paths
@@ -196,12 +199,9 @@ const Cascader = (baseprops: CascaderProps) => {
           }
 
           newValue = filteredValue;
-          newOpts = filteredValue.map((path) => {
-            return path.map((_, i) => {
-              const uid = path.slice(0, i + 1).join('-');
-              return nodeMap.get(uid);
-            });
-          });
+          newOpts = filteredValue.map((path) =>
+            path.map((_, i) => nodeMap.get(pathToUid(path.slice(0, i + 1)))),
+          );
         } else {
           // Leaf node: toggle individual selection
           if (isSelected) {
@@ -209,12 +209,9 @@ const Cascader = (baseprops: CascaderProps) => {
           } else {
             newValue = [...currentValue, item.path];
           }
-          newOpts = (newValue as Array<Array<string | number>>).map((path) => {
-            return path.map((_, i) => {
-              const uid = path.slice(0, i + 1).join('-');
-              return nodeMap.get(uid);
-            });
-          });
+          newOpts = (newValue as Array<Array<string | number>>).map((path) =>
+            path.map((_, i) => nodeMap.get(pathToUid(path.slice(0, i + 1)))),
+          );
         }
         changed = true;
       } else if (shouldSelect) {
@@ -222,23 +219,21 @@ const Cascader = (baseprops: CascaderProps) => {
         newValue = multiple ? [...mergedValue, item.path] : item.path;
         newOpts = multiple
           ? [
-              ...(mergedValue as Array<Array<string | number>>).map((item) => {
-                const vs = item as Array<string | number>;
-                const arr = vs.map((_, i) => vs.slice(0, i + 1).join('-'));
-                return arr.map((uid: string) => nodeMap.get(uid));
+              ...(mergedValue as Array<Array<string | number>>).map((path) => {
+                const vs = path as Array<string | number>;
+                return vs.map((_, i) =>
+                  nodeMap.get(pathToUid(vs.slice(0, i + 1))),
+                );
               }),
-              [
-                item.path.map((_, i) => {
-                  const uid = item.path.slice(0, i + 1).join('-');
-                  return nodeMap.get(uid);
-                }),
-              ],
+              item.path.map((_, i) =>
+                nodeMap.get(pathToUid(item.path.slice(0, i + 1))),
+              ),
             ]
           : flatOptions.filter((opt: FlattenOption) => {
-              const arr = item.path.map((_, i) =>
-                item.path.slice(0, i + 1).join('-'),
+              const ancestors = item.path.map((_, i) =>
+                pathToUid(item.path.slice(0, i + 1)),
               );
-              return arr.includes(opt.uid as string);
+              return ancestors.includes(opt.uid);
             });
         changed = true;
       } else {
@@ -289,7 +284,7 @@ const Cascader = (baseprops: CascaderProps) => {
       return { options: [], selectedKeys: [] };
 
     const { fullNode = false, onlyParentNode = false } = props;
-    const formatKey = (val: Array<string | number>) => val.join('-');
+    const formatKey = (val: Array<string | number>) => pathToUid(val);
 
     let rawValues: (string | number)[][] = [];
 
@@ -308,30 +303,27 @@ const Cascader = (baseprops: CascaderProps) => {
     // Filter values based on onlyParentNode option
     let displayValues = rawValues;
     if (multiple && onlyParentNode) {
-      // Find parent nodes that have all children selected
-      const parentIds: string[] = [];
-      const childPathStrs = new Set(rawValues.map((v) => v.join('-')));
+      // Find parent nodes that have all (direct) children selected
+      const selectedPathKeys = new Set(rawValues.map(pathToUid));
+      const parentPaths: Array<Array<string | number>> = [];
 
       // Check each node to see if it's a fully selected parent
-      nodeMap.forEach((node, uid) => {
-        if (hasChild(node)) {
-          const allChildrenSelected = (node.children as FlattenOption[])?.every(
-            (child) => childPathStrs.has(child.path.join('-')),
+      nodeMap.forEach((node) => {
+        if (!node.isLeaf) {
+          const allChildrenSelected = getChildren(flatOptions, node.uid).every(
+            (child) => selectedPathKeys.has(pathToUid(child.path)),
           );
           if (allChildrenSelected) {
-            parentIds.push(uid);
+            parentPaths.push(node.path);
           }
         }
       });
 
       // Filter out child nodes whose parent is fully selected
-      displayValues = rawValues.filter((path) => {
-        const pathStr = path.join('-');
-        // Keep this path if it's not a child of any fully selected parent
-        return !parentIds.some((parentId) =>
-          pathStr.startsWith(parentId + '-'),
-        );
-      });
+      displayValues = rawValues.filter(
+        (path) =>
+          !parentPaths.some((parentPath) => isSamePrefixPath(parentPath, path)),
+      );
     }
 
     const displayOptions = displayValues.map((valPath) => {
@@ -348,8 +340,7 @@ const Cascader = (baseprops: CascaderProps) => {
             options: opts,
           });
         } else {
-          const source =
-            opts[opts.length - 1]?.$source ?? opts[opts.length - 1];
+          const source = opts[opts.length - 1]?.$source;
           label = (source?.[optionLabelProp as string] ??
             '') as React.ReactNode;
         }
@@ -367,6 +358,7 @@ const Cascader = (baseprops: CascaderProps) => {
     multiple,
     mergedValue,
     nodeMap,
+    flatOptions,
     optionLabelProp,
     props.fullNode,
     props.onlyParentNode,
@@ -375,6 +367,12 @@ const Cascader = (baseprops: CascaderProps) => {
   // visible change
   const onVisibleChange = (newVisible: boolean) => {
     popupVisible.current = newVisible;
+  };
+
+  const handleClear = () => {
+    setSearchValue('');
+    setMergedValue([]);
+    onChange?.([], []);
   };
 
   // Performance Note: For large datasets (1000+ options), consider:
@@ -390,7 +388,11 @@ const Cascader = (baseprops: CascaderProps) => {
     }> = [];
 
     for (const item of flatOptions) {
-      const text = String(item.label);
+      // Match against the full breadcrumb (e.g. "A / B / C") so that:
+      //  - searching a parent label surfaces its descendants,
+      //  - the result row shows the full path to disambiguate duplicate leaf
+      //    labels across different parents.
+      const text = item.labelPath.join(' / ');
       const textLower = text.toLowerCase();
       if (textLower.includes(lowStr)) {
         const matches: Array<{ text: string; highlight: boolean }> = [];
@@ -435,6 +437,7 @@ const Cascader = (baseprops: CascaderProps) => {
         mode={multiple ? 'multiple' : undefined}
         value={searchValue}
         onSearch={handleSearch}
+        onClear={handleClear}
       />
     );
   };

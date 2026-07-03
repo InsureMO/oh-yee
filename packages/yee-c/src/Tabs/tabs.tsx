@@ -91,9 +91,10 @@ const Tabs: FC<TabsProps> = (baseprops) => {
     if (result === false) {
       return;
     }
-
     setMergedActiveKey(key);
-    onChange?.(key);
+    if (key !== mergedActiveKey) {
+      onChange?.(key);
+    }
   };
 
   const contextValue = useMemo(

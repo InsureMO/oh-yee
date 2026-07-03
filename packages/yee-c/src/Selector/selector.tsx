@@ -44,6 +44,7 @@ const Selector = React.forwardRef(
       value,
       open,
       loading,
+      size = 'default',
       onSearch,
       onRemove,
       onClear,
@@ -104,6 +105,7 @@ const Selector = React.forwardRef(
 
     const cls = clsx(
       prefixCls,
+      [`${prefixCls}-${size}`],
       [`${prefixCls}-searchable`],
       [`${prefixCls}-${mode || 'single'}`],
       {

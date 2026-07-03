@@ -1,11 +1,13 @@
 import clsx from 'clsx';
+import { Check } from 'lucide-react';
 import React, { useContext } from 'react';
 
+import type { OptionProps } from './interface';
 import { OptionsCtx } from './options';
 
-const Option = (props: any) => {
+const Option = (props: OptionProps) => {
   const { label, value, disabled, title, dataTestId } = props;
-  const { prefixCls, selectedKeys, focusedKey, onSelect } =
+  const { prefixCls, selectedKeys, focusedKey, multiple, onSelect } =
     useContext(OptionsCtx);
 
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -20,10 +22,12 @@ const Option = (props: any) => {
       ? label
       : undefined;
 
+  const selected = selectedKeys.includes(value);
+
   return (
     <div
       className={clsx(`${prefixCls}-option`, {
-        [`${prefixCls}-option-selected`]: selectedKeys.includes(value),
+        [`${prefixCls}-option-selected`]: selected,
         [`${prefixCls}-option-focused`]: focusedKey === value,
         [`${prefixCls}-option-disabled`]: disabled,
       })}
@@ -39,7 +43,12 @@ const Option = (props: any) => {
       title={htmlTitle}
       data-testid={dataTestId}
     >
-      {label}
+      <div className={`${prefixCls}-option-content`}>{label}</div>
+      {multiple && selected && (
+        <span className={`${prefixCls}-option-state`}>
+          <Check size={16} />
+        </span>
+      )}
     </div>
   );
 };

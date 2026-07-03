@@ -35,7 +35,7 @@ const SearchList = (props: SearchListProps) => {
     <ul className={`${prefixCls}-filter-menu`}>
       {items.length ? (
         items.map((item) => {
-          const title = item.data.title || item.data.label;
+          const title = item.data.$source?.title || item.data.labelPath.join(' / ');
 
           return (
             <li

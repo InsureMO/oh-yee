@@ -65,7 +65,10 @@ const Select = (baseprops: SelectProps) => {
     return options.find((opt) => opt.value === keys);
   };
 
-  const handleSelect = (key: string | number, e?: React.MouseEvent) => {
+  const handleSelect = (
+    key: string | number,
+    e?: React.MouseEvent | React.KeyboardEvent,
+  ) => {
     let keys;
     if (single) {
       setMergedValue([key]);
@@ -137,12 +140,12 @@ const Select = (baseprops: SelectProps) => {
   const popup = (
     <Options
       prefixCls={prefixCls}
+      multiple={mode === 'multiple' || mode === 'tags'}
       options={filteredOpts}
       focusedKey={focusedKey}
       selectedKeys={mergedValue}
       dataTestId={rest['data-testid']}
       onSelect={handleSelect}
-      onClose={() => setOpen(false)}
       ref={popupRef}
     />
   );

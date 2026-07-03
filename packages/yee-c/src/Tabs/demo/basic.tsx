@@ -90,5 +90,11 @@ export default () => {
     },
   ];
 
-  return <Tabs defaultActiveKey="1" items={items} />;
+  return (
+    <Tabs
+      defaultActiveKey="1"
+      items={items}
+      onChange={(key) => console.log(key)}
+    />
+  );
 };

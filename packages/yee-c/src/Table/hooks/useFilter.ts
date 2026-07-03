@@ -18,7 +18,7 @@ export default function useFilter({
   const [filterRecords, setFilterRecords] = useState<Array<FilterRecord>>([]);
   const onFilter = ({ value, dataIndex }: FilterOptions) => {
     let newFilterMap = [...filterRecords];
-    if (!value) {
+    if (!value || (Array.isArray(value) && !value.length)) {
       newFilterMap = newFilterMap.filter(
         (item) => item.dataIndex !== dataIndex,
       );

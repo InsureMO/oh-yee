@@ -69,6 +69,25 @@
     }
   }
 
+  // size
+  &-small {
+    height: var(--yee-input-small-height, 24px);
+    padding: var(--yee-input-small-padding, 0 6px);
+    font-size: var(--yee-input-small-font-size);
+    line-height: var(--yee-input-small-line-height);
+
+    &::placeholder {
+      font-size: var(--yee-input-small-font-size);
+    }
+  }
+
+  &-large {
+    height: var(--yee-input-large-height, 40px);
+    padding: var(--yee-input-large-padding, 4px 12px);
+    font-size: var(--yee-input-large-font-size);
+    line-height: var(--yee-input-large-line-height);
+  }
+
   &-password {
     flex: 1;
     outline: none;

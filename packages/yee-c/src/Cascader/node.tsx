@@ -5,12 +5,12 @@ import Checkbox from '../Checkbox';
 import Spin from '../Spin';
 import isEqual from '../utils/isEqual';
 import { CascaderCtx } from './cascader';
-import { hasChild, isHalfChecked } from './utils';
+import { getChildren, isHalfChecked } from './utils';
 
 import type { NodeProps } from './interface';
 
 const Node = (props: NodeProps) => {
-  const { uid, value, disabled, label, children, isLeaf, path, level } = props;
+  const { uid, value, disabled, label, $source, isLeaf, path, level } = props;
 
   const {
     prefixCls,
@@ -19,11 +19,12 @@ const Node = (props: NodeProps) => {
     mergedValue,
     loadData,
     nodeMap,
+    flatOptions,
     onNodeMouseEnter,
     onItemClick,
   } = useContext(CascaderCtx);
 
-  const isParent = hasChild(props);
+  const isParent = !isLeaf;
 
   /**
    * 0: not load
@@ -50,7 +51,7 @@ const Node = (props: NodeProps) => {
   const handleLoadData = () => {
     if (loadData && isLeaf === false) {
       setLoad(1);
-      loadData({ label, value, children })
+      loadData($source)
         ?.then(() => {
           setLoad(2);
         })
@@ -79,13 +80,17 @@ const Node = (props: NodeProps) => {
   const [checkedAll, indeterminate] = useMemo(() => {
     const currentNode = nodeMap.get(uid);
     if (!multiple || !currentNode || !isParent) return [false, false];
-    return isHalfChecked(mergedValue as (string | number)[][], currentNode);
-  }, [nodeMap, uid, mergedValue, isParent, multiple]);
+    return isHalfChecked(
+      mergedValue as (string | number)[][],
+      currentNode,
+      getChildren(flatOptions, uid),
+    );
+  }, [nodeMap, uid, mergedValue, flatOptions, isParent, multiple]);
 
   const clsName = clsx(
     `${prefixCls}-menu-item`,
     {
-      [`${prefixCls}-menu-item-expand`]: hasChild(props),
+      [`${prefixCls}-menu-item-expand`]: !isLeaf,
       [`${prefixCls}-menu-item-disabled`]: disabled,
       active: expandedPath[level]?.key === uid,
     },

@@ -8,6 +8,7 @@ export default () => {
     <Space>
       <Tag
         checkable
+        variant="outlined"
         checked={checked}
         onChange={(checked) => setChecked(checked)}
       >

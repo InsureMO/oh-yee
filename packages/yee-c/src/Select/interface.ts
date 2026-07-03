@@ -105,3 +105,90 @@ export interface SelectProps extends DataAttributeProps {
    */
   onFilter?: (value: string, options: Array<Option>) => Array<Option>;
 }
+
+/**
+ * Props for the internal Option component (renders a single dropdown option).
+ */
+export interface OptionProps {
+  /**
+   * Display label
+   */
+  label: string;
+  /**
+   * Value
+   */
+  value: string | number;
+  /**
+   * Whether disabled
+   */
+  disabled?: boolean;
+  /**
+   * Native title attribute
+   */
+  title?: string;
+  /**
+   * Test id forwarded to the option element
+   */
+  dataTestId?: string;
+}
+
+/**
+ * Context value shared between Options and each Option.
+ */
+export interface OptionsContextValue {
+  prefixCls: string;
+  selectedKeys: Array<string | number>;
+  focusedKey: string | number;
+  multiple: boolean;
+  onSelect: (
+    key: string | number,
+    e?: React.MouseEvent | React.KeyboardEvent,
+  ) => void;
+}
+
+/**
+ * Props for the internal Options (popup list) component.
+ */
+export interface OptionsProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+  /**
+   * Custom class name prefix
+   */
+  prefixCls: string;
+  /**
+   * Dropdown options
+   */
+  options: Array<Option>;
+  /**
+   * Popup container class name
+   */
+  popupClassName?: string;
+  /**
+   * Popup container inline style
+   */
+  popupStyle?: React.CSSProperties;
+  /**
+   * Selected option values
+   */
+  selectedKeys: Array<string | number>;
+  /**
+   * Currently focused option value
+   */
+  focusedKey: string | number;
+  /**
+   * Test id prefix used to generate each option's test id.
+   * Accepts any `data-*` attribute value (see DataAttributeProps).
+   */
+  dataTestId?: string | number | boolean;
+  /**
+   * Whether multiple selection mode is active
+   */
+  multiple: boolean;
+  /**
+   * Callback when an option is selected
+   */
+  onSelect: (
+    key: string | number,
+    e?: React.MouseEvent | React.KeyboardEvent,
+  ) => void;
+}

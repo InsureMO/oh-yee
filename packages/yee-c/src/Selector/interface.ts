@@ -40,6 +40,10 @@ export interface PureSelectorProps {
    */
   maxCount?: number;
   /**
+   * size
+   * */
+  size?: 'small' | 'default' | 'large';
+  /**
    * Selection mode
    */
   mode?: 'multiple' | 'tags';

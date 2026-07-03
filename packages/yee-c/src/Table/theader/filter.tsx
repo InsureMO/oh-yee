@@ -175,8 +175,7 @@ const HeaderFilter = React.memo((props: any) => {
               <Search size={14} strokeWidth={1.5} />
             )
           }
-          // variant={selectNodes.length ? 'filled' : undefined}
-          color="info"
+          variant={selectNodes.length ? 'filled' : undefined}
           type="text"
           size="small"
         />
@@ -188,6 +187,7 @@ const HeaderFilter = React.memo((props: any) => {
     <Popover
       trigger="click"
       placement="bottomRight"
+      className={clsx(`${prefixCls}-filter`)}
       content={popup}
       arrow
       open={open}
