@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.4.5
+
+### Patch Changes
+
+- 55564e4: refactor(yee-c): replace any types with proper interfaces
+
 ## 0.4.4
 
 ### Patch Changes
