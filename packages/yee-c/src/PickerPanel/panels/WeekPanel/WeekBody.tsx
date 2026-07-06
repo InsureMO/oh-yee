@@ -3,10 +3,11 @@ import { Dayjs } from 'dayjs';
 import * as React from 'react';
 import useEvent from '../../../hooks/useEvent';
 import { useLocale } from '../../../locale';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import PanelBody from '../PanelBody';
 
-function WeekBody(props: any) {
+function WeekBody(props: PanelSharedProps) {
   const { locale } = useLocale();
   const { weekpicker } = locale;
 

@@ -4,11 +4,12 @@ import React from 'react';
 import PanelBody from '../PanelBody';
 
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 
 const quarter = ['Q1', 'Q2', 'Q3', 'Q4'];
 
-function QuarterBody(props: any) {
+function QuarterBody(props: PanelSharedProps) {
   const { prefixCls, viewDate, nowDate } = props;
 
   const baseDate = pickerUtils.setMonth(viewDate, 0);

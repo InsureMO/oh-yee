@@ -1,9 +1,22 @@
 import clsx from 'clsx';
 import dayjs, { Dayjs } from 'dayjs';
 import React from 'react';
+import type { TimeUnit } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 
-function TimeColumn(props: any) {
+interface TimeColumnProps {
+  prefixCls?: string;
+  type: TimeUnit;
+  value?: Dayjs;
+  cells: Dayjs[];
+  disabled?: boolean;
+  onSelect?: (date: Dayjs) => void;
+  viewDate?: Dayjs;
+  maxDate?: Dayjs;
+  minDate?: Dayjs;
+}
+
+function TimeColumn(props: TimeColumnProps) {
   const {
     prefixCls,
     type,
@@ -20,7 +33,7 @@ function TimeColumn(props: any) {
   const [selectedCell, setSelectedCell] = React.useState<number>();
 
   React.useLayoutEffect(() => {
-    if (value !== -1 && selectedRef.current) {
+    if (value !== undefined && selectedRef.current) {
       ref.current?.scrollTo({
         top: selectedRef.current?.offsetTop,
         behavior: 'smooth',

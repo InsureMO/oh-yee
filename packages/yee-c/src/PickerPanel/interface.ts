@@ -1,4 +1,5 @@
 import { Dayjs } from 'dayjs';
+import type { usePanelConfigs } from './configs/locale-adapter';
 export type PickerType =
   | 'date'
   | 'week'
@@ -17,6 +18,9 @@ export type SemanticType =
   | 'footer';
 
 export type UnitType = 'day' | 'hour' | 'minute' | 'second';
+
+/** Hour/minute/second granularity used by the time sub-panels. */
+export type TimeUnit = 'hour' | 'minute' | 'second';
 
 interface HeaderProps {
   showPrevIcon?: boolean;
@@ -115,13 +119,50 @@ export interface PickerPanelProps extends HeaderProps {
   /**
    * Hover range dates [start date, end date]
    */
-  hoverRange?: Array<Dayjs | null>;
+  hoverRange?: Array<Dayjs | null | undefined>;
   /**
    * Selected range dates [start date, end date]
    */
-  selectedRange?: Array<Dayjs | null>;
+  selectedRange?: Array<Dayjs | null | undefined>;
   /**
    * Disabled date function
    */
   disabledDate?: (current: Dayjs) => boolean;
+}
+
+/**
+ * Locale/config bag produced by `usePanelConfigs`, shared by every panel.
+ */
+export type PanelConfigs = ReturnType<typeof usePanelConfigs>;
+
+/**
+ * The `panelProps` bag shared by all date-picking panels, headers and bodies.
+ *
+ * Standalone (does not extend `PickerPanelProps`) so each panel only declares
+ * the fields it actually reads while still receiving the full bag via
+ * `{...props}` spreads (JSX spreads do not trigger excess-property checks).
+ */
+export interface PanelSharedProps {
+  prefixCls?: string;
+  picker?: PickerType;
+  offset?: { year?: number; month?: number; day?: number };
+  viewDate: Dayjs;
+  selectedDate?: Dayjs;
+  panelConfigs: PanelConfigs;
+  handleMouseChange?: (date: Dayjs | '') => void;
+  onViewDateChange: (date: Dayjs) => void;
+  onPanelChange: (view: PickerType) => void;
+  onSelect?: (date: Dayjs) => void;
+  offsetYear?: number;
+  /** Never set in `panelProps`, so always `undefined` at runtime. */
+  nowDate?: Dayjs;
+  weekStart?: number;
+  showHeader?: boolean;
+  cellRender?: (date: Dayjs, panel: PickerType) => React.ReactNode;
+  prefixColumn?: (currentDate: Dayjs) => React.ReactNode;
+  getRowClassName?: (currentDate: Dayjs) => string;
+  hoverRange?: Array<Dayjs | null | undefined>;
+  selectedRange?: Array<Dayjs | null | undefined>;
+  maxDate?: Dayjs;
+  minDate?: Dayjs;
 }

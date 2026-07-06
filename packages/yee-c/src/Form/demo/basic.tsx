@@ -64,7 +64,7 @@ export default () => {
           </Form.Field>
         </Grid.Item>
         <Grid.Item>
-          <Form.Field name="gender" label="Gender" initialValue="male">
+          <Form.Field name="gender" label="Gender" initialValue="male" required>
             <Select
               options={[
                 { label: 'male', value: 'male' },
@@ -76,7 +76,7 @@ export default () => {
         </Grid.Item>
 
         <Grid.Item>
-          <Form.Field name="birthday" label="Birthday">
+          <Form.Field name="birthday" label="Birthday" required>
             <DatePicker />
           </Form.Field>
         </Grid.Item>

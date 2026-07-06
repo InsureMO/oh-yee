@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { Dayjs } from 'dayjs';
+import type { PickerPanelProps } from '../../interface';
+import type { RangePanelProps } from './interface';
 import PickerPanel from '../../picker-panel';
 import pickerUtils from '../../utils/pickerUtils';
 
-function RangePanel(props: any) {
+function RangePanel(props: RangePanelProps) {
   const {
     prefixCls = 'yee-picker',
     panel = 'start',
@@ -28,12 +30,12 @@ function RangePanel(props: any) {
           picker={picker}
           value={panel === 'start' ? value[0] : value[1]}
           pickerView={pickerUtils.init(pickerView[panel === 'start' ? 0 : 1])}
-          onChange={onChange}
+          onChange={onChange as PickerPanelProps['onChange']}
           onPanelChange={onPanelChange}
           onCellMouse={onCellMouse}
           hoverRange={hoverRange}
           selectedRange={selectedRange}
-          disabledDate={disabledDate}
+          disabledDate={disabledDate as PickerPanelProps['disabledDate']}
           footer={false}
         />
       </div>
@@ -61,12 +63,12 @@ function RangePanel(props: any) {
         picker={picker}
         value={startValue}
         pickerView={startViewDate}
-        onChange={onChange}
-        onPanelChange={(viewDate) => onPanelChange(viewDate, 'start')}
+        onChange={onChange as PickerPanelProps['onChange']}
+        onPanelChange={(viewDate) => onPanelChange?.(viewDate, 'start')}
         onCellMouse={onCellMouse}
         hoverRange={hoverRange}
         selectedRange={selectedRange}
-        disabledDate={disabledDate}
+        disabledDate={disabledDate as PickerPanelProps['disabledDate']}
         footer={false}
         showNextIcon={false}
         showSuperNextIcon={false}
@@ -76,12 +78,12 @@ function RangePanel(props: any) {
         picker={picker}
         value={endValue}
         pickerView={endViewDate}
-        onChange={onChange}
-        onPanelChange={(viewDate) => onPanelChange(viewDate, 'end')}
+        onChange={onChange as PickerPanelProps['onChange']}
+        onPanelChange={(viewDate) => onPanelChange?.(viewDate, 'end')}
         onCellMouse={onCellMouse}
         hoverRange={hoverRange}
         selectedRange={selectedRange}
-        disabledDate={disabledDate}
+        disabledDate={disabledDate as PickerPanelProps['disabledDate']}
         footer={false}
         showPrevIcon={false}
         showSuperPrevIcon={false}

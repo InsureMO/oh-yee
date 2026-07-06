@@ -56,5 +56,20 @@
         color: var(--yee-error-color);
       }
     }
+
+    // 表单校验态：在此重定义控件读取的 border / box-shadow 变量，
+    // 后代里的 Input / Selector / InputNumber / TextArea 等通过 CSS 变量继承自动变色，
+    // 无需在每个组件里重复 .yee-form-item-error 块，也不存在 specificity / !important 问题。
+    &&-error {
+      --yee-input-border-color: var(--yee-error-color);
+      --yee-input-hover-border-color: var(--yee-error-color-hover);
+      --yee-input-focus-bs-color: var(--yee-error-color-border);
+    }
+
+    &&-warning {
+      --yee-input-border-color: var(--yee-warning-color);
+      --yee-input-hover-border-color: var(--yee-warning-color-hover);
+      --yee-input-focus-bs-color: var(--yee-warning-color-border);
+    }
   }
 }

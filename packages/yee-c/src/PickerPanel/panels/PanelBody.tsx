@@ -2,8 +2,28 @@ import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
 import pickerUtils from '../utils/pickerUtils';
+import type { PickerType } from '../interface';
 
-function PanelBody(props: any) {
+export interface PanelBodyProps {
+  prefixCls?: string;
+  picker?: PickerType;
+  rowCount: number;
+  colCount: number;
+  baseDate?: Dayjs | number;
+  onSelect?: (date: Dayjs) => void;
+  handleMouseChange?: (date: Dayjs | '') => void;
+  headerCells?: React.ReactNode;
+  getCellNode?: (currentDate: Dayjs) => React.ReactNode;
+  getCellDate: (baseDate: Dayjs, offset: number) => Dayjs;
+  getCellText: (currentDate: Dayjs) => number | string;
+  getCellTitle?: (currentDate: Dayjs) => string;
+  getCellClassName?: (currentDate: Dayjs) => string;
+  prefixColumn?: (currentDate: Dayjs) => React.ReactNode;
+  getRowClassName?: (currentDate: Dayjs) => string;
+  cellRender?: (date: Dayjs, panel: PickerType) => React.ReactNode;
+}
+
+function PanelBody(props: PanelBodyProps) {
   const {
     prefixCls,
     rowCount,
@@ -39,7 +59,7 @@ function PanelBody(props: any) {
 
     for (let j = 0; j < colCount; j++) {
       const offset = i * colCount + j;
-      const currentDate = getCellDate(baseDate, offset);
+      const currentDate = getCellDate(baseDate as Dayjs, offset);
 
       if (j === 0) {
         rowStartDate = currentDate;
@@ -60,11 +80,13 @@ function PanelBody(props: any) {
             {
               [`${cellPrefixCls}-start`]:
                 getCellText(currentDate) === 1 ||
-                (picker === 'year' && getCellText(currentDate) % 10 === 0),
+                (picker === 'year' &&
+                  Number(getCellText(currentDate)) % 10 === 0),
               [`${cellPrefixCls}-end`]:
                 getCellText(currentDate) ===
                   pickerUtils.getDate(currentDate.endOf('month')) ||
-                (picker === 'year' && getCellText(currentDate) % 10 === 9),
+                (picker === 'year' &&
+                  Number(getCellText(currentDate)) % 10 === 9),
             },
             cls,
           )}
@@ -90,7 +112,7 @@ function PanelBody(props: any) {
               </div>
               {cellRender ? (
                 <div className={`${prefixCls}-cell-content`}>
-                  {cellRender(currentDate, { mode: picker })}
+                  {cellRender(currentDate, picker as PickerType)}
                 </div>
               ) : null}
             </div>

@@ -1,8 +1,17 @@
 import * as React from 'react';
+import type { PanelSharedProps } from '../../interface';
 import TimeBody from './TimeBody';
 import TimeHeader from './TimeHeader';
 
-function TimePanel(props: any) {
+interface TimePanelProps extends PanelSharedProps {
+  format?: string;
+  hourStep?: number;
+  minuteStep?: number;
+  secondStep?: number;
+  showTitle?: boolean;
+}
+
+function TimePanel(props: TimePanelProps) {
   const {
     format = 'HH:mm:ss',
     prefixCls,

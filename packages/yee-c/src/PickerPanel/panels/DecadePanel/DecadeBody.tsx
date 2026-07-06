@@ -2,11 +2,12 @@ import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import PanelBody from '../PanelBody';
 
-function DecadeBody(props: any) {
-  const { prefixCls, viewDate, offsetYear } = props;
+function DecadeBody(props: PanelSharedProps) {
+  const { prefixCls, viewDate, offsetYear = 0 } = props;
 
   const baseDate = pickerUtils.getBaseDate('decade', viewDate);
 

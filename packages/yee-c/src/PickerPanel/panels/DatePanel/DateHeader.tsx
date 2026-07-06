@@ -2,10 +2,11 @@ import React from 'react';
 import Button from '../../../Button';
 import useEvent from '../../../hooks/useEvent';
 import { useLocale } from '../../../locale';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import Header from '../Header';
 
-export default function DateHeader(props: any) {
+export default function DateHeader(props: PanelSharedProps) {
   const { locale, lang } = useLocale();
   const { datepicker } = locale;
 
@@ -15,7 +16,7 @@ export default function DateHeader(props: any) {
   const month = pickerUtils.getMonth(viewDate);
 
   if (offset?.year) {
-    year = year + parseInt(offset.year);
+    year = year + offset.year;
   }
 
   const onSuperPrevClick = useEvent(() => {

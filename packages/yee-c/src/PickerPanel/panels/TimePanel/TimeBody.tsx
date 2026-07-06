@@ -1,5 +1,6 @@
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
+import type { PanelSharedProps, TimeUnit } from '../../interface';
 import panelConfig from '../../configs';
 import pickerUtils from '../../utils/pickerUtils';
 import TimeColumn from './TimeColumn';
@@ -10,7 +11,7 @@ function getTimeArray(
   length: number,
   step: number,
   viewDate: Dayjs,
-  type: string,
+  type: TimeUnit,
 ): Array<Dayjs> {
   const arr = new Array(length)
     .fill(0)
@@ -25,7 +26,22 @@ function getTimeArray(
   }
 }
 
-function TimeBody(props: any) {
+interface TimeBodyProps extends PanelSharedProps {
+  value?: Dayjs;
+  showTitle?: boolean;
+  showHour?: boolean;
+  showMinute?: boolean;
+  showSecond?: boolean;
+  disabledHours?: boolean;
+  disabledMinutes?: boolean;
+  disabledSeconds?: boolean;
+  is12hour?: boolean;
+  hourStep?: number;
+  minuteStep?: number;
+  secondStep?: number;
+}
+
+function TimeBody(props: TimeBodyProps) {
   const {
     value,
     prefixCls,
@@ -48,10 +64,10 @@ function TimeBody(props: any) {
   const columns: React.ReactNode[] = [];
 
   function addColumnNode(
-    type: string,
-    selectedValue: number,
+    type: TimeUnit,
+    selectedValue: Dayjs | undefined,
     cells: Array<Dayjs>,
-    disabled: boolean,
+    disabled?: boolean,
   ): React.ReactNode {
     return (
       <TimeColumn

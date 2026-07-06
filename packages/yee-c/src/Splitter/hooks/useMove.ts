@@ -15,13 +15,13 @@ export default function useMove(
   React.useEffect(() => {
     if (!handler.current) return;
     const ele = handler.current as HTMLElement;
-    const onMouseDown = (e: any) => {
+    const onMouseDown = (e: MouseEvent) => {
       e.preventDefault();
       let x = e.pageX;
       let y = e.pageY;
       setMoving(true);
 
-      const onMouseMove = debounce((e: any) => {
+      const onMouseMove = debounce((e: MouseEvent) => {
         document.body.style.userSelect = 'none';
         document.body.style.cursor =
           direction === 'horizontal' ? 'col-resize' : 'row-resize';

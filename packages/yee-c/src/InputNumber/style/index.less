@@ -185,32 +185,3 @@
     padding-right: 0;
   }
 }
-
-// Form error status
-.yee-form-item-error {
-  @{pls} {
-    border-color: var(--yee-error-color);
-
-    &:not(@{pls}-disabled):hover {
-      border-color: var(--yee-error-color);
-    }
-
-    &-focused {
-      box-shadow: 0 0 0 2px var(--yee-input-content-error-focus-bs-color);
-    }
-  }
-}
-
-.yee-form-item-warning {
-  @{pls} {
-    border-color: var(--yee-warning-color);
-
-    &:not(@{pls}-disabled):hover {
-      border-color: var(--yee-warning-color);
-    }
-
-    &-focused {
-      box-shadow: 0 0 0 2px var(--yee-input-content-warning-focus-bs-color);
-    }
-  }
-}

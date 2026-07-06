@@ -76,7 +76,7 @@ const PickerPanel = React.forwardRef<HTMLDivElement, PickerPanelProps>(
     });
 
     // Panel view switch
-    const handlePanelChange = (newView: 'year' | 'month' | 'date') => {
+    const handlePanelChange = (newView: PickerType) => {
       prevPanelView.current = panelView;
       setPanelView(newView);
     };
@@ -87,8 +87,10 @@ const PickerPanel = React.forwardRef<HTMLDivElement, PickerPanelProps>(
       onPanelChange?.(newViewDate);
     };
 
-    const handleMouseChange = (date: Dayjs) => {
-      onCellMouse?.(date);
+    // `PanelBody` clears the hover by passing `''`; forward as-is to preserve
+    // the existing runtime behavior.
+    const handleMouseChange = (date: Dayjs | '') => {
+      onCellMouse?.(date as Dayjs);
     };
 
     const handleNowClick = () => {

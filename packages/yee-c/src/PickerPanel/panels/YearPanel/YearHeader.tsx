@@ -2,12 +2,18 @@ import * as React from 'react';
 import Button from '../../../Button';
 import useEvent from '../../../hooks/useEvent';
 import Header from '../Header';
+import type { PanelSharedProps } from '../../interface';
 
 import pickerUtils from '../../utils/pickerUtils';
 
-export default function YearHeader(props: any) {
-  const { prefixCls, viewDate, onViewDateChange, onPanelChange, offsetYear } =
-    props;
+export default function YearHeader(props: PanelSharedProps) {
+  const {
+    prefixCls,
+    viewDate,
+    onViewDateChange,
+    onPanelChange,
+    offsetYear = 0,
+  } = props;
 
   const viewYear = pickerUtils.getYear(viewDate);
   const startYear = viewYear - (viewYear % 10) + offsetYear;

@@ -1,5 +1,11 @@
 export type SemanticDOM = 'dot' | 'prev' | 'next';
 
+export interface CarouselContextProps {
+  prefixCls: string;
+  effect: 'fade' | 'scrollx';
+  current: number;
+}
+
 export interface CarouselItemProps {
   index: number;
   style?: React.CSSProperties;

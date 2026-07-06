@@ -65,7 +65,9 @@ const Cascader = (baseprops: CascaderProps) => {
 
   // Status variables for internal use
   const [columns, setColumns] = useState<Array<FlattenOption[]>>([]);
-  const [expandedPath, setExpandedPath] = useState<Array<any>>([]);
+  const [expandedPath, setExpandedPath] = useState<
+    Array<{ key: string; label: string }>
+  >([]);
   const [searchValue, setSearchValue] = useState(''); // Input field input
   // NOTE: popupVisible uses ref instead of state to avoid triggering re-renders
   // This is intentional - it's only used for side effects tracking, not for rendering

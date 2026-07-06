@@ -16,13 +16,21 @@ import { GlobalContext } from '../Config-Provider';
 import useElementSize from '../hooks/useElementSize';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import Item from './carousel-item';
-import type { CarouselProps } from './interface';
+import type {
+  CarouselContextProps,
+  CarouselItemProps,
+  CarouselProps,
+} from './interface';
 
 import './style/index.less';
 
 const DEFAULT_ANIMATION_DURATION = 500;
 
-export const CarouselCtx = React.createContext({} as any);
+export const CarouselCtx = React.createContext<CarouselContextProps>({
+  prefixCls: 'yee-carousel',
+  effect: 'scrollx',
+  current: 1,
+});
 
 const Carousel = React.forwardRef(
   (baseprops: CarouselProps, ref: React.Ref<HTMLDivElement>) => {
@@ -249,7 +257,10 @@ const Carousel = React.forwardRef(
 
     const renderFadeChilds = () => {
       return React.Children.map(children, (child, index) => {
-        return React.cloneElement(child as any, { index });
+        return React.cloneElement(
+          child as React.ReactElement<CarouselItemProps>,
+          { index },
+        );
       });
     };
 

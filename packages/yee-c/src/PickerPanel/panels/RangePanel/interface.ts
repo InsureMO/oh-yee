@@ -22,17 +22,17 @@ export type PickerType =
 export interface RangePanelProps {
   prefixCls?: string;
   panel?: 'start' | 'end';
-  value?: Array<Dayjs | string | undefined>;
-  viewDate?: string;
+  value: Array<Dayjs | undefined>;
+  pickerView: [Dayjs, Dayjs];
   picker?: PickerType;
   mode?: PickerMode;
   format?: string;
   saveFormat?: string;
   onChange?: (date: Dayjs, panel: string) => void;
-  onPanelChange?: (dates: Dayjs[]) => void;
+  onPanelChange?: (date: Dayjs, type?: 'start' | 'end') => void;
   onCellMouse?: (date: Dayjs | string) => void;
-  hoverRange?: Array<Dayjs | null>;
-  selectedRange?: Array<Dayjs | null>;
+  hoverRange?: Array<Dayjs | null | undefined>;
+  selectedRange?: Array<Dayjs | null | undefined>;
   disabledDate?: (current: Dayjs, type: 'start' | 'end') => boolean;
   showNextIcon?: boolean;
   showSuperNextIcon?: boolean;

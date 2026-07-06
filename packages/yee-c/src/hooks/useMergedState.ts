@@ -17,7 +17,7 @@ enum Source {
 type ValueRecord<T> = [T, Source, T];
 
 /** We only think `undefined` is empty */
-function hasValue(value: any) {
+function hasValue<T>(value: T | undefined): value is T {
   return value !== undefined;
 }
 
@@ -50,13 +50,13 @@ export default function useMergedState<T, R = T>(
     } else if (hasValue(defaultValue)) {
       finalValue =
         typeof defaultValue === 'function'
-          ? (defaultValue as any)()
+          ? (defaultValue as () => T)()
           : defaultValue;
       source = Source.PROP;
     } else {
       finalValue =
         typeof defaultStateValue === 'function'
-          ? (defaultStateValue as any)()
+          ? (defaultStateValue as () => T)()
           : defaultStateValue;
       source = Source.INNER;
     }
@@ -94,7 +94,9 @@ export default function useMergedState<T, R = T>(
       const [prevValue, prevSource, prevPrevValue] = prev;
 
       const nextValue: T =
-        typeof updater === 'function' ? (updater as any)(prevValue) : updater;
+        typeof updater === 'function'
+          ? (updater as (origin: T) => T)(prevValue)
+          : updater;
       // Do nothing if value not change
       if (nextValue === prevValue) {
         return prev;

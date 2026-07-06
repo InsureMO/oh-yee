@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Button from '../../../Button';
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import Header from '../Header';
 
-export default function WeekHeader(props: any) {
+export default function WeekHeader(props: PanelSharedProps) {
   const { viewDate, onViewDateChange, onPanelChange } = props;
 
   const year = pickerUtils.getYear(viewDate);

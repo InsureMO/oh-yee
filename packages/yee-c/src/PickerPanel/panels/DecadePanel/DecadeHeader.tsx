@@ -1,10 +1,11 @@
 import * as React from 'react';
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import Header from '../Header';
 
-export default function DecadeHeader(props: any) {
-  const { viewDate, offsetYear, onViewDateChange } = props;
+export default function DecadeHeader(props: PanelSharedProps) {
+  const { viewDate, offsetYear = 0, onViewDateChange } = props;
   const onSuperPrevClick = useEvent(() => {
     onViewDateChange(pickerUtils.addYear(viewDate, -100));
   });

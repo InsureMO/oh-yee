@@ -13,7 +13,7 @@ const Column = (props: ColumnProps) => {
   return (
     <ul className={`${prefixCls}-menu`} role="menu">
       {Array.isArray(data) &&
-        data.map((item: any, idx: number) => {
+        data.map((item, idx: number) => {
           return (
             <Node
               {...item}

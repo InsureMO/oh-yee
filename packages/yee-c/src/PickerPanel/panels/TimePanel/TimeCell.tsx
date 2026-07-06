@@ -1,7 +1,14 @@
 import clsx from 'clsx';
 import React from 'react';
 
-function TimeCell(props: any) {
+interface TimeCellProps {
+  prefixCls?: string;
+  value: number;
+  onSelect?: (value: number) => void;
+  active?: boolean;
+}
+
+function TimeCell(props: TimeCellProps) {
   const { prefixCls, value, onSelect, active } = props;
 
   const cls = clsx(`${prefixCls}-time-panel-cell`, {
@@ -11,7 +18,7 @@ function TimeCell(props: any) {
   const renderValue = value < 10 ? '0' + value : value;
 
   return (
-    <li className={cls} onClick={() => onSelect(value)}>
+    <li className={cls} onClick={() => onSelect?.(value)}>
       <div className={`${prefixCls}-time-panel-cell-inner`}>{renderValue}</div>
     </li>
   );

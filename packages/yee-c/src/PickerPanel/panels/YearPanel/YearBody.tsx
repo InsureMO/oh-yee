@@ -4,9 +4,10 @@ import * as React from 'react';
 import PanelBody from '../PanelBody';
 
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 
-function YearBody(props: any) {
+function YearBody(props: PanelSharedProps) {
   const {
     prefixCls,
     viewDate,
@@ -14,7 +15,7 @@ function YearBody(props: any) {
     maxDate,
     minDate,
     nowDate,
-    offsetYear,
+    offsetYear = 0,
     hoverRange = [],
     selectedRange = [],
   } = props;
@@ -34,7 +35,7 @@ function YearBody(props: any) {
 
   const getCellTitle = useEvent((currentDate: Dayjs) => {
     const _year = pickerUtils.getYear(currentDate) + offsetYear;
-    return _year < 1000 ? '0' + _year : _year;
+    return _year < 1000 ? '0' + _year : String(_year);
   });
 
   const getCellClassName = useEvent((currentDate: Dayjs) => {

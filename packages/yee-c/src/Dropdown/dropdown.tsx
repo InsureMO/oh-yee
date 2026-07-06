@@ -56,7 +56,7 @@ const Dropdown: FC<DropdownProps> = (baseprops) => {
     <Trigger
       {...rest}
       arrow={arrow}
-      popup={renderPopup() as any}
+      popup={renderPopup() as React.ReactElement}
       placement={placement}
       popupClassName={`${prefixCls}-popup`}
       open={mergedOpen}

@@ -8,8 +8,8 @@ import { FloatButtonGroupCtx } from './float-button-group';
 import type { FloatButtonProps } from './interface';
 import './style/index.less';
 
-const FloatButton = React.forwardRef(
-  (baseprops: FloatButtonProps, ref: any) => {
+const FloatButton = React.forwardRef<HTMLButtonElement, FloatButtonProps>(
+  (baseprops, ref) => {
     const { floatbutton } = useContext(GlobalContext);
     const props = mergeContextToProps(baseprops, floatbutton);
     const {
@@ -26,7 +26,9 @@ const FloatButton = React.forwardRef(
       ...rest
     } = props;
 
-    const componentRef = ref || React.createRef();
+    const componentRef =
+      (ref as React.RefObject<HTMLButtonElement | null>) ||
+      React.createRef<HTMLButtonElement>();
 
     const onMove = (pos: { x: number; y: number }) => {
       // Check if element exists before operating

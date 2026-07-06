@@ -1,24 +1,31 @@
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
+import type { PickerType, PanelSharedProps } from '../../interface';
 import DatePanel from '../DatePanel';
 import TimePanel from '../TimePanel';
 
-function DateTimePanel(props: any) {
-  const { prefixCls = 'yee-picker', onSelect, showTime } = props;
+interface DateTimePanelProps extends Omit<PanelSharedProps, 'onSelect'> {
+  onSelect?: (panel: PickerType, date: Dayjs) => void;
+  showTime?: boolean;
+}
+
+function DateTimePanel(props: DateTimePanelProps) {
+  const { onSelect, showTime, ...rest } = props;
+  const prefixCls = rest.prefixCls ?? 'yee-picker';
 
   const handleSelect = (type: string, date: Dayjs) => {
-    onSelect(type, date);
+    onSelect?.(type as PickerType, date);
   };
 
   return (
     <div className={`${prefixCls}-datetime-panel`}>
       <DatePanel
-        {...props}
+        {...rest}
         onSelect={(date: Dayjs) => handleSelect('date', date)}
       />
       {showTime ? (
         <TimePanel
-          {...props}
+          {...rest}
           onSelect={(date: Dayjs) => handleSelect('datetimetime', date)}
           showHeader
         />

@@ -2,10 +2,11 @@ import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import PanelBody from '../PanelBody';
 
-function MonthBody(props: any) {
+function MonthBody(props: PanelSharedProps) {
   const {
     prefixCls,
     viewDate,

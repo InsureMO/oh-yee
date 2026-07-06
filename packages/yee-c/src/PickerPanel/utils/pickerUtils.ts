@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import dayjs, { Dayjs, QUnitType } from 'dayjs';
+import dayjs, { Dayjs, OpUnitType, QUnitType } from 'dayjs';
 import buddhistEra from 'dayjs/plugin/buddhistEra';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -26,7 +26,7 @@ type PickerType =
 
 const d = {
   dayjs: dayjs,
-  init: (date?: string, ...rest: any[]) => dayjs(date, ...rest),
+  init: (date?: dayjs.ConfigType, option?: dayjs.OptionType) => dayjs(date, option),
   getNow: () => {
     return d.init(undefined);
   },
@@ -40,7 +40,11 @@ const d = {
   getSecond: (date: Dayjs) => date.second(),
 
   format: (date: Dayjs, format: string) => dayjs(date).format(format),
-  isSame: (date1: Dayjs, date2: Dayjs, type?: PickerType) => {
+  isSame: (
+    date1: Dayjs | undefined,
+    date2: Dayjs | undefined,
+    type?: PickerType,
+  ) => {
     if (!d.isValid(date1) && !d.isValid(date2)) return true;
     return date1 && date2 ? date1.isSame(date2, type as QUnitType) : false;
   },
@@ -56,18 +60,23 @@ const d = {
   addDate: (date: Dayjs, offset: number) => date?.add(offset, 'day'),
   isAfter: (
     date1: Dayjs,
-    date2: Dayjs,
+    date2: Dayjs | undefined,
     type?: 'day' | 'hour' | 'minute' | 'second' | 'year' | 'month',
   ) => (date2 ? date1.isAfter(date2, type) : false),
   isBefore: (
     date1: Dayjs,
-    date2: Dayjs,
+    date2: Dayjs | undefined,
     type?: 'day' | 'hour' | 'minute' | 'second' | 'year' | 'month',
   ) => (date2 ? date1.isBefore(date2, type) : false),
-  isValid: (date: Dayjs, format?: string, strict?: boolean) =>
+  isValid: (date: Dayjs | undefined, format?: string, strict?: boolean) =>
     dayjs(date, format, strict).isValid(),
-  isBetween: (date: Dayjs, start: Dayjs, end: Dayjs, ...args: any[]) =>
-    date && start && end ? date.isBetween(start, end, ...args) : false,
+  isBetween: (
+    date: Dayjs,
+    start: Dayjs,
+    end: Dayjs,
+    unit?: OpUnitType,
+    nulls?: '()' | '[]' | '[)' | '(]',
+  ) => (date && start && end ? date.isBetween(start, end, unit, nulls) : false),
 
   getCellClassName: ({
     date,

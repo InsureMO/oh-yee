@@ -1,6 +1,10 @@
 import React from 'react';
 
-function TimeHeader(props: any) {
+interface TimeHeaderProps {
+  prefixCls?: string;
+}
+
+function TimeHeader(props: TimeHeaderProps) {
   const { prefixCls } = props;
 
   return (

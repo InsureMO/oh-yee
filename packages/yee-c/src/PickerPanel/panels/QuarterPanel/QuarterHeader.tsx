@@ -2,10 +2,11 @@ import * as React from 'react';
 import Button from '../../../Button';
 import useEvent from '../../../hooks/useEvent';
 import Header from '../Header';
+import type { PanelSharedProps } from '../../interface';
 
 import pickerUtils from '../../utils/pickerUtils';
 
-export default function QuarterHeader(props: any) {
+export default function QuarterHeader(props: PanelSharedProps) {
   const { prefixCls, viewDate, onViewDateChange, onPanelChange } = props;
 
   const year = pickerUtils.getYear(viewDate);

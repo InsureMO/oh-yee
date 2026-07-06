@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import React from 'react';
+import type { PanelSharedProps } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import DateBody from '../DatePanel/DateBody';
 import DateHeader from '../DatePanel/DateHeader';
 
-export default function WeekPanel(props: any) {
+export default function WeekPanel(props: PanelSharedProps) {
   const { prefixCls, selectedDate } = props;
 
   const prefixColumn = (currentDate: Dayjs) => {

@@ -7,7 +7,20 @@ import {
 import React from 'react';
 import Button from '../../Button';
 
-export default function Header(props: any) {
+export interface PanelHeaderProps {
+  prefixCls?: string;
+  onPrevClick?: () => void;
+  onSuperPrevClick?: () => void;
+  onNextClick?: () => void;
+  onSuperNextClick?: () => void;
+  showPrevIcon?: boolean;
+  showNextIcon?: boolean;
+  showSuperPrevIcon?: boolean;
+  showSuperNextIcon?: boolean;
+  children?: React.ReactNode;
+}
+
+export default function Header(props: PanelHeaderProps) {
   const {
     prefixCls,
     onPrevClick,

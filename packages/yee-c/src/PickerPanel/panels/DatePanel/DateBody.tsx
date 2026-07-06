@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import React from 'react';
 import useEvent from '../../../hooks/useEvent';
+import type { PanelSharedProps } from '../../interface';
 import panelConfig from '../../configs';
 import pickerUtils from '../../utils/pickerUtils';
 import PanelBody from '../PanelBody';
@@ -10,7 +11,7 @@ const DATEPANEL_WEEK_DAY_COUNT = 7;
 
 const weekTitle = panelConfig.shortWeekList;
 
-function DateBody(props: any) {
+function DateBody(props: PanelSharedProps) {
   const {
     prefixCls,
     viewDate,
