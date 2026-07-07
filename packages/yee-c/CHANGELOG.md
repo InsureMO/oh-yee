@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.5.0
+
+### Minor Changes
+
+- 745d0ca: feat(Form): add async validation support and update API documentation
+
 ## 0.4.5
 
 ### Patch Changes

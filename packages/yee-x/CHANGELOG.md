@@ -1,5 +1,12 @@
 # @rainbow-oh/yee-x
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [745d0ca]
+  - @rainbow-oh/yee-c@0.5.0
+
 ## 0.3.1
 
 ### Patch Changes
