@@ -49,6 +49,6 @@ toc: 'content'
 | minLength | `number` | 最小长度 | - |
 | maxLength | `number` | 最大长度 | - |
 | regexp | `RegExp` | 正则校验 | - |
-| validator | `(value: unknown) => boolean` | 自定义校验函数 | - |
+| validator | `(value: unknown) => boolean \| void \| Promise<boolean \| void>` | 自定义校验函数，支持同步与异步（详见 Form.Rule） | - |
 | message | `string` | 错误提示信息（必填） | - |
 | validateTrigger | `'onBlur' \| 'onChange' \| 'onSubmit' \| Array` | 校验触发时机 | - |

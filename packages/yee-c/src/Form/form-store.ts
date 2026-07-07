@@ -145,13 +145,14 @@ export class FormStore {
       });
     }
 
-    // Validate on onChange and onBlur
+    // Validate on onChange and onBlur (async — fire-and-forget so setFieldsValue
+    // stays synchronous for its callers; results surface via onStoreChange).
     if (
       trigger === 'onChange' ||
       trigger === 'onBlur' ||
       trigger === 'onSubmit'
     ) {
-      this.validateFields(Object.keys(newStore), trigger);
+      void this.validateFields(Object.keys(newStore), trigger);
     }
 
     this.refreshField(newStore);
@@ -202,7 +203,10 @@ export class FormStore {
     this.setFieldsValue(clearStore, 'clear');
   };
 
-  validateField = (name: Name, trigger?: TRIGGER) => {
+  validateField = async (
+    name: Name,
+    trigger?: TRIGGER,
+  ): Promise<ValidateMessage[]> => {
     const entity = this.fieldMap.get(name);
     if (!entity) {
       return [];
@@ -231,32 +235,40 @@ export class FormStore {
       });
     }
     const value = this.getFieldValue(name);
-    mergedRules.forEach((rule) => {
-      const mark = validate(rule, value);
-      if (name && !mark) {
+    for (const rule of mergedRules) {
+      const result = await validate(rule, value);
+      if (name && !result.passed) {
         err.push({
+          ...rule,
           name: name,
           status: 'error',
           value,
-          ...rule,
+          message: result.message ?? rule.message,
         } as ValidateMessage);
       }
-    });
+    }
     if (err.length > 0) {
       this.validateMessages.set(name, err);
     } else if (this.validateMessages.has(name)) {
       this.validateMessages.delete(name);
     }
+    // Notify the field to re-render so async validation results surface in the UI.
+    entity?.onStoreChange();
     return err;
   };
 
-  validateFields = (
+  validateFields = async (
     names = Array.from(this.fieldMap.keys()),
     trigger?: TRIGGER,
-  ) => {
+  ): Promise<ValidateMessage[]> => {
+    // Validate fields in parallel; Promise.all preserves input order so error
+    // ordering stays stable regardless of how long each async validator takes.
+    const results = await Promise.all(
+      names.map((name) => this.validateField(name, trigger)),
+    );
     let err: ValidateMessage[] = [];
-    names.forEach((name) => {
-      const messages = this.validateField(name, trigger);
+    names.forEach((name, index) => {
+      const messages = results[index];
       err = err.concat(messages);
       if (messages.length > 0) {
         this.validateMessages.set(name, messages);
@@ -316,12 +328,16 @@ export class FormStore {
     };
   };
 
-  validateGroups = (force = false): ValidateMessage[] => {
-    let err: ValidateMessage[] = [];
-    this.groupEntities.forEach((entity) => {
-      err = err.concat(entity.validate(force));
-    });
-    return err;
+  validateGroups = async (force = false): Promise<ValidateMessage[]> => {
+    const results = await Promise.all(
+      Array.from(this.groupEntities.values()).map((entity) =>
+        entity.validate(force),
+      ),
+    );
+    return results.reduce(
+      (acc, messages) => acc.concat(messages),
+      [] as ValidateMessage[],
+    );
   };
 
   setCallbacks = (callbacks: Callbacks) => {
@@ -515,10 +531,10 @@ export class FormStore {
     };
   };
 
-  submit = () => {
+  submit = async (): Promise<ValidateMessage[]> => {
     const { onFinish, onFinishFailed } = this.callbacks;
-    const fieldErrors = this.validateFields();
-    const groupErrors = this.validateGroups(true);
+    const fieldErrors = await this.validateFields();
+    const groupErrors = await this.validateGroups(true);
     const allErrors = [...fieldErrors, ...groupErrors];
     if (allErrors.length === 0) {
       onFinish?.(this.getFieldsValue());

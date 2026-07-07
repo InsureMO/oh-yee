@@ -21,6 +21,7 @@ Select component for choosing from a set of options.
 <code src="./demo/multiple.tsx" title="Multiple" description="Multiple selection mode"></code>
 <code src="./demo/search.tsx" title="Search" description="Searchable Select"></code>
 <code src="./demo/tags.tsx" title="Tags" description="Tags mode Select"></code>
+<code src="./demo/virtual.tsx" title="Virtual Scroll" description="Virtual scrolling for large datasets (thousands of options)"></code>
 
 ## API
 
@@ -46,6 +47,9 @@ Select component for choosing from a set of options.
 | optionLabelProp | `string \| (() => string)` | Property to display in the input box | - |
 | onChange | `(value: string \| number \| Array<string \| number>, options?: Option \| undefined \| Option[]) => void` | Value change callback | - |
 | onFilter | `(value: string, options: Array<Option>) => Array<Option>` | Search callback | - |
+| virtual | `boolean` | Enable virtual scrolling. Only the options in the visible window are rendered, so the DOM node count stays constant regardless of the total. Recommended for hundreds or thousands of options | `false` |
+| itemHeight | `number` | Fixed height of each option in pixels. Must be a fixed value when `virtual` is enabled | `32` |
+| listHeight | `number` | Max height of the dropdown popup in pixels | `200` |
 | data-* | `string` | - | Supports all data-* attributes, forwarded to root DOM element |
 
 ### Option

@@ -68,7 +68,7 @@ const List: React.FC<FormListProps> = ({
 
   // List operation methods
   const operations = useMemo(() => {
-    const add = (defaultValue?: any, insertIndex?: number) => {
+    const add = async (defaultValue?: any, insertIndex?: number) => {
       const currentValue = getListValue();
       const pathStr = prefixName.join('.');
 
@@ -83,8 +83,8 @@ const List: React.FC<FormListProps> = ({
         }
       });
 
-      // Execute validation
-      const errors = validateFields?.(fieldPaths);
+      // Execute validation (async — await before deciding whether to add)
+      const errors = await validateFields?.(fieldPaths);
 
       // If errors exist, prevent adding and show errors
       if (errors && errors.length > 0) {

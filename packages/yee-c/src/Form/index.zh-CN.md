@@ -22,6 +22,7 @@ toc: 'content'
 <code src="./demo/form-table.tsx" title="表单列表" description="Form的列表字段用法"></code>
 <code src="./demo/layout.tsx" title="表单布局" description="不同的表单布局"></code>
 <code src="./demo/validate.tsx" title="表单校验" description="表单校验功能"></code>
+<code src="./demo/async-validate.tsx" title="异步校验" description="async validator 实现服务端唯一性校验等异步场景"></code>
 
 ## API
 
@@ -49,16 +50,16 @@ toc: 'content'
 
 | 属性名                | 类型                                                                                       | 描述                                       |
 | --------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------ |
-| getFieldValidate      | `(name: Name) => ValidateMessage \| null`                                                  | 获取字段验证                               |
+| getFieldValidate      | `(name: Name) => ValidateMessage \| null` | 获取字段验证（异步校验未完成时可能读到旧值，最终会随 onStoreChange 更新） |
 | getFieldValue         | `(name: Name) => StoreValue`                                                               | 获取字段值                                 |
-| submit                | `() => void`                                                                               | 提交表单                                   |
+| submit                | `() => Promise<ValidateMessage[]>`                                                          | 提交表单（异步，校验完成后才触发 onFinish） |
 | getFieldsValue        | `() => Values`                                                                             | 获取所有字段值                             |
 | setFieldsValue        | `(newStore: Store, trigger?: TRIGGER) => void`                                             | 设置字段值                                 |
 | setCallbacks          | `(callbacks: Callbacks) => void`                                                           | 设置回调                                   |
 | resetFields           | `(name?: Name[]) => void`                                                                  | 重置字段                                   |
 | clearFields           | `(name?: Name[]) => void`                                                                  | 清空字段                                   |
-| validateField         | `(name: Name, trigger?: 'onChange' \| 'onBlur') => ValidateMessage[]`                      | 校验单个字段                               |
-| validateFields        | `(names?: Name[], trigger?: TRIGGER) => ValidateMessage[]`                                 | 校验多个字段                               |
+| validateField         | `(name: Name, trigger?: 'onChange' \| 'onBlur') => Promise<ValidateMessage[]>`                      | 校验单个字段                               |
+| validateFields        | `(names?: Name[], trigger?: TRIGGER) => Promise<ValidateMessage[]>`                                 | 校验多个字段                               |
 | getCallbacks          | `() => Callbacks`                                                                          | 获取回调                                   |
 | registerFieldEntities | `(entity: FieldEntity) => void`                                                            | 注册字段实体                               |
 | initialize            | `({ initialValues, callbacks }: { initialValues?: Store; callbacks?: Callbacks }) => void` | 初始化表单                                 |
@@ -116,7 +117,7 @@ toc: 'content'
 | maxLength       | `number`                                                                              | 最大长度       |
 | regexp          | `RegExp`                                                                              | 正则表达式     |
 | message         | `string`                                                                              | 错误信息       |
-| validator       | `(value: unknown) => boolean`                                                         | 自定义校验函数 |
+| validator       | `(value: unknown) => boolean \| void \| Promise<boolean \| void>` | 自定义校验函数，支持同步与异步。同步返回 `false` 或 `throw` 表示失败；异步 `resolve(false)`/`reject`/`throw` 表示失败。`throw`/`reject` 时 `error.message` 覆盖 `message` |
 | validateTrigger | `'onBlur' \| 'onChange' \| 'onSubmit' \| Array<'onBlur' \| 'onChange' \| 'onSubmit'>` | 校验触发时机   |
 
 ### Types

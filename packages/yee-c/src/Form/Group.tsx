@@ -9,6 +9,7 @@ import React, {
   useRef,
 } from 'react';
 import Grid from '../Grid';
+import { runValidator } from './utils/validate';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
 import type { FieldGroupProps, NamePath, ValidateMessage } from './interface';
@@ -38,7 +39,9 @@ const Group: React.FC<FieldGroupProps> = (props) => {
   const [, forceValidate] = useReducer((x) => x + 1, 0); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   // Group validation
-  const validate = (force: boolean): ValidateMessage[] => {
+  const validate = async (
+    force: boolean,
+  ): Promise<ValidateMessage[]> => {
     if (!required && (!rules || rules.length === 0)) return [];
 
     // Skip if not touched and not forced validation
@@ -66,21 +69,21 @@ const Group: React.FC<FieldGroupProps> = (props) => {
       }
     }
 
-    // Custom rules validation
+    // Custom rules validation (supports sync + async validators)
     if (rules) {
-      rules.forEach((rule) => {
+      for (const rule of rules) {
         if (rule.validator) {
-          const passed = rule.validator(values);
-          if (!passed) {
+          const result = await runValidator(rule.validator, values);
+          if (!result.passed) {
             errors.push({
               name: childNames,
               status: 'error',
               value: values,
-              message: rule.message || '',
+              message: result.message ?? rule.message ?? '',
             });
           }
         }
-      });
+      }
     }
 
     return errors;
@@ -92,8 +95,8 @@ const Group: React.FC<FieldGroupProps> = (props) => {
     [],
   );
 
-  const runValidation = () => {
-    const result = validate(false);
+  const runValidation = async () => {
+    const result = await validate(false);
     setErrors(result);
   };
 
@@ -102,7 +105,7 @@ const Group: React.FC<FieldGroupProps> = (props) => {
     const unsubscribes = childNames.map((name) =>
       formInstance.subscribe(name, () => {
         touchedRef.current = true;
-        runValidation();
+        void runValidation();
       }),
     );
     return () => unsubscribes.forEach((fn) => fn());
@@ -111,8 +114,8 @@ const Group: React.FC<FieldGroupProps> = (props) => {
   // Register group validator to FormStore
   useEffect(() => {
     const unregister = formInstance.registerGroupEntity(groupId, {
-      validate: (force) => {
-        const result = validate(force);
+      validate: async (force) => {
+        const result = await validate(force);
         setErrors(result);
         forceUpdate();
         return result;

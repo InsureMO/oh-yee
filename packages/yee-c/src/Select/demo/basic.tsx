@@ -15,7 +15,7 @@ const options = [
 ];
 
 export default () => {
-  const [value, setValue] = useState('apple');
+  const [value, setValue] = useState('mango');
 
   return (
     <Select

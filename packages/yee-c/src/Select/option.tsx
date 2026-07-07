@@ -6,7 +6,7 @@ import type { OptionProps } from './interface';
 import { OptionsCtx } from './options';
 
 const Option = (props: OptionProps) => {
-  const { label, value, disabled, title, dataTestId } = props;
+  const { label, value, disabled, title, dataTestId, style } = props;
   const { prefixCls, selectedKeys, focusedKey, multiple, onSelect } =
     useContext(OptionsCtx);
 
@@ -42,6 +42,7 @@ const Option = (props: OptionProps) => {
       tabIndex={disabled ? undefined : 0}
       title={htmlTitle}
       data-testid={dataTestId}
+      style={style}
     >
       <div className={`${prefixCls}-option-content`}>{label}</div>
       {multiple && selected && (

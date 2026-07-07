@@ -104,6 +104,26 @@ export interface SelectProps extends DataAttributeProps {
    * Callback when searching
    */
   onFilter?: (value: string, options: Array<Option>) => Array<Option>;
+  /**
+   * Enable virtual scrolling for the dropdown.
+   *
+   * When enabled, only the options inside the visible window are rendered
+   * (the DOM node count stays constant regardless of how many options there
+   * are). Recommended for large option sets (hundreds or thousands).
+   * @default false
+   */
+  virtual?: boolean;
+  /**
+   * Height of each option in pixels. Required to be a fixed value when
+   * `virtual` is enabled (the list assumes every option has exactly this height).
+   * @default 32
+   */
+  itemHeight?: number;
+  /**
+   * Max height of the dropdown popup in pixels.
+   * @default 200
+   */
+  listHeight?: number;
 }
 
 /**
@@ -130,6 +150,11 @@ export interface OptionProps {
    * Test id forwarded to the option element
    */
   dataTestId?: string;
+  /**
+   * Inline style forwarded to the option element.
+   * Used by virtual scrolling to position each option absolutely.
+   */
+  style?: React.CSSProperties;
 }
 
 /**
@@ -149,8 +174,10 @@ export interface OptionsContextValue {
 /**
  * Props for the internal Options (popup list) component.
  */
-export interface OptionsProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+export interface OptionsProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onSelect'
+> {
   /**
    * Custom class name prefix
    */
@@ -184,6 +211,25 @@ export interface OptionsProps
    * Whether multiple selection mode is active
    */
   multiple: boolean;
+  /**
+   * Whether virtual scrolling is enabled
+   */
+  virtual?: boolean;
+  /**
+   * Fixed option height in pixels (only meaningful when `virtual` is enabled)
+   */
+  itemHeight?: number;
+  /**
+   * Max popup height in pixels (only meaningful when `virtual` is enabled)
+   */
+  listHeight?: number;
+  /**
+   * Ref that receives the virtual list API (currently `scrollToIndex`),
+   * so the parent can wire keyboard navigation to the virtual viewport.
+   */
+  virtualApiRef?: React.MutableRefObject<{
+    scrollToIndex: (index: number) => void;
+  } | null>;
   /**
    * Callback when an option is selected
    */

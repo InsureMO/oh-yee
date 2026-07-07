@@ -113,7 +113,7 @@ export interface FormInstance<Values = any> {
   /**
    * Submit form
    */
-  submit: () => ValidateMessage[];
+  submit: () => Promise<ValidateMessage[]>;
   /**
    * Get all field values
    */
@@ -140,7 +140,7 @@ export interface FormInstance<Values = any> {
   validateField: (
     name: Name,
     trigger?: 'onChange' | 'onBlur',
-  ) => ValidateMessage[];
+  ) => Promise<ValidateMessage[]>;
   /**
    * Get callback functions
    */
@@ -152,7 +152,10 @@ export interface FormInstance<Values = any> {
   /**
    * Validate fields and get error messages
    */
-  validateFields: (names?: Name[], trigger?: TRIGGER) => ValidateMessage[];
+  validateFields: (
+    names?: Name[],
+    trigger?: TRIGGER,
+  ) => Promise<ValidateMessage[]>;
   /**
    * Initialize form - mainly used to set initial values and callbacks
    */
@@ -233,9 +236,12 @@ export type Rule = {
    */
   message?: string;
   /**
-   * Custom validation function, returns true for pass, false or throw for fail
+   * Custom validation function. Supports sync and async:
+   *  - sync:  return true/undefined to pass, return false or throw to fail
+   *  - async: return a Promise (resolve to pass, reject/throw to fail)
+   * When throwing/rejecting with an Error, its message overrides rule.message.
    */
-  validator?: (value: unknown) => boolean;
+  validator?: (value: unknown) => boolean | void | Promise<boolean | void>;
   /**
    * Validation trigger timing
    */
@@ -354,7 +360,7 @@ export type FormListField<T = any> = {
 };
 
 export type FormListOperation = {
-  add: (defaultValue?: any, insertIndex?: number) => void;
+  add: (defaultValue?: any, insertIndex?: number) => void | Promise<void>;
   remove: (index: number | number[]) => void;
   move: (from: number, to: number) => void;
 };
@@ -403,6 +409,6 @@ export type FieldGroupProps = {
 };
 
 export interface GroupEntity {
-  validate: (force: boolean) => ValidateMessage[];
+  validate: (force: boolean) => Promise<ValidateMessage[]>;
   reset: () => void;
 }

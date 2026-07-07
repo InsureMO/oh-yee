@@ -90,7 +90,7 @@ const Dialog = (baseprops: DialogProps) => {
   });
 
   const renderFooter = () => {
-    if (footer === false) {
+    if (footer === false || footer === null) {
       return null;
     }
 

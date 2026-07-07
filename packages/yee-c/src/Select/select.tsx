@@ -1,4 +1,10 @@
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { GlobalContext } from '../Config-Provider';
 import Selector from '../Selector';
 import Trigger from '../Trigger';
@@ -23,6 +29,9 @@ const Select = (baseprops: SelectProps) => {
     disabled,
     onChange,
     onFilter,
+    virtual,
+    itemHeight,
+    listHeight,
     ...rest
   } = props;
 
@@ -50,6 +59,14 @@ const Select = (baseprops: SelectProps) => {
 
   const [open, setOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
+  // Holds the virtual list API exposed by <Options>, so keyboard navigation
+  // can drive the virtual viewport (only populated when `virtual` is on).
+  const virtualApiRef = useRef<{
+    scrollToIndex: (index: number) => void;
+  } | null>(null);
+  const handleVirtualScrollToIndex = useCallback((index: number) => {
+    virtualApiRef.current?.scrollToIndex(index);
+  }, []);
 
   const getOptions = (keys: string | number | Array<string | number>) => {
     if (keys === '' || keys === null) {
@@ -135,6 +152,7 @@ const Select = (baseprops: SelectProps) => {
     onClose: () => setOpen(false),
     onOpenChange: handleOpenChange,
     containerRef: popupRef as React.RefObject<HTMLDivElement>,
+    scrollToIndex: virtual ? handleVirtualScrollToIndex : undefined,
   });
 
   const popup = (
@@ -147,6 +165,10 @@ const Select = (baseprops: SelectProps) => {
       dataTestId={rest['data-testid']}
       onSelect={handleSelect}
       ref={popupRef}
+      virtual={virtual}
+      itemHeight={itemHeight}
+      listHeight={listHeight}
+      virtualApiRef={virtualApiRef}
     />
   );
 

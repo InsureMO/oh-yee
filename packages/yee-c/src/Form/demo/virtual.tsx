@@ -50,7 +50,7 @@ export default function Virtual() {
         type="primary"
         onClick={() => {
           const form = getForm('form');
-          form.submit();
+          void form.submit();
         }}
       >
         Submit

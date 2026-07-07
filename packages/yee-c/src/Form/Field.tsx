@@ -139,10 +139,9 @@ const Field: React.FC<FieldProps> = (props) => {
         props?.onChange?.(_value, ...rest);
       },
       onBlur: (event: unknown) => {
-        const err = validateField?.(normalizedName, 'onBlur');
-        if (err.length) {
-          forceUpdate();
-        }
+        // Fire-and-forget; the store calls onStoreChange (→ forceUpdate) when
+        // the (possibly async) validation completes, so the error UI refreshes.
+        void validateField?.(normalizedName, 'onBlur');
         props?.onBlur?.(event);
       },
     };

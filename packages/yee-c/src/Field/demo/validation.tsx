@@ -8,10 +8,10 @@ export default () => {
     createForm('validationForm');
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const form = getForm('validationForm');
     console.log('form: ', form);
-    const errors = form?.submit();
+    const errors = await form?.submit();
     console.log('errors: ', errors);
     if (errors && errors.length === 0) {
       console.log('Submit success:', form?.getFieldsValue());

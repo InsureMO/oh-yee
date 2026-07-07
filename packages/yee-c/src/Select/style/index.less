@@ -8,6 +8,17 @@
     overflow: auto;
   }
 
+  // Virtual mode: the popup no longer scrolls itself; the inner viewport does.
+  // Without this override there would be two scrollbars.
+  &-popup-virtual {
+    max-height: none;
+    overflow: visible;
+  }
+
+  &-popup-viewport {
+    overflow-y: auto;
+  }
+
   &-option {
     display: flex;
     padding: var(--yee-select-option-padding);
@@ -35,6 +46,12 @@
     &-focused:not(&-selected) {
       background-color: var(--yee-select-option-active-bg-color);
     }
+  }
+
+  // In virtual mode each option has a fixed inline height; center its content
+  // vertically so it stays aligned regardless of the inherited line-height.
+  &-popup-virtual &-option {
+    align-items: center;
   }
 
   &-empty {

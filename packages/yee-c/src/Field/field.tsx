@@ -82,7 +82,8 @@ const Field: FC<FieldProps> = (props) => {
         forceUpdate();
       },
       onBlur: (event: unknown) => {
-        validateField?.(name, 'onBlur');
+        // Fire-and-forget async validation; store notifies onStoreChange on completion.
+        void validateField?.(name, 'onBlur');
 
         // Call child component's onBlur
         if ((children.props as any).onBlur) {

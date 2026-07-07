@@ -49,6 +49,6 @@ A standalone form field component that works without a `<Form>` wrapper. Uses `u
 | minLength | `number` | Minimum length | - |
 | maxLength | `number` | Maximum length | - |
 | regexp | `RegExp` | Regex pattern | - |
-| validator | `(value: unknown) => boolean` | Custom validation function | - |
+| validator | `(value: unknown) => boolean \| void \| Promise<boolean \| void>` | Custom validation function, supports sync and async (see Form.Rule) | - |
 | message | `string` | Error message (required) | - |
 | validateTrigger | `'onBlur' \| 'onChange' \| 'onSubmit' \| Array` | When to trigger validation | - |

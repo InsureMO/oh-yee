@@ -21,6 +21,7 @@ toc: 'content'
 <code src="./demo/multiple.tsx" title="多选" description="多选模式"></code>
 <code src="./demo/search.tsx" title="可搜索" description="可搜索的Select"></code>
 <code src="./demo/tags.tsx" title="标签模式" description="标签模式的Select"></code>
+<code src="./demo/virtual.tsx" title="虚拟滚动" description="大数据量（几千条）下的虚拟滚动"></code>
 
 ## API
 
@@ -46,6 +47,9 @@ toc: 'content'
 | optionLabelProp | `string \| (() => string)` | 回填到选择框里的属性 | - |
 | onChange | `(value: string \| number \| Array<string \| number>, options?: Option \| undefined \| Option[]) => void` | 值改变时的回调函数 | - |
 | onFilter | `(value: string, options: Array<Option>) => Array<Option>` | 搜索时的回调函数 | - |
+| virtual | `boolean` | 是否开启虚拟滚动。开启后仅渲染可视区内的选项，DOM 节点数与数据总量无关，适合成百上千条数据 | `false` |
+| itemHeight | `number` | 每个选项的固定高度（px），开启 `virtual` 时必须为定值 | `32` |
+| listHeight | `number` | 下拉框最大高度（px） | `200` |
 | data-* | `string` | - | 支持所有 data-* 属性，透传到组件根 DOM 元素 |
 
 ### Option

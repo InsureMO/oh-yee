@@ -16,6 +16,7 @@ import useMount from './useMount';
 import usePrevious from './usePrevious';
 import useUpdateEffect from './useUpdateEffect';
 import useVirtualForm from './useVirtualForm';
+import useVirtualList from './useVirtualList';
 
 export {
   useBreakpoint,
@@ -36,4 +37,5 @@ export {
   usePrevious,
   useUpdateEffect,
   useVirtualForm,
+  useVirtualList,
 };

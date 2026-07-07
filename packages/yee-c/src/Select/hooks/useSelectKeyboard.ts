@@ -13,6 +13,12 @@ interface UseSelectKeyboardParams {
   onClose?: () => void;
   onOpenChange?: (open: boolean) => void;
   containerRef?: React.RefObject<HTMLElement>;
+  /**
+   * Virtual-mode scroll hook. When provided, keyboard navigation drives the
+   * virtual viewport through this callback instead of calling scrollIntoView
+   * (the focused option may not be in the DOM while virtualized).
+   */
+  scrollToIndex?: (index: number) => void;
 }
 
 export default function useSelectKeyboard({
@@ -23,6 +29,7 @@ export default function useSelectKeyboard({
   onClose,
   onOpenChange,
   containerRef,
+  scrollToIndex,
 }: UseSelectKeyboardParams) {
   const [focusedKey, setFocusedKey] = useState<string | number>('');
   const latestFocusedKey = useLatest(focusedKey);
@@ -59,6 +66,13 @@ export default function useSelectKeyboard({
 
   // Scroll the focused option into view
   const scrollOptionIntoView = (index: number) => {
+    // Virtual mode: drive the virtual viewport directly, since the option
+    // element may not be mounted when it lies outside the render window.
+    if (scrollToIndex) {
+      scrollToIndex(index);
+      return;
+    }
+
     const container = containerRef?.current;
     if (!container) return;
 
@@ -163,20 +177,30 @@ export default function useSelectKeyboard({
   useEffect(() => {
     if (open) {
       // Focus the first selected option, or the first enabled option
+      let focusedValue: string | number = '';
       if (selectedKeys?.length > 0) {
         const firstSelected = options?.find(
           (opt) => opt.value === selectedKeys[0],
         );
         if (firstSelected && !firstSelected.disabled) {
-          setFocusedKey(firstSelected.value);
-          return;
+          focusedValue = firstSelected.value;
         }
       }
-      // Find the first enabled option
-      const firstEnabled = options?.find((opt) => !opt.disabled);
-      if (firstEnabled) {
-        setFocusedKey(firstEnabled.value);
+      if (!focusedValue) {
+        // Find the first enabled option
+        const firstEnabled = options?.find((opt) => !opt.disabled);
+        if (firstEnabled) {
+          focusedValue = firstEnabled.value;
+        }
       }
+
+      if (focusedValue) {
+        setFocusedKey(focusedValue);
+      }
+      // Scrolling the focused option into view in virtual mode is handled by
+      // <Options> itself (it owns the viewport + virtual list), which avoids
+      // the first-open timing issue where this effect runs before the virtual
+      // API ref is wired up.
     } else {
       // Clear focused key when closing
       setFocusedKey('');

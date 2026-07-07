@@ -23,13 +23,32 @@
           var(--yee-table-tbody-td-borderbottom-color);
       }
     }
+
+    @{pls}-cell {
+      &::before {
+        display: none;
+      }
+    }
   }
 
   &-thead {
     color: var(--yee-table-thead-color);
 
     @{pls}-cell {
+      position: relative;
       background-color: var(--yee-table-thead-bg-color);
+
+      &:not(:last-child):not(@{pls}-expand-col) {
+        &::before {
+          position: absolute;
+          content: '';
+          width: 1.5px;
+          height: 30%;
+          top: 35%;
+          right: 0;
+          background-color: var(--yee-table-head-cell-split-line-color, #eee);
+        }
+      }
     }
 
     &-cell {

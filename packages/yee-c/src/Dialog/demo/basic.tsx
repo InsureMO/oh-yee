@@ -22,7 +22,7 @@ export default () => {
           setOpen(false);
           // form.resetFields();
         }}
-        onConfirm={() => form.submit()}
+        onConfirm={() => void form.submit()}
       >
         <Form
           form={form}

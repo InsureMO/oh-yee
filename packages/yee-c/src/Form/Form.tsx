@@ -60,7 +60,7 @@ const Form: React.FC<FormProps> = (baseprops) => {
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        formInstance.submit();
+        void formInstance.submit();
       }}
       onReset={(e) => {
         e.preventDefault();
