@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-x
 
+## 0.3.2
+
+### Patch Changes
+
+- e159a00: enhance type safety in interfaces, and improve error handling in IndepWin
+
 ## 1.0.0
 
 ### Patch Changes
