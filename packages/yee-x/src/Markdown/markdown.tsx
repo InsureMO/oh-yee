@@ -29,7 +29,7 @@ const Markdown = (props: MarkdownProps) => {
         escapeHtml ? null : rehypeRaw,
         rehypeHighlight,
         ...rehypePlugins,
-      ].filter(Boolean)}
+      ].filter((plugin): plugin is NonNullable<typeof plugin> => Boolean(plugin))}
     >
       {markdown}
     </ReactMarkdown>

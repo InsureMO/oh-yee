@@ -8,11 +8,15 @@ import React, {
 } from 'react';
 import Bubble from './bubble';
 
-import { BubbleListProps } from './interface';
+import type { BubbleListProps } from './interface';
 
 let observer: MutationObserver;
 
-export const BubbleListCtx = createContext({} as any);
+interface BubbleListContextValue {
+  parser?: BubbleListProps['parser'];
+}
+
+export const BubbleListCtx = createContext<BubbleListContextValue>({});
 
 const BubbleList: FC<BubbleListProps> = (props) => {
   const {

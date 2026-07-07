@@ -81,7 +81,7 @@ export const AIRenderer: React.FC<AIRendererProps> = ({
     // Handle events
     if (component.events) {
       for (const [eventName, eventConfig] of Object.entries(component.events)) {
-        props[eventName] = async (eventData: any) => {
+        props[eventName] = async (eventData: unknown) => {
           try {
             await handleEvent(eventConfig, eventData, context);
           } catch (error) {

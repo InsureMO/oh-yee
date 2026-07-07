@@ -13,12 +13,12 @@
 
 import React from 'react';
 import { StreamingAIRenderer } from './StreamingAIRenderer';
-import type { ComponentMapping } from './interface';
+import type { ComponentMapping, UISchema } from './interface';
 
 interface AIRendererMarkdownProps {
   children?: React.ReactNode;
   componentMap?: Record<string, ComponentMapping>;
-  onUpdate?: (update: any) => void;
+  onUpdate?: (update: Partial<UISchema>) => void;
 }
 
 export const AIRendererMarkdown: React.FC<AIRendererMarkdownProps> = ({
@@ -33,9 +33,9 @@ export const AIRendererMarkdown: React.FC<AIRendererMarkdownProps> = ({
     }
     if (
       React.isValidElement(children) &&
-      typeof (children.props as any).children === 'string'
+      typeof (children.props as { children?: unknown }).children === 'string'
     ) {
-      return (children.props as any).children;
+      return (children.props as { children?: unknown }).children as string;
     }
 
     // Try to extract text from multiple child elements
@@ -44,7 +44,7 @@ export const AIRendererMarkdown: React.FC<AIRendererMarkdownProps> = ({
         .map((child) => {
           if (typeof child === 'string') return child;
           if (React.isValidElement(child)) {
-            const props = child.props as any;
+            const props = child.props as { children?: unknown };
             if (typeof props.children === 'string') {
               return props.children;
             }

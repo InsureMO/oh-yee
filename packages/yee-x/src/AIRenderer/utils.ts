@@ -2,7 +2,7 @@
  * AIRenderer utility functions
  */
 
-import type { Component, StreamMessage, UISchema } from './interface';
+import type { Component, EventConfig, StreamMessage, UISchema } from './interface';
 
 /**
  * Get a value from an object by path
@@ -19,12 +19,15 @@ import type { Component, StreamMessage, UISchema } from './interface';
  * getValueByPath(obj, 'user.age'); // undefined
  * ```
  */
-export function getValueByPath(obj: any, path: string): any {
+export function getValueByPath(obj: unknown, path: string): unknown {
   if (!obj || !path) {
     return undefined;
   }
 
-  return path.split('.').reduce((acc, part) => acc?.[part], obj);
+  return path.split('.').reduce<unknown>((acc, part) => {
+    const node = acc as Record<string, unknown> | undefined;
+    return node?.[part];
+  }, obj);
 }
 
 /**
@@ -46,23 +49,28 @@ export function getValueByPath(obj: any, path: string): any {
  * // { user: { name: 'John', profile: { city: 'NYC' } } }
  * ```
  */
-export function setValueByPath(obj: any, path: string, value: any): any {
+export function setValueByPath(
+  obj: Record<string, unknown>,
+  path: string,
+  value: unknown,
+): Record<string, unknown> {
   if (!path) {
     return obj;
   }
 
   const parts = path.split('.');
   const result = { ...obj };
-  let current: any = result;
+  let current: Record<string, unknown> = result;
 
   for (let i = 0; i < parts.length - 1; i++) {
     const part = parts[i];
-    if (!current[part] || typeof current[part] !== 'object') {
+    const next = current[part];
+    if (!next || typeof next !== 'object') {
       current[part] = {};
     } else {
-      current[part] = { ...current[part] };
+      current[part] = { ...(next as Record<string, unknown>) };
     }
-    current = current[part];
+    current = current[part] as Record<string, unknown>;
   }
 
   current[parts[parts.length - 1]] = value;
@@ -93,10 +101,10 @@ export function setValueByPath(obj: any, path: string, value: any): any {
  * ```
  */
 export function resolveDataBindings(
-  props: Record<string, any>,
-  data: Record<string, any>,
-): Record<string, any> {
-  const resolved: Record<string, any> = {};
+  props: Record<string, unknown>,
+  data: Record<string, unknown>,
+): Record<string, unknown> {
+  const resolved: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(props)) {
     if (typeof value === 'string') {
@@ -111,7 +119,7 @@ export function resolveDataBindings(
           vars.forEach((item) => {
             const path = item.substring(6);
             const dataValue = getValueByPath(data, path);
-            _value = _value.replace(item, dataValue);
+            _value = _value.replace(item, dataValue as string);
           });
         }
         resolved[key] = _value;
@@ -202,7 +210,7 @@ export function applyStreamMessage(
   switch (message.op) {
     case 'init':
       if (message.path === 'root') {
-        newSchema.root = message.value;
+        newSchema.root = message.value as string;
       }
       break;
 
@@ -287,13 +295,16 @@ export function applyStreamMessages(
  * ```
  */
 export async function handleEvent(
-  eventConfig: any,
-  eventData: any,
-  context: { data: Record<string, any>; onUpdate?: (update: any) => void },
+  eventConfig: EventConfig,
+  eventData: unknown,
+  context: {
+    data: Record<string, unknown>;
+    onUpdate?: (update: Partial<UISchema>) => void;
+  },
 ): Promise<void> {
   if (eventConfig.type === 'api') {
     // Resolve data references in the request body
-    let body: any;
+    let body: unknown;
 
     if (
       typeof eventConfig.body === 'string' &&
@@ -302,13 +313,16 @@ export async function handleEvent(
       const path = eventConfig.body.substring(6);
       body = path === 'form' ? eventData : getValueByPath(context.data, path);
     } else if (typeof eventConfig.body === 'object') {
-      body = resolveDataBindings(eventConfig.body, context.data);
+      body = resolveDataBindings(
+        eventConfig.body as Record<string, unknown>,
+        context.data,
+      );
     } else {
       body = eventData;
     }
 
     // Send API request
-    const response = await fetch(eventConfig.url, {
+    const response = await fetch(eventConfig.url as string, {
       method: eventConfig.method || 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -321,7 +335,7 @@ export async function handleEvent(
       throw new Error(`API call failed: ${response.statusText}`);
     }
 
-    const result = await response.json();
+    const result: unknown = await response.json();
 
     // Trigger update callback
     context.onUpdate?.({

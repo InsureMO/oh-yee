@@ -153,7 +153,7 @@ export const defaultComponentMap: Record<string, ComponentMapping> = {
       // onFinish: props.onSubmit || props.onFinish,
       initialValues: props.initialValues,
       children: props.children,
-      onFinish: (values: any) => {
+      onFinish: (values: Record<string, unknown>) => {
         context?.onUpdate?.({
           data: values,
         });

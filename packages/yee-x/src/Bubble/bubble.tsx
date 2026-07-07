@@ -5,14 +5,17 @@ import { GlobalContext } from '../Global-Context';
 import MD from '../Markdown';
 import merger from '../utils/mergeContextToProps';
 import { BubbleListCtx } from './bubble-list';
-import { BubbleProps } from './interface';
+import { BubbleListProps, BubbleProps } from './interface';
 import './style/index.less';
 
 const Bubble: FC<
   BubbleProps & {
+    prefixCls?: string;
+    role?: string;
     latest?: boolean;
     item?: BubbleProps;
     $key?: string | number;
+    parser?: BubbleListProps['parser'];
   }
 > = (baseProps) => {
   const { bubble } = useContext(GlobalContext);
@@ -56,12 +59,12 @@ const Bubble: FC<
     </div>
   ) : null;
 
-  const parserContent = (content: any) => {
+  const parserContent = (content: React.ReactNode) => {
     if (parser) {
       if (parser === 'markdown') {
-        return <MD markdown={content} />;
+        return <MD markdown={content as string} />;
       } else if (typeof parser === 'function') {
-        return parser({ role, content });
+        return parser({ role: role as string, content: content as string });
       }
       return content;
     }
@@ -86,7 +89,7 @@ const Bubble: FC<
       style={styles.footer}
     >
       {typeof footer === 'function'
-        ? footer({ role, content, latest, loading, item })
+        ? footer({ role: role as string, content, latest, loading, item })
         : footer}
     </div>
   ) : null;

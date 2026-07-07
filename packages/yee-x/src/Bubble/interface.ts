@@ -50,6 +50,7 @@ export interface BubbleProps {
         content: React.ReactNode;
         latest?: boolean;
         loading?: boolean;
+        item?: BubbleProps;
       }) => React.ReactNode);
   /**
    * Loading state

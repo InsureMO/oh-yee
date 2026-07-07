@@ -2,6 +2,19 @@ import { useMount } from '@rainbow-oh/yee-c';
 import { useCallback, useEffect, useRef } from 'react';
 import { IndepWinProps } from './interface';
 
+// Minimal typings for the Document Picture-in-Picture API
+// (not yet part of the bundled TS DOM lib)
+interface DocumentPictureInPicture {
+  requestWindow: (options?: {
+    width?: number;
+    height?: number;
+  }) => Promise<Window>;
+  window: Window;
+}
+type WindowWithPIP = Window & {
+  documentPictureInPicture?: DocumentPictureInPicture;
+};
+
 const extractOriginElementStyles = (
   document: Document,
   win: Window,
@@ -25,8 +38,8 @@ const extractOriginElementStyles = (
   Array.from(document.styleSheets).forEach((styleSheet) => {
     try {
       const cssRules = Array.from(styleSheet.cssRules)
-        .filter((rule) => !!(rule as any).selectorText)
-        .filter((rule) => (rule as any).selectorText.startsWith(cls))
+        .filter((rule) => !!(rule as CSSStyleRule).selectorText)
+        .filter((rule) => (rule as CSSStyleRule).selectorText.startsWith(cls))
         .map((rule) => rule.cssText);
       if (cssRules.length) {
         const textCss = cssRules.join('\n');
@@ -34,8 +47,8 @@ const extractOriginElementStyles = (
         style.textContent = textCss;
         win.document.head.appendChild(style);
       }
-    } catch (e: any) {
-      throw new Error(e);
+    } catch (e: unknown) {
+      throw new Error(e as string);
       //   const link = document.createElement('link');
       //   link.rel = 'stylesheet';
       //   link.type = styleSheet.type;
@@ -81,14 +94,16 @@ const IndepWin = (props: IndepWinProps) => {
     const ele = getElement(element, id);
     if ('documentPictureInPicture' in window) {
       const pipWindow = await (
-        window as any
-      ).documentPictureInPicture.requestWindow({
+        window as WindowWithPIP
+      ).documentPictureInPicture!.requestWindow({
         width: width, // Window width
         height: height, // Window height
       });
       //   Clone the target node and append it to the PIP window (the original node would disappear otherwise)
       const cloned = ele?.cloneNode(true);
-      pipWindow.document.body.appendChild(cloned);
+      if (cloned) {
+        pipWindow.document.body.appendChild(cloned);
+      }
 
       if (extractStyles) {
         extractStyles(document, pipWindow);
@@ -114,7 +129,7 @@ const IndepWin = (props: IndepWinProps) => {
   }, [element, id]);
 
   const onClose = useCallback(() => {
-    (window as any).documentPictureInPicture.window.close();
+    (window as WindowWithPIP).documentPictureInPicture!.window.close();
     opened.current = false;
   }, []);
 

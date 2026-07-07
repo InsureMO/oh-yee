@@ -179,11 +179,14 @@ const ComprehensiveDemo: React.FC = () => {
       };
 
       // Add new user to table
+      const existingUsers =
+        (newSchema.data?.users as Array<Record<string, unknown>> | undefined) ||
+        [];
       newSchema.data = {
         ...newSchema.data,
         users: [
-          ...(newSchema.data?.users || []),
-          { key: newSchema.data?.users?.length + 1, ...update.data },
+          ...existingUsers,
+          { key: existingUsers.length + 1, ...update.data },
         ],
       };
 

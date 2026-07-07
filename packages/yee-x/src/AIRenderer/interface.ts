@@ -7,13 +7,13 @@
 export interface UISchema {
   root?: string; // Root component ID
   components: Record<string, Component>; // Component definitions (object form)
-  data?: Record<string, any>; // Data model
+  data?: Record<string, unknown>; // Data model
 }
 
 // Component - Component definition
 export interface Component {
   type: string; // Component type (e.g. "form", "input")
-  props: Record<string, any>; // Component properties
+  props: Record<string, unknown>; // Component properties
   children?: string[]; // Child component ID array
   events?: Record<string, EventConfig>; // Event configuration
 }
@@ -23,32 +23,32 @@ export interface EventConfig {
   type: 'api' | 'update' | 'custom'; // Event type
   url?: string; // API endpoint
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  body?: any; // Request body (supports $data. references)
+  body?: unknown; // Request body (supports $data. references)
   headers?: Record<string, string>; // Request headers
   updatePath?: string; // Data update path (for update type)
   action?: string; // Custom action name (for custom type)
-  payload?: any; // Custom data (for custom type)
+  payload?: unknown; // Custom data (for custom type)
 }
 
 // StreamMessage - Streaming update message
 export interface StreamMessage {
   op: 'init' | 'add' | 'update' | 'delete' | 'setData';
   path: string; // Operation path
-  value?: any; // Value
+  value?: unknown; // Value
 }
 
 // ComponentMapping - Component mapping configuration
 export interface ComponentMapping {
-  component: React.ComponentType<any>; // React component
+  component: React.ElementType; // React component
   propsTransformer?: (
-    props: Record<string, any>,
+    props: Record<string, unknown>,
     context: RenderContext,
-  ) => Record<string, any>;
+  ) => Record<string, unknown>;
 }
 
 // RenderContext - Rendering context
 export interface RenderContext {
-  data: Record<string, any>; // Current data model
+  data: Record<string, unknown>; // Current data model
   schema: UISchema; // Current UI Schema
   componentId?: string; // Current component ID
   onUpdate?: (update: Partial<UISchema>) => void; // Update callback

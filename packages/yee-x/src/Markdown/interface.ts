@@ -1,4 +1,4 @@
-import { Components, UrlTransform } from 'react-markdown';
+import type { Components, Options, UrlTransform } from 'react-markdown';
 
 export interface MarkdownProps {
   /**
@@ -24,11 +24,11 @@ export interface MarkdownProps {
   /**
    * Rehype plugin list for processing HTML
    */
-  rehypePlugins?: Array<any>;
+  rehypePlugins?: NonNullable<Options['rehypePlugins']>;
   /**
    * Remark plugin list for processing text
    */
-  remarkPlugins?: Array<any>;
+  remarkPlugins?: NonNullable<Options['remarkPlugins']>;
   /**
    * Whether to escape HTML instead of rendering it
    * @default false
