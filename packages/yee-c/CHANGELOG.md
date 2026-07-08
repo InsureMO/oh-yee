@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.5.1
+
+### Patch Changes
+
+- d6bb05d: feat: update Descriptions and Select components with size support and improve styling
+
 ## 0.5.0
 
 ### Minor Changes
