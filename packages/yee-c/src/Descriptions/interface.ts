@@ -1,7 +1,13 @@
 import type React from 'react';
 import type { DataAttributeProps } from '../utils/types';
 
-export type SemanticDOM = 'header' | 'title' | 'extra' | 'label' | 'content';
+export type SemanticDOM =
+  | 'header'
+  | 'title'
+  | 'extra'
+  | 'label'
+  | 'content'
+  | 'table';
 
 export interface DescriptionsItem {
   key?: React.Key;

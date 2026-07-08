@@ -224,7 +224,10 @@ const Descriptions = React.forwardRef<HTMLDivElement, DescriptionsProps>(
     return (
       <div {...rest} className={cls} style={style} ref={ref}>
         {renderHeader()}
-        <table className={`${prefixCls}-table`}>
+        <table
+          className={clsx(`${prefixCls}-table`, classNames?.table)}
+          style={styles?.table}
+        >
           <tbody>{renderRows()}</tbody>
         </table>
       </div>

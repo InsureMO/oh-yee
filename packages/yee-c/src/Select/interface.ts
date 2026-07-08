@@ -1,3 +1,4 @@
+import type { SelectorProps } from '../Selector';
 import type { DataAttributeProps } from '../utils/types';
 
 export type Option = {
@@ -23,7 +24,8 @@ export type Option = {
   [prop: string]: any;
 };
 
-export interface SelectProps extends DataAttributeProps {
+export interface SelectProps
+  extends DataAttributeProps, Pick<SelectorProps, 'size'> {
   /**
    * Custom class name prefix
    * */

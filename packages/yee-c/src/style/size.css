@@ -482,6 +482,10 @@
   --yee-selector-arrow-right: 8px;
   --yee-selector-clear-right: 8px;
   --yee-selector-clear-padding: 1px;
+  --yee-selector-small-padding: 0 6px;
+  --yee-selector-small-height: 24px;
+  --yee-selector-large-padding: 4px 12px;
+  --yee-selector-large-height: 40px;
   --yee-tags-height: 32px;
   --yee-tags-input-font-size: 14px;
   --yee-tags-input-line-height: 22px;

@@ -16,6 +16,7 @@ export default () => {
         value={value}
         onChange={(val) => setValue(val as string)}
         options={options}
+        size="small"
         style={{ width: 200 }}
         placeholder="Small Size"
       />
@@ -32,6 +33,7 @@ export default () => {
         value={value}
         onChange={(val) => setValue(val as string)}
         options={options}
+        size="large"
         style={{ width: 200 }}
         placeholder="Large Size"
       />
