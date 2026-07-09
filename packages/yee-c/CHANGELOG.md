@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.6.0
+
+### Minor Changes
+
+- 14838d0: feat(Table): enhance table components with custom rendering and grouping support
+
 ## 0.5.1
 
 ### Patch Changes
