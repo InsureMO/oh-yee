@@ -75,7 +75,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
       : [];
   }, [dataSource, rowKey, getRowKey]);
 
-  const { wrapedColumns, columns } = useColumns({
+  const { wrapedColumns, headerRows } = useColumns({
     children,
     columns: propColumns,
     expandable,
@@ -92,7 +92,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     data: sortedData,
     sorters,
     onSort,
-  } = useSorter({ data: filteredData, columns });
+  } = useSorter({ data: filteredData, columns: wrapedColumns });
   // Pagination
   const { pageData, current, pageSize, pagination } = usePagination({
     data: sortedData,
@@ -120,7 +120,6 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   const {
     selectedRowKeys,
     checkedAll,
-    pageDataRowKeys,
     onCheckAll,
     onChange: onSelectionChange,
   } = useSelection({ pageData, dataSource, getRowKey, rowSelection, allKeys });
@@ -180,7 +179,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
         prefixCls={prefixCls}
         header={header}
         download={download}
-        columns={columns}
+        columns={wrapedColumns}
         pageData={pageData}
         dataSource={dataSource}
       />
@@ -195,8 +194,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     return (
       <THeader
         {...ths}
-        columns={wrapedColumns}
-        pageDataRowKeys={pageDataRowKeys}
+        headerRows={headerRows}
         checkedAll={checkedAll}
         sorters={sorters}
         onSort={onSort}
@@ -243,7 +241,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
       <TableCtx.Provider
         value={{
           prefixCls,
-          columns,
+          columns: wrapedColumns,
           classNames,
           styles,
           components,

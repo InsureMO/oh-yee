@@ -8,6 +8,10 @@ export type {
   PaginationType,
   RowSelectionType,
   TableProps,
+  TableComponents,
+  TableBodyComponents,
+  TableRowRendererProps,
+  HeaderCell,
   onChangeParams,
 } from './interface';
 

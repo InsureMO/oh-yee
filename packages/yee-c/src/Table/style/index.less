@@ -153,7 +153,25 @@
 
   &-tbody {
     @{pls}-cell {
-      background-color: var(--yee-table-cell-bg-color, #fff);
+      background-color: var(--yee-table-cell-bg-color, inherit);
+    }
+
+    @{pls}-row {
+      &:hover {
+        background-color: var(--yee-table-tbody-tr-hover-bg-color);
+      }
+    }
+  }
+
+  &-odd-row {
+    > @{pls}-cell {
+      background-color: var(--yee-table-odd-row-bg-color);
+    }
+  }
+
+  &-even-row {
+    > @{pls}-cell {
+      background-color: var(--yee-table-even-row-bg-color);
     }
   }
 

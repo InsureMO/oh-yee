@@ -56,27 +56,38 @@ const TableRow: React.FC<TableRowProps> = (props) => {
   };
 
   const getSelection = (column: WrapedColumnProps) => {
-    const { type, onCell, ...restCol } = column;
-    const key = record[rowKey];
-    const props = onCell ? onCell(record, index) : {};
-    const checked = selectedRowKeys?.includes(key);
+    const { type, disabled: colDisabled, onCell } = column;
+    const rowKeyValue = record[rowKey];
+    const props = (onCell?.(record, index) || {}) as Record<string, unknown>;
+    const checked = selectedRowKeys?.includes(rowKeyValue);
 
+    // rowSelection.disabled may be a boolean, a per-row array, or a function
+    const disabled =
+      typeof colDisabled === 'function'
+        ? colDisabled(record, index)
+        : Array.isArray(colDisabled)
+          ? colDisabled[index]
+          : !!colDisabled;
+
+    // Only forward input-relevant props. Spreading the whole column would leak
+    // rowSelection fields (selectedRowKeys/selectAll/...) and the synthetic
+    // `key` onto the DOM <input>.
     const commonProps = {
-      // ...rest,
-      ...restCol,
-      ...props,
       checked,
-      value: key,
+      value: rowKeyValue,
       onChange: onSelectionChange,
+      disabled,
+      ...props,
     };
 
     if (type === 'checkbox') {
-      // @ts-ignore
-      return <Checkbox {...commonProps} />;
-    } else {
-      // @ts-ignore
-      return <Radio {...commonProps} />;
+      return (
+        <Checkbox
+          {...(commonProps as React.ComponentProps<typeof Checkbox>)}
+        />
+      );
     }
+    return <Radio {...(commonProps as React.ComponentProps<typeof Radio>)} />;
   };
 
   let colSpanStart = Infinity;

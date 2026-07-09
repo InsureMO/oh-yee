@@ -2,8 +2,18 @@ import React, { useMemo } from 'react';
 import useDeepCompareMemo from '../../hooks/useDeepCompareMemo';
 import deepClone from '../../utils/deepClone';
 import { handleColumns } from '../util';
+import {
+  flattenLeafColumns,
+  injectSelectionExpand,
+  parseHeaderRows,
+} from '../util/header';
 
-import { ColumnProps, ExpandableType, RowSelectionType } from '../interface';
+import type {
+  ColumnProps,
+  ExpandableType,
+  RowSelectionType,
+  WrapedColumnProps,
+} from '../interface';
 
 export default function useColumns({
   children,
@@ -22,15 +32,15 @@ export default function useColumns({
   const shouldRenderExpand = !!expandable;
 
   const getColumnsFromChild = (
-    children: React.ReactElement<ColumnProps>[],
+    childs: React.ReactElement<ColumnProps>[],
   ): Array<ColumnProps> | null => {
-    const columns: ColumnProps[] = [];
-    React.Children.forEach(children, (child) => {
+    const cols: ColumnProps[] = [];
+    React.Children.forEach(childs, (child) => {
       if (child) {
-        columns.push({ ...(child.props as ColumnProps) });
+        cols.push({ ...(child.props as ColumnProps) });
       }
     });
-    return columns.length ? columns : null;
+    return cols.length ? cols : null;
   };
 
   const childColumns: Array<ColumnProps> | null = useMemo(() => {
@@ -39,48 +49,21 @@ export default function useColumns({
       : null;
   }, [children]);
 
-  // Wrap columns
-  const wrapColumns = (columns: Array<ColumnProps>) => {
-    let result = deepClone(columns);
-    if (rowSelection) {
-      const { index = 1 } = rowSelection;
-      const loc = index - 1;
-      result.splice(loc, 0, {
-        width: 50,
-        ...rowSelection,
-        key: 'YEE_SELECTION_COL',
-      });
-    }
-    if (expandable) {
-      const { index = 1, visible = true } = expandable;
-      const loc = index ? index - 1 : rowSelection ? 1 : 0;
-      if (visible !== false) {
-        result.splice(loc, 0, {
-          width: 50,
-          ...expandable,
-          key: 'YEE_EXPAND_COL',
-        });
-      }
-    }
-    result = handleColumns(result);
-    return result;
-  };
-
-  // const [mergedColumns, setMergedColumns] = React.useState(
-  //   wrapColumns(childColumns || columns || []),
-  // );
-
-  // useDeepCompareEffect(() => {
-  //   const merged = wrapColumns(childColumns || columns || []);
-  //   setMergedColumns(merged);
-  // }, [childColumns, columns, shouldRenderSelection, shouldRenderExpand]);
-
-  const mergedColumns = useDeepCompareMemo(() => {
-    return wrapColumns(childColumns || columns || []);
+  // Build the column tree (with selection/expand injected at the top level),
+  // then derive both the flat leaf columns (body/colgroup/summary/sorter) and
+  // the 2D header rows (thead multi-level rendering).
+  const { wrapedColumns, headerRows } = useDeepCompareMemo(() => {
+    const base = (deepClone(childColumns || columns || []) ||
+      []) as WrapedColumnProps[];
+    const tree = injectSelectionExpand(base, rowSelection, expandable);
+    const leaves = flattenLeafColumns(tree);
+    const wraped = handleColumns(leaves);
+    const rows = parseHeaderRows(tree);
+    return { wrapedColumns: wraped, headerRows: rows };
   }, [childColumns, columns, shouldRenderSelection, shouldRenderExpand]);
 
   return {
-    wrapedColumns: mergedColumns,
-    columns: childColumns || columns,
+    wrapedColumns,
+    headerRows,
   };
 }

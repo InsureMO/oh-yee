@@ -22,6 +22,8 @@ A table displays rows of data.
 <code src="./demo/expand.tsx" title="Expandable" description="Expandable rows"></code>
 <code src="./demo/pagination.tsx" title="Pagination" description="Table with pagination"></code>
 <code src="./demo/column-filter.tsx" title="column filter" description="Table column filter"></code>
+<code src="./demo/grouping.tsx" title="Grouping" description="Multi-level header"></code>
+<code src="./demo/components-override.tsx" title="components override" description="tbody / row rendering that can be taken over by external libs (e.g. dnd-kit)"></code>
 ## API
 
 ### TableProps
@@ -33,7 +35,7 @@ A table displays rows of data.
 | style | `React.CSSProperties` | Custom root style | - |
 | classNames | `Partial<Record<SemanticType, string>>` | Semantic class names | - |
 | styles | `Partial<Record<SemanticType, React.CSSProperties>>` | Semantic styles | - |
-| components | `Partial<Record<SemanticType, React.ReactNode>>` | Custom table elements | - |
+| components | [`TableComponents`](#tablecomponents) | Custom table elements, can be taken over by external libs (e.g. dnd-kit) | - |
 | bordered | `boolean` | Show border | - |
 | columns | `ColumnProps[]` | Table column configuration | - |
 | children | `Array<React.ReactElement<ColumnProps>> | React.ReactElement<ColumnProps>` | Children elements | - |
@@ -77,7 +79,7 @@ A table displays rows of data.
 | width | `number \| string` | Column width | - |
 | title | `React.ReactNode` | Column title | - |
 | helper | `string \| React.ReactNode` | Help icon for column header | - |
-| children | `(record: Record<string, any>, rowIndex: number) => React.ReactNode` | Custom cell content | - |
+| children | `ColumnProps[]` | Sub-columns for header grouping (multi-level header); use `render` for custom cell content | - |
 | onCell | `(record: object, rowIndex: number) => object` | Cell props | - |
 | onHeaderCell | `(column: ColumnProps) => object` | Header cell props | - |
 | render | `(record: object, rowIndex: number) => React.ReactNode` | Custom render | - |
@@ -114,3 +116,29 @@ A table displays rows of data.
 | onExpand | `(expanded: boolean, record: Record<string, any>) => void` | Expand callback | - |
 | onExpandedRowsChange | `(expandedKeys?: Array<number \| string>) => void` | Expanded rows change callback | - |
 | expandedRowRender | `(record, index, page) => React.ReactNode` | Expanded row render | - |
+
+### TableComponents
+
+Seams exposed by Table so an external lib (e.g. dnd-kit) can take over rendering. **Table itself has no dependency on any drag library** — it only provides replacement points; drag logic is owned by the consumer.
+
+| Property | Type | Description | Default |
+| --- | --- | --- | --- |
+| body | `TableBodyComponents` | Replaceable body elements | - |
+
+#### TableBodyComponents
+
+| Property | Type | Description | Default |
+| --- | --- | --- | --- |
+| tbody | `React.ElementType` | Replace `<tbody>`; commonly used to wrap a `SortableContext` provider | - |
+| row | `React.ComponentType<TableRowRendererProps>` | Full-row takeover: consumer renders the whole `<tr>` + cells (can place a drag handle, etc.) | - |
+
+> Under full-row takeover, the consumer-rendered row **does not** get Table's auto selection / expand / colSpan / stripe row-level features. Table's pagination / sorting / filtering still apply (they mutate `dataSource`).
+
+#### TableRowRendererProps (received by components.body.row)
+
+| Property | Type | Description |
+| --- | --- | --- |
+| record | `Record<string, any>` | Current row data |
+| index | `number` | Current row index |
+| columns | `WrapedColumnProps[]` | Table-resolved columns |
+| rowKey | `string \| number` | Current row key value; usable as sortable id |

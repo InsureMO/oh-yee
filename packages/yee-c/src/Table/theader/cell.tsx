@@ -26,6 +26,8 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     internalFilters,
     style,
     width,
+    colSpan,
+    rowSpan,
     onHeaderCell,
     onSort,
     onInternalFilter,
@@ -141,6 +143,8 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
       className: cls,
       scope: 'col',
       style: styles,
+      colSpan,
+      rowSpan,
     };
   };
 

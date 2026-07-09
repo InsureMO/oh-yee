@@ -23,9 +23,11 @@ toc: 'content'
 <code src="./demo/expand.tsx" title="可展开" description="可展开行的表格"></code>
 <code src="./demo/pagination.tsx" title="分页" description="带分页的表格"></code>
 <code src="./demo/merge-cell.tsx" title="合并单元格" description="合并单元格的表格"></code>
+<code src="./demo/grouping.tsx" title="表头分组" description="多级表头"></code>
 <code src="./demo/summary.tsx" title="统计" description="表格的统计行"></code>
 <code src="./demo/filter.tsx" title="筛选" description="表格的筛选功能"></code>
 <code src="./demo/column-filter.tsx" title="列筛选" description="表格的列筛选功能"></code>
+<code src="./demo/components-override.tsx" title="自定义表格元素" description="可被外部（如 dnd-kit）接管的 tbody / 行渲染"></code>
 
 ## API
 
@@ -38,7 +40,7 @@ toc: 'content'
 | style             | `React.CSSProperties`                                                       | 自定义根样式                         | -      |
 | classNames        | `Partial<Record<SemanticType, string>>`                                     | 语义化类名                           | -      |
 | styles            | `Partial<Record<SemanticType, React.CSSProperties>>`                        | 语义化样式                           | -      |
-| components        | `Partial<Record<SemanticType, React.ReactNode>>`                            | 自定义表格元素                       | -      |
+| components        | [`TableComponents`](#tablecomponents)                                       | 自定义表格元素，可被外部（如 dnd-kit）接管 | -      |
 | bordered          | `boolean`                                                                   | 是否展示外边框和列边框               | -      |
 | columns           | `ColumnProps[]`                                                             | 表格列的配置信息                     | -      |
 | children          | `Array<React.ReactElement<ColumnProps>> \| React.ReactElement<ColumnProps>` | 子元素                               | -      |
@@ -82,7 +84,7 @@ toc: 'content'
 | width        | `number \| string`                                                   | 设置宽度                       | -      |
 | title        | `React.ReactNode`                                                    | 设置列头显示文本               | -      |
 | helper       | `string \| React.ReactNode`                                          | 设置表头help 帮助图标          | -      |
-| children     | `(record: Record<string, any>, rowIndex: number) => React.ReactNode` | 回调函数，用于自定义单元格内容 | -      |
+| children     | `ColumnProps[]`                                                     | 子列，用于表头分组（多级表头）；自定义单元格内容请用 `render` | -      |
 | onCell       | `(record: object, rowIndex: number) => object`                       | 设置单元格属性                 | -      |
 | onHeaderCell | `(column: ColumnProps) => object`                                    | 设置表头单元格属性             | -      |
 | render       | `(record: Record<string, any>, rowIndex: number) => React.ReactNode` | 自定义渲染函数                 | -      |
@@ -119,3 +121,29 @@ toc: 'content'
 | onExpand               | `(expanded: boolean, record: Record<string, any>) => void` | 点击展开图标时触发       | -      |
 | onExpandedRowsChange   | `(expandedKeys?: Array<number \| string>) => void`         | 展开的行变化时触发       | -      |
 | expandedRowRender      | `(record, index, page) => React.ReactNode`                 | 额外的展开行             | -      |
+
+### TableComponents
+
+Table 暴露的"可被外部接管"接缝。**Table 本身不依赖任何拖拽库**，仅提供替换点；dnd 等逻辑由消费方持有。
+
+| 属性名 | 类型                  | 描述             | 默认值 |
+| ------ | --------------------- | ---------------- | ------ |
+| body   | `TableBodyComponents` | 可替换的表体元素 | -      |
+
+#### TableBodyComponents
+
+| 属性名 | 类型                                       | 描述                                                          | 默认值 |
+| ------ | ------------------------------------------ | ------------------------------------------------------------- | ------ |
+| tbody  | `React.ElementType`                        | 替换 `<tbody>`，常用于在外部包 `SortableContext` 等 Provider  | -      |
+| row    | `React.ComponentType<TableRowRendererProps>` | 整行接管：消费方自行渲染 `<tr>` + 单元格（可放拖拽手柄等）    | -      |
+
+> 整行接管时，消费方渲染的行**不享受** Table 的自动 selection / expand / colSpan / stripe 等行级特性；Table 的分页 / 排序 / 筛选仍生效（它们改变 `dataSource`）。
+
+#### TableRowRendererProps（components.body.row 收到的 props）
+
+| 属性名   | 类型                    | 描述                              |
+| -------- | ----------------------- | --------------------------------- |
+| record   | `Record<string, any>`   | 当前行数据                        |
+| index    | `number`                | 当前行索引                        |
+| columns  | `WrapedColumnProps[]`   | Table 解析后的列                  |
+| rowKey   | `string \| number`      | 当前行 key 值，可作 sortable id   |

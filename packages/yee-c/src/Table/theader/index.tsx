@@ -1,65 +1,84 @@
 import clsx from 'clsx';
 import React, { memo, useContext } from 'react';
 import Checkbox from '../../Checkbox';
-import { HeadCellProps, WrapedColumnProps } from '../interface';
+import type { HeaderCell } from '../interface';
 import { TableCtx } from '../table';
 import HeadCell from './cell';
 
 export interface TableHeadProps {
-  children?: React.ReactNode;
-  columns?: Array<HeadCellProps>;
-  isExpandable?: boolean;
-  expandedColumn?: number;
+  /**
+   * Resolved 2D header rows (one array per header row), produced by parseHeaderRows
+   */
+  headerRows?: HeaderCell[][];
 }
 
 const TableHead: React.FC<any> = (props) => {
-  const { columns, onCheckAll, checkedAll, onHeaderRow, ...rest } = props;
+  const { headerRows = [], onCheckAll, checkedAll, onHeaderRow, ...rest } =
+    props;
 
   const { prefixCls } = useContext(TableCtx);
 
-  const renderHeadCell = () => {
-    return columns.map((column: WrapedColumnProps, index: number) => {
-      const { key, type, visible } = column;
-      if (key === 'YEE_SELECTION_COL') {
-        const common = {
-          className: `${prefixCls}-cell ${prefixCls}-selection-col`,
-          scope: 'col',
-          key: 'title-column-selection',
-        };
-        return (
-          <th {...common} key={column.key || column.dataIndex}>
-            {type === 'checkbox' ? (
-              <Checkbox checked={checkedAll} onChange={onCheckAll} />
-            ) : null}
-          </th>
-        );
-      }
-      if (key === 'YEE_EXPAND_COL' && visible !== false) {
-        return (
-          <th
-            className={clsx(`${prefixCls}-cell`, `${prefixCls}-expand-col`)}
-            scope="col"
-            key="title-column-expandable"
-          ></th>
-        );
-      }
+  const renderCell = (
+    cell: HeaderCell,
+    rowIndex: number,
+    colIndex: number,
+  ) => {
+    const { column, colSpan, rowSpan } = cell;
+    const { key, type, visible } = column;
+    const cellKey =
+      'title-column-' +
+      (column.key || column.dataIndex || `${rowIndex}-${colIndex}`);
+
+    if (key === 'YEE_SELECTION_COL') {
       return (
-        <HeadCell
-          {...rest}
-          {...column}
-          key={'title-column-' + (column.key || column.dataIndex || index)}
+        <th
+          className={`${prefixCls}-cell ${prefixCls}-selection-col`}
+          scope="col"
+          key={cellKey}
+          colSpan={colSpan}
+          rowSpan={rowSpan}
+        >
+          {type === 'checkbox' ? (
+            <Checkbox checked={checkedAll} onChange={onCheckAll} />
+          ) : null}
+        </th>
+      );
+    }
+    if (key === 'YEE_EXPAND_COL' && visible !== false) {
+      return (
+        <th
+          className={clsx(`${prefixCls}-cell`, `${prefixCls}-expand-col`)}
+          scope="col"
+          key={cellKey}
+          colSpan={colSpan}
+          rowSpan={rowSpan}
         />
       );
-    });
+    }
+    return (
+      <HeadCell
+        {...rest}
+        {...column}
+        colSpan={colSpan}
+        rowSpan={rowSpan}
+        key={cellKey}
+      />
+    );
   };
-
-  const rowProps = onHeaderRow ? onHeaderRow(columns) : {};
 
   return (
     <thead className={clsx(`${prefixCls}-thead`)}>
-      <tr {...rowProps} key="thead">
-        {renderHeadCell()}
-      </tr>
+      {headerRows.map((row: HeaderCell[], rowIndex: number) => {
+        const rowColumns = row.map((cell) => cell.column);
+        const rowProps = onHeaderRow ? onHeaderRow(rowColumns) : {};
+        return (
+          <tr {...rowProps} key={`thead-row-${rowIndex}`}>
+            {row.map((cell, colIndex) =>
+              renderCell(cell, rowIndex, colIndex),
+            )}
+          </tr>
+        );
+      })}
     </thead>
   );
 };

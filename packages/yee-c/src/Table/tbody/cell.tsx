@@ -11,7 +11,6 @@ export interface BodyCellProps {
   fixedToLeft?: number;
   current: number;
   pageSize: number;
-  children?: (record: Record<string, any>, index: number) => React.ReactNode;
 }
 
 const TableCell: React.FC<BodyCellProps> = (props) => {
@@ -27,7 +26,6 @@ const TableCell: React.FC<BodyCellProps> = (props) => {
     className,
     styles,
     classNames,
-    children,
     onCell,
     render,
   } = column;
@@ -37,10 +35,6 @@ const TableCell: React.FC<BodyCellProps> = (props) => {
   const renderChildren = () => {
     if (render) {
       return typeof render === 'function' ? render(record, rowIndex) : render;
-    }
-    if (typeof children === 'function') {
-      // @ts-ignore
-      return children(record, rowIndex);
     }
     return (
       <div

@@ -70,6 +70,14 @@ export interface HeadCellProps extends Omit<WrapedColumnProps, 'title'> {
   internalFilters?: { [dataIndex: string]: boolean }; // Whether this column is filtered
   onSort?: (dataIndex: string, sorter: any) => void;
   onInternalFilter?: (dataIndex: string, value: string) => void;
+  /**
+   * Horizontal span, used for grouped header cells
+   */
+  colSpan?: number;
+  /**
+   * Vertical span, used for grouped header cells
+   */
+  rowSpan?: number;
 }
 
 // Row selection config
@@ -252,9 +260,9 @@ export interface ColumnProps {
    */
   helper?: string | React.ReactNode;
   /**
-   * Callback function for custom cell content
+   * Sub-columns for header grouping (multi-level header). Use cell `render` for custom cell content.
    */
-  children?: (record: Record<string, any>, rowIndex: number) => React.ReactNode;
+  children?: ColumnProps[];
   /**
    * Set cell properties
    */
@@ -287,7 +295,54 @@ export interface WrapedColumnProps
    */
 }
 
+/**
+ * A header cell resolved from the column tree, with computed span info for multi-level headers.
+ */
+export interface HeaderCell {
+  /**
+   * The source wrapped column (leaf or group)
+   */
+  column: WrapedColumnProps;
+  /**
+   * Horizontal span (number of leaf columns covered)
+   */
+  colSpan: number;
+  /**
+   * Vertical span (number of header rows covered)
+   */
+  rowSpan: number;
+  /**
+   * Whether this cell has sub-columns (group header)
+   */
+  hasSubColumns?: boolean;
+}
+
 type DownloadType = ButtonProps;
+
+/**
+ * 行接管渲染器收到的 props（components.body.row）
+ */
+export interface TableRowRendererProps {
+  record: Record<string, any>;
+  index: number;
+  columns: WrapedColumnProps[];
+  /** 当前行 key 值（= record[rowKey]），可作 sortable id */
+  rowKey: string | number;
+}
+
+/**
+ * 可被外部接管的 <tbody> / 行渲染
+ */
+export interface TableBodyComponents {
+  /** 替换 <tbody>；常用于在外部包 SortableContext 等 Provider */
+  tbody?: React.ElementType;
+  /** 整行接管：消费方自行渲染 <tr> + 单元格（含拖拽手柄等） */
+  row?: React.ComponentType<TableRowRendererProps>;
+}
+
+export interface TableComponents {
+  body?: TableBodyComponents;
+}
 
 export type SemanticProps = {
   /**
@@ -301,7 +356,7 @@ export type SemanticProps = {
   /**
    * Custom table elements
    */
-  components?: Partial<Record<SemanticType, React.ReactNode>>;
+  components?: TableComponents;
 };
 
 export interface HeaderProps extends SemanticProps {
@@ -358,11 +413,14 @@ export interface TableRowProps {
   stripe?: boolean;
   expandedKeyType?: string;
   onRow?: (record: Record<string, any>, index: number) => Record<string, any>;
-  rowClassName?: (record: Record<string, any>, index: number) => string;
+  rowClassName?: (
+    record: Record<string, any>,
+    index: number,
+  ) => string | undefined;
   rowStyle?: (
     record: Record<string, any>,
     index: number,
-  ) => React.CSSProperties;
+  ) => React.CSSProperties | undefined;
   onDoubleClick?: (
     record: Record<string, any>,
     event: React.MouseEvent<HTMLTableRowElement>,
@@ -473,7 +531,7 @@ export interface TableProps
   /**
    * Custom table elements
    */
-  components?: Partial<Record<SemanticType, React.ReactNode>>;
+  components?: TableComponents;
   /**
    * Whether to show outer and column borders
    */
@@ -519,11 +577,11 @@ export interface TableProps
   /**
    * Row class name, unlike classNames, this prop can be set dynamically via a function
    */
-  rowClassName?: (record: object) => string;
+  rowClassName?: (record: object) => string | undefined;
   /**
    * Row style, unlike styles, this prop can be set dynamically via a function
    */
-  rowStyle?: (record: object) => React.CSSProperties;
+  rowStyle?: (record: object) => React.CSSProperties | undefined;
   /**
    * Pagination config
    */
