@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.6.1
+
+### Patch Changes
+
+- cbef1f9: feat(Anchor, Dialog, Input, TextArea): enhance components with improved styling and semantic structure
+
 ## 0.6.0
 
 ### Minor Changes
