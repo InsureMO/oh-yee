@@ -1,7 +1,7 @@
 import { ButtonType } from '../Button';
 import type { DataAttributeProps } from '../utils/types';
 
-export type SemanticDOM = 'content' | 'footer' | 'mask';
+export type SemanticDOM = 'content' | 'header' | 'body' | 'footer' | 'mask';
 
 export interface DialogProps extends DataAttributeProps {
   /**

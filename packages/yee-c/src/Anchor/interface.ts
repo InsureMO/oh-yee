@@ -46,7 +46,7 @@ export interface AnchorItemProps {
   children?: React.ReactNode;
 }
 
-export type AnchorSemanticDOM = 'item' | 'active' | 'content';
+export type AnchorSemanticDOM = 'item' | 'active' | 'content' | 'label';
 
 export interface AnchorProps extends DataAttributeProps {
   /**

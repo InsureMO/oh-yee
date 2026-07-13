@@ -1,4 +1,5 @@
 :root {
+  --yee-font-family: inherit;
   /* ── z-index 基础层级 ── */
   --yee-z-index-fixed: 990; /* L1 吸顶 */
   --yee-z-index-mask: 1000; /* L2 遮罩背景 */

@@ -171,11 +171,19 @@ const Dialog = (baseprops: DialogProps) => {
             ></Button>
           ) : null}
           {title ? (
-            <div className={`${prefixCls}-header`}>
+            <div
+              className={clsx(`${prefixCls}-header`, classNames?.header)}
+              style={styles?.header}
+            >
               <div className={`${prefixCls}-title`}>{title}</div>
             </div>
           ) : null}
-          <div className={`${prefixCls}-body`}>{children}</div>
+          <div
+            className={clsx(`${prefixCls}-body`, classNames?.body)}
+            style={styles?.body}
+          >
+            {children}
+          </div>
           {renderFooter()}
         </div>
       </div>

@@ -44,10 +44,14 @@ const AnchorItem: React.FC<AnchorItemProps> = (props) => {
     paddingLeft: `${level * INDENT_WIDTH}px`,
   };
 
-  const renderItem = (
+  const node = (
     <li className={cls} style={itemStyle} {...rest}>
       <a href={`#${targetKey}`} onClick={handleClick}>
-        <span className={`${prefixCls}-item-label`} title={String(title)}>
+        <span
+          className={clsx(`${prefixCls}-item-label`, classNames?.label)}
+          style={styles?.label}
+          title={String(title)}
+        >
           {title}
         </span>
       </a>
@@ -56,7 +60,7 @@ const AnchorItem: React.FC<AnchorItemProps> = (props) => {
 
   return (
     <>
-      {renderItem}
+      {node}
       {children}
     </>
   );
