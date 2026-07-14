@@ -21,6 +21,7 @@ Select component for choosing from a set of options.
 <code src="./demo/multiple.tsx" title="Multiple" description="Multiple selection mode"></code>
 <code src="./demo/search.tsx" title="Search" description="Searchable Select"></code>
 <code src="./demo/tags.tsx" title="Tags" description="Tags mode Select"></code>
+<code src="./demo/orphan.tsx" title="Orphan Value" description="Display and custom styling when the value is not in options"></code>
 <code src="./demo/virtual.tsx" title="Virtual Scroll" description="Virtual scrolling for large datasets (thousands of options)"></code>
 
 ## API
@@ -45,6 +46,8 @@ Select component for choosing from a set of options.
 | codeTableName | `string` | Code table name | - |
 | optionFilterProp | `string` | Property to filter by when searching | `label` |
 | optionLabelProp | `string \| (() => string)` | Property to display in the input box | - |
+| orphanClassName | `string` | Extra class name for the displayed value when it is not in `options` (orphan value). An orphan value is shown as the raw value itself by default | - |
+| orphanStyle | `React.CSSProperties` | Extra inline style for the displayed value when it is not in `options` (orphan value) | - |
 | onChange | `(value: string \| number \| Array<string \| number>, options?: Option \| undefined \| Option[]) => void` | Value change callback | - |
 | onFilter | `(value: string, options: Array<Option>) => Array<Option>` | Search callback | - |
 | virtual | `boolean` | Enable virtual scrolling. Only the options in the visible window are rendered, so the DOM node count stays constant regardless of the total. Recommended for hundreds or thousands of options | `false` |

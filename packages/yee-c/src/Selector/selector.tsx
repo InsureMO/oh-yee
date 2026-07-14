@@ -37,6 +37,8 @@ const Selector = React.forwardRef(
       disabled,
       options = [],
       selectedKeys,
+      orphanClassName,
+      orphanStyle,
       allowClear = true,
       placeholder,
       closable = true,
@@ -60,17 +62,29 @@ const Selector = React.forwardRef(
     });
 
     const tags = useMemo(() => {
-      return Array.isArray(options)
-        ? options
-            .filter((opt) => selectedKeys.includes(opt.value))
-            .map((opt) => ({
-              ...opt,
-              children:
-                typeof optionLabelProp === 'function'
-                  ? optionLabelProp(opt)
-                  : opt[optionLabelProp],
-            }))
-        : [];
+      if (!Array.isArray(options)) {
+        return [];
+      }
+      // 按 selectedKeys 顺序渲染；找不到的 key 作为孤儿值回退显示 value 本身
+      return selectedKeys.map((key) => {
+        const opt = options.find((o) => o.value === key);
+        if (opt) {
+          return {
+            ...opt,
+            children:
+              typeof optionLabelProp === 'function'
+                ? optionLabelProp(opt)
+                : opt[optionLabelProp],
+            _orphan: false,
+          };
+        }
+        return {
+          value: key,
+          label: String(key),
+          children: String(key),
+          _orphan: true,
+        };
+      });
     }, [options, selectedKeys, optionLabelProp]);
 
     const handleClick = () => {
@@ -148,37 +162,54 @@ const Selector = React.forwardRef(
 
     const renderContent = () => {
       if (multi) {
-        return tags.map((item: TagType & { children: any }, index) => {
-          const _closable =
-            typeof closable === 'function' ? closable(item) : closable;
-          return (
-            <Tag
-              {...item}
-              closable={_closable}
-              onClose={(e) => handleRemove(item, e)}
-              key={item.value || index}
-            />
-          );
-        });
+        return tags.map(
+          (item: TagType & { children: any; _orphan?: boolean }, index) => {
+            const { _orphan, ...tagRest } = item;
+            const _closable =
+              typeof closable === 'function' ? closable(item) : closable;
+            return (
+              <Tag
+                {...tagRest}
+                className={_orphan ? orphanClassName : undefined}
+                style={_orphan ? orphanStyle : undefined}
+                closable={_closable}
+                onClose={(e) => handleRemove(item, e)}
+                key={item.value || index}
+              />
+            );
+          },
+        );
       }
 
       const key = selectedKeys.length ? selectedKeys[0] : '';
       const opt = Array.isArray(options)
         ? options.find((opt) => opt.value === key)
         : null;
+      // 孤儿值：key 非空但在 options 中找不到时，回退显示 value 本身
+      const isOrphan = !opt && key !== '';
       const label = (
         opt
           ? typeof optionLabelProp === 'function'
             ? optionLabelProp(opt)
             : opt[optionLabelProp]
-          : null
+          : isOrphan
+            ? String(key)
+            : null
       ) as React.ReactNode;
 
       return (
         <>
           {renderSearch()}
           {label && (
-            <div className={`${prefixCls}-selection-item`}>{label}</div>
+            <div
+              className={clsx(
+                `${prefixCls}-selection-item`,
+                isOrphan && orphanClassName,
+              )}
+              style={isOrphan ? orphanStyle : undefined}
+            >
+              {label}
+            </div>
           )}
         </>
       );

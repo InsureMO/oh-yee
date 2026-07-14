@@ -149,15 +149,6 @@
     line-height: var(--yee-tag-large-height);
   }
 
-  &-close {
-    display: inline-flex;
-    padding: 0;
-    width: 16px;
-    height: 16px;
-    margin-left: var(--yee-tag-close-margin-left);
-    cursor: pointer;
-  }
-
   &-checkable {
     margin: var(--yee-tag-checkable-margin);
     color: var(--yee-tag-item-not-check-color);
@@ -176,5 +167,14 @@
     color: var(--yee-tag-item-check-active-color);
     background-color: var(--yee-tag-item-check-active-bg-color);
     border-color: var(--yee-tag-item-check-active-border-color);
+  }
+
+  & &-close {
+    display: inline-flex;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    margin-left: var(--yee-tag-close-margin-left);
+    cursor: pointer;
   }
 }

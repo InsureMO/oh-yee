@@ -6,7 +6,7 @@ import LazyRow from './lazy-row';
 import TableRow from './row';
 
 const TableBody: React.FC<TableBodyProps> = (props) => {
-  const { columns, pageData, lazyLoad, ...rest } = props;
+  const { columns, pageData, lazyLoad, noData, ...rest } = props;
 
   const { prefixCls, components, rowKey } = React.useContext(TableCtx);
   const { locale } = useLocale();
@@ -15,7 +15,7 @@ const TableBody: React.FC<TableBodyProps> = (props) => {
   const empty = (
     <tbody className={`${prefixCls}-tbody`}>
       <tr className={`${prefixCls}-no-record`}>
-        <td colSpan={999}>{tableLocale.emptyText}</td>
+        <td colSpan={999}>{noData ?? tableLocale.emptyText}</td>
       </tr>
     </tbody>
   );
@@ -60,7 +60,9 @@ const TableBody: React.FC<TableBodyProps> = (props) => {
   };
 
   const tbody = (
-    <BodyWrapper className={`${prefixCls}-tbody`}>{getRenderRows()}</BodyWrapper>
+    <BodyWrapper className={`${prefixCls}-tbody`}>
+      {getRenderRows()}
+    </BodyWrapper>
   );
 
   return tbody;

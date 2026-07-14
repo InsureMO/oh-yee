@@ -79,6 +79,17 @@ export interface PureSelectorProps {
    * Custom text displayed in the input
    */
   optionLabelProp?: string | ((option: TagType) => string);
+  /**
+   * Extra class name applied to the displayed value/tag when its key is not
+   * found in `options` (an "orphan" value). The orphan value is shown as the
+   * raw key itself; this lets you style it differently (e.g. to flag stale data).
+   */
+  orphanClassName?: string;
+  /**
+   * Extra inline style applied to the displayed value/tag when its key is not
+   * found in `options` (an "orphan" value).
+   */
+  orphanStyle?: React.CSSProperties;
 
   /**
    * Control the open state

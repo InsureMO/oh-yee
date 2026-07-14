@@ -96,6 +96,17 @@ export interface SelectProps
    */
   optionLabelProp?: 'string' | (() => string);
   /**
+   * Extra class name applied to the displayed value when it is not found
+   * in `options` (an "orphan" value). An orphan value is shown as the raw
+   * value itself; this lets you style it differently (e.g. to flag stale data).
+   */
+  orphanClassName?: string;
+  /**
+   * Extra inline style applied to the displayed value when it is not found
+   * in `options` (an "orphan" value).
+   */
+  orphanStyle?: React.CSSProperties;
+  /**
    * Callback when value changes
    */
   onChange?: (

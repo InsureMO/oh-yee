@@ -32,6 +32,8 @@ const Select = (baseprops: SelectProps) => {
     virtual,
     itemHeight,
     listHeight,
+    orphanClassName,
+    orphanStyle,
     ...rest
   } = props;
 
@@ -68,7 +70,9 @@ const Select = (baseprops: SelectProps) => {
     virtualApiRef.current?.scrollToIndex(index);
   }, []);
 
-  const getOptions = (keys: string | number | Array<string | number>) => {
+  const getOptions = (
+    keys: string | number | Array<string | number>,
+  ) => {
     if (keys === '' || keys === null) {
       return undefined;
     }
@@ -76,10 +80,20 @@ const Select = (baseprops: SelectProps) => {
       if (keys.length === 0) {
         return [];
       }
-      return options.filter((opt) => keys.includes(opt.value));
+      // 按 keys 顺序回填，找不到的 key 构造 label=value 的兜底项（孤儿值），
+      // 与 Selector 的显示保持一致，避免 onChange 第二参数丢值。
+      return keys.map((key) => {
+        const opt = options.find((o) => o.value === key);
+        return opt ?? { value: key, label: String(key) };
+      });
     }
 
-    return options.find((opt) => opt.value === keys);
+    return (
+      options.find((opt) => opt.value === keys) ?? {
+        value: keys,
+        label: String(keys),
+      }
+    );
   };
 
   const handleSelect = (
@@ -193,6 +207,8 @@ const Select = (baseprops: SelectProps) => {
         onRemove={handleRemove as any}
         onSearch={handleSearch}
         onKeyDown={onKeyDown}
+        orphanClassName={orphanClassName}
+        orphanStyle={orphanStyle}
       />
     </Trigger>
   );

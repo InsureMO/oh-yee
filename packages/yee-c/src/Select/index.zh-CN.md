@@ -21,6 +21,7 @@ toc: 'content'
 <code src="./demo/multiple.tsx" title="多选" description="多选模式"></code>
 <code src="./demo/search.tsx" title="可搜索" description="可搜索的Select"></code>
 <code src="./demo/tags.tsx" title="标签模式" description="标签模式的Select"></code>
+<code src="./demo/orphan.tsx" title="孤儿值" description="value 不在 options 中时的显示与自定义样式"></code>
 <code src="./demo/virtual.tsx" title="虚拟滚动" description="大数据量（几千条）下的虚拟滚动"></code>
 
 ## API
@@ -45,6 +46,8 @@ toc: 'content'
 | codeTableName | `string` | 代码表 | - |
 | optionFilterProp | `string` | 搜索时对比的属性 | `label` |
 | optionLabelProp | `string \| (() => string)` | 回填到选择框里的属性 | - |
+| orphanClassName | `string` | value 不在 options 中（孤儿值）时，给显示值追加的类名。孤儿值默认直接显示 value 本身 | - |
+| orphanStyle | `React.CSSProperties` | value 不在 options 中（孤儿值）时，给显示值追加的行内样式 | - |
 | onChange | `(value: string \| number \| Array<string \| number>, options?: Option \| undefined \| Option[]) => void` | 值改变时的回调函数 | - |
 | onFilter | `(value: string, options: Array<Option>) => Array<Option>` | 搜索时的回调函数 | - |
 | virtual | `boolean` | 是否开启虚拟滚动。开启后仅渲染可视区内的选项，DOM 节点数与数据总量无关，适合成百上千条数据 | `false` |
