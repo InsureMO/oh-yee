@@ -5,6 +5,7 @@ interface UseActiveBarOptions {
   activeKey: string | number;
   activetab: React.RefObject<HTMLElement | null>;
   activebar: React.RefObject<HTMLDivElement | null>;
+  listEle: React.RefObject<HTMLDivElement | null>;
   enabled: boolean;
 }
 
@@ -13,6 +14,7 @@ export function useActiveBar({
   activeKey,
   activetab,
   activebar,
+  listEle,
   enabled,
 }: UseActiveBarOptions) {
   const rafIdRef = useRef<number>(0);
@@ -20,18 +22,20 @@ export function useActiveBar({
   const moveActiveBar = useCallback(() => {
     const bar = activebar.current;
     const tab = activetab.current;
+    const nav = listEle.current;
 
-    if (!bar || !tab || !enabled) return;
+    if (!bar || !tab || !enabled || !nav) return;
 
     const rect = tab.getBoundingClientRect();
+    const listPaddingLeft = parseFloat(getComputedStyle(nav).paddingLeft) || 0;
+    const listPaddingTop = parseFloat(getComputedStyle(nav).paddingTop) || 0;
     const isHorizontal = direction === 'horizontal';
-
     if (isHorizontal) {
       bar.style.width = `${rect.width}px`;
-      bar.style.transform = `translateX(${tab.offsetLeft}px)`;
+      bar.style.transform = `translateX(${tab.offsetLeft - listPaddingLeft}px)`;
     } else {
       bar.style.height = `${rect.height}px`;
-      bar.style.transform = `translateY(${tab.offsetTop}px)`;
+      bar.style.transform = `translateY(${tab.offsetTop - listPaddingTop}px)`;
     }
   }, [direction, activetab, activebar, enabled]);
 

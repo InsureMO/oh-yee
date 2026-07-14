@@ -1,31 +1,26 @@
 import { Button, Form, Grid, Input, Radio, Space } from '@rainbow-oh/yee-c';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default () => {
   const [form] = Form.useForm();
+  const [layout, setLayout] = useState<'vertical' | 'horizontal'>('vertical');
 
   return (
     <div>
       <Radio.Group
-        defaultValue="vertical"
-        onChange={(value) => {
-          form.setFieldsValue({ layout: value });
-        }}
+        value={layout}
+        onChange={(value) => setLayout(value as 'vertical' | 'horizontal')}
         options={[
           { value: 'vertical', label: 'Vertical' },
           { value: 'horizontal', label: 'Horizontal' },
         ]}
-      ></Radio.Group>
+      />
 
       <br />
       <br />
 
-      <Form
-        form={form}
-        initialValues={{ layout: 'vertical' }}
-        layout="vertical"
-      >
-        <Grid cols={1}>
+      <Form form={form} initialValues={{}} layout={layout}>
+        <Grid cols={2}>
           <Form.Field name="name" label="Name" required>
             <Input placeholder="Please input your name" />
           </Form.Field>

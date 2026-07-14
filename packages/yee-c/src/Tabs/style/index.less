@@ -51,9 +51,9 @@
   padding: var(--yee-tabs-vertical-padding);
   overflow: hidden;
 
-  @{pls}-nav-wrap {
+  @{pls}-nav-track {
     height: 100%;
-    padding: var(--yee-tabs-vertical-nav-wrap-padding);
+    padding: var(--yee-tabs-vertical-nav-track-padding);
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -109,9 +109,9 @@
   overflow: hidden;
   transition: transform 3s ease-in-out;
 
-  &:not(@{pls}-card) {
-    background-color: var(--yee-tabs-bg-color);
-  }
+  // &:not(@{pls}-card) {
+  //   background-color: var(--yee-tabs-bg-color);
+  // }
 
   &@{pls}-nav-wrapper-left,
   &@{pls}-nav-wrapper-right {
@@ -141,7 +141,7 @@
   }
 
   &.center {
-    @{pls}-nav-wrap {
+    @{pls}-nav-track {
       justify-content: center;
     }
   }
@@ -261,7 +261,7 @@
     display: none;
   }
 
-  @{pls}-nav-wrap {
+  @{pls}-nav-track {
     padding: 0;
   }
 
@@ -274,6 +274,16 @@
 @{pls}-card {
   &@{pls} {
     background-color: var(--yee-tabs-card-bg-color);
+  }
+
+  &@{pls}-top {
+    @{pls}-nav-wrapper {
+      border-bottom: none;
+    }
+  }
+
+  @{pls}-container {
+    background-color: var(--yee-tabs-conatiner-bg-color);
   }
 
   &@{pls}-border-card {
@@ -313,7 +323,7 @@
 
 @{pls}-editable-card,
 @{pls}-card {
-  @{pls}-nav-wrap {
+  @{pls}-nav-track {
     padding: 0;
   }
 
@@ -344,16 +354,16 @@
   }
 }
 
-@{pls}-nav-wrap {
+@{pls}-nav-track {
   position: relative;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
 
-  &.is-scroll {
-    width: var(--yee-tabs-nav-wrap-scroll-width);
-    margin-left: var(--yee-tabs-nav-wrap-scroll-margin-left);
-  }
+  // &.is-scroll {
+  //   width: var(--yee-tabs-nav-track-scroll-width);
+  //   margin-left: var(--yee-tabs-nav-track-scroll-margin-left);
+  // }
 
   &::-webkit-scrollbar {
     display: none;
@@ -513,7 +523,7 @@
     }
   }
 
-  @{pls}-nav-wrap {
+  @{pls}-nav-track {
     padding: 0;
   }
 }

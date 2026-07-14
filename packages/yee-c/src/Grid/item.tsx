@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
+import omit from '../utils/omit';
 import type { GridItemProps } from './interface';
 
 const Item: React.FC<GridItemProps> = (props) => {
@@ -15,7 +16,7 @@ const Item: React.FC<GridItemProps> = (props) => {
     <div
       className={clsx(`${prefixCls}-item`, className)}
       style={{ ...spanStyle, ...style }}
-      {...rest}
+      {...omit(rest, ['colspan'])}
     >
       {children}
     </div>

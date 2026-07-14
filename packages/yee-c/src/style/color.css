@@ -903,6 +903,7 @@
   --yee-tabs-card-border-bg-color: var(--yee-color-bg-head);
   --yee-tabs-card-active-bg-color: var(--yee-color-bg-container);
   --yee-tabs-card-bg-color: transparent;
+  --yee-tabs-conatiner-bg-color: var(--yee-color-bg-container);
   --yee-tabs-header-custom-btn-text-color: var(--yee-text-color);
   --yee-tabs-header-custom-btn-text-hover-color: var(--yee-primary-color);
   --yee-tabs-header-custom-btn-text-active-color: var(--yee-primary-color);

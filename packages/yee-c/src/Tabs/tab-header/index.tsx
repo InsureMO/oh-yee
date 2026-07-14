@@ -93,6 +93,7 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
     activeKey,
     activetab,
     activebar,
+    listEle: navList,
     enabled: !type, // Only show active bar for non-card types
   });
 
@@ -161,7 +162,7 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
 
       <TabHeaderCtx.Provider value={contextValue}>
         <div
-          className={clsx(`${prefixCls}-nav-wrap`, classNames?.track)}
+          className={clsx(`${prefixCls}-nav-track`, classNames?.track)}
           style={styles?.track}
           ref={navContainer}
         >

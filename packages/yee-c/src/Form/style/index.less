@@ -1,16 +1,40 @@
 @pls: .yee-form;
 
-@{pls} {
-  &-horizontal {
-    @{pls}-item {
-      &-row {
-        display: flex;
-      }
+// Horizontal form-item layout: label pinned left at a fixed width (right-
+// aligned), control fills the remaining space. Shared by Form-level layout
+// (ancestor .yee-form-horizontal cascades onto every item, including
+// Field.Group) and Field-level layout (the item carries .yee-form-item-
+// horizontal itself). Uses descendant selectors (not &) so the mixin expands
+// correctly under either anchor.
+.horizontal-layout() {
+  @{pls}-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--yee-form-item-horizontal-label-gap, 12px);
+  }
 
-      &-label {
-        margin-bottom: 0;
-      }
-    }
+  @{pls}-item-label {
+    width: var(--yee-form-item-horizontal-label-width, 120px);
+    flex-shrink: 0;
+    margin-bottom: 0;
+    justify-content: flex-end;
+  }
+
+  @{pls}-item-control {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@{pls} {
+  // Form-level horizontal: cascades onto every descendant item.
+  &-horizontal {
+    .horizontal-layout();
+  }
+
+  // Field-level horizontal: a single item opts in via layout="horizontal".
+  &-item-horizontal {
+    .horizontal-layout();
   }
 
   &-item {

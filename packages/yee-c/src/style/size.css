@@ -1,5 +1,6 @@
 :root {
   --yee-font-family: inherit;
+
   /* ── z-index 基础层级 ── */
   --yee-z-index-fixed: 990; /* L1 吸顶 */
   --yee-z-index-mask: 1000; /* L2 遮罩背景 */
@@ -270,6 +271,8 @@
   --yee-form-item-label-line-height: 24px;
   --yee-form-item-required-margin-inline-start: 4px;
   --yee-form-item-additional-bottom: 2px;
+  --yee-form-item-horizontal-label-width: 120px;
+  --yee-form-item-horizontal-label-gap: 12px;
 
   /* --Grid-- */
   --yee-grid-column-min-width: 50px;
@@ -685,7 +688,7 @@
   --yee-tabs-active-bar-height: 2px;
   --yee-tabs-active-bar-width: 2px;
   --yee-tabs-vertical-padding: 8px 0;
-  --yee-tabs-vertical-nav-wrap-padding: 8px 0;
+  --yee-tabs-vertical-nav-track-padding: 8px 0;
   --yee-tabs-vertical-container-padding: 0 20px;
   --yee-tabs-vertical-active-bar-height: 32px;
   --yee-tabs-nav-wrapper-height: 46px;
@@ -722,8 +725,8 @@
   --yee-tabs-card-tab-border-width: 1px;
   --yee-tabs-card-tab-border-radius: 4px;
   --yee-tabs-card-tab-not-active-height: 39px;
-  --yee-tabs-nav-wrap-scroll-width: calc(100% - 64px);
-  --yee-tabs-nav-wrap-scroll-margin-left: 32px;
+  --yee-tabs-nav-track-scroll-width: calc(100% - 64px);
+  --yee-tabs-nav-track-scroll-margin-left: 32px;
   --yee-tabs-nav-wrapper-shadow-width: 8px;
   --yee-tabs-nav-wrapper-shadow-inset: 4px;
   --yee-tabs-nav-wrapper-top-z-index: var(--yee-z-index-fixed);

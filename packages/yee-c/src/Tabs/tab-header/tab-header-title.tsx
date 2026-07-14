@@ -181,6 +181,7 @@ const TabHeaderTitle: React.FC<TabsItemProps> = (props) => {
         <Button
           type="text"
           size="small"
+          className={`${prefixCls}-close`}
           icon={<X size={14} />}
           onClick={handleEdit}
           aria-label={`Close ${label}`}

@@ -202,6 +202,11 @@
     flex-direction: column;
   }
 
+  /* Field-level horizontal collapses too on narrow screens */
+  .yee-form-item-horizontal .yee-form-item-row {
+    flex-direction: column;
+  }
+
   /* ── Table: ensure horizontal scroll ── */
   .yee-table-wrapper {
     -webkit-overflow-scrolling: touch;
