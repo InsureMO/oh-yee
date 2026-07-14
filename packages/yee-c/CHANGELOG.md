@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.6.2
+
+### Patch Changes
+
+- 46ecb79: feat(Form, Tabs, Grid): enhance layout options and styling for better responsiveness and usability
+
 ## 0.6.1
 
 ### Patch Changes
