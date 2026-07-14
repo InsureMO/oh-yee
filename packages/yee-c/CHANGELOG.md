@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.6.3
+
+### Patch Changes
+
+- d4752da: feat(Select, Selector): add support for orphan values with custom styling options
+
 ## 0.6.2
 
 ### Patch Changes
