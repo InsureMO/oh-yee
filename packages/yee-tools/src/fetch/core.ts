@@ -1,19 +1,18 @@
-import { merger, getType, buildHeaders, omit } from "./utils";
-import * as Util from "../type/type-utils";
-import { configer } from "../config/config-provider";
+import * as Util from '../type/type-utils';
 import {
   createInterceptors,
+  runErrorInterceptors,
   runRequestInterceptors,
   runResponseInterceptors,
-  runErrorInterceptors,
-} from "./interceptor";
+} from './interceptor';
+import { buildHeaders, getType, merger, omit } from './utils';
 
 import {
   AxConfig,
-  DefaultAxConfig,
   AxInstance,
+  DefaultAxConfig,
   ErrorResponse,
-} from "./interface";
+} from './interface';
 
 /**
  * Get default request configuration
@@ -21,8 +20,8 @@ import {
  */
 const getDefaultConfig = (): Partial<AxConfig> => {
   return {
-    method: "GET",
-    responseType: "json",
+    method: 'GET',
+    responseType: 'json',
     withCredentials: false,
   };
 };
@@ -34,9 +33,9 @@ const getDefaultConfig = (): Partial<AxConfig> => {
  */
 function buildUrl(config: AxConfig): string {
   const { url, baseUrl, params } = config;
-  let fullpath = baseUrl && !url.startsWith("http") ? baseUrl + url : url;
+  let fullpath = baseUrl && !url.startsWith('http') ? baseUrl + url : url;
 
-  if (getType(params) === "Object" && params && Object.keys(params).length) {
+  if (getType(params) === 'Object' && params && Object.keys(params).length) {
     const searchParams = new URLSearchParams();
     Object.entries(params).forEach(([key, value]) => {
       if (value !== null && value !== undefined) {
@@ -45,7 +44,7 @@ function buildUrl(config: AxConfig): string {
     });
     const queryString = searchParams.toString();
     if (queryString) {
-      fullpath += (fullpath.includes("?") ? "&" : "?") + queryString;
+      fullpath += (fullpath.includes('?') ? '&' : '?') + queryString;
     }
   }
 
@@ -89,10 +88,9 @@ class Ax implements AxInstance {
    */
   async request<T = any>(configOrUrl: AxConfig | string): Promise<T> {
     let config = getDefaultConfig() as AxConfig;
-    const pconfig = configer.getAll();
 
     // Process parameters: string URL or configuration object
-    if (typeof configOrUrl === "string") {
+    if (typeof configOrUrl === 'string') {
       config.url = configOrUrl;
     } else {
       if (configOrUrl.noDefaultHeaders) {
@@ -105,15 +103,15 @@ class Ax implements AxInstance {
       // Execute request interceptors
       config = await runRequestInterceptors(
         this.interceptors.request.getItems(),
-        config
+        config,
       );
 
       // Send actual request
       let response: any;
-      if (config.dispatcher === "fetch") {
+      if (config.dispatcher === 'fetch') {
         response = await this._fetchRequest(config);
       } else {
-        response = await this._xhrRequest(config, pconfig);
+        response = await this._xhrRequest(config);
       }
 
       // Execute response interceptors
@@ -121,7 +119,7 @@ class Ax implements AxInstance {
         this.interceptors.response.getItems(),
         config,
         response,
-        200
+        200,
       );
 
       return response;
@@ -131,7 +129,7 @@ class Ax implements AxInstance {
         this.interceptors.error.getItems(),
         config,
         error,
-        error?.status === "timeout"
+        error?.status === 'timeout',
       );
 
       if (result.handled) {
@@ -149,27 +147,27 @@ class Ax implements AxInstance {
    */
   private async _fetchRequest(config: AxConfig): Promise<any> {
     const { dataFormat = true, data } = config;
-    const method = config.method?.toUpperCase() || "GET";
+    const method = config.method?.toUpperCase() || 'GET';
 
     try {
       const response = await fetch(buildUrl(config), {
         ...(omit(config as any, [
-          "data",
-          "url",
-          "baseUrl",
-          "params",
-          "query",
-          "noDefaultHeaders",
-          "dispatcher",
-          "dataFormat",
+          'data',
+          'url',
+          'baseUrl',
+          'params',
+          'query',
+          'noDefaultHeaders',
+          'dispatcher',
+          'dataFormat',
         ]) as RequestInit),
         method: method,
         body:
-          method === "GET"
+          method === 'GET'
             ? undefined
             : !Util.isString(data) && dataFormat
-            ? JSON.stringify(data)
-            : data,
+              ? JSON.stringify(data)
+              : data,
       });
 
       if (!response.ok) {
@@ -177,14 +175,14 @@ class Ax implements AxInstance {
       }
 
       // Parse data based on response type
-      const contentType = response.headers.get("content-type") || "";
-      if (contentType.includes("application/json")) {
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
         return await response.json();
-      } else if (config.responseType === "blob") {
+      } else if (config.responseType === 'blob') {
         return await response.blob();
-      } else if (config.responseType === "arrayBuffer") {
+      } else if (config.responseType === 'arrayBuffer') {
         return await response.arrayBuffer();
-      } else if (config.responseType === "formData") {
+      } else if (config.responseType === 'formData') {
         return await response.formData();
       } else {
         return await response.text();
@@ -199,10 +197,9 @@ class Ax implements AxInstance {
    * Send request using XMLHttpRequest
    * @private
    * @param config - Request configuration
-   * @param pconfig - Project configuration
    * @returns Promise<any> request result
    */
-  private _xhrRequest(config: AxConfig, pconfig: any): Promise<any> { // eslint-disable-line @typescript-eslint/no-unused-vars
+  private _xhrRequest(config: AxConfig): Promise<any> {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const {
@@ -232,13 +229,13 @@ class Ax implements AxInstance {
       };
 
       // Handle FormData Content-Type
-      if ((!data || getType(data) === "FormData") && headers) {
+      if ((!data || getType(data) === 'FormData') && headers) {
         if (formDataWithBoundary) {
-          delete headers["Content-Type"];
+          delete headers['Content-Type'];
         }
       }
 
-      const method = config.method?.toUpperCase() || "GET";
+      const method = config.method?.toUpperCase() || 'GET';
       const fullpath = buildUrl(config);
 
       xhr.open(method, fullpath, async);
@@ -264,12 +261,12 @@ class Ax implements AxInstance {
           cleanup(); // Clean up event listeners
 
           const contentType =
-            xhr.getResponseHeader("content-type") ||
-            "application/json;charset=UTF-8";
+            xhr.getResponseHeader('content-type') ||
+            'application/json;charset=UTF-8';
           let response = xhr.response;
 
           // Try to parse JSON response
-          if (contentType.indexOf("application/json") > -1) {
+          if (contentType.indexOf('application/json') > -1) {
             try {
               response = JSON.parse(xhr.response);
             } catch (error) {
@@ -290,7 +287,7 @@ class Ax implements AxInstance {
               onError(response, xhr);
             }
             postErrorMsg(config, response);
-            reject({ status: "error", error: xhr.response } as ErrorResponse);
+            reject({ status: 'error', error: xhr.response } as ErrorResponse);
           }
         }
       };
@@ -316,7 +313,7 @@ class Ax implements AxInstance {
         if (onError) {
           onError(xhr.response, xhr);
         }
-        reject({ status: "error", error: err } as ErrorResponse);
+        reject({ status: 'error', error: err } as ErrorResponse);
       };
 
       // Timeout listener
@@ -324,19 +321,24 @@ class Ax implements AxInstance {
         xhr.ontimeout = function (event) {
           cleanup(); // Clean up event listeners
           onTimeout(event, xhr);
-          reject({ status: "timeout", error: event } as ErrorResponse);
+          reject({ status: 'timeout', error: event } as ErrorResponse);
         };
       } else {
         // If onTimeout is not provided, use default timeout handling
-        xhr.ontimeout = function () { // eslint-disable-line @typescript-eslint/no-unused-vars
+        xhr.ontimeout = function () {
+          // eslint-disable-line @typescript-eslint/no-unused-vars
           cleanup();
-          reject({ status: "timeout", error: "Request timeout" } as ErrorResponse);
+          reject({
+            status: 'timeout',
+            error: 'Request timeout',
+          } as ErrorResponse);
         };
       }
 
       // Prepare request data
       let param = data || null;
-      if (param != null && !Util.isString(param) && dataFormat) { // eslint-disable-line eqeqeq
+      if (param != null && !Util.isString(param) && dataFormat) {
+        // eslint-disable-line eqeqeq
         param = JSON.stringify(param);
       }
 
@@ -349,11 +351,11 @@ class Ax implements AxInstance {
    * @private
    */
   private _handle401Error(): { status: string; error: string } {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       sessionStorage.clear();
       window.location.reload();
     }
-    return { status: "error", error: "Unauthorized" };
+    return { status: 'error', error: 'Unauthorized' };
   }
 
   /**
@@ -366,7 +368,7 @@ class Ax implements AxInstance {
     return this.request<T>(
       merger(config || {}, {
         url,
-        method: "GET",
+        method: 'GET',
       }) as AxConfig,
     );
   }
@@ -383,7 +385,7 @@ class Ax implements AxInstance {
       merger(config || {}, {
         url,
         data,
-        method: "POST",
+        method: 'POST',
       }) as AxConfig,
     );
   }
@@ -400,7 +402,7 @@ class Ax implements AxInstance {
       merger(config || {}, {
         url,
         data,
-        method: "PUT",
+        method: 'PUT',
       }) as AxConfig,
     );
   }
@@ -415,7 +417,7 @@ class Ax implements AxInstance {
     return this.request<T>(
       merger(config || {}, {
         url,
-        method: "DELETE",
+        method: 'DELETE',
       }) as AxConfig,
     );
   }
@@ -427,12 +429,16 @@ class Ax implements AxInstance {
    * @param config - Request configuration
    * @returns Promise<T> request result
    */
-  patch<T = any>(url: string, data?: any, config?: DefaultAxConfig): Promise<T> {
+  patch<T = any>(
+    url: string,
+    data?: any,
+    config?: DefaultAxConfig,
+  ): Promise<T> {
     return this.request<T>(
       merger(config || {}, {
         url,
         data,
-        method: "PATCH",
+        method: 'PATCH',
       }) as AxConfig,
     );
   }
@@ -447,7 +453,7 @@ class Ax implements AxInstance {
     return this.request<T>(
       merger(config || {}, {
         url,
-        method: "HEAD",
+        method: 'HEAD',
       }) as AxConfig,
     );
   }
@@ -462,11 +468,10 @@ class Ax implements AxInstance {
     return this.request<T>(
       merger(config || {}, {
         url,
-        method: "OPTIONS",
+        method: 'OPTIONS',
       }) as AxConfig,
     );
   }
-
 }
 
 export default Ax;
