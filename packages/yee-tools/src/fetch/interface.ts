@@ -77,6 +77,14 @@ export interface AxConfig {
   headers?: Record<string, string>;
   /** Response type */
   responseType?: ResponseType;
+  /**
+   * Lossless big-integer parsing for the response. When true, the response body is
+   * read as text, integers beyond the JS safe-integer range are quoted, and then
+   * JSON.parse runs — preventing precision loss of backend longs (e.g. 64-bit IDs).
+   * Defaults to false (original behavior is preserved). Quoted integers are parsed
+   * as strings, so callers must carry such IDs as strings.
+   */
+  parseBigIntAsString?: boolean;
   /** Whether to send request asynchronously */
   async?: boolean;
   /** Request timeout (ms) */

@@ -1,4 +1,5 @@
 import * as Util from '../type/type-utils';
+import { quoteBigInts } from './bigint';
 import {
   createInterceptors,
   runErrorInterceptors,
@@ -160,6 +161,7 @@ class Ax implements AxInstance {
           'noDefaultHeaders',
           'dispatcher',
           'dataFormat',
+          'parseBigIntAsString',
         ]) as RequestInit),
         method: method,
         body:
@@ -172,6 +174,11 @@ class Ax implements AxInstance {
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      // Lossless big-int parsing: read as text → quoteBigInts → JSON.parse (avoids response.json() precision loss).
+      if (config.parseBigIntAsString) {
+        return JSON.parse(quoteBigInts(await response.text()));
       }
 
       // Parse data based on response type
@@ -268,7 +275,10 @@ class Ax implements AxInstance {
           // Try to parse JSON response
           if (contentType.indexOf('application/json') > -1) {
             try {
-              response = JSON.parse(xhr.response);
+              // Lossless big-int parsing: quote large integers first, then JSON.parse.
+              response = config.parseBigIntAsString
+                ? JSON.parse(quoteBigInts(xhr.response))
+                : JSON.parse(xhr.response);
             } catch (error) {
               response = xhr.response;
             }
