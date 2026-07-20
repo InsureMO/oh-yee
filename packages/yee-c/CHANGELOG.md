@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.6.4
+
+### Patch Changes
+
+- 0ecc998: fix(style,utils): correct selector syntax and add circular reference detection
+
 ## 0.6.3
 
 ### Patch Changes
