@@ -38,7 +38,7 @@
       position: relative;
       background-color: var(--yee-table-thead-bg-color);
 
-      &:not(:last-child):not(@{pls}-expand-col) {
+      &:not(:empty):not(:last-child):not(@{pls}-expand-col) {
         &::before {
           position: absolute;
           content: '';
