@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.7.0
+
+### Minor Changes
+
+- b18091f: feat(List, Select, Drawer, Tree, locale): enhance keyboard navigation, virtual scrolling, and styling
+
 ## 0.6.4
 
 ### Patch Changes
