@@ -29,19 +29,17 @@ export default function isEqual(
 
   // For objects and arrays, detect circular references
   if (typeof a === 'object' && typeof b === 'object') {
-    if (!seen) {
-      seen = new Map();
-    }
+    const seenMap = seen || new Map();
 
     // If we've already started comparing this pair, assume equal to break the cycle
-    const seenForA = seen.get(a as object);
+    const seenForA = seenMap.get(a as object);
     if (seenForA && seenForA.has(b as object)) {
       return true;
     }
 
     // Mark this pair as being compared
     if (!seenForA) {
-      seen.set(a as object, new Set([b as object]));
+      seenMap.set(a as object, new Set([b as object]));
     } else {
       seenForA.add(b as object);
     }
@@ -50,7 +48,7 @@ export default function isEqual(
     if (Array.isArray(a) && Array.isArray(b)) {
       if (a.length !== b.length) return false;
       for (let i = 0; i < a.length; i++) {
-        if (!isEqual(a[i], b[i], seen)) return false;
+        if (!isEqual(a[i], b[i], seenMap)) return false;
       }
       return true;
     }
@@ -65,7 +63,7 @@ export default function isEqual(
         !isEqual(
           (a as Record<string, unknown>)[key],
           (b as Record<string, unknown>)[key],
-          seen,
+          seenMap,
         )
       )
         return false;

@@ -7,7 +7,7 @@ import { OptionsCtx } from './options';
 
 const Option = (props: OptionProps) => {
   const { label, value, disabled, title, dataTestId, style } = props;
-  const { prefixCls, selectedKeys, focusedKey, multiple, onSelect } =
+  const { prefixCls, selectedKeys, focusedKey, multiple, looseMatch, onSelect } =
     useContext(OptionsCtx);
 
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
@@ -22,13 +22,19 @@ const Option = (props: OptionProps) => {
       ? label
       : undefined;
 
-  const selected = selectedKeys.includes(value);
+  const selected = looseMatch
+    ? selectedKeys.some((k) => String(k) === String(value))
+    : selectedKeys.includes(value);
+
+  const focused = looseMatch
+    ? String(focusedKey) === String(value)
+    : focusedKey === value;
 
   return (
     <div
       className={clsx(`${prefixCls}-option`, {
         [`${prefixCls}-option-selected`]: selected,
-        [`${prefixCls}-option-focused`]: focusedKey === value,
+        [`${prefixCls}-option-focused`]: focused,
         [`${prefixCls}-option-disabled`]: disabled,
       })}
       aria-label="option"

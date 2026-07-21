@@ -5,6 +5,7 @@ export type SemanticDOM =
   | 'wrapper'
   | 'close'
   | 'header'
+  | 'title'
   | 'content'
   | 'body'
   | 'footer';

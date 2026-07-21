@@ -73,30 +73,39 @@ function LanguageSelector() {
 }
 ```
 
-### 自定义语言包
+### 自定义 / 部分覆盖语言包
+
+传入一个带 `locale` 字段的（可以是**部分的**）对象，只需写要覆盖的 key，其余从对应内置语言包继承。对象会基于 `locale` 字段深度合并到内置包上，无需提供完整包。
 
 ```tsx
 import { LocaleProvider } from '@rainbow-oh/yee-c/locale';
 
-const customLocale = {
-  locale: 'zh_CN',
-  datepicker: {
-    now: '当前时间',
-    confirm: '好的',
-  },
-  select: {
-    noData: '空空如也',
-  },
-};
-
+// 只覆盖 datepicker.now/confirm 和 select.noData，其余沿用 zh_CN 内置包
 function App() {
   return (
-    <LocaleProvider defaultLocale={customLocale}>
+    <LocaleProvider
+      defaultLocale={{
+        locale: 'zh_CN',
+        datepicker: { now: '当前时间', confirm: '好的' },
+        select: { noData: '空空如也' },
+      }}
+    >
       <MyComponent />
     </LocaleProvider>
   );
 }
 ```
+
+运行时切换语言也可传部分覆盖，同样合并到对应基础包：
+
+```tsx
+const { setLocale } = useLocale();
+
+// 切到英文，同时把弹窗的 OK 文案改成 "Sure"
+setLocale({ locale: 'en_US', modal: { okText: 'Sure' } });
+```
+
+> 注意：对象形式必须带 `locale` 字段，用来确定基于哪个内置包合并。也可以用 `deepMerge(LOCALE_CONFIGS.zh_CN, { ... })` 自行预先生成完整包再传入。
 
 ### 异步加载语言包
 

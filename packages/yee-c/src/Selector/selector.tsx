@@ -37,6 +37,7 @@ const Selector = React.forwardRef(
       disabled,
       options = [],
       selectedKeys,
+      looseMatch = false,
       orphanClassName,
       orphanStyle,
       allowClear = true,
@@ -67,7 +68,9 @@ const Selector = React.forwardRef(
       }
       // 按 selectedKeys 顺序渲染；找不到的 key 作为孤儿值回退显示 value 本身
       return selectedKeys.map((key) => {
-        const opt = options.find((o) => o.value === key);
+        const opt = looseMatch
+          ? options.find((o) => String(o.value) === String(key))
+          : options.find((o) => o.value === key);
         if (opt) {
           return {
             ...opt,
@@ -85,7 +88,7 @@ const Selector = React.forwardRef(
           _orphan: true,
         };
       });
-    }, [options, selectedKeys, optionLabelProp]);
+    }, [options, selectedKeys, optionLabelProp, looseMatch]);
 
     const handleClick = () => {
       if (inputRef.current && !disabled) {
@@ -183,7 +186,9 @@ const Selector = React.forwardRef(
 
       const key = selectedKeys.length ? selectedKeys[0] : '';
       const opt = Array.isArray(options)
-        ? options.find((opt) => opt.value === key)
+        ? looseMatch
+          ? options.find((opt) => String(opt.value) === String(key))
+          : options.find((opt) => opt.value === key)
         : null;
       // 孤儿值：key 非空但在 options 中找不到时，回退显示 value 本身
       const isOrphan = !opt && key !== '';

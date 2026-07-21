@@ -11,12 +11,11 @@ import './style/index.less';
 const Node = <T extends Record<string, unknown> = any>(
   props: TreeNodeProps<T>,
 ) => {
-  const { node } = props;
+  const { node, style: nodeStyle } = props;
   const {
-    key,
+    uid,
     isLeaf,
     isLast,
-    path,
     label,
     title,
     disabled,
@@ -31,12 +30,13 @@ const Node = <T extends Record<string, unknown> = any>(
     showIcon,
     icon: contextIcon,
     showLine,
-    selectedKeys,
-    checkedKeys,
-    expandedKeys,
+    selectedUids,
+    checkedUids,
+    indeterminateUids,
+    expandedUids,
     switcherIcon,
     draggable,
-    draggingKey,
+    draggingUid,
     dropState,
     onCheck,
     onSelect,
@@ -47,14 +47,10 @@ const Node = <T extends Record<string, unknown> = any>(
     onNodeDrop,
   } = useContext(TreeContext);
 
-  const expanded = expandedKeys.includes(key);
-  const checked = checkedKeys.includes(key);
-  const selected = selectedKeys.includes(key);
-
-  // All nodes on the path must be visible for this node to display
-  const visible = path.every((p) => expandedKeys.includes(p));
-
-  if (!visible) return null;
+  const expanded = expandedUids.has(uid);
+  const checked = checkedUids.has(uid);
+  const indeterminate = indeterminateUids.has(uid);
+  const selected = selectedUids.has(uid);
 
   const renderExpandedIcon = () => {
     const expandedIcon = switcherIcon ? (
@@ -82,7 +78,7 @@ const Node = <T extends Record<string, unknown> = any>(
             size="small"
             type="text"
             icon={expanded ? expandedIcon : collapseIcon}
-            onClick={() => onExpand(key)}
+            onClick={() => onExpand(uid)}
           />
         )}
       </span>
@@ -93,7 +89,12 @@ const Node = <T extends Record<string, unknown> = any>(
     if (!checkable) return null;
     return (
       <span className={`${prefixCls}-node-checkbox`}>
-        <Checkbox value={key} checked={checked} onChange={onCheck} />
+        <Checkbox
+          value={uid}
+          checked={checked}
+          indeterminate={indeterminate}
+          onChange={(e) => onCheck(e, uid)}
+        />
       </span>
     );
   };
@@ -113,7 +114,7 @@ const Node = <T extends Record<string, unknown> = any>(
         type="text"
         title={_title}
         icon={showIcon ? _icon : undefined}
-        onClick={disabled ? undefined : () => onSelect(key)}
+        onClick={disabled ? undefined : () => onSelect(uid)}
       >
         {label}
       </Button>
@@ -121,8 +122,6 @@ const Node = <T extends Record<string, unknown> = any>(
   };
 
   const renderEmptyNodes = (depth: number) => {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
-
     const temp = new Array(depth).fill(0);
     if (showLine) {
       return temp.map((_, index) => (
@@ -145,17 +144,17 @@ const Node = <T extends Record<string, unknown> = any>(
     ));
   };
 
-  const isDropTarget = dropState?.key === key;
+  const isDropTarget = dropState?.uid === uid;
   const dropPosition = isDropTarget ? dropState.position : null;
 
   const dragProps =
     draggable && !disabled
       ? {
           draggable: true as const,
-          onDragStart: (e: React.DragEvent) => onNodeDragStart(key, e),
-          onDragOver: (e: React.DragEvent) => onNodeDragOver(key, e),
-          onDragLeave: (e: React.DragEvent) => onNodeDragLeave(key, e),
-          onDrop: (e: React.DragEvent) => onNodeDrop(key, e),
+          onDragStart: (e: React.DragEvent) => onNodeDragStart(uid, e),
+          onDragOver: (e: React.DragEvent) => onNodeDragOver(uid, e),
+          onDragLeave: (e: React.DragEvent) => onNodeDragLeave(uid, e),
+          onDrop: (e: React.DragEvent) => onNodeDrop(uid, e),
         }
       : {};
 
@@ -165,14 +164,12 @@ const Node = <T extends Record<string, unknown> = any>(
         [`${prefixCls}-node-with-line`]: showLine,
         [`${prefixCls}-leaf-node`]: isLeaf,
         [`${prefixCls}-last-node`]: isLast,
-        [`${prefixCls}-node-dragging`]: draggingKey === key,
+        [`${prefixCls}-node-dragging`]: draggingUid === uid,
         [`${prefixCls}-node-drag-over-before`]: dropPosition === 'before',
         [`${prefixCls}-node-drag-over-after`]: dropPosition === 'after',
         [`${prefixCls}-node-drag-over-inside`]: dropPosition === 'inside',
       })}
-      // style={{
-      //   paddingLeft: depth * 28 + (isLeaf && checkable ? 24 : 0),
-      // }}
+      style={nodeStyle}
       {...dragProps}
     >
       {renderEmptyNodes(depth)}

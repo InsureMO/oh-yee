@@ -18,6 +18,7 @@ toc: 'content'
 <code src="./demo/bordered.tsx" title="带边框" description="带边框的列表"></code>
 <code src="./demo/renderItem.tsx" title="自定义渲染" description="自定义列表项渲染"></code>
 <code src="./demo/disabled.tsx" title="禁用项" description="包含禁用项的列表"></code>
+<code src="./demo/virtual.tsx" title="虚拟滚动" description="大数据量（万条）下的虚拟滚动，只渲染可视区域内的列表项"></code>
 
 ## API
 
@@ -33,6 +34,11 @@ toc: 'content'
 | focusedKey | `string \| number` | 聚焦项的 key | - |
 | itemRender | `(item: ListItemProps) => React.ReactNode` | 函数形式返回列表项 | - |
 | onClick | `(item: ListItemProps) => void` | 列表项的点击事件 | - |
+| onFocusChange | `(key: string \| number) => void` | 键盘导航焦点变化时的回调 | - |
+| virtual | `boolean` | 是否开启虚拟滚动，需同时设置 `height` | `false` |
+| height | `number` | 滚动容器高度（px），开启 `virtual` 时必填 | - |
+| itemHeight | `number` | 每项固定高度（px） | `32` |
+| columns | `number` | 列数，大于 1 时启用网格布局 | `1` |
 
 ### ListItemProps
 

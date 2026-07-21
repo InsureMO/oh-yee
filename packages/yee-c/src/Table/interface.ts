@@ -577,7 +577,7 @@ export interface TableProps
   /**
    * Row class name, unlike classNames, this prop can be set dynamically via a function
    */
-  rowClassName?: (record: object) => string | undefined;
+  rowClassName?: (record: Record<string, any>) => string | undefined;
   /**
    * Row style, unlike styles, this prop can be set dynamically via a function
    */

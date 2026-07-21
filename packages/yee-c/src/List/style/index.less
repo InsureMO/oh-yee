@@ -6,17 +6,41 @@
   list-style: none;
   background-color: var(--yee-list-bg-color);
 
+  &:focus {
+    outline: none;
+  }
+
   &-item {
     padding: var(--yee-list-item-padding);
 
     &:hover:not(&-disabled) {
       background-color: var(--yee-list-item-bg-hover-color);
+    }
+
+    &-disabled {
       cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    &-clickable:not(&-disabled) {
+      cursor: pointer;
     }
 
     &-focused {
       background-color: var(--yee-list-item-bg-hover-color);
     }
+  }
+
+  // Multi-column grid layout (non-virtual mode).
+  // Column count driven by CSS custom property --yee-list-columns set inline.
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--yee-list-columns, 1), 1fr);
+  }
+
+  // Virtual multi-column: each row is already a grid via inline style.
+  &-grid-row {
+    align-items: center;
   }
 }
 

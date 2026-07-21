@@ -47,6 +47,8 @@ export default () => {
             {
               dragKey: info.dragKey,
               dropKey: info.dropKey,
+              dragPath: info.dragPath,
+              dropPath: info.dropPath,
               position: info.position,
             },
             FIELD_NAMES,

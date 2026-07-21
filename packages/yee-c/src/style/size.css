@@ -248,7 +248,8 @@
   --yee-drawer-body-padding: 20px 24px;
   --yee-drawer-close-top: 20px;
   --yee-drawer-close-right: 20px;
-  --yee-drawer-title-font-weight: 500;
+  --yee-drawer-title-font-weight: 600;
+  --yee-drawer-title-font-size: 18px;
 
   /* --Field-- */
   --yee-field-gap: 8px;

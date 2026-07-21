@@ -9,6 +9,18 @@ interface UseSelectKeyboardParams {
   }>;
   open: boolean;
   selectedKeys: Array<string | number>;
+  /**
+   * Number of columns in multi-column mode.
+   * Affects ArrowLeft/ArrowRight and ArrowUp/ArrowDown behavior.
+   * @default 1
+   */
+  columns?: number;
+  /**
+   * Whether loose value matching is enabled.
+   * Affects initial focus resolution when selectedKeys types differ from option values.
+   * @default false
+   */
+  looseMatch?: boolean;
   onSelect: (value: string | number) => void;
   onClose?: () => void;
   onOpenChange?: (open: boolean) => void;
@@ -25,6 +37,8 @@ export default function useSelectKeyboard({
   options,
   open,
   selectedKeys,
+  columns = 1,
+  looseMatch = false,
   onSelect,
   onClose,
   onOpenChange,
@@ -79,9 +93,15 @@ export default function useSelectKeyboard({
     const optionElements = container.querySelectorAll('[role="option"]');
     const targetElement = optionElements[index] as HTMLElement;
     if (targetElement) {
-      targetElement.scrollIntoView({
-        block: 'nearest',
-      });
+      // Use manual scroll calculation instead of scrollIntoView to avoid
+      // scrolling the entire page (popup is rendered in a portal).
+      const containerRect = container.getBoundingClientRect();
+      const targetRect = targetElement.getBoundingClientRect();
+      if (targetRect.bottom > containerRect.bottom) {
+        container.scrollTop += targetRect.bottom - containerRect.bottom;
+      } else if (targetRect.top < containerRect.top) {
+        container.scrollTop -= containerRect.top - targetRect.top;
+      }
     }
   };
 
@@ -90,12 +110,33 @@ export default function useSelectKeyboard({
     const focusedIndex = getFocusedIndex();
     let nextIndex: number;
 
-    if (focusedIndex === -1) {
-      // No focus yet, focus the last enabled option
-      nextIndex = findNextEnabledIndex(options.length - 1, -1);
+    if (columns > 1) {
+      // Multi-column: move up one row (jump by `columns` items)
+      if (focusedIndex === -1) {
+        nextIndex = findNextEnabledIndex(options.length - 1, -1);
+      } else {
+        const target = focusedIndex - columns;
+        if (target >= 0) {
+          nextIndex = options[target].disabled
+            ? findNextEnabledIndex(target, -1)
+            : target;
+        } else {
+          // Wrap to bottom: find the same column in the last row
+          const lastRowStart =
+            Math.floor((options.length - 1) / columns) * columns;
+          const col = focusedIndex % columns;
+          const wrapTarget = Math.min(lastRowStart + col, options.length - 1);
+          nextIndex = options[wrapTarget]?.disabled
+            ? findNextEnabledIndex(wrapTarget, -1)
+            : wrapTarget;
+        }
+      }
     } else {
-      // Find the previous enabled option
-      nextIndex = findNextEnabledIndex(focusedIndex, -1);
+      if (focusedIndex === -1) {
+        nextIndex = findNextEnabledIndex(options.length - 1, -1);
+      } else {
+        nextIndex = findNextEnabledIndex(focusedIndex, -1);
+      }
     }
 
     if (nextIndex !== -1) {
@@ -110,16 +151,58 @@ export default function useSelectKeyboard({
     const focusedIndex = getFocusedIndex();
     let nextIndex: number;
 
-    if (focusedIndex === -1) {
-      // No focus yet, focus the first enabled option
-      nextIndex = findNextEnabledIndex(0, 1);
+    if (columns > 1) {
+      // Multi-column: move down one row (jump by `columns` items)
+      if (focusedIndex === -1) {
+        nextIndex = findNextEnabledIndex(0, 1);
+      } else {
+        const target = focusedIndex + columns;
+        if (target < options.length) {
+          nextIndex = options[target].disabled
+            ? findNextEnabledIndex(target, 1)
+            : target;
+        } else {
+          // Wrap to top: find the same column in the first row
+          const col = focusedIndex % columns;
+          const wrapTarget = col;
+          nextIndex = options[wrapTarget]?.disabled
+            ? findNextEnabledIndex(wrapTarget, 1)
+            : wrapTarget;
+        }
+      }
     } else {
-      // Find the next enabled option
-      nextIndex = findNextEnabledIndex(focusedIndex, 1);
+      if (focusedIndex === -1) {
+        nextIndex = findNextEnabledIndex(0, 1);
+      } else {
+        nextIndex = findNextEnabledIndex(focusedIndex, 1);
+      }
     }
+
     if (nextIndex !== -1) {
       const nextValue = options[nextIndex].value;
       setFocusedKey(nextValue);
+      scrollOptionIntoView(nextIndex);
+    }
+  };
+
+  // Handle ArrowLeft key (multi-column: move to previous item)
+  const handleArrowLeft = () => {
+    const focusedIndex = getFocusedIndex();
+    if (focusedIndex <= 0) return;
+    const nextIndex = findNextEnabledIndex(focusedIndex, -1);
+    if (nextIndex !== -1) {
+      setFocusedKey(options[nextIndex].value);
+      scrollOptionIntoView(nextIndex);
+    }
+  };
+
+  // Handle ArrowRight key (multi-column: move to next item)
+  const handleArrowRight = () => {
+    const focusedIndex = getFocusedIndex();
+    if (focusedIndex >= options.length - 1) return;
+    const nextIndex = findNextEnabledIndex(focusedIndex, 1);
+    if (nextIndex !== -1) {
+      setFocusedKey(options[nextIndex].value);
       scrollOptionIntoView(nextIndex);
     }
   };
@@ -161,6 +244,18 @@ export default function useSelectKeyboard({
         event.preventDefault();
         handleArrowDown();
         break;
+      case 'ArrowLeft':
+        if (columns > 1) {
+          event.preventDefault();
+          handleArrowLeft();
+        }
+        break;
+      case 'ArrowRight':
+        if (columns > 1) {
+          event.preventDefault();
+          handleArrowRight();
+        }
+        break;
       case 'Enter':
         event.preventDefault();
         handleEnter();
@@ -179,8 +274,10 @@ export default function useSelectKeyboard({
       // Focus the first selected option, or the first enabled option
       let focusedValue: string | number = '';
       if (selectedKeys?.length > 0) {
-        const firstSelected = options?.find(
-          (opt) => opt.value === selectedKeys[0],
+        const firstSelected = options?.find((opt) =>
+          looseMatch
+            ? String(opt.value) === String(selectedKeys[0])
+            : opt.value === selectedKeys[0],
         );
         if (firstSelected && !firstSelected.disabled) {
           focusedValue = firstSelected.value;

@@ -64,6 +64,10 @@ export interface PureSelectorProps {
    */
   selectedKeys: Array<string | number>;
   /**
+   * Enable loose value matching (String comparison instead of strict equality)
+   */
+  looseMatch?: boolean;
+  /**
    * Custom suffix
    */
   suffix?: React.ReactNode | (() => React.ReactNode);

@@ -15,6 +15,30 @@ import { Option, SelectProps } from './interface';
 import Options from './options';
 import './style/index.less';
 
+// ---------------------------------------------------------------------------
+// Value comparison utilities (module-level for stable references)
+// ---------------------------------------------------------------------------
+
+/** Compare two values: loose mode uses String() conversion, strict uses ===. */
+function matchValue(
+  a: string | number,
+  b: string | number,
+  loose: boolean,
+): boolean {
+  if (loose) return String(a) === String(b);
+  return a === b;
+}
+
+/** Check if a value exists in a keys array with optional loose matching. */
+function keysIncludes(
+  keys: Array<string | number>,
+  val: string | number,
+  loose: boolean,
+): boolean {
+  if (loose) return keys.some((k) => String(k) === String(val));
+  return keys.includes(val);
+}
+
 const Select = (baseprops: SelectProps) => {
   const { select } = useContext(GlobalContext);
   const props = mergeContextToProps(baseprops, select);
@@ -32,6 +56,9 @@ const Select = (baseprops: SelectProps) => {
     virtual,
     itemHeight,
     listHeight,
+    columns = 1,
+    popupWidth,
+    looseMatch = false,
     orphanClassName,
     orphanStyle,
     ...rest
@@ -80,16 +107,14 @@ const Select = (baseprops: SelectProps) => {
       if (keys.length === 0) {
         return [];
       }
-      // 按 keys 顺序回填，找不到的 key 构造 label=value 的兜底项（孤儿值），
-      // 与 Selector 的显示保持一致，避免 onChange 第二参数丢值。
       return keys.map((key) => {
-        const opt = options.find((o) => o.value === key);
+        const opt = options.find((o) => matchValue(o.value, key, looseMatch));
         return opt ?? { value: key, label: String(key) };
       });
     }
 
     return (
-      options.find((opt) => opt.value === keys) ?? {
+      options.find((opt) => matchValue(opt.value, keys, looseMatch)) ?? {
         value: keys,
         label: String(keys),
       }
@@ -107,8 +132,8 @@ const Select = (baseprops: SelectProps) => {
       setSearchValue('');
       setOpen(false);
     } else {
-      if (mergedValue.includes(key)) {
-        keys = mergedValue.filter((k: string | number) => k !== key);
+      if (keysIncludes(mergedValue, key, looseMatch)) {
+        keys = mergedValue.filter((k: string | number) => !matchValue(k, key, looseMatch));
       } else {
         keys = [...mergedValue, key];
       }
@@ -128,7 +153,9 @@ const Select = (baseprops: SelectProps) => {
   };
 
   const handleRemove = (option: Option) => {
-    const keys = mergedValue.filter((k: string | number) => k !== option.value);
+    const keys = mergedValue.filter(
+      (k: string | number) => !matchValue(k, option.value, looseMatch),
+    );
     const filteredOpts = getOptions(keys);
     setMergedValue(keys);
     const key = single ? keys[0] : keys;
@@ -162,6 +189,8 @@ const Select = (baseprops: SelectProps) => {
     options: filteredOpts,
     open,
     selectedKeys: mergedValue,
+    columns,
+    looseMatch,
     onSelect: handleSelect,
     onClose: () => setOpen(false),
     onOpenChange: handleOpenChange,
@@ -183,6 +212,8 @@ const Select = (baseprops: SelectProps) => {
       itemHeight={itemHeight}
       listHeight={listHeight}
       virtualApiRef={virtualApiRef}
+      columns={columns}
+      looseMatch={looseMatch}
     />
   );
 
@@ -191,7 +222,8 @@ const Select = (baseprops: SelectProps) => {
       {...rest}
       placement={placement}
       popup={popup}
-      stretch="width"
+      stretch={popupWidth ? undefined : 'width'}
+      popupStyle={popupWidth ? { width: popupWidth } : undefined}
       open={disabled ? false : open}
       onOpenChange={handleOpenChange}
     >
@@ -209,6 +241,7 @@ const Select = (baseprops: SelectProps) => {
         onKeyDown={onKeyDown}
         orphanClassName={orphanClassName}
         orphanStyle={orphanStyle}
+        looseMatch={looseMatch}
       />
     </Trigger>
   );

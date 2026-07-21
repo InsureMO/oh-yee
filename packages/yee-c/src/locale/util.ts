@@ -1,5 +1,5 @@
 import { DEFAULT_LOCALE_CONFIG } from './constants';
-import type { Locale } from './interface';
+import type { DeepPartial, Locale } from './interface';
 
 /**
  * Deep get object value
@@ -45,9 +45,9 @@ export function isValidLocale(obj: any): obj is Locale {
  */
 export function deepMerge<T extends Record<string, any>>(
   target: T,
-  source: Partial<T>,
+  source: DeepPartial<NoInfer<T>>,
 ): T {
-  const result = { ...target };
+  const result: Record<string, any> = { ...target };
 
   for (const key in source) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
@@ -64,18 +64,18 @@ export function deepMerge<T extends Record<string, any>>(
       ) {
         result[key] = deepMerge(targetValue, sourceValue);
       } else {
-        result[key] = sourceValue as T[Extract<keyof T, string>];
+        result[key] = sourceValue;
       }
     }
   }
 
-  return result;
+  return result as T;
 }
 
 /**
  * Ensure locale pack completeness, fill missing fields with default values
  */
-export function normalizeLocale(locale: Partial<Locale>): Locale {
+export function normalizeLocale(locale: DeepPartial<Locale>): Locale {
   return deepMerge(DEFAULT_LOCALE_CONFIG, locale);
 }
 

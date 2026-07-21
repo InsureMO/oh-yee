@@ -54,6 +54,20 @@
     align-items: center;
   }
 
+  // Multi-column grid layout (non-virtual mode).
+  // The column count is driven by the CSS custom property --yee-select-columns
+  // set inline by the Options component.
+  &-popup-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--yee-select-columns, 1), 1fr);
+  }
+
+  // Virtual multi-column: each row container is already a grid via inline style;
+  // options inside it should fill cells evenly and center vertically.
+  &-popup-grid-row {
+    align-items: center;
+  }
+
   &-empty {
     padding: var(--yee-select-option-padding);
   }

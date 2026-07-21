@@ -33,18 +33,23 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
       itemHeight = 32,
       listHeight = 200,
       virtualApiRef,
+      columns = 1,
+      looseMatch = false,
       onSelect,
       ...rest
     } = props;
 
+    const multiColumn = columns > 1;
+
     const rootRef = useRef<HTMLDivElement | null>(null);
-    // Forward the popup root element to the parent (Select uses it as the
-    // keyboard-nav containerRef) while keeping a stable RefObject for the
-    // effects below.
     useImperativeHandle(ref, () => rootRef.current as HTMLDivElement, []);
 
-    // Hook is always called (rules of hooks). When `virtual` is off the
-    // returned viewportRef is never attached, so the observer stays idle.
+    // In multi-column virtual mode, each "row" contains `columns` options.
+    // The virtual list tracks rows, not individual options.
+    const rowCount = multiColumn
+      ? Math.ceil(options.length / columns)
+      : options.length;
+
     const {
       start,
       end,
@@ -54,37 +59,38 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
       onScroll,
       scrollToIndex,
     } = useVirtualList({
-      itemCount: options.length,
+      itemCount: virtual ? rowCount : 0,
       itemHeight,
     });
 
-    // Expose the virtual scroll API to the parent so keyboard navigation
-    // can drive the virtual viewport (replaces scrollIntoView).
+    // Expose the virtual scroll API to the parent.
+    // In multi-column mode, the parent passes a flat option index, so we
+    // convert it to a row index before scrolling.
     useEffect(() => {
       if (!virtual || !virtualApiRef) return;
-      virtualApiRef.current = { scrollToIndex };
+      virtualApiRef.current = {
+        scrollToIndex: (flatIndex: number) => {
+          const rowIndex = multiColumn
+            ? Math.floor(flatIndex / columns)
+            : flatIndex;
+          scrollToIndex(rowIndex);
+        },
+      };
       return () => {
         if (virtualApiRef.current) {
           virtualApiRef.current = null;
         }
       };
-    }, [virtual, virtualApiRef, scrollToIndex]);
+    }, [virtual, virtualApiRef, scrollToIndex, multiColumn, columns]);
 
-    // Reset the scroll position whenever the option set changes (e.g. after
-    // filtering via search), otherwise the viewport may sit at an offset
-    // where none of the new results are visible.
+    // Reset scroll position when options change.
     useEffect(() => {
       if (virtual) {
         scrollToIndex(0);
       }
     }, [options, virtual, scrollToIndex]);
 
-    // Bring the focused option into view on open and whenever it changes.
-    //   - virtual mode: drive the virtual viewport via scrollToIndex.
-    //   - default mode: scrollIntoView on the option's DOM node.
-    // Options owns this (rather than the keyboard hook) so it also covers the
-    // initial open, where the keyboard effect can fire before the popup is
-    // mounted / the virtual API ref is wired up.
+    // Bring the focused option into view.
     useEffect(() => {
       if (options.length === 0) return;
       if (focusedKey === '') return;
@@ -92,7 +98,10 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
       if (focusedIndex < 0) return;
 
       if (virtual) {
-        scrollToIndex(focusedIndex);
+        const rowIndex = multiColumn
+          ? Math.floor(focusedIndex / columns)
+          : focusedIndex;
+        scrollToIndex(rowIndex);
         return;
       }
 
@@ -103,9 +112,18 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
         | HTMLElement
         | undefined;
       if (targetElement) {
-        targetElement.scrollIntoView({ block: 'nearest' });
+        // Use manual scroll calculation instead of scrollIntoView to avoid
+        // scrolling the entire page (the popup is rendered in a portal).
+        const containerRect = container.getBoundingClientRect();
+        const targetRect = targetElement.getBoundingClientRect();
+        if (targetRect.bottom > containerRect.bottom) {
+          container.scrollTop +=
+            targetRect.bottom - containerRect.bottom;
+        } else if (targetRect.top < containerRect.top) {
+          container.scrollTop -= containerRect.top - targetRect.top;
+        }
       }
-    }, [focusedKey, virtual, options, scrollToIndex, rootRef]);
+    }, [focusedKey, virtual, options, scrollToIndex, rootRef, multiColumn, columns]);
 
     const isEmpty = options.length === 0;
     const ctxValue = {
@@ -113,10 +131,76 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
       selectedKeys,
       focusedKey,
       multiple,
+      looseMatch,
       onSelect,
     };
 
-    // ----- Virtual mode: only render the visible window -----
+    // ----- Virtual + multi-column: render rows of N options -----
+    if (virtual && multiColumn && !isEmpty) {
+      const visibleRows = [];
+      for (let rowIdx = start; rowIdx < end; rowIdx++) {
+        const rowOptions = [];
+        for (let col = 0; col < columns; col++) {
+          const flatIdx = rowIdx * columns + col;
+          if (flatIdx < options.length) {
+            rowOptions.push({ option: options[flatIdx], flatIdx });
+          }
+        }
+        visibleRows.push({ rowIdx, rowOptions });
+      }
+
+      return (
+        <div
+          {...rest}
+          className={clsx(
+            `${prefixCls}-popup`,
+            `${prefixCls}-popup-virtual`,
+            popupClassName,
+          )}
+          style={popupStyle}
+          ref={rootRef}
+          tabIndex={-1}
+        >
+          <OptionsCtx.Provider value={ctxValue}>
+            <div
+              className={`${prefixCls}-popup-viewport`}
+              ref={viewportRef}
+              onScroll={onScroll}
+              style={{ maxHeight: listHeight, overflowY: 'auto' }}
+            >
+              <div style={{ height: totalHeight, position: 'relative' }}>
+                {visibleRows.map(({ rowIdx, rowOptions }, ri) => (
+                  <div
+                    key={rowIdx}
+                    className={`${prefixCls}-popup-grid-row`}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: itemHeight,
+                      transform: `translateY(${offsetY + ri * itemHeight}px)`,
+                      display: 'grid',
+                      gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                    }}
+                  >
+                    {rowOptions.map(({ option, flatIdx }) => (
+                      <Option
+                        {...option}
+                        key={option.value}
+                        dataTestId={`${dataTestId}-${flatIdx}`}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </OptionsCtx.Provider>
+        </div>
+      );
+    }
+
+    // ----- Virtual single-column: render visible window -----
     if (virtual && !isEmpty) {
       const visibleOptions = options.slice(start, end);
       return (
@@ -161,12 +245,21 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
       );
     }
 
-    // ----- Default mode: render every option (unchanged behavior) -----
+    // ----- Default mode (non-virtual) -----
     return (
       <div
         {...rest}
-        className={clsx(`${prefixCls}-popup`, popupClassName)}
-        style={popupStyle}
+        className={clsx(
+          `${prefixCls}-popup`,
+          { [`${prefixCls}-popup-grid`]: multiColumn },
+          popupClassName,
+        )}
+        style={{
+          ...popupStyle,
+          ...(multiColumn
+            ? { '--yee-select-columns': columns } as React.CSSProperties
+            : undefined),
+        }}
         ref={rootRef}
         tabIndex={-1}
       >

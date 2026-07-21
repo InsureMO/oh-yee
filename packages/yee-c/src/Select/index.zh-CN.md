@@ -23,6 +23,7 @@ toc: 'content'
 <code src="./demo/tags.tsx" title="标签模式" description="标签模式的Select"></code>
 <code src="./demo/orphan.tsx" title="孤儿值" description="value 不在 options 中时的显示与自定义样式"></code>
 <code src="./demo/virtual.tsx" title="虚拟滚动" description="大数据量（几千条）下的虚拟滚动"></code>
+<code src="./demo/columns.tsx" title="多列布局" description="下拉面板支持多列网格显示，适合选项较多时节省纵向空间"></code>
 
 ## API
 
@@ -53,6 +54,9 @@ toc: 'content'
 | virtual | `boolean` | 是否开启虚拟滚动。开启后仅渲染可视区内的选项，DOM 节点数与数据总量无关，适合成百上千条数据 | `false` |
 | itemHeight | `number` | 每个选项的固定高度（px），开启 `virtual` 时必须为定值 | `32` |
 | listHeight | `number` | 下拉框最大高度（px） | `200` |
+| columns | `number` | 下拉面板列数，大于 1 时启用网格布局 | `1` |
+| popupWidth | `number` | 下拉面板固定宽度（px），设置后弹出层不再跟随触发元素宽度。配合多列布局使用 | - |
+| looseMatch | `boolean` | 是否启用宽松值匹配。开启后 value 与 options 的 value 通过 `String()` 转换后比较，解决 number/string 类型不一致的问题。注意：开启后 `onChange` 回调中的 value 类型为 option 定义的类型，而非传入的原始类型 | `false` |
 | data-* | `string` | - | 支持所有 data-* 属性，透传到组件根 DOM 元素 |
 
 ### Option

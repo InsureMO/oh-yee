@@ -197,3 +197,27 @@ export type TFunction = <K extends LocaleKey>(
   key: K,
   params?: LocaleParams<K>,
 ) => string;
+
+/**
+ * Recursively-optional version of T. Every level is optional; arrays are kept
+ * as-is (replaced wholesale rather than element-merged).
+ *
+ * Used so a locale override only needs to specify the keys it changes:
+ * `{ datepicker: { now: 'Now' } }` is a valid `DeepPartial<Locale>`.
+ */
+export type DeepPartial<T> = T extends (...args: any[]) => any
+  ? T
+  : T extends object
+    ? T extends readonly any[]
+      ? T
+      : { [K in keyof T]?: DeepPartial<T[K]> }
+    : T;
+
+/**
+ * Locale input accepted by `LocaleProvider` / `useLocale().setLocale`:
+ * - a language code string (`'zh_CN'`), resolved from the built-in packs, or
+ * - a (possibly partial) locale object. A partial object MUST carry `locale`
+ *   so the provider knows which built-in pack to merge the overrides onto;
+ *   only the keys you specify are overridden, everything else is inherited.
+ */
+export type LocaleConfigInput = string | (DeepPartial<Locale> & { locale: string });

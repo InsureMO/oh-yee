@@ -23,6 +23,7 @@ Select component for choosing from a set of options.
 <code src="./demo/tags.tsx" title="Tags" description="Tags mode Select"></code>
 <code src="./demo/orphan.tsx" title="Orphan Value" description="Display and custom styling when the value is not in options"></code>
 <code src="./demo/virtual.tsx" title="Virtual Scroll" description="Virtual scrolling for large datasets (thousands of options)"></code>
+<code src="./demo/columns.tsx" title="Multi-Column" description="Dropdown panel supports multi-column grid display to save vertical space when there are many options"></code>
 
 ## API
 
@@ -53,6 +54,9 @@ Select component for choosing from a set of options.
 | virtual | `boolean` | Enable virtual scrolling. Only the options in the visible window are rendered, so the DOM node count stays constant regardless of the total. Recommended for hundreds or thousands of options | `false` |
 | itemHeight | `number` | Fixed height of each option in pixels. Must be a fixed value when `virtual` is enabled | `32` |
 | listHeight | `number` | Max height of the dropdown popup in pixels | `200` |
+| columns | `number` | Number of columns in the dropdown panel. Enables grid layout when greater than 1 | `1` |
+| popupWidth | `number` | Fixed width of the dropdown popup in pixels. When set, the popup does not stretch to match the trigger width. Useful with multi-column layout | - |
+| looseMatch | `boolean` | Enable loose value matching. When enabled, value comparison uses `String()` conversion instead of strict equality, resolving number/string type mismatch between `value` and `options`. Note: when enabled, `onChange` returns the option's value type, not the originally passed value type | `false` |
 | data-* | `string` | - | Supports all data-* attributes, forwarded to root DOM element |
 
 ### Option

@@ -137,11 +137,27 @@ export interface SelectProps
    * @default 200
    */
   listHeight?: number;
+  /**
+   * Number of columns in the dropdown panel.
+   * When greater than 1, options are displayed in a grid layout.
+   * @default 1
+   */
+  columns?: number;
+  /**
+   * Fixed width of the dropdown popup in pixels.
+   * When set, the popup will not stretch to match the trigger width.
+   * Useful with multi-column layout to provide enough horizontal space.
+   */
+  popupWidth?: number;
+  /**
+   * Enable loose value matching. When enabled, value comparison uses
+   * `String(a) === String(b)` instead of strict equality (`===`).
+   * Resolves type mismatch when options use string values but the
+   * controlled value is a number (or vice versa).
+   * @default false
+   */
+  looseMatch?: boolean;
 }
-
-/**
- * Props for the internal Option component (renders a single dropdown option).
- */
 export interface OptionProps {
   /**
    * Display label
@@ -178,6 +194,7 @@ export interface OptionsContextValue {
   selectedKeys: Array<string | number>;
   focusedKey: string | number;
   multiple: boolean;
+  looseMatch: boolean;
   onSelect: (
     key: string | number,
     e?: React.MouseEvent | React.KeyboardEvent,
@@ -244,6 +261,15 @@ export interface OptionsProps extends Omit<
     scrollToIndex: (index: number) => void;
   } | null>;
   /**
+   * Number of columns in the dropdown grid layout.
+   * @default 1
+   */
+  columns?: number;
+  /**
+   * Whether loose value matching is enabled
+   */
+  looseMatch?: boolean;
+  /**
    * Callback when an option is selected
    */
   onSelect: (
@@ -251,3 +277,4 @@ export interface OptionsProps extends Omit<
     e?: React.MouseEvent | React.KeyboardEvent,
   ) => void;
 }
+

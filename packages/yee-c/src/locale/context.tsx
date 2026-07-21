@@ -7,10 +7,10 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { DEFAULT_LOCALE, LOCALE_CONFIGS } from './constants';
-import type { Locale, TFunction } from './interface';
+import { DEFAULT_LOCALE, DEFAULT_LOCALE_CONFIG, LOCALE_CONFIGS } from './constants';
+import type { Locale, LocaleConfigInput, TFunction } from './interface';
 import defaultLocaleData from './lang/en_US';
-import { isValidLocale, translate } from './util';
+import { deepMerge, isValidLocale, translate } from './util';
 
 // ============ Default value (fallback when no Provider) ============
 
@@ -30,12 +30,31 @@ const createDefaultValue = (): LocaleContextType => {
 
 const defaultValue = createDefaultValue();
 
+// ============ Locale input resolution ============
+
+/**
+ * Resolve a locale input (a language code, or a possibly-partial locale
+ * object) into a full `Locale` pack. Partial objects are deep-merged onto the
+ * built-in pack matching their `locale` field, so only the overridden keys
+ * change and everything else is inherited.
+ */
+function resolveLocaleConfigInput(input: LocaleConfigInput): Locale {
+  if (typeof input === 'string') {
+    return LOCALE_CONFIGS[input] || defaultLocaleData;
+  }
+  if (input && typeof input.locale === 'string') {
+    const base = LOCALE_CONFIGS[input.locale] || DEFAULT_LOCALE_CONFIG;
+    return deepMerge(base, input);
+  }
+  return defaultLocaleData;
+}
+
 // ============ Context definition ============
 
 interface LocaleContextType {
   locale: Locale;
   lang: string; // Current language code 'zh_CN'
-  setLocale: (locale: Locale | string) => void; // Supports object or language code
+  setLocale: (locale: LocaleConfigInput) => void; // Supports object (full or partial) or language code
   t: TFunction;
 }
 
@@ -45,8 +64,9 @@ export const LocaleContext = createContext<LocaleContextType>(defaultValue);
 
 interface LocaleProviderProps {
   children: React.ReactNode;
-  /** Initial locale pack or language code */
-  defaultLocale?: Locale | string;
+  /** Initial locale: a language code, or a full/partial locale object.
+   *  Partial objects are merged onto the matching built-in pack. */
+  defaultLocale?: LocaleConfigInput;
   /** Async locale loader function */
   loadLocale?: (lang: string) => Promise<Locale>;
   /** Whether to auto-fallback to default for missing fields */
@@ -60,13 +80,9 @@ export function LocaleProvider({
   fallbackToDefault = true,
 }: LocaleProviderProps) {
   // State management
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof initialLocale === 'string') {
-      // Prefer sync lookup from static locale packs
-      return LOCALE_CONFIGS[initialLocale] || defaultLocaleData;
-    }
-    return isValidLocale(initialLocale) ? initialLocale : defaultLocaleData;
-  });
+  const [locale, setLocaleState] = useState<Locale>(() =>
+    resolveLocaleConfigInput(initialLocale),
+  );
 
   const [lang, setLang] = useState<string>(
     typeof initialLocale === 'string' ? initialLocale : initialLocale.locale,
@@ -131,7 +147,7 @@ export function LocaleProvider({
 
   // Set locale method
   const setLocale = useCallback(
-    (target: Locale | string) => {
+    (target: LocaleConfigInput) => {
       if (typeof target === 'string') {
         // Prefer sync lookup from static locale packs
         const staticLocale = LOCALE_CONFIGS[target];
@@ -142,8 +158,9 @@ export function LocaleProvider({
         }
         // Otherwise use async loading
         loadAndSetLocale(target);
-      } else if (isValidLocale(target)) {
-        setLocaleState(target);
+      } else if (target && typeof target.locale === 'string') {
+        // Full or partial object: merge onto the matching built-in pack
+        setLocaleState(resolveLocaleConfigInput(target));
         setLang(target.locale);
       }
     },

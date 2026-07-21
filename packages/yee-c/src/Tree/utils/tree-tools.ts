@@ -6,6 +6,17 @@ export interface MoveInfo {
   dragKey: string | number;
   dropKey: string | number;
   position: DragPosition;
+  /**
+   * Full key path from root to the dragged node (inclusive).
+   * When provided, enables precise matching even with non-unique keys.
+   * Example: ['root', 'parent', 'child']
+   */
+  dragPath?: Array<string | number>;
+  /**
+   * Full key path from root to the drop target node (inclusive).
+   * When provided, enables precise matching even with non-unique keys.
+   */
+  dropPath?: Array<string | number>;
 }
 
 /**
@@ -15,6 +26,10 @@ export interface MoveInfo {
  * Only the modified path gets new arrays + shallow-cloned wrappers; untouched
  * nodes are reused by reference (data may carry non-cloneable values like
  * React elements / functions in `icon`).
+ *
+ * When `dragPath` / `dropPath` are provided in `info`, matching is done by
+ * walking the exact path (supports non-unique keys). Otherwise falls back to
+ * first-match by key (backward compatible).
  *
  * Returns a brand-new root array; returns the input unchanged if dragKey is
  * not found or drag and drop resolve to the same location.
@@ -27,29 +42,66 @@ export function moveTreeNode<T extends Record<string, unknown>>(
   if (!tree || (Array.isArray(tree) && tree.length === 0)) return [];
 
   const { key: K, children: C } = fieldNames;
-  const { dragKey, dropKey, position } = info;
+  const { dragKey, dropKey, position, dragPath, dropPath } = info;
   const root = Array.isArray(tree) ? tree : [tree];
 
+  /**
+   * Match a node: when a path is provided, match by comparing node key against
+   * the expected key at the current depth; otherwise match by key equality.
+   */
+  const matchNode = (
+    node: T,
+    targetKey: string | number,
+    path: Array<string | number> | undefined,
+    depth: number,
+  ): boolean => {
+    if (path) {
+      return String(node[K]) === String(path[depth]);
+    }
+    return node[K] === targetKey;
+  };
+
+  const isTargetDepth = (
+    path: Array<string | number> | undefined,
+    depth: number,
+  ): boolean => {
+    if (!path) return true; // no path constraint, match at any depth
+    return depth === path.length - 1;
+  };
+
   // Phase 1: detach the drag node subtree (immutably).
-  // Returns the rebuilt array (without the drag node) plus the detached node.
   const detach = (
     nodes: T[],
+    depth: number,
   ): { found: T | null; nodes: T[] } => {
     let found: T | null = null;
     const next: T[] = [];
     for (const n of nodes) {
-      if (n[K] === dragKey) {
-        found = n; // keep the original subtree reference intact
+      if (
+        !found &&
+        matchNode(n, dragKey, dragPath, depth) &&
+        isTargetDepth(dragPath, depth)
+      ) {
+        found = n;
         continue;
       }
       const kids = n[C] as T[] | undefined;
-      if (Array.isArray(kids)) {
-        const r = detach(kids);
+      if (
+        !found &&
+        dragPath &&
+        Array.isArray(kids) &&
+        !matchNode(n, dragKey, dragPath, depth)
+      ) {
+        // A path lets us skip branches that cannot contain the drag node.
+        next.push(n);
+      } else if (!found && Array.isArray(kids)) {
+        // On the drag path (or no path constraint), recurse
+        const r = detach(kids, depth + 1);
         if (r.found) {
           found = r.found;
           next.push({ ...n, [C]: r.nodes });
         } else {
-          next.push(n); // unchanged branch: reuse original ref
+          next.push(n);
         }
       } else {
         next.push(n);
@@ -58,38 +110,43 @@ export function moveTreeNode<T extends Record<string, unknown>>(
     return { found, nodes: next };
   };
 
-  const { found: dragNode, nodes: withoutDrag } = detach(root);
-  if (!dragNode) return root; // dragKey not found: no-op
+  const { found: dragNode, nodes: withoutDrag } = detach(root, 0);
+  if (!dragNode) return root;
 
-  // Phase 2: insert per position into the tree that no longer contains the drag node.
-  // Note: do NOT short-circuit with an early return once inserted — siblings that
-  // follow the matched subtree must still be copied (by reference) or they'd be lost.
-  const insert = (nodes: T[]): { inserted: boolean; nodes: T[] } => {
+  // Phase 2: insert per position.
+  const insert = (nodes: T[], depth: number): { inserted: boolean; nodes: T[] } => {
     const next: T[] = [];
     let inserted = false;
     for (const n of nodes) {
-      if (!inserted && position === 'inside' && n[K] === dropKey) {
+      const isTarget =
+        !inserted &&
+        matchNode(n, dropKey, dropPath, depth) &&
+        isTargetDepth(dropPath, depth);
+
+      if (isTarget && position === 'inside') {
         const oldKids = (Array.isArray(n[C]) ? n[C] : []) as T[];
         next.push({ ...n, [C]: [...oldKids, dragNode] });
         inserted = true;
         continue;
       }
-      if (!inserted && position === 'before' && n[K] === dropKey) {
+      if (isTarget && position === 'before') {
         next.push(dragNode, n);
         inserted = true;
         continue;
       }
-      if (!inserted && position === 'after' && n[K] === dropKey) {
+      if (isTarget && position === 'after') {
         next.push(n, dragNode);
         inserted = true;
         continue;
       }
       const kids = n[C] as T[] | undefined;
       if (inserted || !Array.isArray(kids)) {
-        // Already inserted, or a leaf with no subtree to search: keep by ref.
+        next.push(n);
+      } else if (dropPath && !matchNode(n, dropKey, dropPath, depth)) {
+        // Not on the drop path at this level, skip recursion
         next.push(n);
       } else {
-        const r = insert(kids);
+        const r = insert(kids, depth + 1);
         if (r.inserted) {
           next.push({ ...n, [C]: r.nodes });
           inserted = true;
@@ -101,34 +158,20 @@ export function moveTreeNode<T extends Record<string, unknown>>(
     return { inserted, nodes: next };
   };
 
-  const { inserted, nodes: result } = insert(withoutDrag);
-  // If the drop target wasn't found, nothing should change — return the
-  // original (drag node stays put) rather than silently dropping it.
+  const { inserted, nodes: result } = insert(withoutDrag, 0);
   return inserted ? result : root;
 }
 
-export function getChildKeys<T extends Record<string, unknown>>(
-  data: T,
-  fieldNames: {
-    key: keyof T;
-    children: keyof T;
-  },
-): Array<string | number> {
-  const { key, children } = fieldNames;
-  const _children = data[children];
-  const keys: Array<string | number> = [];
-  if (Array.isArray(_children) && _children.length) {
-    _children.forEach((node) => {
-      keys.push(node[key] as string | number);
-
-      if (Array.isArray(node[children])) {
-        keys.push(...getChildKeys(node, fieldNames));
-      }
-    });
-  }
-  return keys;
-}
-
+/**
+ * Flatten tree into a flat array with rich metadata.
+ *
+ * Key design decisions:
+ * - Uses `uid` (built from the key path) as the internal identifier, because
+ *   user-provided `key` values may NOT be globally unique across the tree.
+ * - The returned Map is keyed by `uid` for O(1) lookups.
+ * - `childUids` is collected bottom-up in a single pass (O(n) total) instead
+ *   of per-node recursive enumeration (which was O(n²)).
+ */
 export function tree2array<T extends Record<string, unknown>>(
   tree: T | T[],
   fieldNames: {
@@ -142,140 +185,203 @@ export function tree2array<T extends Record<string, unknown>>(
 
   const data = Array.isArray(tree) ? tree : [tree];
   const res: TreeNode<T>[] = [];
-  const map = new Map();
+  const map = new Map<string, TreeNode<T>>();
 
   const { key, label, children } = fieldNames;
 
+  /**
+   * Walk returns the list of descendant uids so the parent can collect them
+   * without a second traversal.
+   * Pushes nodes in PRE-ORDER (parent before children) so that visibleItems
+   * filtering can work in a single forward pass.
+   */
   function walk({
-    data,
-    pKey,
+    data: node,
+    pUid,
     depth,
     path,
     isLast,
     lines,
   }: {
     data: T;
-    pKey: string | null;
+    pUid: string | null;
     depth: number;
-    path: string[];
+    path: Array<string | number>;
     isLast: boolean;
     lines: number[];
-  }) {
-    const _key = data[key] as string;
-    const _label = data[label];
-    const _children = data[children] as T[] | undefined;
-    const nextPath = [...path, _key];
-    const uid = nextPath.join('_');
+  }): string[] {
+    const rawKey = node[key] as string | number;
+    const _label = node[label];
+    const _children = node[children] as T[] | undefined;
+    const nextPath = [...path, rawKey];
+    const uid = pUid ? `${pUid}\x00${String(rawKey)}` : String(rawKey);
 
-    const isParent = !!(
-      Array.isArray(_children) &&
-      (_children as Array<Record<string, unknown>>).length
-    );
+    const isParent = Array.isArray(_children) && _children.length > 0;
 
-    const wrapperData = {
+    // Push parent FIRST (pre-order) so visibleItems can rely on forward scan
+    const wrapperData: TreeNode<T> = {
       uid,
-      key: _key,
-      label: _label,
+      key: rawKey,
+      label: _label as string,
+      title: node.title as string | undefined,
       path,
-      pKey,
+      pUid,
       depth,
       isLeaf: !isParent,
-      isLast: isLast,
-      lines: lines,
-      disabled: data.disabled,
-      icon: data.icon,
-      childKeys: getChildKeys<T>(data, fieldNames),
-      original: data,
-    } as TreeNode<T>;
+      isLast,
+      lines,
+      disabled: node.disabled as boolean | undefined,
+      icon: node.icon as React.ReactNode | (() => React.ReactNode) | undefined,
+      childUids: undefined, // will be filled after recursion
+      original: node,
+    };
 
     res.push(wrapperData);
-    map.set(_key, wrapperData);
-    const total = Array.isArray(_children) ? _children.length : 0;
-    _children?.forEach((node, index) =>
-      walk({
-        data: node,
-        pKey: _key,
-        depth: depth + 1,
-        path: nextPath,
-        isLast: index + 1 === total,
-        lines: isLast ? lines : [...lines, depth],
-      }),
-    );
+    map.set(uid, wrapperData);
+
+    // Recurse children to collect their uids bottom-up
+    const childTotal = isParent ? _children!.length : 0;
+    const allDescendantUids: string[] = [];
+
+    if (isParent) {
+      _children!.forEach((child, index) => {
+        const childIsLast = index + 1 === childTotal;
+        const descendantUids = walk({
+          data: child,
+          pUid: uid,
+          depth: depth + 1,
+          path: nextPath,
+          isLast: childIsLast,
+          lines: isLast ? lines : [...lines, depth],
+        });
+        allDescendantUids.push(...descendantUids);
+      });
+    }
+
+    // Now fill in childUids
+    if (allDescendantUids.length > 0) {
+      wrapperData.childUids = allDescendantUids;
+    }
+
+    // Return this uid + all descendant uids to the caller
+    return [uid, ...allDescendantUids];
   }
 
-  const total = Array.isArray(data) ? data.length : 0;
-  data.forEach((node, index) =>
+  const rootTotal = data.length;
+  data.forEach((node, index) => {
     walk({
       data: node,
-      pKey: null,
+      pUid: null,
       depth: 0,
       path: [],
-      isLast: index + 1 === total,
-      lines: index + 1 === total ? [] : [0],
-    }),
-  );
+      isLast: index + 1 === rootTotal,
+      lines: index + 1 === rootTotal ? [] : [0],
+    });
+  });
+
   return [res, map];
 }
 
-export function containsAll<T>(a: Array<T>, b: Array<T>) {
-  if (b.length > a.length) {
-    return false;
+/**
+ * Check whether array `a` contains every element in `b`.
+ */
+export function containsAll<T>(a: Set<T>, b: Array<T>): boolean {
+  if (!b || b.length === 0) return true;
+  return b.every((i) => a.has(i));
+}
+
+/**
+ * Remove all elements in `b` from `a`.
+ */
+export function removeAll<T>(a: Set<T>, b: Array<T>): Set<T> {
+  const result = new Set<T>();
+  a.forEach((item) => result.add(item));
+  for (const item of b) {
+    result.delete(item);
   }
-  return b.every((i) => a.includes(i));
+  return result;
 }
 
-export function removeContainsAll<T>(a: Array<T>, b: Array<T>) {
-  if (!b || b.length === 0) return a;
-  const toRemove = new Set(b);
-  return a.filter((i) => !toRemove.has(i));
-}
-
+/**
+ * Compute new checked uids when a node is toggled.
+ * Uses Set-based operations for O(1) membership checks.
+ * Disabled nodes are NOT affected by parent/child propagation — their checked
+ * state remains unchanged unless they are the directly toggled node.
+ */
 export function getCheckedKeys({
   checked,
   keys,
-  key,
+  uid,
   map,
 }: {
   checked: boolean;
-  keys: Array<string | number>;
-  key: string | number;
+  keys: Set<string>;
+  uid: string;
   map: Map<string, TreeNode<unknown>>;
-}) {
-  let newKeys = [...keys];
-  const item = map.get(key as string);
-  const childKeys = item?.childKeys || [];
-  let pKey = item?.pKey;
+}): Set<string> {
+  const item = map.get(uid);
+  if (!item) return keys;
+
+  const childUids = item.childUids || [];
+  const newKeys = new Set<string>();
+  keys.forEach((k) => newKeys.add(k));
 
   if (checked) {
-    newKeys = [...newKeys, ...childKeys, key];
+    // Add this node + non-disabled descendants
+    newKeys.add(uid);
+    for (const cuid of childUids) {
+      const child = map.get(cuid);
+      if (child && !child.disabled) {
+        newKeys.add(cuid);
+      }
+    }
 
-    while (pKey) {
-      const parent = map.get(pKey);
+    // Walk up: if all non-disabled children of an ancestor are checked, check the ancestor
+    let pUid = item.pUid;
+    while (pUid) {
+      const parent = map.get(pUid);
       if (parent) {
-        if (
-          !newKeys.includes(parent.key) &&
-          containsAll(newKeys, parent.childKeys as Array<unknown>)
-        ) {
-          newKeys.push(parent.key);
+        if (parent.disabled) {
+          // Stop propagation at disabled ancestors
+          break;
         }
-        pKey = parent.pKey;
+        if (!newKeys.has(parent.uid) && parent.childUids) {
+          // Check if all non-disabled children are checked
+          const allNonDisabledChecked = parent.childUids.every((cuid) => {
+            const child = map.get(cuid);
+            return (child && child.disabled) || newKeys.has(cuid);
+          });
+          if (allNonDisabledChecked) {
+            newKeys.add(parent.uid);
+          }
+        }
+        pUid = parent.pUid;
       } else {
-        pKey = null;
+        pUid = null;
       }
     }
   } else {
-    newKeys = newKeys.filter((k) => k !== key);
-    newKeys = removeContainsAll(newKeys, childKeys);
+    // Remove this node + non-disabled descendants
+    newKeys.delete(uid);
+    for (const cuid of childUids) {
+      const child = map.get(cuid);
+      if (child && !child.disabled) {
+        newKeys.delete(cuid);
+      }
+    }
 
-    while (pKey) {
-      const parent = map.get(pKey);
+    // Walk up: uncheck non-disabled ancestors
+    let pUid = item.pUid;
+    while (pUid) {
+      const parent = map.get(pUid);
       if (parent) {
-        if (newKeys.includes(parent.key)) {
-          newKeys = newKeys.filter((k) => k !== parent.key);
+        if (parent.disabled) {
+          break;
         }
-        pKey = parent.pKey;
+        newKeys.delete(parent.uid);
+        pUid = parent.pUid;
       } else {
-        pKey = null;
+        pUid = null;
       }
     }
   }
