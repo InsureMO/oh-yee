@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.0
+
+### Minor Changes
+
+- 22f3b2c: feat(Form, Table): enhance field validation and improve table column styling
+
 ## 0.7.0
 
 ### Minor Changes
