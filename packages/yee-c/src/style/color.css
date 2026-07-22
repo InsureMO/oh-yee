@@ -848,6 +848,7 @@
   --yee-table-thead-stripe-borderbottom-color: var(
     --yee-table-thead-borderbottom-color
   );
+  --yee-table-row-bg-color: var(--yee-color-bg-container);
   --yee-table-odd-row-bg-color: var(--yee-color-bg-container);
   --yee-table-even-row-bg-color: var(--yee-color-bg-head);
   --yee-table-elevated-thead-stripe-borderbottom-color: var(
@@ -870,6 +871,7 @@
   --yee-table-head-filter-active-color: var(--yee-primary-color);
   --yee-table-fixed-left-after-bs-color: var(--yee-box-shadow-color);
   --yee-table-fixed-right-after-bs-color: var(--yee-box-shadow-color);
+  --yee-table-fixed-column-bg-color: inherit;
   --yee-table-filter-list-bg-color: var(--yee-color-bg-elevated);
   --yee-table-tbody-tr-expanded-bg-color: var(--yee-color-bg-container);
   --yee-table-elevated-tbody-tr-expanded-bg-color: var(

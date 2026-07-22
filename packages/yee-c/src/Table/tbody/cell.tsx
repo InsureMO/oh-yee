@@ -61,7 +61,7 @@ const TableCell: React.FC<BodyCellProps> = (props) => {
       {
         [`${prefixCls}-cell-fixed-${fixed}`]: fixed,
         [`${prefixCls}-cell-fixed-${fixed}-first`]: isFixedRightFirst,
-        [`${prefixCls}-fixed-${fixed}-last`]: isFixedLeftLast,
+        [`${prefixCls}-cell-fixed-${fixed}-last`]: isFixedLeftLast,
       },
       className,
     );

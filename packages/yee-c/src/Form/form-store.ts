@@ -32,6 +32,11 @@ function move<T>(array: T[], from: number, to: number): T[] {
 
 const GLOBAL_WATCH_KEY = '__ALL__';
 
+const isRelatedNamePath = (first: string, second: string): boolean =>
+  first === second ||
+  first.startsWith(`${second}.`) ||
+  second.startsWith(`${first}.`);
+
 export class FormStore {
   private store: Store = {};
   private callbacks: Callbacks = {};
@@ -145,6 +150,9 @@ export class FormStore {
       });
     }
 
+    const changedKeys = Object.keys(newStore);
+    const relatedFieldNames = this.getRelatedFieldNames(changedKeys);
+
     // Validate on onChange and onBlur (async — fire-and-forget so setFieldsValue
     // stays synchronous for its callers; results surface via onStoreChange).
     if (
@@ -152,10 +160,10 @@ export class FormStore {
       trigger === 'onBlur' ||
       trigger === 'onSubmit'
     ) {
-      void this.validateFields(Object.keys(newStore), trigger);
+      void this.validateFields(relatedFieldNames, trigger);
     }
 
-    this.refreshField(newStore);
+    this.refreshField(newStore, relatedFieldNames);
   };
 
   resetFields = (name?: Name[]) => {
@@ -279,16 +287,22 @@ export class FormStore {
     return err;
   };
 
-  refreshField = (newStore?: Store) => {
+  private getRelatedFieldNames = (changedKeys: string[]): Name[] =>
+    Array.from(this.fieldMap.keys()).filter((fieldName) =>
+      changedKeys.some((changedKey) =>
+        isRelatedNamePath(String(fieldName), changedKey),
+      ),
+    );
+
+  refreshField = (newStore?: Store, relatedFieldNames?: Name[]) => {
     if (newStore) {
-      const keys = Object.keys(newStore);
-      keys.forEach((key) => {
-        const entity = this.fieldMap.get(key);
-        if (entity) {
-          entity?.onStoreChange();
-        }
-        this.notifyWatchers(key);
+      const changedKeys = Object.keys(newStore);
+      const fieldNames =
+        relatedFieldNames ?? this.getRelatedFieldNames(changedKeys);
+      fieldNames.forEach((fieldName) => {
+        this.fieldMap.get(fieldName)?.onStoreChange();
       });
+      this.notifyWatchers(changedKeys);
     } else {
       this.fieldEntities.forEach((entity) => {
         entity?.onStoreChange();
@@ -308,14 +322,27 @@ export class FormStore {
     }
     this.watchers.get(key)!.add(callback);
     return () => {
-      this.watchers.get(key)?.delete(callback);
+      const watchers = this.watchers.get(key);
+      watchers?.delete(callback);
+      if (watchers?.size === 0) {
+        this.watchers.delete(key);
+      }
     };
   };
 
-  private notifyWatchers = (changedKey?: string) => {
-    if (changedKey) {
-      this.watchers.get(changedKey)?.forEach((cb) => cb());
-      this.watchers.get(GLOBAL_WATCH_KEY)?.forEach((cb) => cb());
+  private notifyWatchers = (changedKeys?: string | string[]) => {
+    if (changedKeys) {
+      const keys = Array.isArray(changedKeys) ? changedKeys : [changedKeys];
+      const callbacks = new Set<() => void>();
+      this.watchers.forEach((watchers, watchedKey) => {
+        if (
+          watchedKey === GLOBAL_WATCH_KEY ||
+          keys.some((changedKey) => isRelatedNamePath(watchedKey, changedKey))
+        ) {
+          watchers.forEach((callback) => callbacks.add(callback));
+        }
+      });
+      callbacks.forEach((callback) => callback());
     } else {
       this.watchers.forEach((set) => set.forEach((cb) => cb()));
     }

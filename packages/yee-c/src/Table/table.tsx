@@ -126,6 +126,36 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
 
   // Track previous values to determine what action triggered onChange
   const prevSortersRef = useRef<typeof sorters>({});
+  const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [horizontalScroll, setHorizontalScroll] = React.useState({
+    left: false,
+    right: false,
+  });
+
+  const updateHorizontalScroll = React.useCallback(() => {
+    const wrapper = contentWrapperRef.current;
+    const content = contentRef.current;
+    if (!wrapper || !content) return;
+
+    const scrollContainer =
+      content.scrollWidth - content.clientWidth > 1 ? content : wrapper;
+    const maxScrollLeft =
+      scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    const hasHorizontalScroll = maxScrollLeft > 1;
+    const next = {
+      left: hasHorizontalScroll && scrollContainer.scrollLeft > 1,
+      right:
+        hasHorizontalScroll &&
+        scrollContainer.scrollLeft < maxScrollLeft - 1,
+    };
+
+    setHorizontalScroll((current) =>
+      current.left === next.left && current.right === next.right
+        ? current
+        : next,
+    );
+  }, []);
 
   // Wrap onFilter to trigger onChange
   const onFilter = React.useCallback(
@@ -172,6 +202,25 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
       return;
     }
   }, [sorters, current, pageSize, pageData, sortedData, onChange]);
+
+  useEffect(() => {
+    updateHorizontalScroll();
+
+    const wrapper = contentWrapperRef.current;
+    const content = contentRef.current;
+    if (!wrapper || !content) return undefined;
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateHorizontalScroll);
+      return () => window.removeEventListener('resize', updateHorizontalScroll);
+    }
+
+    const resizeObserver = new ResizeObserver(updateHorizontalScroll);
+    resizeObserver.observe(wrapper);
+    resizeObserver.observe(content);
+
+    return () => resizeObserver.disconnect();
+  }, [updateHorizontalScroll, wrapedColumns, pageData, scroll?.x]);
 
   const renderHeader = () => {
     return (
@@ -259,13 +308,23 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     );
 
     return (
-      <div className={`${prefixCls}-content-wrapper`}>
+      <div
+        ref={contentWrapperRef}
+        className={clsx(`${prefixCls}-content-wrapper`, {
+          [`${prefixCls}-content-wrapper-scroll-left`]: horizontalScroll.left,
+          [`${prefixCls}-content-wrapper-scroll-right`]:
+            horizontalScroll.right,
+        })}
+        onScroll={updateHorizontalScroll}
+      >
         <div
+          ref={contentRef}
           className={clsx(`${prefixCls}-content`, {
             [`${prefixCls}-${size}-size`]: size,
             [`${prefixCls}-fixed-header`]: scroll?.y,
           })}
           style={{ height: scroll?.y, width: scroll?.x }}
+          onScroll={updateHorizontalScroll}
         >
           {table}
         </div>

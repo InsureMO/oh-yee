@@ -32,13 +32,17 @@ export function flattenLeafColumns(
  *
  * - Pass 1 (DFS): place each column into the row matching its depth; a group's
  *   colSpan equals the sum of its children's colSpans.
+ * - Fixed metadata from the resolved leaf columns is reused by leaf cells and
+ *   aggregated for group cells whose descendants share the same fixed side.
  * - Pass 2: leaf cells (no sub-columns) get rowSpan = rowCount - rowIndex so
  *   they stretch down to the last header row; group cells keep rowSpan = 1.
  */
 export function parseHeaderRows(
   rootColumns: WrapedColumnProps[],
+  resolvedLeafColumns: WrapedColumnProps[] = flattenLeafColumns(rootColumns),
 ): HeaderCell[][] {
   const rows: HeaderCell[][] = [];
+  let leafIndex = 0;
 
   const fillRowCells = (
     columns: WrapedColumnProps[],
@@ -46,17 +50,59 @@ export function parseHeaderRows(
   ): number => {
     rows[rowIndex] = rows[rowIndex] || [];
     let colSpanTotal = 0;
-    columns.filter(Boolean).forEach((column) => {
+    columns.filter(Boolean).forEach((sourceColumn) => {
+      let column = sourceColumn;
+      const subColumns = sourceColumn.children as
+        | WrapedColumnProps[]
+        | undefined;
+      const leafStartIndex = leafIndex;
       const cell: HeaderCell = {
         column,
         colSpan: 1,
         rowSpan: 1,
       };
-      const subColumns = column.children as WrapedColumnProps[] | undefined;
+
       if (subColumns && subColumns.length > 0) {
         cell.colSpan = fillRowCells(subColumns, rowIndex + 1);
         cell.hasSubColumns = true;
+
+        const groupLeaves = resolvedLeafColumns.slice(
+          leafStartIndex,
+          leafIndex,
+        );
+        const fixed = groupLeaves[0]?.fixed;
+        const isFixedGroup =
+          (fixed === 'left' || fixed === 'right') &&
+          groupLeaves.every((leaf) => leaf.fixed === fixed);
+
+        if (isFixedGroup) {
+          const offsetLeaf =
+            fixed === 'left'
+              ? groupLeaves[0]
+              : groupLeaves[groupLeaves.length - 1];
+          const boundaryLeaf =
+            fixed === 'left'
+              ? groupLeaves[groupLeaves.length - 1]
+              : groupLeaves[0];
+          column = {
+            ...sourceColumn,
+            fixed,
+            style: {
+              ...sourceColumn.style,
+              [fixed]: offsetLeaf.style?.[fixed],
+            },
+            isFixedLeftLast: fixed === 'left' && boundaryLeaf.isFixedLeftLast,
+            isFixedRightFirst:
+              fixed === 'right' && boundaryLeaf.isFixedRightFirst,
+          };
+          cell.column = column;
+        }
+      } else {
+        column = resolvedLeafColumns[leafIndex] || sourceColumn;
+        cell.column = column;
+        leafIndex += 1;
       }
+
       rows[rowIndex].push(cell);
       colSpanTotal += cell.colSpan;
     });

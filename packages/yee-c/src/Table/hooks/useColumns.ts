@@ -58,7 +58,7 @@ export default function useColumns({
     const tree = injectSelectionExpand(base, rowSelection, expandable);
     const leaves = flattenLeafColumns(tree);
     const wraped = handleColumns(leaves);
-    const rows = parseHeaderRows(tree);
+    const rows = parseHeaderRows(tree, wraped);
     return { wrapedColumns: wraped, headerRows: rows };
   }, [childColumns, columns, shouldRenderSelection, shouldRenderExpand]);
 
