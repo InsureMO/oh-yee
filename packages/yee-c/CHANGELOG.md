@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.2
+
+### Patch Changes
+
+- 2365ab5: fix(useColumns): columns memo
+
 ## 0.8.1
 
 ### Patch Changes
