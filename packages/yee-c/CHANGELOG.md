@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.1
+
+### Patch Changes
+
+- 236b095: fix(Dialog): first focus
+
 ## 0.8.0
 
 ### Minor Changes
