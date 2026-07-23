@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { AnimatePresence, motion } from 'motion/react';
 import React, {
   ChangeEvent,
   createContext,
@@ -7,7 +8,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
 import { GlobalContext } from '../Config-Provider';
 import useEvent from '../hooks/useEvent';
 import useMergedState from '../hooks/useMergedState';
@@ -228,9 +228,15 @@ const Tree = <T extends Record<string, unknown> = any>(
   // useStableUidArray ensures stable references to prevent infinite re-render loops.
 
   const stableExpandedValue = useStableUidArray(expandedKeys, flatItems);
-  const stableExpandedDefault = useStableUidArray(defaultExpandedKeys, flatItems);
+  const stableExpandedDefault = useStableUidArray(
+    defaultExpandedKeys,
+    flatItems,
+  );
   const stableSelectedValue = useStableUidArray(selectedKeys, flatItems);
-  const stableSelectedDefault = useStableUidArray(defaultSelectedKeys, flatItems);
+  const stableSelectedDefault = useStableUidArray(
+    defaultSelectedKeys,
+    flatItems,
+  );
   const stableCheckedValue = useStableUidArray(checkedKeys, flatItems);
   const stableCheckedDefault = useStableUidArray(defaultCheckedKeys, flatItems);
 
@@ -248,13 +254,10 @@ const Tree = <T extends Record<string, unknown> = any>(
   );
 
   // --- Selected ---
-  const [selectedUidArray, setSelectedUidArray] = useMergedState<string[]>(
-    [],
-    {
-      value: stableSelectedValue,
-      defaultValue: stableSelectedDefault,
-    },
-  );
+  const [selectedUidArray, setSelectedUidArray] = useMergedState<string[]>([], {
+    value: stableSelectedValue,
+    defaultValue: stableSelectedDefault,
+  });
   const selectedUidSet = useMemo(
     () => arrayToSet(selectedUidArray),
     [selectedUidArray],
@@ -678,7 +681,9 @@ const Tree = <T extends Record<string, unknown> = any>(
         <AnimatePresence initial={false}>
           {segments.map((segment) => {
             if (segment.type === 'node') {
-              return <TreeNodeComp node={segment.node} key={segment.node.uid} />;
+              return (
+                <TreeNodeComp node={segment.node} key={segment.node.uid} />
+              );
             }
             // Keep the wrapper mounted throughout native drag operations.
             // Replacing this tree after dragStart removes the browser's drag

@@ -446,7 +446,11 @@ const Cascader = (baseprops: CascaderProps) => {
 
   const renderPopup = () => {
     return (
-      <div className={clsx(prefixCls)} role="group" aria-label="Cascader options">
+      <div
+        className={clsx(prefixCls)}
+        role="group"
+        aria-label="Cascader options"
+      >
         {isFilter ? (
           <SearchList
             prefixCls={prefixCls}

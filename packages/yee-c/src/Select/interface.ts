@@ -277,4 +277,3 @@ export interface OptionsProps extends Omit<
     e?: React.MouseEvent | React.KeyboardEvent,
   ) => void;
 }
-

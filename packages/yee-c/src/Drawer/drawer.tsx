@@ -206,7 +206,13 @@ const Drawer = (baseprops: DrawerProps) => {
                 className={clsx(`${prefixCls}-header`, classNames?.header)}
                 style={styles?.header}
               >
-                <div className={clsx(`${prefixCls}-title`, classNames?.title)} style={styles?.title} id={titleId}>{title}</div>
+                <div
+                  className={clsx(`${prefixCls}-title`, classNames?.title)}
+                  style={styles?.title}
+                  id={titleId}
+                >
+                  {title}
+                </div>
               </div>
             ) : null}
             <div

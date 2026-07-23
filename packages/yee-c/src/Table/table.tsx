@@ -146,8 +146,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     const next = {
       left: hasHorizontalScroll && scrollContainer.scrollLeft > 1,
       right:
-        hasHorizontalScroll &&
-        scrollContainer.scrollLeft < maxScrollLeft - 1,
+        hasHorizontalScroll && scrollContainer.scrollLeft < maxScrollLeft - 1,
     };
 
     setHorizontalScroll((current) =>
@@ -312,8 +311,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
         ref={contentWrapperRef}
         className={clsx(`${prefixCls}-content-wrapper`, {
           [`${prefixCls}-content-wrapper-scroll-left`]: horizontalScroll.left,
-          [`${prefixCls}-content-wrapper-scroll-right`]:
-            horizontalScroll.right,
+          [`${prefixCls}-content-wrapper-scroll-right`]: horizontalScroll.right,
         })}
         onScroll={updateHorizontalScroll}
       >

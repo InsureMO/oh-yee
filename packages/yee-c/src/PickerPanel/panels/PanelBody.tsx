@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
-import pickerUtils from '../utils/pickerUtils';
 import type { PickerType } from '../interface';
+import pickerUtils from '../utils/pickerUtils';
 
 export interface PanelBodyProps {
   prefixCls?: string;

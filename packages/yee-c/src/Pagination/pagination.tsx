@@ -184,7 +184,9 @@ const Pagination = React.forwardRef(
           aria-disabled={mergedCurrent === 1 || undefined}
           key="prev"
         >
-          {components?.prev ?? <ChevronLeft size={20} strokeWidth={1.5} aria-hidden="true" />}
+          {components?.prev ?? (
+            <ChevronLeft size={20} strokeWidth={1.5} aria-hidden="true" />
+          )}
         </li>
       );
     };
@@ -212,7 +214,9 @@ const Pagination = React.forwardRef(
           aria-disabled={mergedCurrent === pageCount || undefined}
           key="next"
         >
-          {components?.next ?? <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />}
+          {components?.next ?? (
+            <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />
+          )}
         </li>
       );
     };
@@ -255,13 +259,23 @@ const Pagination = React.forwardRef(
     }
 
     return (
-      <ul {...rest} className={cls} style={style} ref={ref} role="navigation" aria-label="Pagination" aria-disabled={disabled || undefined}>
+      <ul
+        {...rest}
+        className={cls}
+        style={style}
+        ref={ref}
+        role="navigation"
+        aria-label="Pagination"
+        aria-disabled={disabled || undefined}
+      >
         {renderTotal()}
         {renderPrevious()}
         {simple ? (
           <li className={`${prefixCls}-simple`}>
             {renderNumber(false)}
-            <span className="split" aria-hidden="true">/</span>
+            <span className="split" aria-hidden="true">
+              /
+            </span>
             <span className="total-page">{pageCount}</span>
           </li>
         ) : (

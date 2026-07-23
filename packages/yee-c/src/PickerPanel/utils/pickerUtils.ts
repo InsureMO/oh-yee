@@ -26,7 +26,8 @@ type PickerType =
 
 const d = {
   dayjs: dayjs,
-  init: (date?: dayjs.ConfigType, option?: dayjs.OptionType) => dayjs(date, option),
+  init: (date?: dayjs.ConfigType, option?: dayjs.OptionType) =>
+    dayjs(date, option),
   getNow: () => {
     return d.init(undefined);
   },

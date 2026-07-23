@@ -114,7 +114,10 @@ export function moveTreeNode<T extends Record<string, unknown>>(
   if (!dragNode) return root;
 
   // Phase 2: insert per position.
-  const insert = (nodes: T[], depth: number): { inserted: boolean; nodes: T[] } => {
+  const insert = (
+    nodes: T[],
+    depth: number,
+  ): { inserted: boolean; nodes: T[] } => {
     const next: T[] = [];
     let inserted = false;
     for (const n of nodes) {

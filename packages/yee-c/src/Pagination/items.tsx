@@ -86,14 +86,20 @@ const Items: React.FC<PaginationItemsProps> = (props) => {
             >
               {components?.jumpPrev ?? (
                 <>
-                  <span className={`${prefixCls}-jump-prev-ellipsis`} aria-hidden="true">
+                  <span
+                    className={`${prefixCls}-jump-prev-ellipsis`}
+                    aria-hidden="true"
+                  >
                     <Ellipsis
                       className="ellipsis"
                       size={18}
                       strokeWidth={1.5}
                     />
                   </span>
-                  <span className={`${prefixCls}-jump-prev-icon`} aria-hidden="true">
+                  <span
+                    className={`${prefixCls}-jump-prev-icon`}
+                    aria-hidden="true"
+                  >
                     <ChevronsLeft
                       className="turn"
                       size={18}
@@ -122,14 +128,20 @@ const Items: React.FC<PaginationItemsProps> = (props) => {
             >
               {components?.jumpNext ?? (
                 <>
-                  <span className={`${prefixCls}-jump-next-ellipsis`} aria-hidden="true">
+                  <span
+                    className={`${prefixCls}-jump-next-ellipsis`}
+                    aria-hidden="true"
+                  >
                     <Ellipsis
                       className="ellipsis"
                       size={18}
                       strokeWidth={1.5}
                     />
                   </span>
-                  <span className={`${prefixCls}-jump-next-icon`} aria-hidden="true">
+                  <span
+                    className={`${prefixCls}-jump-next-icon`}
+                    aria-hidden="true"
+                  >
                     <ChevronsRight
                       className="turn"
                       size={18}

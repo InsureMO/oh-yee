@@ -66,7 +66,10 @@ const Star: React.FC<StarProps> = (props) => {
                 {renderCharacter()}
               </span>
             ) : (
-              <StarHalf className={`${prefixCls}-star-half`} aria-hidden="true" />
+              <StarHalf
+                className={`${prefixCls}-star-half`}
+                aria-hidden="true"
+              />
             )}
           </div>
           <div
@@ -87,7 +90,10 @@ const Star: React.FC<StarProps> = (props) => {
                 {renderCharacter()}
               </span>
             ) : (
-              <StarFull className={`${prefixCls}-star-full`} aria-hidden="true" />
+              <StarFull
+                className={`${prefixCls}-star-full`}
+                aria-hidden="true"
+              />
             )}
           </div>
         </li>
@@ -114,9 +120,15 @@ const Star: React.FC<StarProps> = (props) => {
               {renderCharacter()}
             </span>
           ) : active ? (
-            <StarFull className={`${prefixCls}-star-active`} aria-hidden="true" />
+            <StarFull
+              className={`${prefixCls}-star-active`}
+              aria-hidden="true"
+            />
           ) : (
-            <StarFull className={`${prefixCls}-star-inactive`} aria-hidden="true" />
+            <StarFull
+              className={`${prefixCls}-star-inactive`}
+              aria-hidden="true"
+            />
           )}
         </li>
       )}

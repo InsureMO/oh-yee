@@ -6,8 +6,13 @@ import pickerUtils from '../../utils/pickerUtils';
 import Header from '../Header';
 
 export default function MonthHeader(props: PanelSharedProps) {
-  const { prefixCls, viewDate, offsetYear = 0, onViewDateChange, onPanelChange } =
-    props;
+  const {
+    prefixCls,
+    viewDate,
+    offsetYear = 0,
+    onViewDateChange,
+    onPanelChange,
+  } = props;
 
   const year = pickerUtils.getYear(viewDate) + offsetYear;
 

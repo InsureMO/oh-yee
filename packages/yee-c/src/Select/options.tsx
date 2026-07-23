@@ -117,13 +117,20 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
         const containerRect = container.getBoundingClientRect();
         const targetRect = targetElement.getBoundingClientRect();
         if (targetRect.bottom > containerRect.bottom) {
-          container.scrollTop +=
-            targetRect.bottom - containerRect.bottom;
+          container.scrollTop += targetRect.bottom - containerRect.bottom;
         } else if (targetRect.top < containerRect.top) {
           container.scrollTop -= containerRect.top - targetRect.top;
         }
       }
-    }, [focusedKey, virtual, options, scrollToIndex, rootRef, multiColumn, columns]);
+    }, [
+      focusedKey,
+      virtual,
+      options,
+      scrollToIndex,
+      rootRef,
+      multiColumn,
+      columns,
+    ]);
 
     const isEmpty = options.length === 0;
     const ctxValue = {
@@ -257,7 +264,7 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
         style={{
           ...popupStyle,
           ...(multiColumn
-            ? { '--yee-select-columns': columns } as React.CSSProperties
+            ? ({ '--yee-select-columns': columns } as React.CSSProperties)
             : undefined),
         }}
         ref={rootRef}

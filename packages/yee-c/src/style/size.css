@@ -224,6 +224,8 @@
   /* --Dialog-- */
   --yee-dialog-z-index: var(--yee-z-index-overlay);
   --yee-dialog-mask-z-index: var(--yee-z-index-mask);
+  --yee-dialog-title-font-size: 18px;
+  --yee-dialog-title-font-weight: 600;
   --yee-dialog-content-wrapper-z-index: var(--yee-z-index-overlay);
   --yee-dialog-header-margin-bottom: 12px;
   --yee-dialog-content-margin-top: 10%;

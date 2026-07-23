@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Dayjs } from 'dayjs';
 import type { PickerPanelProps } from '../../interface';
-import type { RangePanelProps } from './interface';
 import PickerPanel from '../../picker-panel';
 import pickerUtils from '../../utils/pickerUtils';
+import type { RangePanelProps } from './interface';
 
 function RangePanel(props: RangePanelProps) {
   const {

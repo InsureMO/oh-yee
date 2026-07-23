@@ -46,7 +46,8 @@ export default () => {
           {
             target: () => targetRef.current,
             title: `placement: ${p}`,
-            description: '气泡卡片相对目标元素的位置；靠近视口边缘时会自动翻转。',
+            description:
+              '气泡卡片相对目标元素的位置；靠近视口边缘时会自动翻转。',
           },
         ]}
       />

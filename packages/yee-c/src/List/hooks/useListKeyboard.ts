@@ -31,9 +31,9 @@ export default function useListKeyboard({
   onFocusChange,
   onClick,
 }: UseListKeyboardParams) {
-  const [internalFocusedKey, setInternalFocusedKey] = useState<
-    string | number
-  >('');
+  const [internalFocusedKey, setInternalFocusedKey] = useState<string | number>(
+    '',
+  );
 
   const isControlled = controlledFocusedKey !== undefined;
   const focusedKey = isControlled ? controlledFocusedKey : internalFocusedKey;

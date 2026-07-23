@@ -7,9 +7,7 @@ export default function useEvent<T extends Function>(callback?: T): T {
 
   const memoFn = React.useCallback(
     (...args: unknown[]) =>
-      (ref.current as ((...args: unknown[]) => unknown) | undefined)?.(
-        ...args,
-      ),
+      (ref.current as ((...args: unknown[]) => unknown) | undefined)?.(...args),
     [],
   ) as unknown as T;
 

@@ -71,7 +71,14 @@ const Steps = forwardRef<HTMLDivElement, StepsProps>((baseprops, ref) => {
   };
 
   return (
-    <div {...rest} className={cls} style={style} ref={ref} role="list" aria-label="Steps">
+    <div
+      {...rest}
+      className={cls}
+      style={style}
+      ref={ref}
+      role="list"
+      aria-label="Steps"
+    >
       <StepsContext.Provider value={contextValue}>
         {renderSteps()}
       </StepsContext.Provider>

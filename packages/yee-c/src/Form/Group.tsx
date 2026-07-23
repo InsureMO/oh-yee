@@ -9,10 +9,10 @@ import React, {
   useRef,
 } from 'react';
 import Grid from '../Grid';
-import { runValidator } from './utils/validate';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
 import type { FieldGroupProps, NamePath, ValidateMessage } from './interface';
+import { runValidator } from './utils/validate';
 
 const Group: React.FC<FieldGroupProps> = (props) => {
   const { label, required, rules, cols, children, style, className } = props;
@@ -39,9 +39,7 @@ const Group: React.FC<FieldGroupProps> = (props) => {
   const [, forceValidate] = useReducer((x) => x + 1, 0); // eslint-disable-line @typescript-eslint/no-unused-vars
 
   // Group validation
-  const validate = async (
-    force: boolean,
-  ): Promise<ValidateMessage[]> => {
+  const validate = async (force: boolean): Promise<ValidateMessage[]> => {
     if (!required && (!rules || rules.length === 0)) return [];
 
     // Skip if not touched and not forced validation

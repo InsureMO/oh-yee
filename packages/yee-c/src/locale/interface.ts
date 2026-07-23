@@ -220,4 +220,6 @@ export type DeepPartial<T> = T extends (...args: any[]) => any
  *   so the provider knows which built-in pack to merge the overrides onto;
  *   only the keys you specify are overridden, everything else is inherited.
  */
-export type LocaleConfigInput = string | (DeepPartial<Locale> & { locale: string });
+export type LocaleConfigInput =
+  | string
+  | (DeepPartial<Locale> & { locale: string });

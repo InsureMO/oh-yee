@@ -2,9 +2,9 @@ import InternalTour from './tour';
 
 export type {
   TourProps,
+  TourSemanticDOM,
   TourStep,
   TourTarget,
-  TourSemanticDOM,
 } from './interface';
 
 export default InternalTour;

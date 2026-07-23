@@ -197,9 +197,13 @@ const Dialog = (baseprops: DialogProps) => {
               className={clsx(`${prefixCls}-header`, classNames?.header)}
               style={styles?.header}
             >
-              <div className={`${prefixCls}-title`} id={titleId}>
-                {title}
-              </div>
+              {typeof title === 'string' ? (
+                <div className={`${prefixCls}-title`} id={titleId}>
+                  {title}
+                </div>
+              ) : (
+                title
+              )}
             </div>
           ) : null}
           <div

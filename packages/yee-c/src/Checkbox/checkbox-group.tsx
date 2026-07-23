@@ -63,7 +63,12 @@ const CheckboxGroup = (baseprops: CheckboxGroupProps) => {
   };
 
   return (
-    <div className={cls} style={style} role="group" aria-disabled={disabled || undefined}>
+    <div
+      className={cls}
+      style={style}
+      role="group"
+      aria-disabled={disabled || undefined}
+    >
       <CheckboxGroupCtx.Provider
         value={{ name, buttonStyle, onChange: handleChange }}
       >

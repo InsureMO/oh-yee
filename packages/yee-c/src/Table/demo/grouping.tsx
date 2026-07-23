@@ -20,7 +20,13 @@ export default () => {
       title: 'Info',
       key: 'info',
       children: [
-        { title: 'Age', dataIndex: 'age', key: 'age', width: 100, sorter: true },
+        {
+          title: 'Age',
+          dataIndex: 'age',
+          key: 'age',
+          width: 100,
+          sorter: true,
+        },
         {
           title: 'Address',
           dataIndex: 'address',
@@ -52,9 +58,7 @@ export default () => {
       key: 'action',
       fixed: 'right',
       width: 100,
-      render: (record) => (
-        <a onClick={() => console.log(record)}>Edit</a>
-      ),
+      render: (record) => <a onClick={() => console.log(record)}>Edit</a>,
     },
   ];
 

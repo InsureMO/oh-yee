@@ -256,8 +256,7 @@ const Carousel = React.forwardRef(
             .fill(0)
             .map((i, index: number) => {
               const isActive =
-                current === index + 1 ||
-                (current === 0 && index === count - 1);
+                current === index + 1 || (current === 0 && index === count - 1);
               return (
                 <li
                   className={clsx({

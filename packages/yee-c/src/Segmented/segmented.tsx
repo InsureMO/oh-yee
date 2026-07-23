@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import React, { useContext, useId, useMemo } from 'react';
 import { motion } from 'motion/react';
+import React, { useContext, useId, useMemo } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useMergedState from '../hooks/useMergedState';
 import mergeContextToProps from '../utils/mergeContextToProps';
@@ -13,9 +13,7 @@ import type {
 
 import './style/index.less';
 
-const normalizeOption = (
-  option: SegmentedOption,
-): SegmentedLabeledOption => {
+const normalizeOption = (option: SegmentedOption): SegmentedLabeledOption => {
   if (typeof option === 'string' || typeof option === 'number') {
     return { label: String(option), value: option };
   }
@@ -47,10 +45,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
       ...rest
     } = props;
 
-    const items = useMemo(
-      () => options.map(normalizeOption),
-      [options],
-    );
+    const items = useMemo(() => options.map(normalizeOption), [options]);
 
     const firstValue = items[0]?.value;
 
@@ -104,9 +99,7 @@ const Segmented = React.forwardRef<HTMLDivElement, SegmentedProps>(
               ) : null}
               <span className={`${prefixCls}-item-inner`}>
                 {item.icon ? (
-                  <span className={`${prefixCls}-item-icon`}>
-                    {item.icon}
-                  </span>
+                  <span className={`${prefixCls}-item-icon`}>{item.icon}</span>
                 ) : null}
                 {item.label !== undefined && item.label !== null ? (
                   <span className={`${prefixCls}-item-label`}>

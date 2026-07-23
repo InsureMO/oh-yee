@@ -7,8 +7,14 @@ import { OptionsCtx } from './options';
 
 const Option = (props: OptionProps) => {
   const { label, value, disabled, title, dataTestId, style } = props;
-  const { prefixCls, selectedKeys, focusedKey, multiple, looseMatch, onSelect } =
-    useContext(OptionsCtx);
+  const {
+    prefixCls,
+    selectedKeys,
+    focusedKey,
+    multiple,
+    looseMatch,
+    onSelect,
+  } = useContext(OptionsCtx);
 
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     if (!disabled) {

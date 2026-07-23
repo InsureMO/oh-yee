@@ -33,7 +33,8 @@ const List = forwardRef<HTMLUListElement, ListProps>((baseprops, ref) => {
   } = props;
 
   const multiColumn = columns > 1;
-  const useVirtual = virtual && height !== null && height !== undefined && Array.isArray(items);
+  const useVirtual =
+    virtual && height !== null && height !== undefined && Array.isArray(items);
   const safeItems = Array.isArray(items) ? items : [];
 
   // Keyboard navigation

@@ -32,10 +32,15 @@ const SearchList = (props: SearchListProps) => {
   const { prefixCls, items, onClick } = props;
 
   return (
-    <ul className={`${prefixCls}-filter-menu`} role="listbox" aria-label="Search results">
+    <ul
+      className={`${prefixCls}-filter-menu`}
+      role="listbox"
+      aria-label="Search results"
+    >
       {items.length ? (
         items.map((item) => {
-          const title = item.data.$source?.title || item.data.labelPath.join(' / ');
+          const title =
+            item.data.$source?.title || item.data.labelPath.join(' / ');
 
           return (
             <li
@@ -58,7 +63,9 @@ const SearchList = (props: SearchListProps) => {
           );
         })
       ) : (
-        <li role="option" aria-disabled="true">{'No result'}</li>
+        <li role="option" aria-disabled="true">
+          {'No result'}
+        </li>
       )}
     </ul>
   );

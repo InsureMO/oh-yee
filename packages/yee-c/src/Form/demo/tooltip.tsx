@@ -1,11 +1,4 @@
-import {
-  Button,
-  Form,
-  Grid,
-  Input,
-  Space,
-  TextArea,
-} from '@rainbow-oh/yee-c';
+import { Button, Form, Grid, Input, Space, TextArea } from '@rainbow-oh/yee-c';
 import { Info } from 'lucide-react';
 import React from 'react';
 
@@ -29,9 +22,7 @@ export default () => {
             name="username"
             label="Username"
             tooltip="Used for login. 4-20 characters."
-            rules={[
-              { required: true, message: 'Please input your username!' },
-            ]}
+            rules={[{ required: true, message: 'Please input your username!' }]}
           >
             <Input placeholder="Please input your username" />
           </Form.Field>

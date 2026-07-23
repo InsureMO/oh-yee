@@ -5,13 +5,13 @@ import Head from './theader';
 
 export type {
   ColumnProps,
+  HeaderCell,
   PaginationType,
   RowSelectionType,
-  TableProps,
-  TableComponents,
   TableBodyComponents,
+  TableComponents,
+  TableProps,
   TableRowRendererProps,
-  HeaderCell,
   onChangeParams,
 } from './interface';
 

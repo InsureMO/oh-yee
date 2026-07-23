@@ -98,7 +98,10 @@ const Step: React.FC<StepProps> = (props) => {
   return (
     <>
       {type === 'ribbon' && (
-        <div className={`${prefixCls}-item-ribbon-end ${ribbonStatus}`} aria-hidden="true" />
+        <div
+          className={`${prefixCls}-item-ribbon-end ${ribbonStatus}`}
+          aria-hidden="true"
+        />
       )}
       <div
         className={cls}
@@ -111,7 +114,9 @@ const Step: React.FC<StepProps> = (props) => {
         aria-current={index === current ? 'step' : undefined}
         aria-label={`Step ${index + 1}${typeof title === 'string' ? `: ${title}` : ''}, ${statusLabel}`}
       >
-        <div className={`${prefixCls}-item-icon`} aria-hidden="true">{renderIcon}</div>
+        <div className={`${prefixCls}-item-icon`} aria-hidden="true">
+          {renderIcon}
+        </div>
         <div className={`${prefixCls}-item-content`}>
           <div className={`${prefixCls}-item-title`}>
             <span title={typeof title === 'string' ? title : undefined}>
@@ -132,7 +137,10 @@ const Step: React.FC<StepProps> = (props) => {
         </div>
       )}
       {type === 'ribbon' && (
-        <div className={`${prefixCls}-item-ribbon-head ${ribbonStatus}`} aria-hidden="true" />
+        <div
+          className={`${prefixCls}-item-ribbon-head ${ribbonStatus}`}
+          aria-hidden="true"
+        />
       )}
     </>
   );

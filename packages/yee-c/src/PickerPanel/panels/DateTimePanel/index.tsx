@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
-import type { PickerType, PanelSharedProps } from '../../interface';
+import type { PanelSharedProps, PickerType } from '../../interface';
 import DatePanel from '../DatePanel';
 import TimePanel from '../TimePanel';
 

@@ -139,8 +139,8 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
 
     // Scrolled above the first anchor — reset to the top item.
     if (nextActiveKey === undefined) {
-      const first = currentItems.find(
-        (item) => document.getElementById(item.key),
+      const first = currentItems.find((item) =>
+        document.getElementById(item.key),
       );
       nextActiveKey = first?.key;
     }

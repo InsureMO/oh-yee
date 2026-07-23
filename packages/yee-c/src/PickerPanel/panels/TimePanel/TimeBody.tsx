@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
-import type { PanelSharedProps, TimeUnit } from '../../interface';
 import panelConfig from '../../configs';
+import type { PanelSharedProps, TimeUnit } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import TimeColumn from './TimeColumn';
 

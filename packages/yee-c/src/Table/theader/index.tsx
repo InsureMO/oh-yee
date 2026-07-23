@@ -13,16 +13,17 @@ export interface TableHeadProps {
 }
 
 const TableHead: React.FC<any> = (props) => {
-  const { headerRows = [], onCheckAll, checkedAll, onHeaderRow, ...rest } =
-    props;
+  const {
+    headerRows = [],
+    onCheckAll,
+    checkedAll,
+    onHeaderRow,
+    ...rest
+  } = props;
 
   const { prefixCls } = useContext(TableCtx);
 
-  const renderCell = (
-    cell: HeaderCell,
-    rowIndex: number,
-    colIndex: number,
-  ) => {
+  const renderCell = (cell: HeaderCell, rowIndex: number, colIndex: number) => {
     const { column, colSpan, rowSpan } = cell;
     const { key, type, visible } = column;
     const cellKey =
@@ -73,9 +74,7 @@ const TableHead: React.FC<any> = (props) => {
         const rowProps = onHeaderRow ? onHeaderRow(rowColumns) : {};
         return (
           <tr {...rowProps} key={`thead-row-${rowIndex}`}>
-            {row.map((cell, colIndex) =>
-              renderCell(cell, rowIndex, colIndex),
-            )}
+            {row.map((cell, colIndex) => renderCell(cell, rowIndex, colIndex))}
           </tr>
         );
       })}

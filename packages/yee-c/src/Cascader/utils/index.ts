@@ -340,7 +340,8 @@ export const changeToView = (
  * conversions share one collision-safe format.
  * @param val - The path array
  */
-export const formatKey = (val: Array<string | number>): string => pathToUid(val);
+export const formatKey = (val: Array<string | number>): string =>
+  pathToUid(val);
 
 /**
  * Check if a path has the same prefix as another path
@@ -441,11 +442,7 @@ export const flattenOptions = (
       });
       if (hasChild(node, children)) {
         seen.add(node);
-        dfs(
-          node[children] as Array<Record<string, unknown>>,
-          path,
-          labelPath,
-        );
+        dfs(node[children] as Array<Record<string, unknown>>, path, labelPath);
         seen.delete(node);
       }
     });

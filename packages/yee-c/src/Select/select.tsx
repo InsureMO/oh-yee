@@ -97,9 +97,7 @@ const Select = (baseprops: SelectProps) => {
     virtualApiRef.current?.scrollToIndex(index);
   }, []);
 
-  const getOptions = (
-    keys: string | number | Array<string | number>,
-  ) => {
+  const getOptions = (keys: string | number | Array<string | number>) => {
     if (keys === '' || keys === null) {
       return undefined;
     }
@@ -133,7 +131,9 @@ const Select = (baseprops: SelectProps) => {
       setOpen(false);
     } else {
       if (keysIncludes(mergedValue, key, looseMatch)) {
-        keys = mergedValue.filter((k: string | number) => !matchValue(k, key, looseMatch));
+        keys = mergedValue.filter(
+          (k: string | number) => !matchValue(k, key, looseMatch),
+        );
       } else {
         keys = [...mergedValue, key];
       }

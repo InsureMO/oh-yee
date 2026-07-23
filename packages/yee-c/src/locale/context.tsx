@@ -7,7 +7,11 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { DEFAULT_LOCALE, DEFAULT_LOCALE_CONFIG, LOCALE_CONFIGS } from './constants';
+import {
+  DEFAULT_LOCALE,
+  DEFAULT_LOCALE_CONFIG,
+  LOCALE_CONFIGS,
+} from './constants';
 import type { Locale, LocaleConfigInput, TFunction } from './interface';
 import defaultLocaleData from './lang/en_US';
 import { deepMerge, isValidLocale, translate } from './util';

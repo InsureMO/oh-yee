@@ -9,8 +9,16 @@ export default () => (
       <Segmented variant="pill" options={['Daily', 'Weekly', 'Monthly']} />
     </Space>
     <Space block>
-      <Segmented variant="pill" size="small" options={['Small', 'Default', 'Large']} />
-      <Segmented variant="pill" size="large" options={['Small', 'Default', 'Large']} />
+      <Segmented
+        variant="pill"
+        size="small"
+        options={['Small', 'Default', 'Large']}
+      />
+      <Segmented
+        variant="pill"
+        size="large"
+        options={['Small', 'Default', 'Large']}
+      />
     </Space>
     <div style={{ width: 480 }}>
       <Segmented

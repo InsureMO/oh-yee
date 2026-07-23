@@ -82,9 +82,7 @@ const TableRow: React.FC<TableRowProps> = (props) => {
 
     if (type === 'checkbox') {
       return (
-        <Checkbox
-          {...(commonProps as React.ComponentProps<typeof Checkbox>)}
-        />
+        <Checkbox {...(commonProps as React.ComponentProps<typeof Checkbox>)} />
       );
     }
     return <Radio {...(commonProps as React.ComponentProps<typeof Radio>)} />;

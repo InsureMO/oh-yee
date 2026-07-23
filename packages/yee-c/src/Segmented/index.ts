@@ -1,12 +1,12 @@
 import InternalSegmented from './segmented';
 
 export type {
-  SegmentedOption,
   SegmentedLabeledOption,
+  SegmentedOption,
+  SegmentedProps,
   SegmentedRawOption,
   SegmentedSemanticDOM,
   SegmentedValue,
-  SegmentedProps,
 } from './interface';
 
 export default InternalSegmented;

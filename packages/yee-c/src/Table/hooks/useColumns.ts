@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import useDeepCompareMemo from '../../hooks/useDeepCompareMemo';
 import deepClone from '../../utils/deepClone';
 import { handleColumns } from '../util';
 import {
@@ -15,6 +14,18 @@ import type {
   WrapedColumnProps,
 } from '../interface';
 
+const getColumnsFromChild = (
+  childs: React.ReactElement<ColumnProps>[],
+): Array<ColumnProps> | null => {
+  const cols: ColumnProps[] = [];
+  React.Children.forEach(childs, (child) => {
+    if (child) {
+      cols.push({ ...(child.props as ColumnProps) });
+    }
+  });
+  return cols.length ? cols : null;
+};
+
 export default function useColumns({
   children,
   columns,
@@ -28,21 +39,6 @@ export default function useColumns({
   rowSelection?: RowSelectionType;
   expandable?: ExpandableType;
 }) {
-  const shouldRenderSelection = !!rowSelection;
-  const shouldRenderExpand = !!expandable;
-
-  const getColumnsFromChild = (
-    childs: React.ReactElement<ColumnProps>[],
-  ): Array<ColumnProps> | null => {
-    const cols: ColumnProps[] = [];
-    React.Children.forEach(childs, (child) => {
-      if (child) {
-        cols.push({ ...(child.props as ColumnProps) });
-      }
-    });
-    return cols.length ? cols : null;
-  };
-
   const childColumns: Array<ColumnProps> | null = useMemo(() => {
     return children
       ? getColumnsFromChild(children as React.ReactElement<ColumnProps>[])
@@ -52,7 +48,7 @@ export default function useColumns({
   // Build the column tree (with selection/expand injected at the top level),
   // then derive both the flat leaf columns (body/colgroup/summary/sorter) and
   // the 2D header rows (thead multi-level rendering).
-  const { wrapedColumns, headerRows } = useDeepCompareMemo(() => {
+  const { wrapedColumns, headerRows } = useMemo(() => {
     const base = (deepClone(childColumns || columns || []) ||
       []) as WrapedColumnProps[];
     const tree = injectSelectionExpand(base, rowSelection, expandable);
@@ -60,7 +56,7 @@ export default function useColumns({
     const wraped = handleColumns(leaves);
     const rows = parseHeaderRows(tree, wraped);
     return { wrapedColumns: wraped, headerRows: rows };
-  }, [childColumns, columns, shouldRenderSelection, shouldRenderExpand]);
+  }, [childColumns, columns, rowSelection, expandable]);
 
   return {
     wrapedColumns,

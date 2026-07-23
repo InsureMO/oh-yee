@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Button from '../../../Button';
 import useEvent from '../../../hooks/useEvent';
-import Header from '../Header';
 import type { PanelSharedProps } from '../../interface';
+import Header from '../Header';
 
 import pickerUtils from '../../utils/pickerUtils';
 

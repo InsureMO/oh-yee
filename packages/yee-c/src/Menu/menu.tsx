@@ -41,7 +41,11 @@ const MenuGroup = ({
   renderItems: (items: MenuItemType[]) => React.ReactNode[];
 }) => (
   <li className={`${prefixCls}-item-group`} role="none">
-    <div className={`${prefixCls}-item-group-title`} role="presentation" id={`${prefixCls}-group-${String(item.label)}`}>
+    <div
+      className={`${prefixCls}-item-group-title`}
+      role="presentation"
+      id={`${prefixCls}-group-${String(item.label)}`}
+    >
       {item.label}
     </div>
     <ul
@@ -118,11 +122,18 @@ const Menu = (props: InnerMenuProps) => {
   const rootStyle = root ? { ...style } : {};
 
   return (
-    <ul {...dataAttrs} className={cls} style={rootStyle} role={root && mode === 'horizontal' ? 'menubar' : 'menu'}>
+    <ul
+      {...dataAttrs}
+      className={cls}
+      style={rootStyle}
+      role={root && mode === 'horizontal' ? 'menubar' : 'menu'}
+    >
       <MenuCtx.Provider value={{ level, mode, classNames, styles }}>
         {getChildFromItems(items)}
         {level === 0 && footer && (
-          <li className={`${prefixCls}-footer`} role="none">{footer}</li>
+          <li className={`${prefixCls}-footer`} role="none">
+            {footer}
+          </li>
         )}
       </MenuCtx.Provider>
     </ul>

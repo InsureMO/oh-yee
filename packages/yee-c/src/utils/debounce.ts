@@ -1,8 +1,6 @@
 type AnyFn = (...args: any[]) => any;
 
-export type Debounced<T extends AnyFn> = ((
-  ...args: Parameters<T>
-) => void) & {
+export type Debounced<T extends AnyFn> = ((...args: Parameters<T>) => void) & {
   /** Cancel any pending invocation. */
   cancel: () => void;
 };

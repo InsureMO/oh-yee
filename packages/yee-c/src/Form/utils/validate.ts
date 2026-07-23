@@ -134,10 +134,7 @@ export async function runValidator(
  * Returns { passed, message? }. Sync rules short-circuit; the custom validator
  * is awaited so async validators are supported.
  */
-async function validate(
-  rule: Rule,
-  value: unknown,
-): Promise<ValidateResult> {
+async function validate(rule: Rule, value: unknown): Promise<ValidateResult> {
   if (rule.required && isEmpty(value)) {
     return { passed: false };
   }

@@ -54,7 +54,7 @@ export interface DialogProps extends DataAttributeProps {
   /**
    * Title
    */
-  title?: string;
+  title?: string | React.ReactNode;
   /**
    * Cancel button text
    * @default Cancel

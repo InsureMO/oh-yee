@@ -306,9 +306,7 @@ const RangePickerMobile: FC<RangePickerProps> = (props) => {
               </Space>
             )}
             <Button block type="primary" onClick={handleTabConfirm}>
-              {activeTab === 'start'
-                ? rangepicker.next
-                : rangepicker.confirm}
+              {activeTab === 'start' ? rangepicker.next : rangepicker.confirm}
             </Button>
           </div>
         }
