@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { ChevronRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import React, { useContext } from 'react';
+import React, { useContext, useId } from 'react';
 import Button from '../Button';
 import { CollapseContext } from './collapse';
 import type { PanelProps } from './interface';
@@ -11,6 +11,10 @@ const Panel: React.FC<PanelProps & { id: string | number }> = (props) => {
     props;
 
   const { prefixCls, activeKey, onExpand } = useContext(CollapseContext);
+
+  const panelId = useId();
+  const headerId = `${panelId}-header`;
+  const contentId = `${panelId}-content`;
 
   const expanded = activeKey.includes(id);
 
@@ -28,7 +32,9 @@ const Panel: React.FC<PanelProps & { id: string | number }> = (props) => {
         className={clsx(`${prefixCls}-header`, classNames?.header)}
         role="button"
         style={styles?.header}
+        id={headerId}
         aria-expanded={expanded}
+        aria-controls={contentId}
         aria-disabled="false"
         tabIndex={0}
         onClick={() => onExpand(id)}
@@ -44,6 +50,7 @@ const Panel: React.FC<PanelProps & { id: string | number }> = (props) => {
           style={styles?.expandIcon}
           animate={{ rotate: expanded ? 90 : 0 }}
           transition={{ duration: 0.15 }}
+          aria-hidden="true"
         >
           <Button icon={<ChevronRight size={16} />} type="text" />
         </motion.div>
@@ -69,6 +76,9 @@ const Panel: React.FC<PanelProps & { id: string | number }> = (props) => {
           <motion.div
             className={clsx(`${prefixCls}-content`, classNames?.content)}
             style={styles?.content}
+            id={contentId}
+            role="region"
+            aria-labelledby={headerId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

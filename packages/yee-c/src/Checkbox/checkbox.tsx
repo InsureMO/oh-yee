@@ -51,6 +51,7 @@ const Checkbox = (baseprops: CheckboxProps) => {
         className,
       )}
       style={style}
+      aria-disabled={disabled || undefined}
     >
       <span
         className={clsx(`${prefixCls}`, {
@@ -68,10 +69,12 @@ const Checkbox = (baseprops: CheckboxProps) => {
           disabled={disabled}
           checked={mergedChecked}
           onChange={handleChange}
+          aria-checked={indeterminate ? 'mixed' : mergedChecked}
         />
         <span
           className={clsx(`${prefixCls}-inner`, classNames?.inner)}
           style={styles?.inner}
+          aria-hidden="true"
         ></span>
       </span>
       {children ? (

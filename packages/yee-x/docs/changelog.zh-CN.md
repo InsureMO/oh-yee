@@ -102,6 +102,6 @@ pnpm add yee-x@latest
 
 如果你在使用过程中遇到问题，欢迎：
 
-- 提交 [Issue](https://github.com/InsureMO/oh-yee/issues)
-- 参与 [讨论](https://github.com/InsureMO/oh-yee/discussions)
+- 提交 [Issue](https://github.com/insureMO/oh-yee/issues)
+- 参与 [讨论](https://github.com/insureMO/oh-yee/discussions)
 - 查看 [常见问题](/faq)

@@ -63,7 +63,7 @@ We welcome all forms of contributions, whether it's new features, bug fixes, or 
 
 ## Community Support
 
-- 💬 [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions) - Discuss and ask questions
-- 🐛 [GitHub Issues](https://github.com/InsureMO/oh-yee/issues) - Report issues
+- 💬 [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions) - Discuss and ask questions
+- 🐛 [GitHub Issues](https://github.com/insureMO/oh-yee/issues) - Report issues
 - 📖 [Changelog](/changelog) - View version updates
 - ❓ [FAQ](/faq) - Frequently asked questions

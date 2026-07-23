@@ -67,9 +67,11 @@ const TabContent: React.FC<TabContentProps> = ({
             className={`${prefixCls}-tab-content`}
             style={{ display: activeKey === key ? 'block' : 'none' }}
             key={key}
+            id={`tabpanel-${key}`}
             role="tabpanel"
             aria-labelledby={`tab-${key}`}
             aria-hidden={activeKey !== key}
+            tabIndex={activeKey === key ? 0 : -1}
           >
             {children}
           </div>

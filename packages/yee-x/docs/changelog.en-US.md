@@ -102,6 +102,6 @@ pnpm add yee-x@latest
 
 If you encounter any issues, please:
 
-- Submit an [Issue](https://github.com/InsureMO/oh-yee/issues)
-- Join the [Discussion](https://github.com/InsureMO/oh-yee/discussions)
+- Submit an [Issue](https://github.com/insureMO/oh-yee/issues)
+- Join the [Discussion](https://github.com/insureMO/oh-yee/discussions)
 - Check [FAQ](/faq)

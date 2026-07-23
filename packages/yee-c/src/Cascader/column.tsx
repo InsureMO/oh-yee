@@ -11,7 +11,7 @@ export interface ColumnProps {
 const Column = (props: ColumnProps) => {
   const { prefixCls, data, index } = props;
   return (
-    <ul className={`${prefixCls}-menu`} role="menu">
+    <ul className={`${prefixCls}-menu`} role="listbox" aria-label={`Level ${index + 1} options`}>
       {Array.isArray(data) &&
         data.map((item, idx: number) => {
           return (

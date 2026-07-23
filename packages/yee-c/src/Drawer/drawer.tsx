@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useId, useRef, useState } from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
 import Portal from '../Portal';
@@ -81,6 +81,9 @@ const Drawer = (baseprops: DrawerProps) => {
 
   const [delayOpen, setDelayOpen] = useState(open);
   const contentRef = useRef<HTMLDivElement>(null);
+  const drawerId = useId();
+  const titleId = `${drawerId}-title`;
+  const bodyId = `${drawerId}-body`;
 
   useLockFocus(contentRef.current, delayOpen);
 
@@ -149,7 +152,7 @@ const Drawer = (baseprops: DrawerProps) => {
   const renderNode = () => {
     const { initial, animate, exit } = getAnimate(placement, open);
     return (
-      <div {...rest} className={cls} style={style} role="modal">
+      <div {...rest} className={cls} style={style}>
         {showMask && delayOpen && (
           <motion.div
             className={clsx(`${prefixCls}-mask`, classNames?.mask)}
@@ -159,6 +162,7 @@ const Drawer = (baseprops: DrawerProps) => {
             animate={open ? { opacity: 1 } : { opacity: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: ANIMATION_DURATION }}
+            aria-hidden="true"
           ></motion.div>
         )}
         <motion.div
@@ -191,6 +195,10 @@ const Drawer = (baseprops: DrawerProps) => {
             tabIndex={0}
             style={styles?.content}
             ref={contentRef}
+            role="dialog"
+            aria-modal={showMask ? true : undefined}
+            aria-labelledby={title ? titleId : undefined}
+            aria-describedby={bodyId}
           >
             {renderClose()}
             {title ? (
@@ -198,12 +206,13 @@ const Drawer = (baseprops: DrawerProps) => {
                 className={clsx(`${prefixCls}-header`, classNames?.header)}
                 style={styles?.header}
               >
-                <div className={clsx(`${prefixCls}-title`, classNames?.title)} style={styles?.title}>{title}</div>
+                <div className={clsx(`${prefixCls}-title`, classNames?.title)} style={styles?.title} id={titleId}>{title}</div>
               </div>
             ) : null}
             <div
               className={clsx(`${prefixCls}-body`, classNames?.body)}
               style={styles?.body}
+              id={bodyId}
             >
               {children}
             </div>

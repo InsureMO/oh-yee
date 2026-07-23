@@ -33,10 +33,10 @@ npx create-yee-app my-app
 
 ### Example Projects
 
-- [Basic Chat App](https://github.com/InsureMO/oh-yee-examples/tree/main/basic-chat)
-- [AI Assistant App](https://github.com/InsureMO/oh-yee-examples/tree/main/ai-assistant)
-- [Document Q&A System](https://github.com/InsureMO/oh-yee-examples/tree/main/doc-qa)
-- [Code Generator](https://github.com/InsureMO/oh-yee-examples/tree/main/code-generator)
+- [Basic Chat App](https://github.com/insureMO/oh-yee-examples/tree/main/basic-chat)
+- [AI Assistant App](https://github.com/insureMO/oh-yee-examples/tree/main/ai-assistant)
+- [Document Q&A System](https://github.com/insureMO/oh-yee-examples/tree/main/doc-qa)
+- [Code Generator](https://github.com/insureMO/oh-yee-examples/tree/main/code-generator)
 
 ### Code Snippets
 
@@ -68,15 +68,15 @@ code --install-extension yee-x.snippets
 
 ### Official Channels
 
-- [GitHub Repository](https://github.com/InsureMO/oh-yee)
-- [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions)
+- [GitHub Repository](https://github.com/insureMO/oh-yee)
+- [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions)
 - [Changelog](/changelog)
 
 ### Community Projects
 
-- [awesome-yee-x](https://github.com/InsureMO/awesome-yee-x)
-- [yee-x-plugins](https://github.com/InsureMO/oh-yee-plugins)
-- [yee-x-themes](https://github.com/InsureMO/oh-yee-themes)
+- [awesome-yee-x](https://github.com/insureMO/awesome-yee-x)
+- [yee-x-plugins](https://github.com/insureMO/oh-yee-plugins)
+- [yee-x-themes](https://github.com/insureMO/oh-yee-themes)
 
 ## Tools and Plugins
 
@@ -103,5 +103,5 @@ code --install-extension yee-x.snippets
 If you encounter issues:
 
 - Check [FAQ](/faq)
-- Submit an [Issue](https://github.com/InsureMO/oh-yee/issues)
-- Join [Discussions](https://github.com/InsureMO/oh-yee/discussions)
+- Submit an [Issue](https://github.com/insureMO/oh-yee/issues)
+- Join [Discussions](https://github.com/insureMO/oh-yee/discussions)

@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-tools.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-tools) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-A modern, type-safe TypeScript utility library. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
+A modern, type-safe TypeScript utility library. Part of the [Yee](https://github.com/insureMO/oh-yee) component library.
 
 ## Features
 
@@ -22,7 +22,12 @@ pnpm add @rainbow-oh/yee-tools
 ## Usage
 
 ```typescript
-import { StringUtils, NumberUtils, DateUtils, SessionContext } from '@rainbow-oh/yee-tools';
+import {
+  StringUtils,
+  NumberUtils,
+  DateUtils,
+  SessionContext,
+} from '@rainbow-oh/yee-tools';
 
 // String utilities
 const cleaned = StringUtils.trim('  hello  '); // 'hello'
@@ -59,7 +64,7 @@ StringUtils.mask('4111111111111111', 4, 4); // '4111********1111'
 `add`, `subtract`, `multiply`, `divide`, `random`
 
 ```typescript
-NumberUtils.add(0.1, 0.2);   // 0.3 (not 0.30000000000000004)
+NumberUtils.add(0.1, 0.2); // 0.3 (not 0.30000000000000004)
 NumberUtils.divide(1, 3, 2); // 0.33
 ```
 
@@ -111,15 +116,20 @@ const theme = CookieUtils.get('theme'); // 'dark'
 
 Four storage strategies with the same `get`/`set`/`remove`/`clear` API:
 
-| Module | Storage | Lifecycle |
-|---|---|---|
-| `SessionContext` | `sessionStorage` | Cleared on browser close |
-| `LocalContext` | `localStorage` | Persists until cleared |
-| `PageContext` | In-memory | Cleared on page navigation |
-| `StoreContext` | IndexedDB | Persists across sessions |
+| Module           | Storage          | Lifecycle                  |
+| ---------------- | ---------------- | -------------------------- |
+| `SessionContext` | `sessionStorage` | Cleared on browser close   |
+| `LocalContext`   | `localStorage`   | Persists until cleared     |
+| `PageContext`    | In-memory        | Cleared on page navigation |
+| `StoreContext`   | IndexedDB        | Persists across sessions   |
 
 ```typescript
-import { SessionContext, LocalContext, PageContext, StoreContext } from '@rainbow-oh/yee-tools/cache';
+import {
+  SessionContext,
+  LocalContext,
+  PageContext,
+  StoreContext,
+} from '@rainbow-oh/yee-tools/cache';
 ```
 
 ### HTTP Client
@@ -181,8 +191,8 @@ pnpm build:all
 
 ## Contributing
 
-See the root [Contributing Guide](https://github.com/InsureMO/oh-yee/blob/main/CONTRIBUTING.md).
+See the root [Contributing Guide](https://github.com/insureMO/oh-yee/blob/main/CONTRIBUTING.md).
 
 ## License
 
-[MIT](./LICENSE) © [InsureMO](https://github.com/InsureMO)
+[MIT](./LICENSE) © [insureMO](https://github.com/insureMO)

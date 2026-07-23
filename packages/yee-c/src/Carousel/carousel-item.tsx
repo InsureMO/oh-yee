@@ -7,17 +7,23 @@ const CarouselItem = (props: CarouselItemProps) => {
   const { style, className, children, index } = props;
   const { prefixCls, current } = React.useContext(CarouselCtx);
 
+  const isActive = index === current - 1;
+
   return (
     <div
       className={clsx(
         `${prefixCls}-item`,
         {
-          [`${prefixCls}-item-active`]: index === current - 1,
+          [`${prefixCls}-item-active`]: isActive,
         },
         className,
       )}
       data-index={index}
       style={style}
+      role="tabpanel"
+      aria-roledescription="slide"
+      aria-label={`Slide ${(index ?? 0) + 1}`}
+      aria-hidden={!isActive}
     >
       {children}
     </div>

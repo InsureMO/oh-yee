@@ -81,18 +81,19 @@ const Items: React.FC<PaginationItemsProps> = (props) => {
                 }
               }}
               role="button"
+              aria-label="Jump back 7 pages"
               key="turnleft"
             >
               {components?.jumpPrev ?? (
                 <>
-                  <span className={`${prefixCls}-jump-prev-ellipsis`}>
+                  <span className={`${prefixCls}-jump-prev-ellipsis`} aria-hidden="true">
                     <Ellipsis
                       className="ellipsis"
                       size={18}
                       strokeWidth={1.5}
                     />
                   </span>
-                  <span className={`${prefixCls}-jump-prev-icon`}>
+                  <span className={`${prefixCls}-jump-prev-icon`} aria-hidden="true">
                     <ChevronsLeft
                       className="turn"
                       size={18}
@@ -116,18 +117,19 @@ const Items: React.FC<PaginationItemsProps> = (props) => {
                 }
               }}
               role="button"
+              aria-label="Jump forward 7 pages"
               key="turn-right"
             >
               {components?.jumpNext ?? (
                 <>
-                  <span className={`${prefixCls}-jump-next-ellipsis`}>
+                  <span className={`${prefixCls}-jump-next-ellipsis`} aria-hidden="true">
                     <Ellipsis
                       className="ellipsis"
                       size={18}
                       strokeWidth={1.5}
                     />
                   </span>
-                  <span className={`${prefixCls}-jump-next-icon`}>
+                  <span className={`${prefixCls}-jump-next-icon`} aria-hidden="true">
                     <ChevronsRight
                       className="turn"
                       size={18}
@@ -159,6 +161,9 @@ const Items: React.FC<PaginationItemsProps> = (props) => {
                   onChange(number as number);
                 }
               }}
+              role="button"
+              aria-label={`Page ${number}`}
+              aria-current={current === number ? 'page' : undefined}
             >
               {number}
             </li>

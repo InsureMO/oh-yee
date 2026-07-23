@@ -32,7 +32,7 @@ const SearchList = (props: SearchListProps) => {
   const { prefixCls, items, onClick } = props;
 
   return (
-    <ul className={`${prefixCls}-filter-menu`}>
+    <ul className={`${prefixCls}-filter-menu`} role="listbox" aria-label="Search results">
       {items.length ? (
         items.map((item) => {
           const title = item.data.$source?.title || item.data.labelPath.join(' / ');
@@ -43,13 +43,22 @@ const SearchList = (props: SearchListProps) => {
               title={typeof title === 'string' ? title : String(title)}
               onClick={() => onClick(item.data)}
               key={item.data.uid}
+              role="option"
+              aria-disabled={item.data.$source?.disabled || undefined}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onClick(item.data);
+                }
+              }}
             >
               {renderHighlightText(item.matches)}
             </li>
           );
         })
       ) : (
-        <p>{'No result'}</p>
+        <li role="option" aria-disabled="true">{'No result'}</li>
       )}
     </ul>
   );

@@ -106,6 +106,11 @@ const Rate = React.forwardRef<HTMLUListElement, RateProps>((baseprops, ref) => {
       ref={componentRef}
       role="radiogroup"
       aria-label="Rating"
+      aria-disabled={disabled || undefined}
+      aria-valuemin={0}
+      aria-valuemax={count}
+      aria-valuenow={mergedValue}
+      aria-valuetext={`${mergedValue} out of ${count} stars`}
     >
       {Array(count)
         .fill(0)

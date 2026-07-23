@@ -1,22 +1,65 @@
-// focusStack.ts
 type Focusable = HTMLElement | null;
 
-const stack: Focusable[] = [];
+export interface FocusStackEntry {
+  container: HTMLElement;
+  previous: Focusable;
+}
+
+const focusableSelector = [
+  'a[href]',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'details',
+  '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
+const stack: FocusStackEntry[] = [];
 let raf = 0;
 
-const schedule = (el: Focusable) => {
+const schedule = (callback: () => void) => {
   cancelAnimationFrame(raf);
-  raf = requestAnimationFrame(() => el?.focus());
+  raf = requestAnimationFrame(callback);
 };
 
-export const pushFocus = (el: Focusable) => {
-  const prev = document.activeElement as HTMLElement;
-  if (prev && prev !== el) stack.push(prev);
-  schedule(el);
+const focusInitialElement = (entry: FocusStackEntry) => {
+  if (stack[stack.length - 1] !== entry || !entry.container.isConnected) {
+    return;
+  }
+
+  const activeElement = document.activeElement;
+  if (activeElement && entry.container.contains(activeElement)) {
+    return;
+  }
+
+  const firstFocusable =
+    entry.container.querySelector<HTMLElement>(focusableSelector);
+  (firstFocusable ?? entry.container).focus();
 };
 
-export const popFocus = () => {
-  const el = stack.pop();
-  if (!el) return;
-  schedule(el);
+export const pushFocus = (
+  container: HTMLElement,
+  previous: Focusable = document.activeElement as HTMLElement | null,
+): FocusStackEntry => {
+  const entry = { container, previous };
+  stack.push(entry);
+  schedule(() => focusInitialElement(entry));
+  return entry;
+};
+
+export const popFocus = (entry: FocusStackEntry) => {
+  const index = stack.lastIndexOf(entry);
+  if (index === -1) return;
+
+  const isTopEntry = index === stack.length - 1;
+  stack.splice(index, 1);
+
+  if (!isTopEntry) return;
+
+  schedule(() => {
+    if (entry.previous?.isConnected) {
+      entry.previous.focus();
+    }
+  });
 };

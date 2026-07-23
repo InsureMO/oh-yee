@@ -45,6 +45,7 @@ const Star: React.FC<StarProps> = (props) => {
           aria-checked={active}
           aria-posinset={index + 1}
           aria-setsize={count}
+          aria-label={`${index + 1} ${index + 1 === 1 ? 'star' : 'stars'}`}
           key={'star-' + index}
         >
           <div
@@ -57,6 +58,7 @@ const Star: React.FC<StarProps> = (props) => {
               }
             }}
             tabIndex={0}
+            aria-label={`${index + 0.5} stars`}
             key={'star-' + index + 'left'}
           >
             {character ? (
@@ -64,7 +66,7 @@ const Star: React.FC<StarProps> = (props) => {
                 {renderCharacter()}
               </span>
             ) : (
-              <StarHalf className={`${prefixCls}-star-half`} />
+              <StarHalf className={`${prefixCls}-star-half`} aria-hidden="true" />
             )}
           </div>
           <div
@@ -77,6 +79,7 @@ const Star: React.FC<StarProps> = (props) => {
               }
             }}
             tabIndex={0}
+            aria-label={`${index + 1} ${index + 1 === 1 ? 'star' : 'stars'}`}
             key={'star-' + index + 'right'}
           >
             {character ? (
@@ -84,7 +87,7 @@ const Star: React.FC<StarProps> = (props) => {
                 {renderCharacter()}
               </span>
             ) : (
-              <StarFull className={`${prefixCls}-star-full`} />
+              <StarFull className={`${prefixCls}-star-full`} aria-hidden="true" />
             )}
           </div>
         </li>
@@ -103,6 +106,7 @@ const Star: React.FC<StarProps> = (props) => {
           aria-checked={active}
           aria-posinset={index + 1}
           aria-setsize={count}
+          aria-label={`${index + 1} ${index + 1 === 1 ? 'star' : 'stars'}`}
           key={'star-' + index}
         >
           {character ? (
@@ -110,9 +114,9 @@ const Star: React.FC<StarProps> = (props) => {
               {renderCharacter()}
             </span>
           ) : active ? (
-            <StarFull className={`${prefixCls}-star-active`} />
+            <StarFull className={`${prefixCls}-star-active`} aria-hidden="true" />
           ) : (
-            <StarFull className={`${prefixCls}-star-inactive`} />
+            <StarFull className={`${prefixCls}-star-inactive`} aria-hidden="true" />
           )}
         </li>
       )}

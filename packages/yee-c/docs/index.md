@@ -6,7 +6,7 @@ hero:
     - text: 开始使用
       link: /components/button
     - text: GitHub
-      link: https://github.com/InsureMO/oh-yee
+      link: https://github.com/insureMO/oh-yee
 features:
   - title: 丰富组件
     emoji: 🎨

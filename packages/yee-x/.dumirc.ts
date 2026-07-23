@@ -7,10 +7,10 @@ export default defineConfig({
 
   themeConfig: {
     name: 'yee-x',
-    logo: 'https://github.com/InsureMO.png',
-    footer: 'Open Source | Copyright © 2026 InsureMO',
+    logo: 'https://github.com/insureMO.png',
+    footer: 'Open Source | Copyright © 2026 insureMO',
     socialLinks: {
-      github: 'https://github.com/InsureMO/oh-yee',
+      github: 'https://github.com/insureMO/oh-yee',
     },
     nav: {
       'zh-CN': [

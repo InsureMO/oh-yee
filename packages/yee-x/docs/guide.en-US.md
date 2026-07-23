@@ -43,5 +43,5 @@ pnpm add yee-x
 If you encounter any issues:
 
 - Check [FAQ](/faq)
-- Submit an [Issue](https://github.com/InsureMO/oh-yee/issues)
-- Join [Discussions](https://github.com/InsureMO/oh-yee/discussions)
+- Submit an [Issue](https://github.com/insureMO/oh-yee/issues)
+- Join [Discussions](https://github.com/insureMO/oh-yee/discussions)

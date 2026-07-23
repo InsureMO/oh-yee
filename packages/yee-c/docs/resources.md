@@ -4,7 +4,7 @@
 
 ## 官方资源
 
-- **GitHub 仓库**：[https://github.com/InsureMO/oh-yee](https://github.com/InsureMO/oh-yee)
+- **GitHub 仓库**：[https://github.com/insureMO/oh-yee](https://github.com/insureMO/oh-yee)
 - **NPM 包**：[https://www.npmjs.com/package/yee-c](https://www.npmjs.com/package/yee-c)
 - **官方文档**：[https://yee-c.dev](https://yee-c.dev)
 
@@ -18,10 +18,10 @@
 
 ### 示例项目
 
-- **基础示例**：[GitHub](https://github.com/InsureMO/oh-yee-examples-basic)
-- **Next.js 集成**：[GitHub](https://github.com/InsureMO/oh-yee-examples-nextjs)
-- **Vite + React**：[GitHub](https://github.com/InsureMO/oh-yee-examples-vite)
-- **TypeScript 最佳实践**：[GitHub](https://github.com/InsureMO/oh-yee-examples-ts)
+- **基础示例**：[GitHub](https://github.com/insureMO/oh-yee-examples-basic)
+- **Next.js 集成**：[GitHub](https://github.com/insureMO/oh-yee-examples-nextjs)
+- **Vite + React**：[GitHub](https://github.com/insureMO/oh-yee-examples-vite)
+- **TypeScript 最佳实践**：[GitHub](https://github.com/insureMO/oh-yee-examples-ts)
 
 ## 设计资源
 
@@ -94,17 +94,17 @@ yee-c upgrade
 
 使用 yee-c 构建的精彩项目：
 
-- [Admin Dashboard](https://github.com/InsureMO/yee-admin)
-- [电商后台管理系统](https://github.com/InsureMO/shop-admin)
-- [数据可视化平台](https://github.com/InsureMO/data-visual)
+- [Admin Dashboard](https://github.com/insureMO/yee-admin)
+- [电商后台管理系统](https://github.com/insureMO/shop-admin)
+- [数据可视化平台](https://github.com/insureMO/data-visual)
 
 ## 相关项目
 
 ### 生态系统
 
-- [yee-icons](https://github.com/InsureMO/yee-icons) - 图标库
-- [yee-theme](https://github.com/InsureMO/yee-theme) - 主题包
-- [yee-pro](https://github.com/InsureMO/yee-pro) - 高级组件包
+- [yee-icons](https://github.com/insureMO/yee-icons) - 图标库
+- [yee-theme](https://github.com/insureMO/yee-theme) - 主题包
+- [yee-pro](https://github.com/insureMO/yee-pro) - 高级组件包
 
 ### 推荐工具
 
@@ -114,4 +114,4 @@ yee-c upgrade
 
 ## 贡献资源
 
-如果你有好的学习资源或工具想要分享，欢迎提交 PR 或在 [Discussions](https://github.com/InsureMO/oh-yee/discussions) 中分享。
+如果你有好的学习资源或工具想要分享，欢迎提交 PR 或在 [Discussions](https://github.com/insureMO/oh-yee/discussions) 中分享。

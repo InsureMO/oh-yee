@@ -69,6 +69,10 @@ const MenuItem = (props: MenuItemProps) => {
         style={{ paddingLeft, ...styles?.item }}
         onClick={handleClick}
         title={isCollapsed && typeof label === 'string' ? label : undefined}
+        role="menuitem"
+        aria-disabled={disabled || undefined}
+        aria-current={selectedKeys?.includes(key) ? 'page' : undefined}
+        tabIndex={disabled ? -1 : 0}
       >
         {iconNode}
         {!isCollapsed && (
@@ -149,7 +153,7 @@ const MenuItem = (props: MenuItemProps) => {
     if (isCollapsed) return null;
     if (mode === 'vertical' || mode === 'horizontal') {
       return (
-        <span className={`${prefixCls}-item-switch`}>
+        <span className={`${prefixCls}-item-switch`} aria-hidden="true">
           <ChevronRight strokeWidth={2} size={18} />
         </span>
       );
@@ -159,6 +163,7 @@ const MenuItem = (props: MenuItemProps) => {
         className={`${prefixCls}-item-switch`}
         animate={{ rotateX: opened ? 180 : 0 }}
         transition={{ duration: 0.15 }}
+        aria-hidden="true"
       >
         <ChevronDown strokeWidth={2} size={18} />
       </motion.span>
@@ -167,7 +172,10 @@ const MenuItem = (props: MenuItemProps) => {
 
   const triggerNode = (
     <div
-      role="submenu"
+      role="menuitem"
+      aria-haspopup="true"
+      aria-expanded={opened}
+      aria-disabled={disabled || undefined}
       className={clsx(`${prefixCls}-submenu-title`, {
         [`${prefixCls}-submenu-open`]: opened,
         [`${prefixCls}-submenu-selected`]:
@@ -178,6 +186,7 @@ const MenuItem = (props: MenuItemProps) => {
       })}
       style={{ paddingLeft }}
       onClick={handleExpand}
+      tabIndex={disabled ? -1 : 0}
       title={isCollapsed && typeof label === 'string' ? label : undefined}
     >
       {iconNode}
@@ -203,7 +212,7 @@ const MenuItem = (props: MenuItemProps) => {
     mode === 'horizontal' && !isCollapsed ? 'bottomLeft' : 'rightTop';
 
   const childNode = (
-    <li className={cls}>
+    <li className={cls} role="none">
       {usePopup ? (
         <Trigger
           open={openKeys.includes(key)}

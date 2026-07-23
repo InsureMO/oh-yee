@@ -73,12 +73,12 @@ const Card: FC<CardProps> = (baseprops) => {
         )}
         style={styles?.expandIcon}
         aria-expanded={mergedExpanded}
+        aria-label={mergedExpanded ? 'Collapse content' : 'Expand content'}
         icon={
           icon ? (
             icon
           ) : (
             <ChevronUp
-              aria-label="expanded"
               strokeWidth={1.5}
               size={16}
               style={{
@@ -134,6 +134,7 @@ const Card: FC<CardProps> = (baseprops) => {
           onKeyDown={handleKeyDown}
           tabIndex={headerClickable ? 0 : undefined}
           role={headerClickable ? 'button' : undefined}
+          aria-expanded={headerClickable ? mergedExpanded : undefined}
         >
           {iconPosition === 'left' ? renderExpandIcon() : null}
           {title ? (
@@ -154,6 +155,9 @@ const Card: FC<CardProps> = (baseprops) => {
         animate={mergedExpanded ? { height: 'auto' } : { height: 0 }}
         exit={{ height: 0, display: 'none' }}
         transition={{ duration: animationDuration }}
+        role="region"
+        aria-labelledby={title ? headerId : undefined}
+        aria-hidden={!mergedExpanded}
       >
         {children}
       </motion.div>

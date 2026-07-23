@@ -10,13 +10,13 @@
     "design-system",
     "yee"
   ],
-  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-c#readme",
+  "homepage": "https://github.com/insureMO/oh-yee/tree/main/packages/yee-c#readme",
   "bugs": {
-    "url": "https://github.com/InsureMO/oh-yee/issues"
+    "url": "https://github.com/insureMO/oh-yee/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/InsureMO/oh-yee.git",
+    "url": "https://github.com/insureMO/oh-yee.git",
     "directory": "packages/yee-c"
   },
   "license": "MIT",
@@ -76,6 +76,7 @@
     "prepare": "dumi setup",
     "prepublishOnly": "npm run docs:scan && father doctor && node scripts/generate-version.js && npm run build",
     "start": "npm run dev",
+    "test": "vitest run",
     "watch": "father dev"
   },
   "commitlint": {
@@ -114,6 +115,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@testing-library/react": "16.3.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -122,6 +124,7 @@
     "eslint": "^8.23.0",
     "father": "^4.1.0",
     "husky": "^8.0.1",
+    "jsdom": "25.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
@@ -129,7 +132,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "stylelint": "^14.16.1",
-    "stylelint-order": "^6.0.4"
+    "stylelint-order": "^6.0.4",
+    "vitest": "3.2.6"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -140,6 +144,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "authors": [
-    "InsureMO"
+    "insureMO"
   ]
 }

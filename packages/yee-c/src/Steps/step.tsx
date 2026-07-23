@@ -43,6 +43,15 @@ const Step: React.FC<StepProps> = (props) => {
     status ??
     (index < current ? 'finish' : index === current ? 'process' : 'wait');
 
+  const statusLabel =
+    mergedStatus === 'finish'
+      ? 'completed'
+      : mergedStatus === 'process'
+        ? 'in progress'
+        : mergedStatus === 'error'
+          ? 'error'
+          : 'pending';
+
   const renderIcon = useMemo(() => {
     if (dot) return <span className={`${prefixCls}-item-dot`}></span>;
 
@@ -89,7 +98,7 @@ const Step: React.FC<StepProps> = (props) => {
   return (
     <>
       {type === 'ribbon' && (
-        <div className={`${prefixCls}-item-ribbon-end ${ribbonStatus}`} />
+        <div className={`${prefixCls}-item-ribbon-end ${ribbonStatus}`} aria-hidden="true" />
       )}
       <div
         className={cls}
@@ -97,11 +106,12 @@ const Step: React.FC<StepProps> = (props) => {
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         tabIndex={disabled ? -1 : onChange ? 0 : undefined}
-        role={onChange ? 'button' : undefined}
+        role={onChange ? 'button' : 'listitem'}
         aria-disabled={disabled}
         aria-current={index === current ? 'step' : undefined}
+        aria-label={`Step ${index + 1}${typeof title === 'string' ? `: ${title}` : ''}, ${statusLabel}`}
       >
-        <div className={`${prefixCls}-item-icon`}>{renderIcon}</div>
+        <div className={`${prefixCls}-item-icon`} aria-hidden="true">{renderIcon}</div>
         <div className={`${prefixCls}-item-content`}>
           <div className={`${prefixCls}-item-title`}>
             <span title={typeof title === 'string' ? title : undefined}>
@@ -117,12 +127,12 @@ const Step: React.FC<StepProps> = (props) => {
         </div>
       </div>
       {type === 'navigation' && (
-        <div className={`${prefixCls}-item-navi-arrow`}>
+        <div className={`${prefixCls}-item-navi-arrow`} aria-hidden="true">
           <ChevronRight />
         </div>
       )}
       {type === 'ribbon' && (
-        <div className={`${prefixCls}-item-ribbon-head ${ribbonStatus}`} />
+        <div className={`${prefixCls}-item-ribbon-head ${ribbonStatus}`} aria-hidden="true" />
       )}
     </>
   );

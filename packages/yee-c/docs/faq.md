@@ -32,16 +32,16 @@ import { Button } from 'yee-c';
 
 ```json
 {
-    "plugins": [
-        [
-            "import",
-            {
-                "libraryName": "yee-c",
-                "libraryDirectory": "es",
-                "style": true
-            }
-        ]
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "yee-c",
+        "libraryDirectory": "es",
+        "style": true
+      }
     ]
+  ]
 }
 ```
 
@@ -53,11 +53,11 @@ import { Button } from 'yee-c';
 
 ```css
 :root {
-    --yee-primary-color: #1890ff;
-    --yee-success-color: #52c41a;
-    --yee-warning-color: #faad14;
-    --yee-error-color: #f5222d;
-    --yee-border-radius: 4px;
+  --yee-primary-color: #1890ff;
+  --yee-success-color: #52c41a;
+  --yee-warning-color: #faad14;
+  --yee-error-color: #f5222d;
+  --yee-border-radius: 4px;
 }
 ```
 
@@ -65,8 +65,8 @@ import { Button } from 'yee-c';
 
 ```css
 [data-theme='dark'] {
-    --yee-bg-color: #1f1f1f;
-    --yee-text-color: #ffffff;
+  --yee-bg-color: #1f1f1f;
+  --yee-text-color: #ffffff;
 }
 ```
 
@@ -147,7 +147,7 @@ import { ConfigProvider } from 'yee-c';
 import zhCN from 'yee-c/es/locale/zh_CN';
 
 <ConfigProvider locale={zhCN}>
-    <App />
+  <App />
 </ConfigProvider>;
 ```
 
@@ -170,7 +170,7 @@ import zhCN from 'yee-c/es/locale/zh_CN';
 
 ### Q: 如何报告 Bug？
 
-请在 [GitHub Issues](https://github.com/InsureMO/oh-yee/issues) 中提交，包含：
+请在 [GitHub Issues](https://github.com/insureMO/oh-yee/issues) 中提交，包含：
 
 - 复现步骤
 - 预期行为
@@ -188,4 +188,4 @@ import zhCN from 'yee-c/es/locale/zh_CN';
 
 ---
 
-仍有问题？欢迎在 [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions) 中提问。
+仍有问题？欢迎在 [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions) 中提问。

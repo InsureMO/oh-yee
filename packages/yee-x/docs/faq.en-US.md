@@ -128,6 +128,6 @@ yee-x uses MIT license and can be freely used in commercial projects.
 
 If the above doesn't solve your problem, please:
 
-- Submit an [Issue](https://github.com/InsureMO/oh-yee/issues)
-- Join the [Discussion](https://github.com/InsureMO/oh-yee/discussions)
+- Submit an [Issue](https://github.com/insureMO/oh-yee/issues)
+- Join the [Discussion](https://github.com/insureMO/oh-yee/discussions)
 - Check the [Guide](/guide)

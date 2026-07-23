@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-c.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-c) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-65+ foundational React UI components for building modern enterprise applications. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
+65+ foundational React UI components for building modern enterprise applications. Part of the [Yee](https://github.com/insureMO/oh-yee) component library.
 
 ## Features
 
@@ -24,7 +24,16 @@ Requires `react >= 18` and `react-dom >= 18` as peer dependencies.
 ## Usage
 
 ```tsx
-import { Button, Form, Input, Table, Card, Select, Dialog, message } from '@rainbow-oh/yee-c';
+import {
+  Button,
+  Form,
+  Input,
+  Table,
+  Card,
+  Select,
+  Dialog,
+  message,
+} from '@rainbow-oh/yee-c';
 ```
 
 Import styles:
@@ -54,10 +63,16 @@ function UserForm() {
     <>
       {messageHolder}
       <Form form={form} onFinish={handleSubmit}>
-        <Form.Field label="Name" name="name" rules={[{ required: true, message: 'Please enter name' }]}>
+        <Form.Field
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: 'Please enter name' }]}
+        >
           <Input />
         </Form.Field>
-        <Button type="primary" htmlType="submit">Submit</Button>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
       </Form>
     </>
   );
@@ -98,31 +113,31 @@ ConfigProvider, Portal
 
 20+ utility hooks for common React patterns:
 
-| Hook | Description |
-|---|---|
-| `useDebounceFunction` | Debounced function execution |
-| `useDebounceValue` | Debounced state value |
-| `useDeepCompareEffect` | Effect with deep comparison |
-| `useDeepCompareMemo` | Memo with deep comparison |
-| `useMergedState` | Controlled/uncontrolled state |
-| `useLatest` | Always-current ref value |
-| `useMount` | Mount lifecycle hook |
-| `useUpdateEffect` | Skip-first-run effect |
-| `useResizeObserver` | Element resize observation |
-| `useElementSize` | Element dimensions tracking |
-| `useEvent` | Stable event handler |
-| `useFocusManage` | Focus management |
-| `useKeyControl` | Keyboard control |
-| `useVirtualForm` | Virtual scrolling for forms |
+| Hook                   | Description                   |
+| ---------------------- | ----------------------------- |
+| `useDebounceFunction`  | Debounced function execution  |
+| `useDebounceValue`     | Debounced state value         |
+| `useDeepCompareEffect` | Effect with deep comparison   |
+| `useDeepCompareMemo`   | Memo with deep comparison     |
+| `useMergedState`       | Controlled/uncontrolled state |
+| `useLatest`            | Always-current ref value      |
+| `useMount`             | Mount lifecycle hook          |
+| `useUpdateEffect`      | Skip-first-run effect         |
+| `useResizeObserver`    | Element resize observation    |
+| `useElementSize`       | Element dimensions tracking   |
+| `useEvent`             | Stable event handler          |
+| `useFocusManage`       | Focus management              |
+| `useKeyControl`        | Keyboard control              |
+| `useVirtualForm`       | Virtual scrolling for forms   |
 
 ## Theming
 
 Use built-in color themes by importing the corresponding CSS file:
 
 ```tsx
-import '@rainbow-oh/yee-c/variables.css';   // Base variables
-import '@rainbow-oh/yee-c/color.blue.css';  // Blue theme
-import '@rainbow-oh/yee-c/color.dark.css';  // Dark theme
+import '@rainbow-oh/yee-c/variables.css'; // Base variables
+import '@rainbow-oh/yee-c/color.blue.css'; // Blue theme
+import '@rainbow-oh/yee-c/color.dark.css'; // Dark theme
 ```
 
 Available themes: `blue`, `crimson`, `dark`, `green`, `jam`, `navy`, `peach`, `pine`, `pitaya`, `pumpkin`, `ruby`.
@@ -145,8 +160,8 @@ pnpm lint
 
 ## Contributing
 
-See the root [Contributing Guide](https://github.com/InsureMO/oh-yee/blob/main/CONTRIBUTING.md).
+See the root [Contributing Guide](https://github.com/insureMO/oh-yee/blob/main/CONTRIBUTING.md).
 
 ## License
 
-[MIT](./LICENSE) © [InsureMO](https://github.com/InsureMO)
+[MIT](./LICENSE) © [insureMO](https://github.com/insureMO)

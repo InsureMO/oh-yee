@@ -173,6 +173,9 @@ const Carousel = React.forwardRef(
         { [`${prefixCls}-arrows-visible`]: showArrow },
         className,
       ),
+      role: 'region' as const,
+      'aria-roledescription': 'carousel',
+      'aria-live': autoplay ? ('off' as const) : ('polite' as const),
       onMouseEnter: handleMouseEnter,
       onMouseLeave: handleMouseLeave,
     };
@@ -198,6 +201,15 @@ const Carousel = React.forwardRef(
             )}
             style={styles?.prev}
             onClick={prev}
+            role="button"
+            aria-label="Previous slide"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                prev();
+              }
+            }}
           >
             {direction === 'vertical' ? <ChevronUp /> : <ChevronLeft />}
           </div>
@@ -211,6 +223,15 @@ const Carousel = React.forwardRef(
             )}
             style={styles?.next}
             onClick={next}
+            role="button"
+            aria-label="Next slide"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                next();
+              }
+            }}
           >
             {direction === 'vertical' ? <ChevronDown /> : <ChevronRight />}
           </div>
@@ -228,17 +249,23 @@ const Carousel = React.forwardRef(
             classNames?.dot,
           )}
           style={styles?.dot}
+          role="tablist"
+          aria-label="Slide controls"
         >
           {new Array(React.Children.count(children))
             .fill(0)
             .map((i, index: number) => {
+              const isActive =
+                current === index + 1 ||
+                (current === 0 && index === count - 1);
               return (
                 <li
                   className={clsx({
-                    active:
-                      current === index + 1 ||
-                      (current === 0 && index === count),
+                    active: isActive,
                   })}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-label={`Slide ${index + 1}`}
                   tabIndex={0}
                   onClick={() => handleIndicator(index + 1, 'click')}
                   onKeyDown={(e) => {

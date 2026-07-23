@@ -40,9 +40,15 @@ const MenuGroup = ({
   prefixCls: string;
   renderItems: (items: MenuItemType[]) => React.ReactNode[];
 }) => (
-  <li className={`${prefixCls}-item-group`}>
-    <div className={`${prefixCls}-item-group-title`}>{item.label}</div>
-    <ul className={`${prefixCls}-item-group-list`}>
+  <li className={`${prefixCls}-item-group`} role="none">
+    <div className={`${prefixCls}-item-group-title`} role="presentation" id={`${prefixCls}-group-${String(item.label)}`}>
+      {item.label}
+    </div>
+    <ul
+      className={`${prefixCls}-item-group-list`}
+      role="group"
+      aria-labelledby={`${prefixCls}-group-${String(item.label)}`}
+    >
       {renderItems(item.children)}
     </ul>
   </li>
@@ -112,11 +118,11 @@ const Menu = (props: InnerMenuProps) => {
   const rootStyle = root ? { ...style } : {};
 
   return (
-    <ul {...dataAttrs} className={cls} style={rootStyle} role="menu">
+    <ul {...dataAttrs} className={cls} style={rootStyle} role={root && mode === 'horizontal' ? 'menubar' : 'menu'}>
       <MenuCtx.Provider value={{ level, mode, classNames, styles }}>
         {getChildFromItems(items)}
         {level === 0 && footer && (
-          <li className={`${prefixCls}-footer`}>{footer}</li>
+          <li className={`${prefixCls}-footer`} role="none">{footer}</li>
         )}
       </MenuCtx.Provider>
     </ul>

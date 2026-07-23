@@ -166,10 +166,12 @@ const TabHeaderTitle: React.FC<TabsItemProps> = (props) => {
       {...rest}
       ref={tabRef}
       role="tab"
+      id={`tab-${$key}`}
       aria-selected={activeKey === $key}
       aria-disabled={disabled}
+      aria-controls={`tabpanel-${$key}`}
       className={cls}
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={disabled ? -1 : activeKey === $key ? 0 : -1}
       onClick={handleTabClick}
       onKeyDown={handleKeyDown}
     >

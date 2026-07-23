@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@rainbow-oh/yee-x.svg)](https://www.npmjs.com/package/@rainbow-oh/yee-x) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-React components for building AI-powered conversational interfaces. Part of the [Yee](https://github.com/InsureMO/oh-yee) component library.
+React components for building AI-powered conversational interfaces. Part of the [Yee](https://github.com/insureMO/oh-yee) component library.
 
 ## Features
 
@@ -24,37 +24,37 @@ Requires `@rainbow-oh/yee-c`, `react >= 18`, and `react-dom >= 18` as peer depen
 
 ### Text & Content
 
-| Component | Description |
-|---|---|
-| `Markdown` | GFM markdown rendering with syntax highlighting |
-| `CodeBlock` | Code display with language detection and copy button |
-| `AIRenderer` | Schema-driven dynamic UI renderer |
+| Component    | Description                                          |
+| ------------ | ---------------------------------------------------- |
+| `Markdown`   | GFM markdown rendering with syntax highlighting      |
+| `CodeBlock`  | Code display with language detection and copy button |
+| `AIRenderer` | Schema-driven dynamic UI renderer                    |
 
 ### Conversation
 
-| Component | Description |
-|---|---|
-| `Bubble` | Chat bubble with avatar, header, content, and footer |
-| `Sender` | Chat input with auto-sizing, send/stop, and keyboard shortcuts |
-| `Prompts` | Prompt suggestion list for welcome screens |
-| `Attachments` | File upload and attachment cards |
+| Component     | Description                                                    |
+| ------------- | -------------------------------------------------------------- |
+| `Bubble`      | Chat bubble with avatar, header, content, and footer           |
+| `Sender`      | Chat input with auto-sizing, send/stop, and keyboard shortcuts |
+| `Prompts`     | Prompt suggestion list for welcome screens                     |
+| `Attachments` | File upload and attachment cards                               |
 
 ### Layout
 
-| Component | Description |
-|---|---|
-| `Flow` | Auto-scrolling marquee container |
-| `Resize` | Draggable resizable panel |
+| Component | Description                      |
+| --------- | -------------------------------- |
+| `Flow`    | Auto-scrolling marquee container |
+| `Resize`  | Draggable resizable panel        |
 
 ### Utilities
 
-| Component | Description |
-|---|---|
-| `Welcome` | Welcome landing section for AI chat |
-| `Process` | Animated status indicator with message transitions |
-| `Commands` | Slash-command popup menu |
-| `IndepWin` | Picture-in-Picture independent window |
-| `History` | Conversation history list |
+| Component  | Description                                        |
+| ---------- | -------------------------------------------------- |
+| `Welcome`  | Welcome landing section for AI chat                |
+| `Process`  | Animated status indicator with message transitions |
+| `Commands` | Slash-command popup menu                           |
+| `IndepWin` | Picture-in-Picture independent window              |
+| `History`  | Conversation history list                          |
 
 ## Usage
 
@@ -102,20 +102,21 @@ const schema = {
       children: ['nameInput'],
     },
     nameInput: { type: 'input', props: { placeholder: 'Enter your name' } },
-    submitBtn: { type: 'button', props: { type: 'primary', htmlType: 'submit' }, children: ['Submit'] },
+    submitBtn: {
+      type: 'button',
+      props: { type: 'primary', htmlType: 'submit' },
+      children: ['Submit'],
+    },
   },
 };
 
-<AIRenderer schema={schema} />
+<AIRenderer schema={schema} />;
 ```
 
 For streaming AI responses, use `StreamingAIRenderer`:
 
 ```tsx
-<StreamingAIRenderer
-  content={streamingJsonString}
-  isStreaming={isStreaming}
-/>
+<StreamingAIRenderer content={streamingJsonString} isStreaming={isStreaming} />
 ```
 
 Supports 40+ component type mappings: `form`, `input`, `select`, `table`, `button`, `card`, `tabs`, `drawer`, `alert`, `progress`, and more.
@@ -129,7 +130,7 @@ Chat bubble with role-based layout and content parsing.
   avatar={{ src: '/avatar.png', alt: 'AI' }}
   placement="start"
   content="Hello! How can I help you?"
-  footer={({ loading }) => loading ? <Spin /> : null}
+  footer={({ loading }) => (loading ? <Spin /> : null)}
 />
 ```
 
@@ -137,7 +138,7 @@ Chat bubble with role-based layout and content parsing.
 
 ```tsx
 <BubbleList
-  items={messages.map(msg => ({
+  items={messages.map((msg) => ({
     key: msg.id,
     role: msg.role,
     content: msg.content,
@@ -163,7 +164,11 @@ Chat input with auto-sizing textarea, send/stop controls, and keyboard shortcuts
   onStop={() => abortController.abort()}
   loading={isStreaming}
   sendKey="enter"
-  header={<Sender.Header title="Context" closable>...</Sender.Header>}
+  header={
+    <Sender.Header title="Context" closable>
+      ...
+    </Sender.Header>
+  }
   prefix={<Paperclip size={18} />}
 />
 ```
@@ -256,7 +261,9 @@ Auto-scrolling marquee container for horizontal or vertical content.
 ```tsx
 <Flow stopOnHover distance={1} interval={30}>
   <div style={{ display: 'flex', gap: 16 }}>
-    {items.map(item => <Card key={item.id}>{item.title}</Card>)}
+    {items.map((item) => (
+      <Card key={item.id}>{item.title}</Card>
+    ))}
   </div>
 </Flow>
 ```
@@ -308,7 +315,7 @@ import { GlobalContext } from '@rainbow-oh/yee-x';
 
 <GlobalContext.Provider value={{ bubble: { avatar: { src: '/default.png' } } }}>
   <ChatApp />
-</GlobalContext.Provider>
+</GlobalContext.Provider>;
 ```
 
 ## Development
@@ -341,8 +348,8 @@ pnpm doctor
 
 ## Contributing
 
-See the root [Contributing Guide](https://github.com/InsureMO/oh-yee/blob/main/CONTRIBUTING.md).
+See the root [Contributing Guide](https://github.com/insureMO/oh-yee/blob/main/CONTRIBUTING.md).
 
 ## License
 
-[MIT](./LICENSE) © [InsureMO](https://github.com/InsureMO)
+[MIT](./LICENSE) © [insureMO](https://github.com/insureMO)

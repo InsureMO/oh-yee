@@ -32,16 +32,16 @@ Configure `babel-plugin-import`:
 
 ```json
 {
-    "plugins": [
-        [
-            "import",
-            {
-                "libraryName": "yee-c",
-                "libraryDirectory": "es",
-                "style": true
-            }
-        ]
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "yee-c",
+        "libraryDirectory": "es",
+        "style": true
+      }
     ]
+  ]
 }
 ```
 
@@ -53,10 +53,10 @@ Use CSS variables:
 
 ```css
 :root {
-    --yee-primary-color: #1890ff;
-    --yee-success-color: #52c41a;
-    --yee-warning-color: #faad14;
-    --yee-error-color: #f5222d;
+  --yee-primary-color: #1890ff;
+  --yee-success-color: #52c41a;
+  --yee-warning-color: #faad14;
+  --yee-error-color: #f5222d;
 }
 ```
 
@@ -64,8 +64,8 @@ Use CSS variables:
 
 ```css
 [data-theme='dark'] {
-    --yee-bg-color: #1f1f1f;
-    --yee-text-color: #ffffff;
+  --yee-bg-color: #1f1f1f;
+  --yee-text-color: #ffffff;
 }
 ```
 
@@ -102,4 +102,4 @@ Yes, most components support SSR. Some components like Dialog may need client-si
 
 ---
 
-Still have questions? Ask in [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions).
+Still have questions? Ask in [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions).

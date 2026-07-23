@@ -8,7 +8,7 @@
 
 如果你发现了 Bug 或有功能建议：
 
-1. 在 [GitHub Issues](https://github.com/InsureMO/oh-yee/issues) 搜索现有问题
+1. 在 [GitHub Issues](https://github.com/insureMO/oh-yee/issues) 搜索现有问题
 2. 如果没有找到相关问题，创建新的 Issue
 3. 提供详细的问题描述和复现步骤
 
@@ -18,7 +18,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/InsureMO/oh-yee.git
+git clone https://github.com/insureMO/oh-yee.git
 cd yee-c
 
 # 安装依赖
@@ -54,6 +54,7 @@ npm run build
 ```
 
 **类型 (type)：**
+
 - `feat`：新功能
 - `fix`：问题修复
 - `docs`：文档更新
@@ -76,23 +77,27 @@ docs: 更新快速开始文档
 #### Pull Request 流程
 
 1. **Fork 仓库**并创建你的分支
+
    ```bash
    git checkout -b feature/awesome-feature
    ```
 
 2. **进行修改**并确保代码通过检查
+
    ```bash
    npm run lint
    npm test
    ```
 
 3. **提交代码**
+
    ```bash
    git add .
    git commit -m "feat: add awesome feature"
    ```
 
 4. **推送到你的 Fork**
+
    ```bash
    git push origin feature/awesome-feature
    ```
@@ -204,8 +209,8 @@ import { ComponentName } from 'yee-c';
 ### Props
 
 | 属性 | 说明 | 类型 | 默认值 |
-|------|------|------|--------|
-| ... | ... | ... | ... |
+| ---- | ---- | ---- | ------ |
+| ...  | ...  | ...  | ...    |
 
 ## 注意事项
 
@@ -234,8 +239,8 @@ import { ComponentName } from 'yee-c';
 
 如有任何问题，欢迎：
 
-- 提交 [GitHub Issue](https://github.com/InsureMO/oh-yee/issues)
-- 在 [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions) 中讨论
+- 提交 [GitHub Issue](https://github.com/insureMO/oh-yee/issues)
+- 在 [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions) 中讨论
 
 ---
 

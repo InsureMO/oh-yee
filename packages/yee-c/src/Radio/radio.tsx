@@ -67,7 +67,12 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
     );
 
     return (
-      <label className={cls} style={style} onClick={handleClick}>
+      <label
+        className={cls}
+        style={style}
+        onClick={handleClick}
+        aria-disabled={disabled || undefined}
+      >
         <span
           className={clsx(prefixCls, {
             [`${prefixCls}-disabled`]: disabled,
@@ -83,12 +88,12 @@ const Radio = React.forwardRef<HTMLInputElement, RadioProps>(
             checked={mergedChecked}
             disabled={disabled}
             onChange={handleChange}
-            aria-checked={mergedChecked}
           />
           {!buttonStyle && (
             <span
               className={clsx(`${prefixCls}-inner`, classNames?.inner)}
               style={styles?.inner}
+              aria-hidden="true"
             ></span>
           )}
         </span>

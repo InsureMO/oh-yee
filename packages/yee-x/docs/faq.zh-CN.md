@@ -225,6 +225,6 @@ yee-x 采用 MIT 协议，可以免费用于商业项目。
 
 如果以上内容没有解决你的问题，欢迎：
 
-- 提交 [Issue](https://github.com/InsureMO/oh-yee/issues)
-- 参与 [讨论](https://github.com/InsureMO/oh-yee/discussions)
+- 提交 [Issue](https://github.com/insureMO/oh-yee/issues)
+- 参与 [讨论](https://github.com/insureMO/oh-yee/discussions)
 - 查看 [使用指南](/guide)

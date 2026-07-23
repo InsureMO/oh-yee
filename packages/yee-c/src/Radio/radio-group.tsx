@@ -61,6 +61,8 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
         style={{ ...style, gap: gap }}
         ref={ref}
         role="radiogroup"
+        aria-disabled={disabled || undefined}
+        {...rest}
       >
         <GroupCtx.Provider
           value={{ name, buttonStyle, onChange: handleChange }}
@@ -68,7 +70,6 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
           {options?.map((option, index) => (
             <Radio
               disabled={disabled}
-              {...rest}
               {...option}
               checked={option.value === mergedValue}
               key={option.value || index}

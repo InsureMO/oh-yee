@@ -38,7 +38,7 @@ Flexible APIs and theme customization for different scenarios.
 
 ## Contact Us
 
-- **Bug Reports**: [GitHub Issues](https://github.com/InsureMO/oh-yee/issues)
+- **Bug Reports**: [GitHub Issues](https://github.com/insureMO/oh-yee/issues)
 - **Feature Requests**: Welcome to submit Feature Requests
 - **Security**: Please report security issues privately
 

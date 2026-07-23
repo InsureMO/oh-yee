@@ -4,10 +4,12 @@ export default function useDelayState<T>(state: T, delay = 0): T {
   const [delayState, setDelayState] = useState<T>();
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = window.setTimeout(() => {
       setDelayState(state);
     }, delay * 1000);
-  }, [state]);
+
+    return () => window.clearTimeout(timer);
+  }, [delay, state]);
 
   return delayState as T;
 }

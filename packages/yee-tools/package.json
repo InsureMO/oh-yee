@@ -2,24 +2,6 @@
   "name": "@rainbow-oh/yee-tools",
   "version": "0.1.2",
   "description": "A modern, type-safe TypeScript utility library",
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "type": "module",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.mjs",
-  "types": "./dist/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/InsureMO/oh-yee.git",
-    "directory": "packages/yee-tools"
-  },
-  "homepage": "https://github.com/InsureMO/oh-yee/tree/main/packages/yee-tools#readme",
-  "bugs": {
-    "url": "https://github.com/InsureMO/oh-yee/issues"
-  },
   "keywords": [
     "typescript",
     "utility",
@@ -32,9 +14,18 @@
     "i18n",
     "tree-shakeable"
   ],
-  "engines": {
-    "node": ">=16.0.0"
+  "homepage": "https://github.com/insureMO/oh-yee/tree/main/packages/yee-tools#readme",
+  "bugs": {
+    "url": "https://github.com/insureMO/oh-yee/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/insureMO/oh-yee.git",
+    "directory": "packages/yee-tools"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -144,7 +135,9 @@
     },
     "./umd": "./dist/umd/yee-tools.min.js"
   },
-  "sideEffects": false,
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/esm",
     "dist/cjs",
@@ -155,22 +148,19 @@
     "LICENSE",
     "API.md"
   ],
-  "dependencies": {},
-  "peerDependencies": {
-    "dayjs": "^1.11.11"
-  },
   "scripts": {
-    "clean": "rimraf dist",
     "build": "npm run clean && rollup -c",
     "build:prod": "cross-env NODE_ENV=production npm run build",
-    "prepublishOnly": "npm run build",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "clean": "rimraf dist",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
     "lint": "npm run lint:es",
     "lint:es": "eslint \"{src,test}/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,less,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,less,json}\""
+    "prepublishOnly": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
+  "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -196,5 +186,15 @@
     "ts-jest": "^29.2.5",
     "tslib": "^2.8.1",
     "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "dayjs": "^1.11.11"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

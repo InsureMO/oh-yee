@@ -170,6 +170,8 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
             className={clsx(`${prefixCls}-nav-list`, classNames?.list)}
             style={styles?.list}
             ref={navList}
+            role="tablist"
+            aria-orientation={direction}
           >
             {items?.map((item: TabItemType, index: number) => (
               <TabHeaderTitle

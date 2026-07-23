@@ -179,9 +179,12 @@ const Pagination = React.forwardRef(
               prevClick();
             }
           }}
+          role="button"
+          aria-label="Previous page"
+          aria-disabled={mergedCurrent === 1 || undefined}
           key="prev"
         >
-          {components?.prev ?? <ChevronLeft size={20} strokeWidth={1.5} />}
+          {components?.prev ?? <ChevronLeft size={20} strokeWidth={1.5} aria-hidden="true" />}
         </li>
       );
     };
@@ -204,9 +207,12 @@ const Pagination = React.forwardRef(
               nextClick();
             }
           }}
+          role="button"
+          aria-label="Next page"
+          aria-disabled={mergedCurrent === pageCount || undefined}
           key="next"
         >
-          {components?.next ?? <ChevronRight size={20} strokeWidth={1.5} />}
+          {components?.next ?? <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />}
         </li>
       );
     };
@@ -249,13 +255,13 @@ const Pagination = React.forwardRef(
     }
 
     return (
-      <ul {...rest} className={cls} style={style} ref={ref}>
+      <ul {...rest} className={cls} style={style} ref={ref} role="navigation" aria-label="Pagination" aria-disabled={disabled || undefined}>
         {renderTotal()}
         {renderPrevious()}
         {simple ? (
           <li className={`${prefixCls}-simple`}>
             {renderNumber(false)}
-            <span className="split">/</span>
+            <span className="split" aria-hidden="true">/</span>
             <span className="total-page">{pageCount}</span>
           </li>
         ) : (

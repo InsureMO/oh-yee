@@ -10,7 +10,8 @@ const path = require('path');
 
 const SRC_DIR = path.join(__dirname, '../src');
 const OUTPUT_FILE = path.join(__dirname, '../agents.md');
-const GITHUB_BASE_URL = 'https://github.com/InsureMO/oh-yee/blob/main/packages/yee-x/src';
+const GITHUB_BASE_URL =
+  'https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src';
 
 const GROUP_ORDER = {
   Core: 1,
@@ -192,12 +193,12 @@ This file is a component index for the yee-x library, helping AI Agents quickly 
 ### Doc URL Format
 
 \`\`\`
-https://github.com/InsureMO/oh-yee/blob/main/packages/yee-x/src/{ComponentName}/index.en-US.md
+https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/{ComponentName}/index.en-US.md
 \`\`\`
 
 Example - Markdown component docs:
 \`\`\`
-https://github.com/InsureMO/oh-yee/blob/main/packages/yee-x/src/Markdown/index.en-US.md
+https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Markdown/index.en-US.md
 \`\`\`
 
 ---

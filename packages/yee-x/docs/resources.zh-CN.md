@@ -33,10 +33,10 @@ npx create-yee-app my-app
 
 ### 示例项目
 
-- [基础聊天应用](https://github.com/InsureMO/oh-yee-examples/tree/main/basic-chat) - 展示基本的聊天功能
-- [AI 助手应用](https://github.com/InsureMO/oh-yee-examples/tree/main/ai-assistant) - 完整的 AI 助手示例
-- [文档问答系统](https://github.com/InsureMO/oh-yee-examples/tree/main/doc-qa) - 基于文档的问答系统
-- [代码生成器](https://github.com/InsureMO/oh-yee-examples/tree/main/code-generator) - AI 代码生成工具
+- [基础聊天应用](https://github.com/insureMO/oh-yee-examples/tree/main/basic-chat) - 展示基本的聊天功能
+- [AI 助手应用](https://github.com/insureMO/oh-yee-examples/tree/main/ai-assistant) - 完整的 AI 助手示例
+- [文档问答系统](https://github.com/insureMO/oh-yee-examples/tree/main/doc-qa) - 基于文档的问答系统
+- [代码生成器](https://github.com/insureMO/oh-yee-examples/tree/main/code-generator) - AI 代码生成工具
 
 ### 代码片段
 
@@ -90,24 +90,26 @@ function ChatApp() {
 
 ### 官方渠道
 
-- [GitHub 仓库](https://github.com/InsureMO/oh-yee) - 源码和问题追踪
-- [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions) - 社区讨论
+- [GitHub 仓库](https://github.com/insureMO/oh-yee) - 源码和问题追踪
+- [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions) - 社区讨论
 - [更新日志](/changelog) - 版本更新记录
 
 ### 社区项目
 
-- [awesome-yee-x](https://github.com/InsureMO/awesome-yee-x) - 精选资源列表
-- [yee-x-plugins](https://github.com/InsureMO/oh-yee-plugins) - 社区插件集合
-- [yee-x-themes](https://github.com/InsureMO/oh-yee-themes) - 主题集合
+- [awesome-yee-x](https://github.com/insureMO/awesome-yee-x) - 精选资源列表
+- [yee-x-plugins](https://github.com/insureMO/oh-yee-plugins) - 社区插件集合
+- [yee-x-themes](https://github.com/insureMO/oh-yee-themes) - 主题集合
 
 ### 第三方集成
 
 - **状态管理**
+
   - Redux 集成示例
   - Zustand 集成示例
   - Jotai 集成示例
 
 - **UI 框架**
+
   - Ant Design 集成
   - Material-UI 集成
   - Chakra UI 集成
@@ -187,15 +189,15 @@ npm run docs:download
 如果你在使用过程中遇到问题：
 
 - 查看 [常见问题](/faq)
-- 提交 [Issue](https://github.com/InsureMO/oh-yee/issues)
-- 参与 [讨论](https://github.com/InsureMO/oh-yee/discussions)
+- 提交 [Issue](https://github.com/insureMO/oh-yee/issues)
+- 参与 [讨论](https://github.com/insureMO/oh-yee/discussions)
 - 联系维护团队
 
 ## 保持更新
 
 关注我们获取最新动态：
 
-- ⭐ Star [GitHub 仓库](https://github.com/InsureMO/oh-yee)
+- ⭐ Star [GitHub 仓库](https://github.com/insureMO/oh-yee)
 - 👀 Watch 仓库获取更新通知
 - 📧 订阅邮件列表（即将推出）
 - 🐦 关注官方社交媒体（即将推出）

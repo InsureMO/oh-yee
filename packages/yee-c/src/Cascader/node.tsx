@@ -107,12 +107,24 @@ const Node = (props: NodeProps) => {
       className={clsName}
       onMouseEnter={handleMouseEnter}
       onClick={(e: React.MouseEvent<HTMLElement>) => handleClick(false, e)}
+      role="option"
+      aria-disabled={disabled || undefined}
+      aria-selected={checked || expandedPath[level]?.key === uid}
+      aria-expanded={isParent ? expandedPath[level]?.key === uid : undefined}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick(false, e as unknown as React.MouseEvent<HTMLElement>);
+        }
+      }}
     >
       {multiple && (
         <Checkbox
           checked={isParent ? checkedAll : checked}
           onChange={isParent ? () => handleClick(true) : undefined}
           indeterminate={indeterminate}
+          aria-label={`Select ${typeof label === 'string' ? label : String(label)}`}
         />
       )}
       <span
@@ -125,9 +137,9 @@ const Node = (props: NodeProps) => {
       </span>
 
       {load === 1 ? (
-        <Spin size="small" />
+        <Spin size="small" aria-label="Loading" />
       ) : isLeaf === false ? (
-        <ChevronRight size={20} />
+        <ChevronRight size={20} aria-hidden="true" />
       ) : null}
     </li>
   );

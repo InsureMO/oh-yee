@@ -8,7 +8,7 @@ Thanks for your interest in contributing to yee-c! We welcome all forms of contr
 
 If you find a bug or have a feature request:
 
-1. Search [GitHub Issues](https://github.com/InsureMO/oh-yee/issues)
+1. Search [GitHub Issues](https://github.com/insureMO/oh-yee/issues)
 2. Create a new issue if not found
 3. Provide detailed description and reproduction steps
 
@@ -18,7 +18,7 @@ If you find a bug or have a feature request:
 
 ```bash
 # Clone repository
-git clone https://github.com/InsureMO/oh-yee.git
+git clone https://github.com/insureMO/oh-yee.git
 cd yee-c
 
 # Install dependencies
@@ -50,6 +50,7 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation
@@ -60,6 +61,7 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 - `chore`: Build/tools
 
 **Examples:**
+
 ```bash
 feat(button): add loading state support
 fix(dialog): fix close animation
@@ -69,23 +71,27 @@ docs: update quick start guide
 #### Pull Request Process
 
 1. **Fork** and create your branch
+
    ```bash
    git checkout -b feature/awesome-feature
    ```
 
 2. **Make changes** and run checks
+
    ```bash
    npm run lint
    npm test
    ```
 
 3. **Commit** your changes
+
    ```bash
    git add .
    git commit -m "feat: add awesome feature"
    ```
 
 4. **Push** to your fork
+
    ```bash
    git push origin feature/awesome-feature
    ```
@@ -146,7 +152,7 @@ Contributions are licensed under [MIT License](LICENSE).
 
 ## Contact
 
-- [GitHub Issues](https://github.com/InsureMO/oh-yee/issues)
-- [GitHub Discussions](https://github.com/InsureMO/oh-yee/discussions)
+- [GitHub Issues](https://github.com/insureMO/oh-yee/issues)
+- [GitHub Discussions](https://github.com/insureMO/oh-yee/discussions)
 
 Thanks for contributing! 🎉

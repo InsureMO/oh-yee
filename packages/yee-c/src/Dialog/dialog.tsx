@@ -1,7 +1,14 @@
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { motion } from 'motion/react';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
 import useEsc from '../hooks/useEsc';
@@ -55,7 +62,17 @@ const Dialog = (baseprops: DialogProps) => {
   } = props;
 
   const [delayOpen, setDelayOpen] = useState(open);
+  const [contentElement, setContentElement] = useState<HTMLDivElement | null>(
+    null,
+  );
   const contentRef = useRef<HTMLDivElement>(null);
+  const setContentRef = useCallback((element: HTMLDivElement | null) => {
+    contentRef.current = element;
+    setContentElement(element);
+  }, []);
+  const dialogId = useId();
+  const titleId = `${dialogId}-title`;
+  const bodyId = `${dialogId}-body`;
 
   // When open changes and openResetLocation is true, reset position
   useEffect(() => {
@@ -71,7 +88,7 @@ const Dialog = (baseprops: DialogProps) => {
   });
 
   // lock focus in the dialog
-  useLockFocus(contentRef?.current ?? null, delayOpen);
+  useLockFocus(contentElement, delayOpen);
 
   // enable esc to close dialog
   useEsc({
@@ -81,8 +98,8 @@ const Dialog = (baseprops: DialogProps) => {
     },
   });
 
-  // manage focus
-  useFocusManage(contentRef.current as HTMLElement, delayOpen);
+  // manage focus once per open cycle
+  useFocusManage(contentElement, open);
 
   const cls = clsx(prefixCls, {
     [`${prefixCls}-open`]: delayOpen,
@@ -143,6 +160,7 @@ const Dialog = (baseprops: DialogProps) => {
         <div
           className={clsx(`${prefixCls}-mask`, classNames?.mask)}
           style={styles?.mask}
+          aria-hidden="true"
         ></div>
       )}
       <div
@@ -154,7 +172,11 @@ const Dialog = (baseprops: DialogProps) => {
           style={{ width: fullscreen ? '100%' : width, ...styles?.content }}
           tabIndex={0}
           onClick={(e) => e.stopPropagation()}
-          ref={contentRef}
+          ref={setContentRef}
+          role="dialog"
+          aria-modal={showMask ? true : undefined}
+          aria-labelledby={title ? titleId : undefined}
+          aria-describedby={bodyId}
         >
           {closable ? (
             <Button
@@ -175,12 +197,15 @@ const Dialog = (baseprops: DialogProps) => {
               className={clsx(`${prefixCls}-header`, classNames?.header)}
               style={styles?.header}
             >
-              <div className={`${prefixCls}-title`}>{title}</div>
+              <div className={`${prefixCls}-title`} id={titleId}>
+                {title}
+              </div>
             </div>
           ) : null}
           <div
             className={clsx(`${prefixCls}-body`, classNames?.body)}
             style={styles?.body}
+            id={bodyId}
           >
             {children}
           </div>
