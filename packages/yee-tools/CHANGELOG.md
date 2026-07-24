@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-tools
 
+## 0.1.3
+
+### Patch Changes
+
+- d274d5a: feat: Enhance deep copy function functionality
+
 ## 0.1.2
 
 ### Patch Changes
