@@ -4,7 +4,12 @@
  */
 
 /**
- * Deep clones an object or array
+ * Deep clones an object or array.
+ *
+ * Supports plain objects, arrays, Date, RegExp, and circular references.
+ * Functions are kept by reference (not cloned). Map/Set and class instance
+ * prototypes are not preserved.
+ *
  * @param obj - The object to clone
  * @returns A deep clone of the object
  * @example
@@ -15,19 +20,38 @@
  * console.log(original.b.c); // 2
  * ```
  */
-export function clone<T>(obj: T): T {
+export function clone<T>(obj: T, seen = new WeakMap<object, unknown>()): T {
   if (typeof obj !== "object" || obj === null) {
     return obj;
   }
 
+  // Preserve Date/RegExp by creating new instances instead of degrading to {}
+  if (obj instanceof Date) {
+    return new Date(obj.getTime()) as T;
+  }
+  if (obj instanceof RegExp) {
+    return new RegExp(obj.source, obj.flags) as T;
+  }
+
+  // Handle circular references
+  if (seen.has(obj as object)) {
+    return seen.get(obj as object) as T;
+  }
+
   if (Array.isArray(obj)) {
-    return obj.map((item) => clone(item)) as T;
+    const clonedArr: unknown[] = [];
+    seen.set(obj as object, clonedArr);
+    for (const item of obj) {
+      clonedArr.push(clone(item, seen));
+    }
+    return clonedArr as T;
   }
 
   const cloned = {} as T;
+  seen.set(obj as object, cloned);
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      cloned[key] = clone(obj[key]);
+      cloned[key] = clone(obj[key], seen);
     }
   }
   return cloned;
