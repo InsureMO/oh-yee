@@ -4,19 +4,33 @@ export type CountdownOptions = {
   duration: number;
   interval?: number;
   onComplete?: () => void;
+  resetKey?: string | number;
 };
 
 export default function useCountdown({
   duration,
   interval = 100,
   onComplete,
+  resetKey,
 }: CountdownOptions) {
-  const [remaining, setRemaining] = useState(duration);
+  const initialRemaining = Math.max(0, duration);
+  const [remaining, setRemaining] = useState(initialRemaining);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const remainingRef = useRef(duration);
+  const remainingRef = useRef(initialRemaining);
+  const isPausedRef = useRef(false);
   const onCompleteRef = useRef(onComplete);
+  const identityRef = useRef({ duration, resetKey });
+  const epochRef = useRef(0);
+
   onCompleteRef.current = onComplete;
+  if (
+    identityRef.current.duration !== duration ||
+    identityRef.current.resetKey !== resetKey
+  ) {
+    identityRef.current = { duration, resetKey };
+    epochRef.current += 1;
+  }
 
   const clear = useCallback(() => {
     if (timerRef.current !== null) {
@@ -25,41 +39,58 @@ export default function useCountdown({
     }
   }, []);
 
-  const tick = useCallback(() => {
-    const next = Math.max(0, remainingRef.current - interval);
-    remainingRef.current = next;
-    setRemaining(next);
+  const tick = useCallback(
+    (epoch: number) => {
+      if (epoch !== epochRef.current) {
+        return;
+      }
 
-    if (next <= 0) {
-      onCompleteRef.current?.();
-    } else {
-      timerRef.current = setTimeout(tick, interval);
-    }
-  }, [interval]);
+      const next = Math.max(0, remainingRef.current - interval);
+      remainingRef.current = next;
+      setRemaining(next);
+
+      if (next <= 0) {
+        onCompleteRef.current?.();
+      } else {
+        timerRef.current = setTimeout(() => tick(epoch), interval);
+      }
+    },
+    [interval],
+  );
 
   const start = useCallback(() => {
     clear();
-    timerRef.current = setTimeout(tick, interval);
+    if (remainingRef.current > 0 && !isPausedRef.current) {
+      const epoch = epochRef.current;
+      timerRef.current = setTimeout(() => tick(epoch), interval);
+    }
   }, [clear, interval, tick]);
 
   useEffect(() => {
-    remainingRef.current = duration;
-    setRemaining(duration);
-    setIsPaused(false);
-    start();
+    clear();
+    const nextRemaining = Math.max(0, duration);
+    remainingRef.current = nextRemaining;
+    setRemaining(nextRemaining);
+
+    if (nextRemaining > 0 && !isPausedRef.current) {
+      start();
+    }
+
     return clear;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration]);
+  }, [clear, duration, resetKey, start]);
 
   const onPause = useCallback(() => {
+    isPausedRef.current = true;
     clear();
     setIsPaused(true);
   }, [clear]);
 
   const onResume = useCallback(() => {
-    if (remainingRef.current <= 0) return;
+    isPausedRef.current = false;
     setIsPaused(false);
-    start();
+    if (remainingRef.current > 0) {
+      start();
+    }
   }, [start]);
 
   return { remaining, isPaused, onPause, onResume };

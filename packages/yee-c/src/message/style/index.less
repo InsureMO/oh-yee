@@ -6,6 +6,7 @@
   align-items: center;
   width: fit-content;
   padding: var(--yee-message-padding);
+  pointer-events: auto;
   background-color: var(--yee-message-bg-color);
   border-radius: var(--yee-message-border-radius);
   box-shadow: var(--yee-message-box-shadow);
@@ -30,12 +31,13 @@
     align-items: center;
     justify-content: center;
     width: 100vw;
+    pointer-events: none;
   }
 
   // status
   &-success {
     @{pls}-icon {
-      color: var(--yee-primary-color);
+      color: var(--yee-success-color);
     }
   }
 

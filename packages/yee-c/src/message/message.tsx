@@ -5,10 +5,10 @@ import Spin from '../Spin';
 import type { MessageProps } from './interface';
 
 const icons = {
-  info: <Info size={16} strokeWidth={2} />,
-  success: <CircleCheck size={16} strokeWidth={2} />,
-  warning: <CircleAlert size={16} strokeWidth={2} />,
-  error: <CircleX size={16} strokeWidth={2} />,
+  info: <Info size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
+  success: <CircleCheck size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
+  warning: <CircleAlert size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
+  error: <CircleX size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
   loading: <Spin className="loading" type="spin" size="small" height="auto" />,
 };
 
@@ -16,6 +16,7 @@ const Message: React.FC<MessageProps & { id: string | number }> = (props) => {
   const {
     prefixCls = 'yee-message',
     id: key,
+    timerGeneration,
     status,
     content,
     style,
@@ -32,15 +33,14 @@ const Message: React.FC<MessageProps & { id: string | number }> = (props) => {
   useEffect(() => {
     if (duration && duration > 0) {
       const timer = setTimeout(() => {
-        onDestroy?.(key);
-        onClose?.();
+        onDestroy?.(key, timerGeneration);
       }, duration * 1000);
 
       return () => {
         clearTimeout(timer);
       };
     }
-  }, [duration, key, onDestroy, onClose]);
+  }, [duration, key, onDestroy, onClose, timerGeneration]);
 
   const renderIcon = () => {
     if (!icon && !status) {
@@ -48,22 +48,27 @@ const Message: React.FC<MessageProps & { id: string | number }> = (props) => {
     }
 
     return (
-      <span className={`${prefixCls}-icon`}>
+      <span aria-hidden="true" className={`${prefixCls}-icon`}>
         {icon ? icon : status ? icons[status] : null}
       </span>
     );
   };
 
+  const isAssertive = status === 'error' || status === 'warning';
+
   return (
     <div
       {...rest}
+      aria-atomic="true"
+      aria-live={isAssertive ? 'assertive' : 'polite'}
+      role={isAssertive ? 'alert' : 'status'}
       data-testid={dataTestId}
       className={clsx(prefixCls, [`${prefixCls}-${status}`], className)}
       style={style}
       onClick={onClick}
     >
       {renderIcon()}
-      <p className={`${prefixCls}-content`}>{content}</p>
+      <div className={`${prefixCls}-content`}>{content}</div>
     </div>
   );
 };

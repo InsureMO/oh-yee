@@ -76,6 +76,9 @@ export interface LocaleTable {
   selectionAll?: string; // "Select all on current page"
   selectionInvert?: string; // "Invert selection on current page"
   selectionNone?: string; // "Clear selection on current page"
+  sortAscending?: string; // "Click to sort ascending"
+  sortDescending?: string; // "Click to sort descending"
+  sortCancel?: string; // "Click to cancel sorting"
 }
 
 // Pagination component

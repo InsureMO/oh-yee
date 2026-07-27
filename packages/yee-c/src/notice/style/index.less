@@ -12,13 +12,25 @@
   background-color: var(--yee-notice-bg-color);
   border-radius: var(--yee-notice-border-radius);
   box-shadow: var(--yee-notice-box-shadow);
-  cursor: pointer;
+  cursor: default;
   transition: all 0.3s ease;
   border: var(--yee-notice-border-width) solid transparent;
   overflow: hidden;
 
   &:hover {
     box-shadow: var(--yee-notice-box-shadow-hover);
+  }
+
+  &-clickable {
+    cursor: pointer;
+  }
+
+  &-closable {
+    @{pls}-content-wrapper {
+      padding-right: calc(
+        var(--yee-notice-close-size) + var(--yee-notice-close-right)
+      );
+    }
   }
 
   &-content-wrapper {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NoticeProps } from './interface';
+import type { NoticeProps, PlacementType } from './interface';
 import Notice from './notice';
 
 import './style/index.less';
@@ -10,14 +10,8 @@ const NoticeList = ({
   onDestroy,
 }: {
   items: NoticeProps[];
-  placement?:
-    | 'topLeft'
-    | 'topRight'
-    | 'bottomLeft'
-    | 'bottomRight'
-    | 'top'
-    | 'bottom';
-  onDestroy: (key: string | number) => void;
+  placement?: PlacementType;
+  onDestroy: (key: string | number, timerGeneration?: number) => void;
 }) => {
   if (items.length === 0) {
     return null;

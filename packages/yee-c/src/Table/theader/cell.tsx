@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React, { useContext } from 'react';
+import { useLocale } from '../../locale';
 import Tooltip from '../../Tooltip';
 import ArrowIcon from '../icon/arrow-icon';
 import { HeadCellProps } from '../interface';
@@ -35,6 +36,8 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
   } = props;
 
   const { prefixCls } = useContext(TableCtx);
+  const { locale } = useLocale();
+  const { table: tableLocale } = locale;
 
   const showFilter = !!filter;
 
@@ -80,11 +83,11 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
       if (showSorterTooltip && sorter) {
         let title = '';
         if (displaySortOrder === 0) {
-          title = 'Click to sort ascending';
+          title = tableLocale.sortAscending || 'Click to sort ascending';
         } else if (displaySortOrder === 1) {
-          title = 'Click to sort descending';
+          title = tableLocale.sortDescending || 'Click to sort descending';
         } else if (displaySortOrder === 2) {
-          title = 'Click to cancel sorting';
+          title = tableLocale.sortCancel || 'Click to cancel sorting';
         }
 
         return <Tooltip title={title}>{trigger}</Tooltip>;

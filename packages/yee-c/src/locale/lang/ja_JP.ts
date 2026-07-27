@@ -102,6 +102,9 @@ const locale: Locale = {
     selectionAll: 'ページ内すべて選択',
     selectionInvert: 'ページ内選択を反転',
     selectionNone: 'ページ内選択をクリア',
+    sortAscending: 'クリックで昇順に並べ替え',
+    sortDescending: 'クリックで降順に並べ替え',
+    sortCancel: 'クリックで並べ替えを解除',
   },
 
   pagination: {

@@ -1,7 +1,8 @@
 import React, { createContext, useContext } from 'react';
+import type { NoticeApi } from './interface';
 import useNotice from './use-notice';
 
-const NoticeContext = createContext<any>({});
+const NoticeContext = createContext<NoticeApi | undefined>(undefined);
 
 export function NoticeProvider({ children }: { children: React.ReactNode }) {
   const { noticeApi, noticeHolders } = useNotice();
@@ -14,7 +15,7 @@ export function NoticeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useGlobalNotice() {
+export function useGlobalNotice(): NoticeApi {
   const context = useContext(NoticeContext);
 
   if (context === undefined) {

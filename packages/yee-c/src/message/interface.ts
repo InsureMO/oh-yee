@@ -1,8 +1,9 @@
 export type MessageConfig = {
-  /**
-   * test identifier
-   */
-  'data-testid'?: string;
+  [dataAttribute: `data-${string}`]:
+    | string
+    | number
+    | boolean
+    | undefined;
   /**
    * Custom prefix class name
    */
@@ -20,8 +21,8 @@ export type MessageConfig = {
    */
   content: React.ReactNode;
   /**
-   * Auto close time (ms), 0 means no auto close
-   * @default 3000
+   * Auto close time (seconds), 0 means no auto close
+   * @default 3
    */
   duration?: number;
   /**
@@ -42,6 +43,19 @@ export type MessageConfig = {
   onClose?: () => void;
 };
 
+export type MessageClose = () => void;
+
+export interface MessageApi {
+  open: (config: string | MessageConfig) => MessageClose;
+  info: (config: string | MessageConfig) => MessageClose;
+  success: (config: string | MessageConfig) => MessageClose;
+  warning: (config: string | MessageConfig) => MessageClose;
+  error: (config: string | MessageConfig) => MessageClose;
+  loading: (config: string | MessageConfig) => MessageClose;
+  destroy: (key: string | number) => void;
+  clear: () => void;
+}
+
 // With status
 export type WrapperedMessageConfig = MessageConfig & {
   status?: 'info' | 'success' | 'warning' | 'error' | 'loading';
@@ -50,11 +64,12 @@ export type WrapperedMessageConfig = MessageConfig & {
 // With key
 export type MessageType = WrapperedMessageConfig & {
   key: string | number;
+  timerGeneration: number;
 };
 
 export interface MessageProps extends MessageType {
   /**
    * Destroy component callback
    */
-  onDestroy?: (key: string | number) => void;
+  onDestroy?: (key: string | number, timerGeneration?: number) => void;
 }

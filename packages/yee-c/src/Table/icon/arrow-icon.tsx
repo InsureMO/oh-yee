@@ -3,7 +3,7 @@ import React from 'react';
 const TriangleArrow = ({
   direction = 'down',
   className,
-  size = 10,
+  size = 8,
   ...props
 }: {
   direction?: 'up' | 'down' | 'left' | 'right';

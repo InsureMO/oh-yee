@@ -1,7 +1,8 @@
 import React, { createContext, useContext } from 'react';
+import type { MessageApi } from './interface';
 import useMessage from './use-message';
 
-const MessageContext = createContext<any>({});
+const MessageContext = createContext<MessageApi | undefined>(undefined);
 
 export function MessageProvider({ children }: { children: React.ReactNode }) {
   const { messageApi, messageHolder } = useMessage();
@@ -14,7 +15,7 @@ export function MessageProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useGlobalMessage() {
+export function useGlobalMessage(): MessageApi {
   const context = useContext(MessageContext);
 
   if (context === undefined) {

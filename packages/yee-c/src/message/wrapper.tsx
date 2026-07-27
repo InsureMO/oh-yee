@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import {
+  MessageClose,
   MessageConfig,
   MessageType,
   WrapperedMessageConfig,
@@ -8,15 +9,24 @@ import {
 import MessageList from './message-list';
 import useMessage from './use-message';
 
+const noop: MessageClose = () => {};
+
 class MessageWrapper {
   root: Root | null;
   messages: MessageType[];
   container: HTMLElement | null;
+  generationByKey: Map<string | number, number>;
+  generation: number;
+  timerGeneration: number;
 
   constructor() {
     this.root = null;
     this.messages = [];
     this.container = null;
+    this.generationByKey = new Map();
+    this.generation = 0;
+    this.timerGeneration = 0;
+    this.destroy = this.destroy.bind(this);
   }
 
   private createContainer() {
@@ -50,9 +60,14 @@ class MessageWrapper {
     this.root = null;
     this.cleanupContainer();
     this.messages = [];
+    this.generationByKey.clear();
   }
 
   render() {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
     if (this.messages.length === 0) {
       if (this.root) {
         this.root.unmount();
@@ -68,40 +83,67 @@ class MessageWrapper {
     }
 
     this.root.render(
-      <MessageList items={this.messages} onDestroy={this.destroy.bind(this)} />,
+      <MessageList items={this.messages} onDestroy={this.destroy} />,
     );
   }
 
-  show(params: WrapperedMessageConfig) {
-    if (!params.key) {
-      params.key = this.uuid();
+  show(params: WrapperedMessageConfig): MessageClose {
+    if (typeof document === 'undefined') {
+      return noop;
     }
-    const isExit = this.messages.find((item) => item.key === params.key);
-    if (isExit) {
-      this.messages = this.messages.map((item) => {
-        if (item.key === params.key) {
-          return params as MessageType;
-        }
-        return item;
-      });
+
+    const key = params.key ?? this.uuid();
+    const keyGeneration =
+      this.generationByKey.get(key) ?? this.generation++;
+    this.generationByKey.set(key, keyGeneration);
+    const nextMessage = {
+      ...params,
+      key,
+      timerGeneration: this.timerGeneration++,
+    } as MessageType;
+    const exists = this.messages.some((item) => item.key === key);
+
+    if (exists) {
+      this.messages = this.messages.map((item) =>
+        item.key === key ? nextMessage : item,
+      );
     } else {
-      this.messages.push(params as MessageType);
+      this.messages = [...this.messages, nextMessage];
     }
 
     this.render();
+    return () => {
+      if (this.generationByKey.get(key) === keyGeneration) {
+        this.destroy(key);
+      }
+    };
   }
 
-  destroy(key: string | number) {
+  destroy(key: string | number, expectedTimerGeneration?: number) {
+    const target = this.messages.find((item) => item.key === key);
+    if (
+      expectedTimerGeneration !== undefined &&
+      target?.timerGeneration !== expectedTimerGeneration
+    ) {
+      return;
+    }
+
+    if (!target) {
+      return;
+    }
+
+    this.generationByKey.delete(key);
     this.messages = this.messages.filter((item) => item.key !== key);
     this.render();
+    target.onClose?.();
   }
 
   open(params: string | MessageConfig) {
-    this.show(typeof params === 'string' ? { content: params } : params);
+    return this.show(typeof params === 'string' ? { content: params } : params);
   }
 
   info(params: string | MessageConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'info', content: params }
         : { ...params, status: 'info' },
@@ -109,7 +151,7 @@ class MessageWrapper {
   }
 
   success(params: string | MessageConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'success', content: params }
         : { ...params, status: 'success' },
@@ -117,7 +159,7 @@ class MessageWrapper {
   }
 
   warning(params: string | MessageConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'warning', content: params }
         : { ...params, status: 'warning' },
@@ -125,7 +167,7 @@ class MessageWrapper {
   }
 
   error(params: string | MessageConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'error', content: params }
         : { ...params, status: 'error' },
@@ -133,7 +175,7 @@ class MessageWrapper {
   }
 
   loading(params: string | MessageConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'loading', content: params }
         : { ...params, status: 'loading' },

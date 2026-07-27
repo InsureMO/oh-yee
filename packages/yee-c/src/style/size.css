@@ -323,9 +323,9 @@
   --yee-menu-submenu-vertical-top: -4px;
 
   /* --Message-- */
-  --yee-message-gap: 8px;
-  --yee-message-padding: 12px 16px;
-  --yee-message-border-radius: 4px;
+  --yee-message-gap: 6px;
+  --yee-message-padding: 9px 12px;
+  --yee-message-border-radius: 8px;
   --yee-message-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
   --yee-message-icon-size: 20px;
   --yee-message-list-top: 24px;

@@ -32,7 +32,7 @@ toc: 'content'
 | --- | --- | --- | --- |
 | title | 通知标题 | ReactNode | - |
 | content | 通知内容 | ReactNode | - |
-| duration | 自动关闭时间(秒)，设为 0 时不自动关闭 | number | `4.5` |
+| duration | 自动关闭时间(毫秒)，设为 0 时不自动关闭 | number | `4500` |
 | icon | 自定义图标 | ReactNode | - |
 | key | 当前通知的唯一标识 | string \| number | - |
 | placement | 显示位置 | `'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' \| 'top' \| 'bottom'` | `'topRight'` |
@@ -53,6 +53,7 @@ toc: 'content'
 | notice.warning(config) | 打开警告通知 | string \| [NoticeConfigs](#noticeconfigs) | - |
 | notice.error(config) | 打开错误通知 | string \| [NoticeConfigs](#noticeconfigs) | - |
 | notice.destroy(key) | 手动销毁指定 key 的通知 | string \| number | - |
+| notice.clear(placement?) | 清除指定位置或全部通知 | placement | - |
 
 ### NoticeConfigs
 
@@ -63,7 +64,7 @@ toc: 'content'
 | style | 自定义根样式 | CSSProperties | - |
 | title | 通知标题 | ReactNode | - |
 | content | 通知内容 | ReactNode | - |
-| duration | 自动关闭时间(秒)，设为 0 时不自动关闭 | number | `4.5` |
+| duration | 自动关闭时间(毫秒)，设为 0 时不自动关闭 | number | `4500` |
 | icon | 自定义图标 | ReactNode | - |
 | key | 当前通知的唯一标识 | string \| number | - |
 | placement | 显示位置 | `'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' \| 'top' \| 'bottom'` | `'topRight'` |

@@ -32,7 +32,7 @@ Display notification messages globally, supporting multiple positions simultaneo
 | --- | --- | --- | --- |
 | title | Notice title | ReactNode | - |
 | content | Notice content | ReactNode | - |
-| duration | Time in seconds before the notice disappears. If set to 0, it will not automatically close | number | `4.5` |
+| duration | Time in milliseconds before the notice disappears. If set to 0, it will not automatically close | number | `4500` |
 | icon | Custom icon | ReactNode | - |
 | key | The unique identifier of the current notice | string \| number | - |
 | placement | Display position | `'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' \| 'top' \| 'bottom'` | `'topRight'` |
@@ -53,6 +53,7 @@ Display notification messages globally, supporting multiple positions simultaneo
 | notice.warning(config) | Open a warning notice | string \| [NoticeConfigs](#noticeconfigs) | - |
 | notice.error(config) | Open an error notice | string \| [NoticeConfigs](#noticeconfigs) | - |
 | notice.destroy(key) | Manually destroy the notice with the specified key | string \| number | - |
+| notice.clear(placement?) | Clear notices at one position or all positions | placement | - |
 
 ### NoticeConfigs
 
@@ -63,7 +64,7 @@ Display notification messages globally, supporting multiple positions simultaneo
 | style | Custom inline style | CSSProperties | - |
 | title | Notice title | ReactNode | - |
 | content | Notice content | ReactNode | - |
-| duration | Time in seconds before the notice disappears. If set to 0, it will not automatically close | number | `4.5` |
+| duration | Time in milliseconds before the notice disappears. If set to 0, it will not automatically close | number | `4500` |
 | icon | Custom icon | ReactNode | - |
 | key | The unique identifier of the current notice | string \| number | - |
 | placement | Display position | `'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight' \| 'top' \| 'bottom'` | `'topRight'` |

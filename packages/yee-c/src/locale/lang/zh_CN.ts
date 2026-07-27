@@ -93,6 +93,9 @@ const locale: Locale = {
     selectionAll: '全选当页',
     selectionInvert: '反选当页',
     selectionNone: '清空当页选择',
+    sortAscending: '点击升序排列',
+    sortDescending: '点击降序排列',
+    sortCancel: '点击取消排序',
   },
 
   pagination: {

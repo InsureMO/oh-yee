@@ -1,8 +1,17 @@
+export type PlacementType =
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'top'
+  | 'bottom';
+
 export type NoticeConfig = {
-  /**
-   * test identifier
-   */
-  'data-testid'?: string;
+  [dataAttribute: `data-${string}`]:
+    | string
+    | number
+    | boolean
+    | undefined;
   /**
    * Custom prefix class name
    */
@@ -24,7 +33,7 @@ export type NoticeConfig = {
    */
   content: React.ReactNode;
   /**
-   * Auto close time (ms), 0 means no auto close
+   * Auto close time (milliseconds), 0 means no auto close
    * @default 4500
    */
   duration?: number;
@@ -40,13 +49,7 @@ export type NoticeConfig = {
    * Display position
    * @default 'topRight'
    */
-  placement?:
-    | 'topLeft'
-    | 'topRight'
-    | 'bottomLeft'
-    | 'bottomRight'
-    | 'top'
-    | 'bottom';
+  placement?: PlacementType;
   /**
    * Whether to show progress bar
    */
@@ -70,19 +73,33 @@ export type NoticeConfig = {
   closable?: boolean;
 };
 
+export type NoticeClose = () => void;
+
+export interface NoticeApi {
+  open: (config: string | NoticeConfig) => NoticeClose;
+  info: (config: string | NoticeConfig) => NoticeClose;
+  success: (config: string | NoticeConfig) => NoticeClose;
+  warning: (config: string | NoticeConfig) => NoticeClose;
+  error: (config: string | NoticeConfig) => NoticeClose;
+  destroy: (key: string | number) => void;
+  clear: (placement?: PlacementType) => void;
+}
+
 // With status
 export type WrapperedNoticeConfig = NoticeConfig & {
   status?: 'info' | 'success' | 'warning' | 'error';
 };
 
-// With key
+// Internal notice state
 export type NoticeType = WrapperedNoticeConfig & {
   key: string | number;
+  placement: PlacementType;
+  timerGeneration: number;
 };
 
 export interface NoticeProps extends NoticeType {
   /**
    * Destroy component callback
    */
-  onDestroy?: (key: string | number) => void;
+  onDestroy?: (key: string | number, timerGeneration?: number) => void;
 }

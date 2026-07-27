@@ -6,7 +6,7 @@ const BaseDemo = () => {
   const showMessage = (type: string) => {
     switch (type) {
       case 'info':
-        messageApi.open('This is an info message');
+        messageApi.open({content: 'This is an info message', duration: 0});
         break;
       case 'success':
         message.success('This is a success message');

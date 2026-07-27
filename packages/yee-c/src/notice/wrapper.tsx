@@ -1,35 +1,70 @@
 import React from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { NoticeConfig, NoticeType, WrapperedNoticeConfig } from './interface';
+import {
+  NoticeClose,
+  NoticeConfig,
+  NoticeType,
+  PlacementType,
+  WrapperedNoticeConfig,
+} from './interface';
 import NoticeList from './notice-list';
 
-type PlacementType =
-  | 'topLeft'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomRight'
-  | 'top'
-  | 'bottom';
+const noop: NoticeClose = () => {};
+
+const invokeOnClose = (notices: NoticeType[]) => {
+  const errors: unknown[] = [];
+
+  notices.forEach((notice) => {
+    try {
+      notice.onClose?.();
+    } catch (error) {
+      errors.push(error);
+    }
+  });
+
+  errors.forEach((error) => {
+    const reportError = (
+      globalThis as typeof globalThis & {
+        reportError?: (reportedError: unknown) => void;
+      }
+    ).reportError;
+    if (reportError) {
+      reportError(error);
+    } else {
+      console.error(error);
+    }
+  });
+};
 
 class NoticeWrapper {
   roots: Map<PlacementType, Root>;
   containers: Map<PlacementType, HTMLElement>;
   notices: Map<PlacementType, NoticeType[]>;
+  generationByKey: Map<string | number, number>;
+  generation: number;
+  timerGeneration: number;
 
   constructor() {
     this.roots = new Map();
     this.containers = new Map();
     this.notices = new Map();
+    this.generationByKey = new Map();
+    this.generation = 0;
+    this.timerGeneration = 0;
+    this.destroy = this.destroy.bind(this);
   }
 
   uuid(): string {
-    return crypto.randomUUID
-      ? crypto.randomUUID()
-      : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-          const r = (Math.random() * 16) | 0;
-          const v = c === 'x' ? r : (r & 0x3) | 0x8;
-          return v.toString(16);
-        });
+    const randomUUID = globalThis.crypto?.randomUUID?.();
+    if (randomUUID) {
+      return randomUUID;
+    }
+
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 
   private createContainer(placement: PlacementType): HTMLElement {
@@ -44,49 +79,52 @@ class NoticeWrapper {
 
   private cleanupContainer(placement: PlacementType) {
     const container = this.containers.get(placement);
-    if (container && container.parentNode) {
+    if (container?.parentNode) {
       container.parentNode.removeChild(container);
-      this.containers.delete(placement);
     }
+    this.containers.delete(placement);
   }
 
   unmount(placement?: PlacementType) {
-    if (placement) {
-      const root = this.roots.get(placement);
-      if (root) {
-        root.unmount();
-        this.roots.delete(placement);
-        this.cleanupContainer(placement);
-        this.notices.delete(placement);
-      }
-    } else {
-      // Clean up all
-      this.roots.forEach((root, placement) => {
-        root.unmount();
-        this.cleanupContainer(placement);
-      });
+    const placements = placement
+      ? [placement]
+      : Array.from(this.notices.keys());
+    const removed = placements.flatMap((item) => this.notices.get(item) || []);
+
+    placements.forEach((item) => {
+      this.roots.get(item)?.unmount();
+      this.roots.delete(item);
+      this.cleanupContainer(item);
+      this.notices.delete(item);
+    });
+
+    if (!placement) {
       this.roots.clear();
       this.containers.clear();
-      this.notices.clear();
     }
+
+    removed.forEach((item) => {
+      this.generationByKey.delete(item.key);
+    });
+    invokeOnClose(removed);
   }
 
   render(placement: PlacementType) {
-    const notices = this.notices.get(placement) || [];
+    if (typeof document === 'undefined') {
+      return;
+    }
 
+    const notices = this.notices.get(placement) || [];
     if (notices.length === 0) {
-      const root = this.roots.get(placement);
-      if (root) {
-        root.unmount();
-        this.roots.delete(placement);
-        this.cleanupContainer(placement);
-      }
+      this.roots.get(placement)?.unmount();
+      this.roots.delete(placement);
+      this.cleanupContainer(placement);
+      this.notices.delete(placement);
       return;
     }
 
     const container = this.createContainer(placement);
     let root = this.roots.get(placement);
-
     if (!root) {
       root = createRoot(container);
       this.roots.set(placement, root);
@@ -96,53 +134,102 @@ class NoticeWrapper {
       <NoticeList
         items={notices}
         placement={placement}
-        onDestroy={(key) => this.destroy(key, placement)}
+        onDestroy={this.destroy}
       />,
     );
   }
 
-  show(params: WrapperedNoticeConfig) {
-    const placement = params.placement || 'topRight';
-
-    if (!params.key) {
-      params.key = this.uuid();
+  show(params: WrapperedNoticeConfig): NoticeClose {
+    if (typeof document === 'undefined') {
+      return noop;
     }
 
-    const notices = this.notices.get(placement) || [];
-    const existIndex = notices.findIndex((item) => item.key === params.key);
+    const placement = params.placement ?? 'topRight';
+    const key = params.key ?? this.uuid();
+    const keyGeneration =
+      this.generationByKey.get(key) ?? this.generation++;
+    this.generationByKey.set(key, keyGeneration);
 
-    if (existIndex >= 0) {
-      notices[existIndex] = params as NoticeType;
+    const affectedPlacements = new Set<PlacementType>([placement]);
+    this.notices.forEach((items, currentPlacement) => {
+      if (
+        currentPlacement !== placement &&
+        items.some((item) => item.key === key)
+      ) {
+        this.notices.set(
+          currentPlacement,
+          items.filter((item) => item.key !== key),
+        );
+        affectedPlacements.add(currentPlacement);
+      }
+    });
+
+    const currentNotices = this.notices.get(placement) || [];
+    const existingIndex = currentNotices.findIndex((item) => item.key === key);
+    const nextNotice = {
+      ...params,
+      key,
+      placement,
+      timerGeneration: this.timerGeneration++,
+    } as NoticeType;
+    const nextNotices = currentNotices.filter((item) => item.key !== key);
+
+    if (existingIndex >= 0) {
+      nextNotices.splice(existingIndex, 0, nextNotice);
     } else {
-      notices.push(params as NoticeType);
+      nextNotices.push(nextNotice);
     }
 
-    this.notices.set(placement, notices);
-    this.render(placement);
+    this.notices.set(placement, nextNotices);
+    affectedPlacements.forEach((item) => this.render(item));
+
+    return () => {
+      if (this.generationByKey.get(key) === keyGeneration) {
+        this.destroy(key);
+      }
+    };
   }
 
-  destroy(key: string | number, placement?: PlacementType) {
-    if (placement) {
-      const notices = this.notices.get(placement) || [];
-      const filtered = notices.filter((item) => item.key !== key);
-      this.notices.set(placement, filtered);
-      this.render(placement);
-    } else {
-      // Find and remove in all placements
-      this.notices.forEach((notices, p) => {
-        const filtered = notices.filter((item) => item.key !== key);
-        this.notices.set(p, filtered);
-        this.render(p);
-      });
+  destroy(key: string | number, expectedTimerGeneration?: number) {
+    let target: NoticeType | undefined;
+    this.notices.forEach((items) => {
+      target ??= items.find((item) => item.key === key);
+    });
+
+    if (
+      !target ||
+      (expectedTimerGeneration !== undefined &&
+        target.timerGeneration !== expectedTimerGeneration)
+    ) {
+      return;
     }
+
+    const affectedPlacements = new Set<PlacementType>();
+    this.notices.forEach((items, placement) => {
+      if (items.some((item) => item.key === key)) {
+        this.notices.set(
+          placement,
+          items.filter((item) => item.key !== key),
+        );
+        affectedPlacements.add(placement);
+      }
+    });
+
+    this.generationByKey.delete(key);
+    affectedPlacements.forEach((item) => this.render(item));
+    target.onClose?.();
+  }
+
+  clear(placement?: PlacementType) {
+    this.unmount(placement);
   }
 
   open(params: string | NoticeConfig) {
-    this.show(typeof params === 'string' ? { content: params } : params);
+    return this.show(typeof params === 'string' ? { content: params } : params);
   }
 
   info(params: string | NoticeConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'info', content: params }
         : { ...params, status: 'info' },
@@ -150,7 +237,7 @@ class NoticeWrapper {
   }
 
   success(params: string | NoticeConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'success', content: params }
         : { ...params, status: 'success' },
@@ -158,7 +245,7 @@ class NoticeWrapper {
   }
 
   warning(params: string | NoticeConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'warning', content: params }
         : { ...params, status: 'warning' },
@@ -166,7 +253,7 @@ class NoticeWrapper {
   }
 
   error(params: string | NoticeConfig) {
-    this.show(
+    return this.show(
       typeof params === 'string'
         ? { status: 'error', content: params }
         : { ...params, status: 'error' },
@@ -187,4 +274,5 @@ export const notice = {
   warning: noticeWrapper.warning.bind(noticeWrapper),
   error: noticeWrapper.error.bind(noticeWrapper),
   destroy: noticeWrapper.destroy.bind(noticeWrapper),
+  clear: noticeWrapper.clear.bind(noticeWrapper),
 };

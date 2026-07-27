@@ -102,6 +102,9 @@ const locale: Locale = {
     selectionAll: 'Select All on Page',
     selectionInvert: 'Invert Selection on Page',
     selectionNone: 'Clear Selection on Page',
+    sortAscending: 'Click to sort ascending',
+    sortDescending: 'Click to sort descending',
+    sortCancel: 'Click to cancel sorting',
   },
 
   pagination: {
