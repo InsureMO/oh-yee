@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.3
+
+### Patch Changes
+
+- 7e08313: feat(message, notice): enhance localization and improve component styling
+
 ## 0.8.2
 
 ### Patch Changes
