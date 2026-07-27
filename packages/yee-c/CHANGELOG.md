@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.4
+
+### Patch Changes
+
+- da25c7c: fix(Form, Select): prevent validation errors and make options optional
+
 ## 0.8.3
 
 ### Patch Changes
