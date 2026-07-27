@@ -81,7 +81,7 @@ export interface SelectProps
   /**
    * Dropdown options
    */
-  options: Array<Option>;
+  options?: Array<Option>;
   /**
    * Selection mode
    */

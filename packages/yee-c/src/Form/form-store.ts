@@ -242,6 +242,11 @@ export class FormStore {
         return false;
       });
     }
+    // If no rules match the current trigger, skip validation entirely
+    // to avoid clearing existing errors from a previous validation pass.
+    if (trigger && mergedRules.length === 0) {
+      return [];
+    }
     const value = this.getFieldValue(name);
     for (const rule of mergedRules) {
       const result = await validate(rule, value);
