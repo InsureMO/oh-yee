@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.5
+
+### Patch Changes
+
+- 82a2aa5: fix(Select): prevent empty string from being treated as valid value
+
 ## 0.8.4
 
 ### Patch Changes
