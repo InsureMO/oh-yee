@@ -49,12 +49,12 @@ export default function useFilter({
       return handled.find((o) => {
         if (Array.isArray(o.value)) {
           return o.value.some((v) => {
-            const t = item[o.dataIndex];
+            const t = item[o.dataIndex] || '';
             return (t as string).toLowerCase() === v.toLowerCase();
           });
         } else {
           const v = o.value.toLowerCase();
-          const t = item[o.dataIndex];
+          const t = item[o.dataIndex] || '';
           return (t as string).toLowerCase().includes(v);
         }
       });
