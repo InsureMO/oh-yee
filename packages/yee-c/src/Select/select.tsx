@@ -72,7 +72,7 @@ const Select = (baseprops: SelectProps) => {
     if (Array.isArray(value)) {
       return value;
     }
-    if (value !== undefined && typeof value !== null) {
+    if (value !== undefined && typeof value !== null && value !== '') {
       return [value];
     }
     return [];
