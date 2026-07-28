@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.8
+
+### Patch Changes
+
+- b50e156: fix(Table): handle undefined values in filter comparisons
+
 ## 0.8.7
 
 ### Patch Changes
