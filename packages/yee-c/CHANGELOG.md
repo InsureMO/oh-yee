@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.7
+
+### Patch Changes
+
+- 0bb9037: feat(a11y): enhance accessibility and improve input styling
+
 ## 0.8.6
 
 ### Patch Changes
