@@ -246,7 +246,18 @@ const Selector = React.forwardRef(
         return null;
       }
       return (
-        <span className={`${prefixCls}-clear`} onClick={handleClear}>
+        <span
+          className={`${prefixCls}-clear`}
+          role="button"
+          aria-label="clear"
+          tabIndex={0}
+          onClick={handleClear}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleClear(e as unknown as React.MouseEvent<HTMLSpanElement>);
+            }
+          }}
+        >
           <X size={12} strokeWidth={1} />
         </span>
       );

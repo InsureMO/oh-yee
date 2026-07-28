@@ -175,7 +175,7 @@ const HeaderFilter = React.memo((props: any) => {
               <Search size={14} strokeWidth={1.5} />
             )
           }
-          variant={selectNodes.length ? 'filled' : undefined}
+          variant={selectNodes.length || searchValue ? 'filled' : undefined}
           type="text"
           size="small"
         />
