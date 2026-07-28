@@ -1,3 +1,5 @@
+import type { DataAttributeProps } from '../utils/types';
+
 export type SemanticType = '';
 
 export type DragPosition = 'before' | 'after' | 'inside';
@@ -73,7 +75,7 @@ export interface TreeNodeProps<T> {
   style?: React.CSSProperties;
 }
 
-export interface TreeProps<T> {
+export interface TreeProps<T> extends DataAttributeProps {
   /**
    * Custom class name prefix
    */

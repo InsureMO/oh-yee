@@ -43,7 +43,8 @@ const Option = (props: OptionProps) => {
         [`${prefixCls}-option-focused`]: focused,
         [`${prefixCls}-option-disabled`]: disabled,
       })}
-      aria-label="option"
+      aria-selected={selected}
+      aria-disabled={disabled || undefined}
       onClick={handleClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {

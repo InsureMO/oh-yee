@@ -170,6 +170,11 @@ const Node = <T extends Record<string, unknown> = any>(
         [`${prefixCls}-node-drag-over-inside`]: dropPosition === 'inside',
       })}
       style={nodeStyle}
+      role="treeitem"
+      aria-expanded={isLeaf ? undefined : expanded}
+      aria-selected={selected}
+      aria-level={depth + 1}
+      aria-disabled={disabled || undefined}
       {...dragProps}
     >
       {renderEmptyNodes(depth)}

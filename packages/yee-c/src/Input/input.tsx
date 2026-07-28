@@ -104,6 +104,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>((baseprops, ref) => {
               <span
                 className={clsx(`${prefixCls}-clear`, classNames?.clear)}
                 style={styles?.clear}
+                role="button"
+                aria-label="clear"
+                tabIndex={0}
                 onClick={onClear}
                 onKeyDown={(event: React.KeyboardEvent<HTMLSpanElement>) => {
                   if (event.key === 'Enter') {

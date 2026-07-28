@@ -166,6 +166,8 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
           )}
           style={popupStyle}
           ref={rootRef}
+          role="listbox"
+          aria-multiselectable={multiple || undefined}
           tabIndex={-1}
         >
           <OptionsCtx.Provider value={ctxValue}>
@@ -220,6 +222,8 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
           )}
           style={popupStyle}
           ref={rootRef}
+          role="listbox"
+          aria-multiselectable={multiple || undefined}
           tabIndex={-1}
         >
           <OptionsCtx.Provider value={ctxValue}>
@@ -268,6 +272,8 @@ const Options = forwardRef<HTMLDivElement, OptionsProps>(
             : undefined),
         }}
         ref={rootRef}
+        role="listbox"
+        aria-multiselectable={multiple || undefined}
         tabIndex={-1}
       >
         {isEmpty ? (

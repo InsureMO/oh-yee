@@ -35,7 +35,7 @@ toc: 'content'
 | auto | `boolean` | 是否自动生成锚点 | `false` |
 | name | `string` | 锚点组名称（用于自动生成） | - |
 | defaultActiveKey | `string` | 锚点默认位置 | - |
-| activeKey | `string` | 锚点位置（受控） | - |
+| activeKey | `string` | 锚点位置（受控，需在 `onChange` 中同步回写） | - |
 | affix | `boolean` | 是否固定 | `true` |
 | direction | `'vertical' \| 'horizontal'` | 设置导航方向 | `'vertical'` |
 | offsetTop | `number` | 距离顶部距离为多少时，触发锚点改变 | `0` |

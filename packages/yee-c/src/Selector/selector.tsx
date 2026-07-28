@@ -258,6 +258,10 @@ const Selector = React.forwardRef(
         tabIndex={disabled || searchable ? -1 : 0}
         className={cls}
         style={style}
+        role="combobox"
+        aria-expanded={open || false}
+        aria-haspopup="listbox"
+        aria-disabled={disabled || undefined}
         onKeyDown={(event) => {
           if (disabled) return;
           // For non-searchable single select, handle Enter to open dropdown

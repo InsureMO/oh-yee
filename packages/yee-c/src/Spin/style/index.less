@@ -38,7 +38,7 @@
     }
 
     &-ring {
-      .yee-spin-ring {
+      @{pls}-ring {
         box-sizing: border-box;
         display: block;
         border-style: solid;
@@ -53,13 +53,13 @@
     }
 
     &-spokes {
-      .yee-spin-spokes {
+      @{pls}-spokes {
         position: relative;
         width: 100%;
         height: 100%;
       }
 
-      .yee-spin-spokes-line {
+      @{pls}-spokes-line {
         position: absolute;
         top: 0;
         left: 50%;
@@ -101,9 +101,14 @@
 
   &-blur {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
     background-color: var(--yee-color-bg-mask-light, rgba(255, 255, 255, 40%));
   }
 

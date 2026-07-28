@@ -56,6 +56,7 @@ const Tag = forwardRef(
           style={styles?.close}
           type="text"
           size="small"
+          aria-label="close"
           onClick={onClose}
         >
           {typeof closable === 'boolean' ? (
@@ -69,7 +70,19 @@ const Tag = forwardRef(
     const closeNode = renderClose();
 
     return (
-      <div {...rest} className={cls} onClick={handleClick} ref={ref}>
+      <div
+        {...rest}
+        className={cls}
+        onClick={handleClick}
+        ref={ref}
+        {...(checkable
+          ? {
+              role: 'checkbox',
+              'aria-checked': checked || false,
+              tabIndex: 0,
+            }
+          : undefined)}
+      >
         {icon && (
           <span
             className={clsx(`${prefixCls}-icon`, classNames?.icon)}

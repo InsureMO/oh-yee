@@ -1,4 +1,5 @@
 import { TriggerProps as RcTriggerProps } from '@rc-component/trigger';
+import type { DataAttributeProps } from '../utils/types';
 
 export type Placement =
   | 'top'
@@ -31,7 +32,7 @@ export type Point =
   | 'cl'
   | 'cr';
 
-export interface TriggerProps extends Omit<RcTriggerProps, 'children'> {
+export interface TriggerProps extends Omit<RcTriggerProps, 'children'>, DataAttributeProps {
   /**
    * Custom class name prefix
    */

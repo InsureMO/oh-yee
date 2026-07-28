@@ -87,6 +87,7 @@ const Alert: React.FC<AlertProps> = (baseprops) => {
   return (
     <div
       {...rest}
+      role="alert"
       className={clsx(
         prefixCls,
         [`${prefixCls}-${mergedState}`],

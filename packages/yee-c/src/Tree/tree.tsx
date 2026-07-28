@@ -13,6 +13,7 @@ import useEvent from '../hooks/useEvent';
 import useMergedState from '../hooks/useMergedState';
 import useVirtualList from '../hooks/useVirtualList';
 import mergeContextToProps from '../utils/mergeContextToProps';
+import { pickDataAttrs } from '../utils/types';
 import type { DragPosition, TreeNode, TreeProps } from './interface';
 import TreeNodeComp from './tree-node';
 import { getCheckedKeys, tree2array } from './utils/tree-tools';
@@ -205,7 +206,10 @@ const Tree = <T extends Record<string, unknown> = any>(
     virtual = false,
     height,
     itemHeight = 28,
+    ...rest
   } = props;
+
+  const dataAttrs = pickDataAttrs(rest as Record<string, unknown>);
 
   // ======================== Data ========================
   const [flatItems, itemMap] = useMemo(
@@ -606,7 +610,9 @@ const Tree = <T extends Record<string, unknown> = any>(
       <div
         className={clsx(prefixCls, className)}
         style={style}
+        role="tree"
         onDragEnd={handleDragEnd}
+        {...dataAttrs}
       >
         <TreeContext.Provider value={contextValue}>
           <div
@@ -675,7 +681,9 @@ const Tree = <T extends Record<string, unknown> = any>(
     <div
       className={clsx(prefixCls, className)}
       style={style}
+      role="tree"
       onDragEnd={handleDragEnd}
+      {...dataAttrs}
     >
       <TreeContext.Provider value={contextValue}>
         <AnimatePresence initial={false}>

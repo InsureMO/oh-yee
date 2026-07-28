@@ -35,7 +35,7 @@ Anchor component for linking to specific sections within a page.
 | auto | `boolean` | Whether to auto-generate anchors | `false` |
 | name | `string` | Anchor group name (for auto-generation) | - |
 | defaultActiveKey | `string` | Default active anchor key | - |
-| activeKey | `string` | Active anchor key (controlled) | - |
+| activeKey | `string` | Active anchor key (controlled; update it in `onChange`) | - |
 | affix | `boolean` | Whether to fix position | `true` |
 | direction | `'vertical' \| 'horizontal'` | Navigation direction | `'vertical'` |
 | offsetTop | `number` | Offset top to trigger anchor change | `0` |

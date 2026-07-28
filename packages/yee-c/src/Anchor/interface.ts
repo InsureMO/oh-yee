@@ -91,7 +91,7 @@ export interface AnchorProps extends DataAttributeProps {
    */
   defaultActiveKey?: string;
   /**
-   * Anchor position (controlled)
+   * Anchor position (controlled). When provided, update it from onChange.
    */
   activeKey?: string;
   /**
