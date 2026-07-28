@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.6
+
+### Patch Changes
+
+- 50c20c1: feat(a11y): enhance accessibility across components and improve anchor navigation
+
 ## 0.8.5
 
 ### Patch Changes
