@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.12
+
+### Patch Changes
+
+- 71d66b3: fix(Table): refactor useFilter hook with improved type safety and filter logic
+
 ## 0.8.11
 
 ### Patch Changes
