@@ -393,9 +393,9 @@
   /* --Popover-- */
   --yee-popover-z-index: var(--yee-z-index-tooltip);
   --yee-popover-max-width: 704px;
-  --yee-popover-padding: 16px;
+  --yee-popover-padding: 12px;
   --yee-popover-border-radius: 4px;
-  --yee-popover-header-margin-bottom: 16px;
+  --yee-popover-header-margin-bottom: 8px;
   --yee-popover-header-font-weight: 500;
   --yee-popover-header-font-size: 16px;
   --yee-popover-header-line-height: 24px;
@@ -849,6 +849,7 @@
 
   /* --Trigger-- */
   --yee-trigger-z-index: var(--yee-z-index-popup);
+  --yee-trigger-border-radius: 6px;
   --yee-trigger-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
   --yee-trigger-arrow-margin-left: -4px;
   --yee-trigger-animation-duration: 0.2s;

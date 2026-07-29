@@ -33,6 +33,9 @@ const Popover = (baseprops: PopoverProps) => {
     ...rest
   } = props;
 
+  const mergedArrow =
+    arrow === true ? { className: `${prefixCls}-arrow` } : arrow;
+
   const [mergedOpen, setMergedOpen] = useMergedState(false, {
     value: open,
     defaultValue: defaultOpen,
@@ -49,7 +52,7 @@ const Popover = (baseprops: PopoverProps) => {
 
     return (
       <div
-        className={clsx(prefixCls, [`${prefixCls}-${placement}`], className)}
+        className={clsx(`${prefixCls}-container`, className)}
         style={style}
         role="dialog"
         ref={popupRef}
@@ -96,12 +99,12 @@ const Popover = (baseprops: PopoverProps) => {
   return (
     <Trigger
       {...rest}
-      arrow={arrow}
+      arrow={mergedArrow}
       trigger={trigger}
       placement={placement}
       popup={popup}
       open={mergedOpen}
-      popupClassName={clsx(`${prefixCls}-popup`, popupClassName)}
+      popupClassName={clsx(`${prefixCls}`, popupClassName)}
       onOpenChange={handleOpenChange}
     >
       {children}

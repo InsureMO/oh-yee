@@ -24,7 +24,7 @@ const getStrLower = (str: any) => {
 };
 
 const HeaderFilter = React.memo((props: any) => {
-  const { filter, column, getContainer, onInternalFilter } = props;
+  const { filter, column, getPopupContainer, onInternalFilter } = props;
   const { prefixCls } = useContext(TableCtx);
   const { locale } = useLocale();
   const { table: tableLocale } = locale;
@@ -36,11 +36,13 @@ const HeaderFilter = React.memo((props: any) => {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    if (open) {
-      requestAnimationFrame(() => {
-        inputRef.current?.focus({ preventScroll: true });
-      });
-    }
+    if (!open) return;
+
+    const raf = requestAnimationFrame(() => {
+      inputRef.current?.focus({ preventScroll: true });
+    });
+
+    return () => cancelAnimationFrame(raf);
   }, [open]);
 
   const inputChange = (value: string) => {
@@ -187,12 +189,12 @@ const HeaderFilter = React.memo((props: any) => {
     <Popover
       trigger="click"
       placement="bottomRight"
-      className={clsx(`${prefixCls}-filter`)}
+      popupClassName={clsx(`${prefixCls}-filter`)}
       content={popup}
       arrow
       open={open}
       hideOnClick={false}
-      getPopupContainer={getContainer}
+      getPopupContainer={getPopupContainer}
       onOpenChange={handleOpenChange}
     >
       {renderTrigger()}

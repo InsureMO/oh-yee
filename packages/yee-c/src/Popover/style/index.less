@@ -2,11 +2,14 @@
 
 @{pls} {
   max-width: var(--yee-popover-max-width);
-  padding: var(--yee-popover-padding);
   color: var(--yee-color-text);
   background-color: var(--yee-popover-bg-color);
   border-radius: var(--yee-popover-border-radius);
-  overflow: hidden;
+
+  &-container {
+    padding: var(--yee-popover-padding);
+    overflow: auto;
+  }
 
   &-header {
     margin-bottom: var(--yee-popover-header-margin-bottom);

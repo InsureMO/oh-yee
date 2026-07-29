@@ -35,7 +35,9 @@ const focusInitialElement = (entry: FocusStackEntry) => {
 
   const firstFocusable =
     entry.container.querySelector<HTMLElement>(focusableSelector);
-  (firstFocusable ?? entry.container).focus();
+  // Focusing popup content must not move the page or a scrollable ancestor.
+  // Consumers can still scroll explicitly after focus when that behavior is needed.
+  (firstFocusable ?? entry.container).focus({ preventScroll: true });
 };
 
 export const pushFocus = (
