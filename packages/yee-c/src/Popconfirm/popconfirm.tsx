@@ -74,7 +74,7 @@ const Popconfirm: React.FC<PopconfirmProps> = (baseprops) => {
       ref={(node) => {
         if (node) {
           const btn = node.querySelector<HTMLButtonElement>('[data-confirm]');
-          if (btn) btn.focus();
+          if (btn) btn.focus({ preventScroll: true });
         }
       }}
     >
@@ -127,7 +127,11 @@ const Popconfirm: React.FC<PopconfirmProps> = (baseprops) => {
       open={mergedOpen}
       onOpenChange={handleOpenChange}
     >
-      <div className={`${prefixCls}-trigger`}>{children}</div>
+      {React.isValidElement(children) ? (
+        children
+      ) : (
+        <span className={`${prefixCls}-trigger`}>{children}</span>
+      )}
     </Trigger>
   );
 };

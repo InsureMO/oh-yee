@@ -383,12 +383,14 @@
 
   /* --Popconfirm-- */
   --yee-popconfirm-z-index: var(--yee-z-index-tooltip);
-  --yee-popconfirm-padding: 16px;
+  --yee-popconfirm-padding: 12px;
   --yee-popconfirm-border-radius: 4px;
   --yee-popconfirm-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
   --yee-popconfirm-header-gap: 16px;
-  --yee-popconfirm-title-margin: 0;
+  --yee-popconfirm-header-margin-bottom: 8px;
   --yee-popconfirm-footer-margin-top: 16px;
+  --yee-popconfirm-title-font-size: 16px;
+  --yee-popconfirm-title-font-weight: 600;
 
   /* --Popover-- */
   --yee-popover-z-index: var(--yee-z-index-tooltip);
