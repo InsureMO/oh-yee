@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.11
+
+### Patch Changes
+
+- 37da88a: fix(Table): refactor filter popup styling and simplify className prop
+
 ## 0.8.10
 
 ### Patch Changes
