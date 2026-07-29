@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.10
+
+### Patch Changes
+
+- 8965a19: fix(Popconfirm): improve focus management and refactor trigger rendering
+
 ## 0.8.9
 
 ### Patch Changes
