@@ -1,14 +1,23 @@
 import { useMemo, useState } from 'react';
 
+type FilterValue = string | number;
+type FilterInput = FilterValue | FilterValue[];
+
 type FilterOptions = {
   dataIndex: string;
-  value: string;
+  value: FilterInput;
 };
 
 type FilterRecord = {
-  value: string;
+  value: FilterInput;
   dataIndex: string;
 };
+
+const isEmptyFilterValue = (value: FilterInput) =>
+  value === '' || (Array.isArray(value) && value.length === 0);
+
+const normalizeValue = (value: unknown) =>
+  value === null || value === undefined ? '' : String(value).toLowerCase();
 
 export default function useFilter({
   data,
@@ -18,7 +27,7 @@ export default function useFilter({
   const [filterRecords, setFilterRecords] = useState<Array<FilterRecord>>([]);
   const onFilter = ({ value, dataIndex }: FilterOptions) => {
     let newFilterMap = [...filterRecords];
-    if (!value || (Array.isArray(value) && !value.length)) {
+    if (isEmptyFilterValue(value)) {
       newFilterMap = newFilterMap.filter(
         (item) => item.dataIndex !== dataIndex,
       );
@@ -40,23 +49,23 @@ export default function useFilter({
 
   const filtered = useMemo(() => {
     const handled = filterRecords.filter(
-      (item) => item.dataIndex && item.value,
+      ({ dataIndex, value }) =>
+        Boolean(dataIndex) && !isEmptyFilterValue(value),
     );
     if (!handled.length) {
       return data;
     }
     return data.filter((item) => {
-      return handled.find((o) => {
-        if (Array.isArray(o.value)) {
-          return o.value.some((v) => {
-            const t = item[o.dataIndex] || '';
-            return (t as string).toLowerCase() === v.toLowerCase();
-          });
-        } else {
-          const v = o.value.toLowerCase();
-          const t = item[o.dataIndex] || '';
-          return (t as string).toLowerCase().includes(v);
+      return handled.some(({ dataIndex, value }) => {
+        const targetValue = normalizeValue(item[dataIndex]);
+
+        if (Array.isArray(value)) {
+          return value.some(
+            (filterValue) => targetValue === normalizeValue(filterValue),
+          );
         }
+
+        return targetValue.includes(normalizeValue(value));
       });
     });
   }, [data, filterRecords]);
