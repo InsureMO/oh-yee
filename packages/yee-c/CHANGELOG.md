@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.9
+
+### Patch Changes
+
+- 17c8f70: fix(Popover, Table, Trigger): refactor component structure and improve focus management
+
 ## 0.8.8
 
 ### Patch Changes
