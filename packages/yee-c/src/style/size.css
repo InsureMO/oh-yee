@@ -403,6 +403,7 @@
   --yee-popover-header-line-height: 24px;
   --yee-popover-arrow-width: var(--yee-popup-arrow-width);
   --yee-popover-arrow-height: var(--yee-popup-arrow-height);
+  --yee-table-filter-popup-height: 400px;
 
   /* --Progress-- */
   --yee-progress-text-width: 48px;

@@ -189,7 +189,7 @@ const HeaderFilter = React.memo((props: any) => {
     <Popover
       trigger="click"
       placement="bottomRight"
-      popupClassName={clsx(`${prefixCls}-filter`)}
+      className={`${prefixCls}-filter`}
       content={popup}
       arrow
       open={open}
