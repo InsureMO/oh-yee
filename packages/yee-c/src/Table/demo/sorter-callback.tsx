@@ -23,8 +23,9 @@ export default () => {
       title: 'Score',
       dataIndex: 'score',
       key: 'score',
-      sorter: true,
-      defaultSortOrder: 'descend' as const,
+      sorter: {
+        defaultSortOrder: 'descend' as const,
+      },
     },
     {
       title: 'Address',

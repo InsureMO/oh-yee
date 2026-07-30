@@ -9,7 +9,9 @@ export function handleColumns(columns: Array<WrapedColumnProps>) {
     if (col.fixed === true || col.fixed === 'left') {
       col.fixed = 'left';
       col.style = { ...col.style, left: leftWidthCount };
-      if (!columns[i + 1].fixed) {
+      const nextFixed = columns[i + 1]?.fixed;
+      const nextIsFixedLeft = nextFixed === true || nextFixed === 'left';
+      if (!nextIsFixedLeft) {
         col.isFixedLeftLast = true;
       }
       leftWidthCount =

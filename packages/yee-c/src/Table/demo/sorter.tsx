@@ -13,8 +13,9 @@ export default () => {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
-      sorter: true,
-      defaultSortOrder: 'descend' as const,
+      sorter: {
+        defaultSortOrder: 'descend' as const,
+      },
     },
     {
       title: 'Address',

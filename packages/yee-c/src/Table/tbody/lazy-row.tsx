@@ -6,7 +6,7 @@ const createBlank = (size: number, key: string) => {
     : [];
 };
 const LazyRow = (props: any) => {
-  const { range, pageData, columns, ...rest } = props;
+  const { range, pageData, columns, resolveRowKey, ...rest } = props;
   const { start, end } = range;
   let result: any = [];
   const pl = pageData.length;
@@ -14,13 +14,16 @@ const LazyRow = (props: any) => {
   result = result.concat(startBlank);
 
   for (let i = start; i < (end > pl ? pl : end); i++) {
+    const record = pageData[i];
+    const rowKeyValue = resolveRowKey(record);
     result.push(
       <TableRow
         {...rest}
         columns={columns}
-        record={pageData[i]}
+        record={record}
+        rowKeyValue={rowKeyValue}
         index={i}
-        key={'row-' + i}
+        key={rowKeyValue ?? `row-${i}`}
       />,
     );
   }

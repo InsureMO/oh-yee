@@ -81,16 +81,6 @@ export default function usePagination({
     });
   };
 
-  if (pagination === false) {
-    return {
-      pageData: data,
-      current: 1,
-      pageSize: data.length,
-      pagination: false,
-    };
-  }
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const pageData = useMemo(() => {
     const total = data.length;
     if (total <= mergedPageSize) return data;
@@ -102,6 +92,15 @@ export default function usePagination({
     const start = (current - 1) * mergedPageSize;
     return data.slice(start, start + mergedPageSize);
   }, [data, meregdCurrent, mergedPageSize]);
+
+  if (pagination === false) {
+    return {
+      pageData: data,
+      current: 1,
+      pageSize: data.length,
+      pagination: false,
+    };
+  }
 
   return {
     pageData,

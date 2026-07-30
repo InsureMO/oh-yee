@@ -39,4 +39,4 @@ const ColGroup = React.memo(({ columns }: TableColGroupProps) => {
 
 ColGroup.displayName = 'ColGroup';
 
-export default React.memo(ColGroup);
+export default ColGroup;

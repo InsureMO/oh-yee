@@ -14,6 +14,7 @@ const TableRow: React.FC<TableRowProps> = (props) => {
   const {
     index,
     record,
+    rowKeyValue,
     columns,
     highlight,
     stripe,
@@ -30,10 +31,10 @@ const TableRow: React.FC<TableRowProps> = (props) => {
     ...rest
   } = props;
 
-  const { prefixCls, rowKey } = useContext(TableCtx);
+  const { prefixCls } = useContext(TableCtx);
 
   const expanded = expandedRowKeys?.includes(
-    expandedKeyType === 'index' ? index + 1 : record[rowKey],
+    expandedKeyType === 'index' ? index + 1 : rowKeyValue,
   );
 
   const high = React.useMemo(() => {
@@ -57,7 +58,6 @@ const TableRow: React.FC<TableRowProps> = (props) => {
 
   const getSelection = (column: WrapedColumnProps) => {
     const { type, disabled: colDisabled, onCell } = column;
-    const rowKeyValue = record[rowKey];
     const props = (onCell?.(record, index) || {}) as Record<string, unknown>;
     const checked = selectedRowKeys?.includes(rowKeyValue);
 
@@ -75,7 +75,8 @@ const TableRow: React.FC<TableRowProps> = (props) => {
     const commonProps = {
       checked,
       value: rowKeyValue,
-      onChange: onSelectionChange,
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+        onSelectionChange(event, rowKeyValue),
       disabled,
       ...props,
     };

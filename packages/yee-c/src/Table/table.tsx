@@ -83,15 +83,28 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   });
 
   // Filter
-  const { data: filteredData, onFilter: onFilterInternal } = useFilter({
+  const {
+    data: filteredData,
+    filterRecords,
+    onFilter: onFilterInternal,
+  } = useFilter({
     data: dataSource,
+    columns: wrapedColumns,
   });
+
+  const filters = useMemo(
+    () =>
+      Object.fromEntries(
+        filterRecords.map(({ dataIndex, value }) => [dataIndex, value]),
+      ),
+    [filterRecords],
+  );
 
   // Sort
   const {
     data: sortedData,
     sorters,
-    onSort,
+    onSort: onSortInternal,
   } = useSorter({ data: filteredData, columns: wrapedColumns });
   // Pagination
   const { pageData, current, pageSize, pagination } = usePagination({
@@ -102,13 +115,27 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
           onChange({
             pagination: info,
             sorter: sorters,
-            filters: undefined, // TODO: Extract filter info from onFilterInternal
+            filters,
             currentDataSource: sortedData,
             action: 'paginate',
           });
         }
       : undefined,
   });
+
+  const handleSort = React.useCallback(
+    (dataIndex: string) => {
+      const next = onSortInternal(dataIndex);
+      onChange?.({
+        pagination: pagination === false ? undefined : { current, pageSize },
+        sorter: next.sorters,
+        filters,
+        currentDataSource: next.data,
+        action: 'sort',
+      });
+    },
+    [onSortInternal, onChange, pagination, current, pageSize, filters],
+  );
 
   // Expanded row data
   const { expandedRowKeys, onExpand } = useExpand(
@@ -124,8 +151,8 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     onChange: onSelectionChange,
   } = useSelection({ pageData, dataSource, getRowKey, rowSelection, allKeys });
 
-  // Track previous values to determine what action triggered onChange
-  const prevSortersRef = useRef<typeof sorters>({});
+  // Track filter changes to emit onChange after filtered data is recalculated
+  const prevFilterRecordsRef = useRef(filterRecords);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [horizontalScroll, setHorizontalScroll] = React.useState({
@@ -156,51 +183,29 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     );
   }, []);
 
-  // Wrap onFilter to trigger onChange
-  const onFilter = React.useCallback(
-    (...args: Parameters<typeof onFilterInternal>) => {
-      onFilterInternal(...args);
-      // Trigger onChange for filter action
-      if (onChange) {
-        onChange({
-          pagination: pagination === false ? undefined : { current, pageSize },
-          sorter: sorters,
-          filters: undefined, // TODO: Extract filter info from args
-          currentDataSource: filteredData,
-          action: 'filter',
-        });
-      }
-    },
-    [
-      onChange,
-      pagination,
-      current,
-      pageSize,
-      sorters,
-      filteredData,
-      onFilterInternal,
-    ],
-  );
-
-  // Trigger onChange when sorter, pagination, or filter changes
   useEffect(() => {
+    if (prevFilterRecordsRef.current === filterRecords) return;
+
+    prevFilterRecordsRef.current = filterRecords;
     if (!onChange) return;
 
-    // Check if sorters changed
-    const sortersChanged =
-      JSON.stringify(prevSortersRef.current) !== JSON.stringify(sorters);
-    if (sortersChanged && prevSortersRef.current !== sorters) {
-      prevSortersRef.current = sorters;
-      onChange({
-        pagination: pagination === false ? undefined : { current, pageSize },
-        sorter: sorters,
-        filters: undefined,
-        currentDataSource: sortedData,
-        action: 'sort',
-      });
-      return;
-    }
-  }, [sorters, current, pageSize, pageData, sortedData, onChange]);
+    onChange({
+      pagination: pagination === false ? undefined : { current, pageSize },
+      sorter: sorters,
+      filters,
+      currentDataSource: sortedData,
+      action: 'filter',
+    });
+  }, [
+    filterRecords,
+    filters,
+    sortedData,
+    pagination,
+    current,
+    pageSize,
+    sorters,
+    onChange,
+  ]);
 
   useEffect(() => {
     updateHorizontalScroll();
@@ -245,9 +250,9 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
         headerRows={headerRows}
         checkedAll={checkedAll}
         sorters={sorters}
-        onSort={onSort}
+        onSort={handleSort}
         onCheckAll={onCheckAll}
-        onInternalFilter={onFilter}
+        onInternalFilter={onFilterInternal}
       />
     );
   };

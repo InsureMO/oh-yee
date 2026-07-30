@@ -31,19 +31,27 @@ const TableBody: React.FC<TableBodyProps> = (props) => {
 
   const getRenderRows = () => {
     if (lazyLoad) {
-      return <LazyRow {...rest} pageData={pageData} columns={columns} />;
+      return (
+        <LazyRow
+          {...rest}
+          pageData={pageData}
+          columns={columns}
+          resolveRowKey={resolveRowKey}
+        />
+      );
     }
     return pageData.map((record: Record<string, any>, index: number) => {
+      const resolvedRowKey = resolveRowKey(record);
+
       // 整行接管：由外部组件渲染 <tr> + 单元格（可放拖拽手柄等）
       if (RowRenderer) {
-        const rk = resolveRowKey(record);
         return (
           <RowRenderer
-            key={rk ?? index}
+            key={resolvedRowKey ?? index}
             record={record}
             index={index}
             columns={columns}
-            rowKey={rk}
+            rowKey={resolvedRowKey}
           />
         );
       }
@@ -52,8 +60,9 @@ const TableBody: React.FC<TableBodyProps> = (props) => {
           {...rest}
           columns={columns}
           record={record}
+          rowKeyValue={resolvedRowKey}
           index={index}
-          key={`row-${record.key || index}`}
+          key={resolvedRowKey ?? `row-${index}`}
         />
       );
     });

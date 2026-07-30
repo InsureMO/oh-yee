@@ -1,10 +1,10 @@
 import useMergedState from '../../hooks/useMergedState';
-import { ExpandableType } from '../interface';
+import { ExpandableType, SelectionKeyType } from '../interface';
 
 export default function useExpand(
   expandable: ExpandableType | undefined,
-  allKeys: string[],
-  getRowKey: (record: Record<string, any>) => string,
+  allKeys: SelectionKeyType[],
+  getRowKey: (record: Record<string, any>) => SelectionKeyType,
 ) {
   const {
     expandedRowKeys, // keys

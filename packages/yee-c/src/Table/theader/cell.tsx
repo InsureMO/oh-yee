@@ -46,6 +46,8 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
   const sortOrder = (dataIndex && sorters?.[dataIndex]) || 0;
   const displaySortOrder: 0 | 1 | 2 =
     sortOrder === -1 ? 2 : (sortOrder as 0 | 1);
+  const currentSortOrder =
+    sortOrder === 1 ? 'ascend' : sortOrder === -1 ? 'descend' : null;
 
   const handleSort = () => {
     if (dataIndex && onSort) {
@@ -54,6 +56,14 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
   };
 
   const renderSort = () => {
+    if (typeof sorter === 'object' && sorter.icon) {
+      return (
+        <span className={`${prefixCls}-column-sorter`}>
+          {sorter.icon(currentSortOrder)}
+        </span>
+      );
+    }
+
     const trigger = (
       <span className={`${prefixCls}-column-sorter`}>
         <ArrowIcon

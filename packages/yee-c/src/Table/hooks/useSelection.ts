@@ -11,7 +11,7 @@ export default function useSelection({
 }: {
   pageData: Array<Record<string, unknown>>;
   dataSource: Array<Record<string, unknown>>;
-  getRowKey: (record: Record<string, unknown>) => string;
+  getRowKey: (record: Record<string, unknown>) => SelectionKeyType;
   allKeys: Array<SelectionKeyType>;
   rowSelection?: RowSelectionType;
 }) {
@@ -43,29 +43,25 @@ export default function useSelection({
     onChange?.(rowKeys as any, rowRecords);
   };
 
-  const getDisabledKeys = () => {
+  const getDisabledKeys = (): SelectionKeyType[] => {
+    if (disabled === true) {
+      return pageData.map((record) => getRowKey(record));
+    }
     if (Array.isArray(disabled)) {
-      return disabled;
+      return pageData
+        .filter((_, index) => disabled[index])
+        .map((record) => getRowKey(record));
     }
     if (typeof disabled === 'function') {
-      return (
-        Array.isArray(pageData) &&
-        pageData
-          .filter((record, index) => disabled(record, index))
-          .map((record) => getRowKey(record))
-      );
+      return pageData
+        .filter((record, index) => disabled(record, index))
+        .map((record) => getRowKey(record));
     }
     return [];
   };
 
-  const getPageDataRowKeys = () => {
-    return (
-      Array.isArray(pageData) && pageData.map((record) => getRowKey(record))
-    );
-  };
-
-  const disabledKeys = getDisabledKeys() as Array<string>;
-  const pageDataRowKeys = getPageDataRowKeys() as Array<string>;
+  const disabledKeys = getDisabledKeys();
+  const pageDataRowKeys = pageData.map((record) => getRowKey(record));
 
   const isCheckedAll = () => {
     const filtered = pageDataRowKeys.filter(
@@ -109,7 +105,7 @@ export default function useSelection({
     setMergedSelectedRowKeys(rowKeys);
 
     onChange?.(rowKeys, rowRecords);
-    onSelectAll?.(rowKeys as any, rowRecords as any, checked);
+    onSelectAll?.(checked, rowKeys, rowRecords);
   };
 
   const onRadioCheck = (checked: boolean, key: number | string) => {
@@ -118,8 +114,10 @@ export default function useSelection({
     onChange?.([key as any], record as any);
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const key = event.target.value;
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    key: SelectionKeyType,
+  ) => {
     const checked = event.target.checked;
     if (type === 'checkbox') {
       onCheck(checked, key);

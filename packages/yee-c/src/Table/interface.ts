@@ -24,7 +24,7 @@ export interface ExpandableType {
   /**
    * Default expanded rows
    */
-  defaultExpandedRowKeys?: string[]; // Default expanded rows
+  defaultExpandedRowKeys?: SelectionKeyType[]; // Default expanded rows
   /**
    * Expanded rows
    */
@@ -57,6 +57,7 @@ export interface ExpandableType {
 }
 
 export type SelectionKeyType = string | number;
+export type FilterValue = string | number;
 
 export type ColumnSemanticType = 'inner' | 'action';
 
@@ -210,7 +211,7 @@ export interface ColumnProps {
     /**
      * Filter callback function
      */
-    onFilter?: (value: string, record: Record<string, any>) => boolean;
+    onFilter?: (value: FilterValue, record: Record<string, any>) => boolean;
   };
   /**
    * Sorter config
@@ -221,9 +222,13 @@ export interface ColumnProps {
         /**
          * Sort function
          */
-        sort?: () => number | boolean;
+        sort?: (
+          a: Record<string, unknown>,
+          b: Record<string, unknown>,
+        ) => number;
         /**
-         * Whether to support multi-column sort, if set to a number, it indicates the number of sortable columns
+         * Enable multi-column sorting. A positive number limits the active
+         * sorters; when exceeded, the earliest activated sorter is removed.
          */
         multiple?: boolean | number;
         /**
@@ -405,6 +410,7 @@ export interface TableRowProps {
   pageSize: number;
   index: number;
   record: Record<string, any>;
+  rowKeyValue: SelectionKeyType;
   columns: ColumnProps[];
   expandable?: ExpandableType;
   expandedRowKeys?: Array<string | number>;
@@ -436,7 +442,10 @@ export interface TableRowProps {
     index: number;
   }) => void;
   // Checkbox or Radio onChange event
-  onSelectionChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSelectionChange: (
+    event: ChangeEvent<HTMLInputElement>,
+    key: SelectionKeyType,
+  ) => void;
 }
 
 type LazyLoadType = {
@@ -452,7 +461,10 @@ export interface LazyRowProps extends TableRowProps {
   lazyLoad?: boolean | LazyLoadType;
 }
 
-export interface TableBodyProps extends Omit<LazyRowProps, 'index' | 'record'> {
+export interface TableBodyProps extends Omit<
+  LazyRowProps,
+  'index' | 'record' | 'rowKeyValue'
+> {
   pageData: Array<Record<string, any>>;
   noData?: React.ReactNode;
 }
@@ -619,7 +631,7 @@ export interface TableProps
    * Set the unique key for rows
    * @default id
    */
-  rowKey?: string | ((record: Record<string, any>) => string);
+  rowKey?: string | ((record: Record<string, any>) => SelectionKeyType);
   /**
    * Summary bar
    */

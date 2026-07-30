@@ -8,6 +8,7 @@ import Popover from '../../Popover';
 import Space from '../../Space';
 import Tree from '../../Tree';
 import { useLocale } from '../../locale';
+import type { FilterValue } from '../interface';
 import { TableCtx } from '../table';
 
 export interface TableFilterProps {
@@ -23,14 +24,37 @@ const getStrLower = (str: any) => {
   return str;
 };
 
+type FilterInput = FilterValue | FilterValue[];
+
+const areFilterValuesEqual = (a: FilterInput, b: FilterInput) => {
+  if (!Array.isArray(a) || !Array.isArray(b)) return a === b;
+  return a.length === b.length && a.every((value, index) => value === b[index]);
+};
+
+const hasFilterValue = (value: FilterInput) =>
+  Array.isArray(value) ? value.length > 0 : value !== '';
+
 const HeaderFilter = React.memo((props: any) => {
   const { filter, column, getPopupContainer, onInternalFilter } = props;
   const { prefixCls } = useContext(TableCtx);
   const { locale } = useLocale();
   const { table: tableLocale } = locale;
   const { dataIndex } = column;
+  const {
+    items,
+    icon,
+    searchable = true,
+    filterMode = 'menu',
+    filtered,
+    filterOnClose = true,
+    render,
+  } = filter;
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const initialValue: FilterInput = items ? [] : '';
+  const committedValueRef = useRef<FilterInput>(initialValue);
+  const [committedValue, setCommittedValue] =
+    useState<FilterInput>(initialValue);
   const [open, setOpen] = useState(false);
   const [selectNodes, setSelectNodes] = useState<Array<string | number>>([]);
   const [searchValue, setSearchValue] = useState('');
@@ -53,33 +77,40 @@ const HeaderFilter = React.memo((props: any) => {
   //     setSelectNodes(node);
   //   };
 
-  const reset = () => {
-    setSearchValue('');
-    setSelectNodes([]);
-    onInternalFilter({ dataIndex, value: '', column });
+  const getCurrentValue = (type: 'filter' | 'search'): FilterInput =>
+    type === 'search' ? searchValue : selectNodes;
+
+  const commitValue = (value: FilterInput) => {
+    const committed = Array.isArray(value) ? [...value] : value;
+    committedValueRef.current = committed;
+    setCommittedValue(committed);
   };
 
-  const ok = (type?: 'filter' | 'search') => {
+  const applyFilter = (type: 'filter' | 'search') => {
+    const value = getCurrentValue(type);
+    commitValue(value);
     onInternalFilter({
       dataIndex,
-      value: type === 'search' ? searchValue : selectNodes,
-      type: type,
+      value,
+      type,
       column,
     });
+  };
+
+  const reset = () => {
+    const value: FilterInput = items ? [] : '';
+    setSearchValue('');
+    setSelectNodes([]);
+    commitValue(value);
+    onInternalFilter({ dataIndex, value, column });
+  };
+
+  const ok = (type: 'filter' | 'search') => {
+    applyFilter(type);
     setOpen(false);
   };
 
   let popup: React.ReactNode;
-
-  const {
-    items,
-    icon,
-    searchable = true,
-    filterMode = 'menu',
-    // filtered,
-    // filterOnClose,
-    // onFilter,
-  } = filter;
 
   const searchInputNode = searchable ? (
     <Input
@@ -96,7 +127,9 @@ const HeaderFilter = React.memo((props: any) => {
     />
   ) : null;
 
-  if (items) {
+  if (render) {
+    popup = render();
+  } else if (items) {
     let dataSource = [];
     const inputValue = getStrLower(searchValue);
 
@@ -160,14 +193,23 @@ const HeaderFilter = React.memo((props: any) => {
     return null;
   }
 
-  const handleOpenChange = (o: boolean) => {
-    setOpen(o);
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen && open && filterOnClose && !render) {
+      const type = items ? 'filter' : 'search';
+      const value = getCurrentValue(type);
+      if (!areFilterValuesEqual(value, committedValueRef.current)) {
+        applyFilter(type);
+      }
+    }
+    setOpen(nextOpen);
   };
+
+  const isFiltered = filtered ?? hasFilterValue(committedValue);
 
   const renderTrigger = () => {
     const trigger =
       typeof icon === 'function' ? (
-        icon()
+        icon(isFiltered)
       ) : (
         <Button
           icon={
@@ -177,7 +219,7 @@ const HeaderFilter = React.memo((props: any) => {
               <Search size={14} strokeWidth={1.5} />
             )
           }
-          variant={selectNodes.length || searchValue ? 'filled' : undefined}
+          variant={isFiltered ? 'filled' : undefined}
           type="text"
           size="small"
         />
