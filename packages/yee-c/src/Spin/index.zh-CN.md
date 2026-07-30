@@ -52,12 +52,6 @@ toc: 'content'
 
 | 类型 | 描述 |
 | --- | --- |
-| blank | 空白类型 |
-| balls | 小球类型 |
-| bars | 条形类型 |
-| bubbles | 气泡类型 |
-| cubes | 方块类型 |
-| cylon | 赛隆类型 |
-| spin | 旋转类型 |
-| spinningBubbles | 旋转气泡类型 |
+| dot | 原点旋转 |
+| ring | 圆环转圈 |
 | spokes | 辐条类型 |

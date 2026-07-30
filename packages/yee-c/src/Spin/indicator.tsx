@@ -60,6 +60,7 @@ const SpokesSpinner: React.FC<SpinProps> = (props) => {
     styles,
     width,
     height,
+    color
   } = props;
 
   const containerSize = sizeMap[size];
@@ -86,6 +87,7 @@ const SpokesSpinner: React.FC<SpinProps> = (props) => {
             style={{
               transform: `rotate(${i * (360 / count)}deg)`,
               animationDelay: `${(i * 1) / count}s`,
+              backgroundColor: color,
             }}
           />
         ))}

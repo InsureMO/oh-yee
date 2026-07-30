@@ -52,12 +52,6 @@ Used for page and block loading status.
 
 | Type | Description |
 | --- | --- |
-| blank | Blank type |
-| balls | Balls type |
-| bars | Bars type |
-| bubbles | Bubbles type |
-| cubes | Cubes type |
-| cylon | Cylon type |
-| spin | Spin type |
-| spinningBubbles | Spinning bubbles type |
+| dot | dot circle |
+| ring | rotating circle |
 | spokes | Spokes type |
