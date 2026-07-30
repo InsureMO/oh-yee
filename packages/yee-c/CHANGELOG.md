@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.14
+
+### Patch Changes
+
+- d5dd449: fix(Spin, Pagination): refactor indicator styling and update documentation
+
 ## 0.8.13
 
 ### Patch Changes
