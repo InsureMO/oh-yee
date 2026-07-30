@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.13
+
+### Patch Changes
+
+- 485925b: fix(Table): refactor hooks and improve filter logic with custom filter support# An empty message aborts the editor.
+
 ## 0.8.12
 
 ### Patch Changes
