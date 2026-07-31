@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.15
+
+### Patch Changes
+
+- df550a5: feat(Spin): add bounce, pulse, and wheel variants; update styles and documentation
+
 ## 0.8.14
 
 ### Patch Changes
