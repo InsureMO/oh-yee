@@ -43,7 +43,7 @@ Used for page and block loading status.
 | styles | `Partial<Record<'tip' \| 'indicator', React.CSSProperties>>` | Semantic structure styles | - |
 | tip | `React.ReactNode` | Loading tip text | - |
 | delay | `number` | Delay in milliseconds to show loading effect | - |
-| variant | `'dot' \| 'ring' \| 'spokes'` | Indicator variant, `ring` for rotating circle, `spokes` for radiating lines | `'dot'` |
+| variant | `'dot' \| 'ring' \| 'spokes' \| 'bounce' \| 'pulse' \| 'wheel'` | Indicator variant, `ring` for rotating circle, `spokes` for radiating lines, `bounce` for bouncing dots, `pulse` for pulsing circles, `wheel` for spokes with hollow center | `'dot'` |
 | indicator | `React.ReactNode` | Loading indicator | - |
 | mask | `boolean` | Whether to show mask | - |
 | children | `React.ReactNode` | Children elements | - |
@@ -55,3 +55,6 @@ Used for page and block loading status.
 | dot | dot circle |
 | ring | rotating circle |
 | spokes | Spokes type |
+| bounce | Bouncing dots |
+| pulse | Pulsing circles |
+| wheel | Spokes with hollow center |

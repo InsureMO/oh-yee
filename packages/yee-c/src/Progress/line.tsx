@@ -36,7 +36,7 @@ const Line = React.forwardRef<HTMLDivElement, LineProps>((props, ref) => {
 
   return (
     <div className={`${prefixCls}-outer`} ref={ref}>
-      <div className={`${prefixCls}-inner`} style={{ height: strokeWidth }}>
+      <div className={`${prefixCls}-inner`} style={{ height: strokeWidth }} aria-hidden="true">
         <div
           className={`${prefixCls}-bg`}
           style={{ width: percent + '%', ...progressColor }}

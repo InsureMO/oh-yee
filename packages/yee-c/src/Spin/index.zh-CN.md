@@ -43,7 +43,7 @@ toc: 'content'
 | styles | `Partial<Record<'tip' \| 'indicator', React.CSSProperties>>` | 语义化结构样式 | - |
 | tip | `React.ReactNode` | 加载状态的提示词 | - |
 | delay | `number` | 延迟显示加载效果的时间（毫秒） | - |
-| variant | `'dot' \| 'ring' \| 'spokes'` | 加载器样式变体，`ring` 为圆环转圈，`spokes` 为辐条旋转 | `'dot'` |
+| variant | `'dot' \| 'ring' \| 'spokes' \| 'bounce' \| 'pulse' \| 'wheel'` | 加载器样式变体，`ring` 为圆环转圈，`spokes` 为辐条旋转，`bounce` 为弹跳圆点，`pulse` 为脉冲圆圈，`wheel` 为带中心空圆的辐条 | `'dot'` |
 | indicator | `React.ReactNode` | 加载器指示符 | - |
 | mask | `boolean` | 是否显示遮罩 | - |
 | children | `React.ReactNode` | 子元素 | - |
@@ -55,3 +55,6 @@ toc: 'content'
 | dot | 原点旋转 |
 | ring | 圆环转圈 |
 | spokes | 辐条类型 |
+| bounce | 弹跳圆点 |
+| pulse | 脉冲圆圈 |
+| wheel | 中空辐条（辐条离中心有距离，中间形成空圆） |

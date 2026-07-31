@@ -56,7 +56,9 @@ const Steps = React.forwardRef<HTMLDivElement, StepsProps>((props, ref) => {
 
   return (
     <div className={`${prefixCls}-steps`} ref={ref}>
-      {renderSteps()}
+      <div aria-hidden="true" style={{ display: 'contents' }}>
+        {renderSteps()}
+      </div>
       {showInfo && <span className={`${prefixCls}-text`}>{children}</span>}
     </div>
   );

@@ -77,7 +77,7 @@ export type SpinProps = DataAttributeProps & {
   /**
    * Indicator variant
    * */
-  variant?: 'dot' | 'ring' | 'spokes';
+  variant?: 'dot' | 'ring' | 'spokes' | 'bounce' | 'pulse' | 'wheel';
   /**
    * Loading indicator
    */

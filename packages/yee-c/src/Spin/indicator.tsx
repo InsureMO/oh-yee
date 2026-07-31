@@ -188,8 +188,163 @@ const DotSpinner: React.FC<SpinProps> = (props) => {
   );
 };
 
+/**
+ * Bounce spinner - three dots that bounce up and down sequentially
+ */
+const BounceSpinner: React.FC<SpinProps> = (props) => {
+  const {
+    prefixCls = 'yee-spin',
+    size = 'default',
+    classNames,
+    styles,
+    width,
+    height,
+    color,
+  } = props;
+
+  const containerSize = sizeMap[size];
+  const dotSizeMap = { small: 4, default: 6, large: 10 };
+  const dotSize = dotSizeMap[size];
+
+  return (
+    <div
+      className={clsx(
+        `${prefixCls}-indicator`,
+        `${prefixCls}-indicator-bounce`,
+        classNames?.indicator,
+      )}
+      style={{
+        width: width || containerSize,
+        height: height || containerSize,
+        ...styles?.indicator,
+      }}
+    >
+      <div className={`${prefixCls}-bounce`}>
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className={`${prefixCls}-bounce-dot`}
+            style={{
+              width: dotSize,
+              height: dotSize,
+              animationDelay: `${i * 0.15}s`,
+              backgroundColor: color,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/**
+ * Pulse spinner - a circle that pulses (scales up and fades out) repeatedly
+ */
+const PulseSpinner: React.FC<SpinProps> = (props) => {
+  const {
+    prefixCls = 'yee-spin',
+    size = 'default',
+    classNames,
+    styles,
+    width,
+    height,
+    color,
+  } = props;
+
+  const containerSize = sizeMap[size];
+
+  return (
+    <div
+      className={clsx(
+        `${prefixCls}-indicator`,
+        `${prefixCls}-indicator-pulse`,
+        classNames?.indicator,
+      )}
+      style={{
+        width: width || containerSize,
+        height: height || containerSize,
+        ...styles?.indicator,
+      }}
+    >
+      <span
+        className={`${prefixCls}-pulse-circle`}
+        style={{ backgroundColor: color }}
+      />
+      <span
+        className={`${prefixCls}-pulse-circle ${prefixCls}-pulse-circle-delay`}
+        style={{ backgroundColor: color }}
+      />
+    </div>
+  );
+};
+
+/**
+ * Wheel spinner - similar to spokes but each line is offset from center,
+ * creating a visible hollow circle in the middle
+ */
+const WheelSpinner: React.FC<SpinProps> = (props) => {
+  const {
+    prefixCls = 'yee-spin',
+    size = 'default',
+    classNames,
+    styles,
+    width,
+    height,
+    color,
+  } = props;
+
+  const containerSize = sizeMap[size];
+  const count = 10;
+  const innerRadius = 0.38; // start at 38% from center (larger hollow area)
+  const spokeLength = containerSize * 0.22;
+
+  return (
+    <div
+      className={clsx(
+        `${prefixCls}-indicator`,
+        `${prefixCls}-indicator-wheel`,
+        classNames?.indicator,
+      )}
+      style={{
+        width: width || containerSize,
+        height: height || containerSize,
+        ...styles?.indicator,
+      }}
+    >
+      <div className={`${prefixCls}-wheel-spokes`}>
+        {Array.from({ length: count }, (_, i) => {
+          const angle = (i * 360) / count;
+          const rad = (angle * Math.PI) / 180;
+          // Position each spoke: starts at innerRadius from center
+          const cx = containerSize / 2;
+          const cy = containerSize / 2;
+          const x = cx + innerRadius * containerSize * Math.sin(rad);
+          const y = cy - innerRadius * containerSize * Math.cos(rad);
+
+          return (
+            <div
+              key={i}
+              className={`${prefixCls}-wheel-spoke`}
+              style={{
+                top: y,
+                left: x,
+                height: spokeLength,
+                marginLeft: -1,
+                transform: `rotate(${angle}deg)`,
+                transformOrigin: 'top center',
+                animationDelay: `${(i * 1.2) / count}s`,
+                backgroundColor: color,
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 interface IndicatorProps extends SpinProps {
-  variant?: 'dot' | 'ring' | 'spokes';
+  variant?: 'dot' | 'ring' | 'spokes' | 'bounce' | 'pulse' | 'wheel';
 }
 
 const Indicator: React.FC<IndicatorProps> = ({ variant = 'dot', ...props }) => {
@@ -198,6 +353,15 @@ const Indicator: React.FC<IndicatorProps> = ({ variant = 'dot', ...props }) => {
   }
   if (variant === 'spokes') {
     return <SpokesSpinner {...props} />;
+  }
+  if (variant === 'bounce') {
+    return <BounceSpinner {...props} />;
+  }
+  if (variant === 'pulse') {
+    return <PulseSpinner {...props} />;
+  }
+  if (variant === 'wheel') {
+    return <WheelSpinner {...props} />;
   }
   return <DotSpinner {...props} />;
 };

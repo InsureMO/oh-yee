@@ -4,6 +4,7 @@ import React, {
   startTransition,
   useContext,
   useEffect,
+  useId,
   useRef,
   useState,
 } from 'react';
@@ -55,6 +56,7 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
     const [open, setOpen] = useState(false);
 
     const popupRef = useRef<HTMLDivElement>(undefined);
+    const listboxId = useId();
 
     const { focusedKey, onKeyDown } = useSelectKeyboard({
       open,
@@ -130,8 +132,17 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
               className={clsx(`${prefixCls}-clear-icon`, classNames?.clear)}
               style={styles?.clear}
               onClick={handleClear}
+              role="button"
+              aria-label="Clear search"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleClear(e as unknown as React.MouseEvent<HTMLSpanElement>);
+                }
+              }}
             >
-              <X size={14} />
+              <X size={14} aria-hidden="true" />
             </span>
           )}
           {suffix}
@@ -174,8 +185,10 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
       );
     };
 
+    const hasPopup = Array.isArray(options) || Array.isArray(suggestions);
+
     const popup = (
-      <div className={`${prefixCls}-popup`} tabIndex={0}>
+      <div className={`${prefixCls}-popup`} tabIndex={0} id={listboxId} role="listbox">
         {Array.isArray(options) ? (
           <List
             focusedKey={focusedKey}
@@ -196,7 +209,15 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
 
     return (
       <Trigger popup={popup} open={open} onOpenChange={setOpen}>
-        <div className={getRootClassName()} style={style}>
+        <div
+          className={getRootClassName()}
+          style={style}
+          role="combobox"
+          aria-expanded={hasPopup ? open : undefined}
+          aria-haspopup={hasPopup ? 'listbox' : undefined}
+          aria-owns={hasPopup && open ? listboxId : undefined}
+          aria-disabled={disabled || undefined}
+        >
           {renderPrefix()}
           <input
             {...rest}
@@ -208,8 +229,16 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
             placeholder={placeholder}
             onChange={handleChange}
             onKeyDown={onKeyDown}
+            role="searchbox"
+            aria-autocomplete={hasPopup ? 'list' : undefined}
+            aria-controls={hasPopup && open ? listboxId : undefined}
+            aria-activedescendant={
+              hasPopup && open && focusedKey != null
+                ? String(focusedKey)
+                : undefined
+            }
           />
-          {loading ? <Spin variant="ring" size="small" /> : renderSuffix()}
+          {loading ? <Spin variant="ring" size="small" aria-label="Loading" /> : renderSuffix()}
         </div>
       </Trigger>
     );

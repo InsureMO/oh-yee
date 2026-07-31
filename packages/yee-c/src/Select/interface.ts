@@ -1,3 +1,4 @@
+import type { TriggerProps } from '../Trigger';
 import type { SelectorProps } from '../Selector';
 import type { DataAttributeProps } from '../utils/types';
 
@@ -25,7 +26,7 @@ export type Option = {
 };
 
 export interface SelectProps
-  extends DataAttributeProps, Pick<SelectorProps, 'size'> {
+  extends DataAttributeProps, Pick<SelectorProps, 'size'>, Omit<TriggerProps, 'popup' | 'children'> {
   /**
    * Custom class name prefix
    * */

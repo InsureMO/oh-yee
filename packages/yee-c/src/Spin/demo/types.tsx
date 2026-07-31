@@ -5,18 +5,33 @@ export default () => {
   return (
     <Space direction="vertical">
       <Space>
-        <Spin variant="dot" color="error"/>
+        <Spin variant="dot" />
         <span>dot</span>
       </Space>
 
       <Space>
-        <Spin variant="ring" color="error"/>
+        <Spin variant="ring" />
         <span>ring</span>
       </Space>
 
       <Space>
-        <Spin variant="spokes" color="error"/>
+        <Spin variant="spokes" />
         <span>spokes</span>
+      </Space>
+
+      <Space>
+        <Spin variant="bounce" />
+        <span>bounce</span>
+      </Space>
+
+      <Space>
+        <Spin variant="pulse" />
+        <span>pulse</span>
+      </Space>
+
+      <Space>
+        <Spin variant="wheel" />
+        <span>wheel</span>
       </Space>
     </Space>
   );
