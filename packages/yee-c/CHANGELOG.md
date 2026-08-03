@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.16
+
+### Patch Changes
+
+- 3d9314a: fix(Table): improve fixed column styling and add column width measurement
+
 ## 0.8.15
 
 ### Patch Changes
