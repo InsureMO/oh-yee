@@ -24,6 +24,7 @@ toc: 'content'
 <code src="./demo/pagination.tsx" title="分页" description="带分页的表格"></code>
 <code src="./demo/merge-cell.tsx" title="合并单元格" description="合并单元格的表格"></code>
 <code src="./demo/grouping.tsx" title="表头分组" description="多级表头"></code>
+<code src="./demo/fixed.tsx" title="固定列" description="固定表格左右列，横向滚动可查看效果"></code>
 <code src="./demo/summary.tsx" title="统计" description="表格的统计行"></code>
 <code src="./demo/filter.tsx" title="筛选" description="表格的筛选功能"></code>
 <code src="./demo/column-filter.tsx" title="列筛选" description="表格的列筛选功能"></code>

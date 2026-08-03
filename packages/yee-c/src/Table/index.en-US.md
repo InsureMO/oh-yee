@@ -23,6 +23,7 @@ A table displays rows of data.
 <code src="./demo/pagination.tsx" title="Pagination" description="Table with pagination"></code>
 <code src="./demo/column-filter.tsx" title="column filter" description="Table column filter"></code>
 <code src="./demo/grouping.tsx" title="Grouping" description="Multi-level header"></code>
+<code src="./demo/fixed.tsx" title="Fixed Columns" description="Fix columns on both sides and scroll horizontally to see the effect"></code>
 <code src="./demo/components-override.tsx" title="components override" description="tbody / row rendering that can be taken over by external libs (e.g. dnd-kit)"></code>
 ## API
 

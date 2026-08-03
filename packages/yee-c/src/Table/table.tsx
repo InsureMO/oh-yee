@@ -12,6 +12,7 @@ import TFooter from './tfooter';
 import THeader from './theader';
 
 import { GlobalContext } from '../Config-Provider';
+import useLatest from '../hooks/useLatest';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import omit from '../utils/omit';
 import { pickDataAttrs } from '../utils/types';
@@ -61,6 +62,8 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   } = props;
 
   const dataAttrs = pickDataAttrs(rest as Record<string, unknown>);
+  const [measuredColumnWidths, setMeasuredColumnWidths] =
+    React.useState<number[]>();
 
   const getRowKey = React.useCallback(
     (record: Record<string, any>, key = rowKey) => {
@@ -80,6 +83,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     columns: propColumns,
     expandable,
     rowSelection,
+    measuredColumnWidths,
   });
 
   // Filter
@@ -153,27 +157,22 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
 
   // Track filter changes to emit onChange after filtered data is recalculated
   const prevFilterRecordsRef = useRef(filterRecords);
-  const contentWrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const [horizontalScroll, setHorizontalScroll] = React.useState({
     left: false,
     right: false,
   });
 
   const updateHorizontalScroll = React.useCallback(() => {
-    const wrapper = contentWrapperRef.current;
     const content = contentRef.current;
-    if (!wrapper || !content) return;
+    if (!content) return;
 
-    const scrollContainer =
-      content.scrollWidth - content.clientWidth > 1 ? content : wrapper;
-    const maxScrollLeft =
-      scrollContainer.scrollWidth - scrollContainer.clientWidth;
+    const maxScrollLeft = content.scrollWidth - content.clientWidth;
     const hasHorizontalScroll = maxScrollLeft > 1;
     const next = {
-      left: hasHorizontalScroll && scrollContainer.scrollLeft > 1,
-      right:
-        hasHorizontalScroll && scrollContainer.scrollLeft < maxScrollLeft - 1,
+      left: hasHorizontalScroll && content.scrollLeft > 1,
+      right: hasHorizontalScroll && content.scrollLeft < maxScrollLeft - 1,
     };
 
     setHorizontalScroll((current) =>
@@ -182,6 +181,54 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
         : next,
     );
   }, []);
+
+  // A primitive signature of everything in the columns that can affect the
+  // measured layout, used as an effect dependency instead of the array itself.
+  const columnLayoutKey = useMemo(
+    () =>
+      wrapedColumns
+        .map(
+          (column, index) =>
+            `${column.key ?? column.dataIndex ?? index}:${
+              column.fixed ?? ''
+            }:${column.width ?? ''}`,
+        )
+        .join('|'),
+    [wrapedColumns],
+  );
+
+  // Keep the latest columns in a ref so that the measure callback stays stable:
+  // `wrapedColumns` is derived from `measuredColumnWidths`, so depending on it
+  // directly would recreate the callback (and the ResizeObserver) on every
+  // measurement.
+  const wrapedColumnsRef = useLatest(wrapedColumns);
+
+  const updateMeasuredColumnWidths = React.useCallback(() => {
+    const columns = wrapedColumnsRef.current;
+    if (!columns.some((column) => column.fixed)) return;
+
+    const colElements = tableRef.current?.querySelectorAll(
+      ':scope > colgroup > col',
+    );
+    if (!colElements || colElements.length !== columns.length) return;
+
+    // Round to whole pixels: sticky offsets do not need sub-pixel precision,
+    // and raw fractional widths would otherwise flip-flop (scrollbar showing /
+    // hiding, browser zoom) and keep re-triggering renders.
+    const nextWidths = Array.from(colElements, (column) =>
+      Math.round(column.getBoundingClientRect().width),
+    );
+    if (nextWidths.some((width) => !Number.isFinite(width) || width <= 0)) {
+      return;
+    }
+
+    setMeasuredColumnWidths((current) => {
+      const unchanged =
+        current?.length === nextWidths.length &&
+        current.every((width, index) => width === nextWidths[index]);
+      return unchanged ? current : nextWidths;
+    });
+  }, [wrapedColumnsRef]);
 
   useEffect(() => {
     if (prevFilterRecordsRef.current === filterRecords) return;
@@ -207,24 +254,43 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     onChange,
   ]);
 
+  // Observers are attached once: both callbacks are referentially stable.
   useEffect(() => {
-    updateHorizontalScroll();
-
-    const wrapper = contentWrapperRef.current;
     const content = contentRef.current;
-    if (!wrapper || !content) return undefined;
+    const tableElement = tableRef.current;
+    if (!content || !tableElement) return undefined;
+
+    const handleResize = () => {
+      updateHorizontalScroll();
+      updateMeasuredColumnWidths();
+    };
 
     if (typeof ResizeObserver === 'undefined') {
-      window.addEventListener('resize', updateHorizontalScroll);
-      return () => window.removeEventListener('resize', updateHorizontalScroll);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }
 
-    const resizeObserver = new ResizeObserver(updateHorizontalScroll);
-    resizeObserver.observe(wrapper);
+    const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(content);
+    resizeObserver.observe(tableElement);
 
     return () => resizeObserver.disconnect();
-  }, [updateHorizontalScroll, wrapedColumns, pageData, scroll?.x]);
+  }, [updateHorizontalScroll, updateMeasuredColumnWidths]);
+
+  // Re-sync when something that can change the layout changes. `columnLayoutKey`
+  // is a primitive, so a measurement round-trip (which produces a new
+  // `wrapedColumns` array with identical layout config) does not retrigger it.
+  useEffect(() => {
+    updateHorizontalScroll();
+    updateMeasuredColumnWidths();
+  }, [
+    columnLayoutKey,
+    pageData,
+    scroll?.x,
+    scroll?.y,
+    updateHorizontalScroll,
+    updateMeasuredColumnWidths,
+  ]);
 
   const renderHeader = () => {
     return (
@@ -283,6 +349,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     const tableProps = {
       style: {
         ...styles?.table,
+        minWidth: scroll?.x,
         tableLayout: pageData?.length ? tableLayout : undefined,
       },
       className: clsx(
@@ -302,7 +369,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
           rowKey,
         }}
       >
-        <table {...tableProps}>
+        <table ref={tableRef} {...tableProps}>
           <ColGroup columns={wrapedColumns} />
           {renderTHeader()}
           {renderTBody()}
@@ -313,12 +380,10 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
 
     return (
       <div
-        ref={contentWrapperRef}
         className={clsx(`${prefixCls}-content-wrapper`, {
           [`${prefixCls}-content-wrapper-scroll-left`]: horizontalScroll.left,
           [`${prefixCls}-content-wrapper-scroll-right`]: horizontalScroll.right,
         })}
-        onScroll={updateHorizontalScroll}
       >
         <div
           ref={contentRef}
@@ -326,7 +391,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
             [`${prefixCls}-${size}-size`]: size,
             [`${prefixCls}-fixed-header`]: scroll?.y,
           })}
-          style={{ height: scroll?.y, width: scroll?.x }}
+          style={{ height: scroll?.y }}
           onScroll={updateHorizontalScroll}
         >
           {table}

@@ -31,6 +31,7 @@ export default function useColumns({
   columns,
   rowSelection,
   expandable,
+  measuredColumnWidths,
 }: {
   children?:
     | React.ReactElement<ColumnProps>
@@ -38,6 +39,7 @@ export default function useColumns({
   columns: ColumnProps[];
   rowSelection?: RowSelectionType;
   expandable?: ExpandableType;
+  measuredColumnWidths?: number[];
 }) {
   const childColumns: Array<ColumnProps> | null = useMemo(() => {
     return children
@@ -53,10 +55,10 @@ export default function useColumns({
       []) as WrapedColumnProps[];
     const tree = injectSelectionExpand(base, rowSelection, expandable);
     const leaves = flattenLeafColumns(tree);
-    const wraped = handleColumns(leaves);
+    const wraped = handleColumns(leaves, measuredColumnWidths);
     const rows = parseHeaderRows(tree, wraped);
     return { wrapedColumns: wraped, headerRows: rows };
-  }, [childColumns, columns, rowSelection, expandable]);
+  }, [childColumns, columns, rowSelection, expandable, measuredColumnWidths]);
 
   return {
     wrapedColumns,

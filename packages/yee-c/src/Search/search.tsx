@@ -233,7 +233,7 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
             aria-autocomplete={hasPopup ? 'list' : undefined}
             aria-controls={hasPopup && open ? listboxId : undefined}
             aria-activedescendant={
-              hasPopup && open && focusedKey != null
+              hasPopup && open && focusedKey !== null
                 ? String(focusedKey)
                 : undefined
             }
