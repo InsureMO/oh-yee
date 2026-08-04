@@ -5,6 +5,7 @@
 
 import { configer } from "../config/config-provider";
 import { SessionContext } from "../cache/session-context";
+import { parseBool } from "../type/type-utils";
 import { warn } from "../common/logger";
 
 /**
@@ -199,24 +200,51 @@ export function removeUrlParams(url: string, keysToRemove: string[]): string {
 }
 
 /**
- * Normalizes a URL path by ensuring it starts with a slash and optionally adding platform prefix
+ * Options for {@link normalizeURL}
+ */
+export interface NormalizeURLOptions {
+  /**
+   * Whether the request is routed through the baseline API gateway
+   * (UI_BASE_LINE_API_GATEWAY_PROXY). When true, the baseline tenant code
+   * (UI_BASE_LINE_TENANT_CODE) is used as the path prefix instead of the
+   * regular UI_TENANT_CODE. Equivalent to the legacy isCustomerGetway flag.
+   */
+  baseline?: boolean;
+}
+
+/**
+ * Normalizes a URL path by ensuring it starts with a slash and adding a
+ * tenant / platform / segment prefix when needed.
+ *
+ * Prefixing is gated by `UI_API_GATEWAY_PROXY_WITH_TENANT` from the project
+ * config: it defaults to **on** when unset, and is only disabled by an explicit
+ * falsy value (`false` / `"false"` / `"0"` / ...). Both boolean and
+ * string-encoded booleans are accepted.
  *
  * @param url - The URL or path to normalize
+ * @param options - Optional normalization options
  * @returns The normalized URL path
  * @throws {TypeError} If url is not a non-empty string
  *
  * @example
  * ```ts
- * // Without tenant
+ * // Already under /api → only a leading slash is ensured
  * normalizeURL('api/users')      // '/api/users'
- * normalizeURL('/api/users')     // '/api/users'
  *
- * // With tenant (when auth.gatewayProxyWithTenant is true)
- * normalizeURL('api/users')      // '/api/platform/api/users'
- * normalizeURL('http://example.com/api/users') // 'http://example.com/api/platform/api/users'
+ * // Tenant prefix added (UI_TENANT_CODE)
+ * normalizeURL('users/list')     // '/api/{tenant}/users/list'
+ *
+ * // Platform prefix (when 'urp' is in UI_API_PLATFORM_PATHS)
+ * normalizeURL('urp/pub/load')   // '/api/platform/urp/pub/load'
+ *
+ * // Baseline gateway uses UI_BASE_LINE_TENANT_CODE
+ * normalizeURL('users/list', { baseline: true }) // '/api/{baselineTenant}/users/list'
+ *
+ * // Full URLs are returned untouched
+ * normalizeURL('http://example.com/api/users') // 'http://example.com/api/users'
  * ```
  */
-export function normalizeURL(url: string): string {
+export function normalizeURL(url: string, options?: NormalizeURLOptions): string {
   // Input validation
   if (!url || typeof url !== "string") {
     throw new TypeError("URL must be a non-empty string");
@@ -227,23 +255,52 @@ export function normalizeURL(url: string): string {
   }
 
   const wrappedUrl = url.startsWith("/") ? url : "/" + url;
-  const mark = wrappedUrl.split("/")[1];
-
-  const project_config_key = configer.get("storageKeys.projectConfig", "project_config");
-  const projectConfig = SessionContext.get(project_config_key) as any;
-  const platformApis = projectConfig?.UI_API_PLATFORM_PATHS || "";
-  const tenantCode = projectConfig?.UI_TENANT_CODE || "";
-
-  const platform = platformApis.split(",").find((api: string) => api === mark);
-
-  if (platform) {
-    return "/api/platform" + wrappedUrl;
-  }
-
-  // If URL already starts with /api, return as-is to avoid double prefix
-  if (mark === "api") {
+  const service = wrappedUrl.split("/")[1];
+  if (!service) {
     return wrappedUrl;
   }
 
-  return `/api/${tenantCode}` + wrappedUrl;
+  const projectConfigKey = configer.get<string>("storageKeys.projectConfig", "project_config");
+  const cfg = (SessionContext.get(projectConfigKey) as any) || {};
+  const baseLineTenant = cfg.UI_BASE_LINE_TENANT_CODE || "";
+
+  // Baseline gateway without a baseline tenant → no prefix (legacy early return)
+  if (options?.baseline && !baseLineTenant) {
+    return wrappedUrl;
+  }
+
+  // UI_API_GATEWAY_PROXY_WITH_TENANT master switch.
+  // Defaults to ON when unset; only an explicit falsy value disables prefixing.
+  // Existence is checked first because parseBool(undefined) === false.
+  const withTenantRaw = cfg.UI_API_GATEWAY_PROXY_WITH_TENANT;
+  const withTenant =
+    withTenantRaw === undefined || withTenantRaw === null ? true : parseBool(withTenantRaw);
+  if (!withTenant) {
+    return wrappedUrl;
+  }
+
+  // Already prefixed with /api → avoid double prefix
+  if (service === "api") {
+    return wrappedUrl;
+  }
+
+  // 1) Platform prefix
+  const platformApis: string[] = (cfg.UI_API_PLATFORM_PATHS || "").split(",").filter(Boolean);
+  if (platformApis.includes(service)) {
+    return "/api/platform" + wrappedUrl;
+  }
+
+  // 2) Segment prefix (UI_API_SEGMENT_PATHS: { segmentKey: "svc1,svc2" })
+  const segmentPaths: Record<string, string> = cfg.UI_API_SEGMENT_PATHS || {};
+  for (const segKey of Object.keys(segmentPaths)) {
+    const list = (segmentPaths[segKey] || "").split(",").filter(Boolean);
+    if (list.includes(service)) {
+      return `/api/${segKey}${wrappedUrl}`;
+    }
+  }
+
+  // 3) Tenant prefix — baseline tenant wins when on baseline gateway
+  const tenant =
+    options?.baseline && baseLineTenant ? baseLineTenant : cfg.UI_TENANT_CODE || "";
+  return `/api/${tenant}${wrappedUrl}`;
 }

@@ -292,5 +292,69 @@ describe("URL Utils", () => {
       const result = normalizeURL("users/list");
       expect(result).toBe("/api/mytenant/users/list");
     });
+
+    it("should add segment prefix when service matches UI_API_SEGMENT_PATHS", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_API_SEGMENT_PATHS: { custom: "svc1,svc2" },
+        UI_TENANT_CODE: "mytenant",
+      });
+
+      const result = normalizeURL("svc1/details");
+      expect(result).toBe("/api/custom/svc1/details");
+    });
+
+    it("should use baseline tenant when baseline is true", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_BASE_LINE_TENANT_CODE: "baselineTenant",
+        UI_TENANT_CODE: "normalTenant",
+      });
+
+      const result = normalizeURL("users/list", { baseline: true });
+      expect(result).toBe("/api/baselineTenant/users/list");
+    });
+
+    it("should return path as-is when baseline gateway has no baseline tenant", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_TENANT_CODE: "normalTenant",
+      });
+
+      const result = normalizeURL("users/list", { baseline: true });
+      expect(result).toBe("/users/list");
+    });
+
+    it("should not prefix when UI_API_GATEWAY_PROXY_WITH_TENANT is explicitly false", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_API_GATEWAY_PROXY_WITH_TENANT: false,
+        UI_TENANT_CODE: "mytenant",
+      });
+
+      const result = normalizeURL("users/list");
+      expect(result).toBe("/users/list");
+    });
+
+    it("should treat string 'false' as disabled (parseBool compatibility)", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_API_GATEWAY_PROXY_WITH_TENANT: "false",
+        UI_TENANT_CODE: "mytenant",
+      });
+
+      const result = normalizeURL("users/list");
+      expect(result).toBe("/users/list");
+    });
+
+    it("should prefix by default when UI_API_GATEWAY_PROXY_WITH_TENANT is unset", () => {
+      const { SessionContext } = require("../cache/session-context");
+      SessionContext.get.mockReturnValue({
+        UI_TENANT_CODE: "mytenant",
+      });
+
+      const result = normalizeURL("users/list");
+      expect(result).toBe("/api/mytenant/users/list");
+    });
   });
 });
