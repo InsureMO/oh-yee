@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-tools
 
+## 0.1.4
+
+### Patch Changes
+
+- 6453ab0: feat(URL Utils): enhance normalizeURL to support baseline and segment prefixes
+
 ## 0.1.3
 
 ### Patch Changes
