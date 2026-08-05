@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-x
 
+## 0.4.0
+
+### Minor Changes
+
+- 4850238: feat(Workflow): add workflow canvas component for AI workflow orchestration
+
 ## 0.3.2
 
 ### Patch Changes
