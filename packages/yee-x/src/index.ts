@@ -31,3 +31,5 @@ export { default as Sender } from './Sender';
 export * from './utils/stream';
 export * from './Welcome';
 export { default as Welcome } from './Welcome';
+export * from './Workflow';
+export { default as Workflow } from './Workflow';
