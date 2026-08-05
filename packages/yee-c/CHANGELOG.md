@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.17
+
+### Patch Changes
+
+- 05627f9: feat(Tree): add labelRender prop and extra field support
+
 ## 0.8.16
 
 ### Patch Changes
