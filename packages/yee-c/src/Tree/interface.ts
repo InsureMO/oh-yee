@@ -65,6 +65,13 @@ export type TreeNode<T> = {
    */
   childUids?: Array<string>;
   /**
+   * Extra content rendered after the label (e.g. tags, badges, action buttons).
+   * Only takes effect when `labelRender` is NOT provided at the Tree level.
+   * When `labelRender` is present, access this value via `node.extra` in your
+   * custom render function.
+   */
+  extra?: React.ReactNode | ((node: T) => React.ReactNode);
+  /**
    * Original data
    */
   original: T;
@@ -163,9 +170,17 @@ export interface TreeProps<T> extends DataAttributeProps {
    */
   multiple?: boolean;
   /**
+   * Custom render function for node label.
+   * When provided, takes full control of the label area rendering.
+   * The node's `extra` will NOT be appended automatically in this case;
+   * access it via `node.extra` if you need it in your custom render.
+   * The original `label` string is still used for `title` attribute fallback.
+   */
+  labelRender?: (node: TreeNode<T>) => React.ReactNode;
+  /**
    * Customize node key, title, children field names
    */
-  fieldNames?: { key?: keyof T; label?: keyof T; children?: keyof T };
+  fieldNames?: { key?: keyof T; label?: keyof T; children?: keyof T; extra?: keyof T };
   /**
    * Asynchronous data loading
    */

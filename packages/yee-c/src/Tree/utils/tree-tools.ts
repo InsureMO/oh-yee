@@ -181,6 +181,7 @@ export function tree2array<T extends Record<string, unknown>>(
     key: keyof T;
     label: keyof T;
     children: keyof T;
+    extra?: keyof T;
   },
 ): [TreeNode<T>[], Map<string, TreeNode<T>>] {
   if (!tree || (Array.isArray(tree) && tree.length === 0))
@@ -190,7 +191,7 @@ export function tree2array<T extends Record<string, unknown>>(
   const res: TreeNode<T>[] = [];
   const map = new Map<string, TreeNode<T>>();
 
-  const { key, label, children } = fieldNames;
+  const { key, label, children, extra } = fieldNames;
 
   /**
    * Walk returns the list of descendant uids so the parent can collect them
@@ -216,6 +217,7 @@ export function tree2array<T extends Record<string, unknown>>(
     const rawKey = node[key] as string | number;
     const _label = node[label];
     const _children = node[children] as T[] | undefined;
+    const _extra = extra ? node[extra] : node.extra;
     const nextPath = [...path, rawKey];
     const uid = pUid ? `${pUid}\x00${String(rawKey)}` : String(rawKey);
 
@@ -227,6 +229,7 @@ export function tree2array<T extends Record<string, unknown>>(
       key: rawKey,
       label: _label as string,
       title: node.title as string | undefined,
+      extra: _extra as React.ReactNode | ((node: T) => React.ReactNode) | undefined,
       path,
       pUid,
       depth,

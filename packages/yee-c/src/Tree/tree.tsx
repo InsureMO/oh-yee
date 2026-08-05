@@ -35,6 +35,7 @@ export const TreeContext = createContext<{
   icon?: React.ReactNode | ((props: any) => React.ReactNode);
   showLine?: boolean;
   switcherIcon?: [React.ReactNode, React.ReactNode];
+  labelRender?: (node: TreeNode<any>) => React.ReactNode;
   selectedUids: Set<string>;
   checkedUids: Set<string>;
   indeterminateUids: Set<string>;
@@ -203,6 +204,7 @@ const Tree = <T extends Record<string, unknown> = any>(
     onSelect,
     onCheck,
     onExpand,
+    labelRender,
     virtual = false,
     height,
     itemHeight = 28,
@@ -553,6 +555,7 @@ const Tree = <T extends Record<string, unknown> = any>(
       icon,
       showLine,
       switcherIcon,
+      labelRender,
       selectedUids: selectedUidSet,
       checkedUids: checkedUidSet,
       indeterminateUids: indeterminateUidSet,
@@ -575,6 +578,7 @@ const Tree = <T extends Record<string, unknown> = any>(
       icon,
       showLine,
       switcherIcon,
+      labelRender,
       selectedUidSet,
       checkedUidSet,
       indeterminateUidSet,
@@ -687,7 +691,7 @@ const Tree = <T extends Record<string, unknown> = any>(
     >
       <TreeContext.Provider value={contextValue}>
         <AnimatePresence initial={false}>
-          {segments.map((segment) => {
+          {segments.map((segment, index) => {
             if (segment.type === 'node') {
               return (
                 <TreeNodeComp node={segment.node} key={segment.node.uid} />
@@ -698,7 +702,7 @@ const Tree = <T extends Record<string, unknown> = any>(
             // source and cancels the drag before dragOver/drop can fire.
             return (
               <motion.div
-                key={segment.pUid + '\x01children'}
+                key={segment.pUid + index + '\x01children'}
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}

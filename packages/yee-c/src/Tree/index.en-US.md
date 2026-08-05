@@ -44,7 +44,8 @@ Tree is a hierarchical data display component.
 | icon | `React.ReactNode \| ((props: TreeProps<T>) => React.ReactNode)` | Icon before title (requires showIcon) | - |
 | switcherIcon | `[React.ReactNode, React.ReactNode]` | Expand/collapse switcher icons | - |
 | multiple | `boolean` | Whether tree node supports multiple selection | `false` |
-| fieldNames | `{ key?: keyof T; label?: keyof T; children?: keyof T }` | Custom key, label, children fields | - |
+| fieldNames | `{ key?: keyof T; label?: keyof T; children?: keyof T; extra?: keyof T }` | Custom key, label, children, extra fields | - |
+| labelRender | `(node: TreeNode<T>) => React.ReactNode` | Custom label render function. When provided, takes full control of the label area; the node's `extra` will NOT be appended automatically (access it via `node.extra` in your render function) | - |
 | loadData | `() => void` | Async load data | - |
 | dataSource | `Array<T> \| T` | Data source | - |
 | checkedKeys | `Array<string \| number>` | Checked tree nodes (controlled) | - |
@@ -54,3 +55,20 @@ Tree is a hierarchical data display component.
 | onCheck | `(checkedKeys: Array<string \| number>, params: { checked: boolean; checkedNodes: T[]; node: T }) => void` | Callback when checkbox is checked | - |
 | onSelect | `(selectedKeys: Array<string \| number>, params: { selected: boolean; selectedNodes: T[]; node: T }) => void` | Callback when tree node is clicked | - |
 | onExpand | `(expandedKeys: Array<string \| number>, params: { expanded: boolean; expandedNodes: T[]; node: T[] }) => void` | Callback when expand/collapse | - |
+
+### Data Node Fields
+
+| Property | Type | Description |
+| --- | --- | --- |
+| key | `string \| number` | Unique node identifier |
+| label | `string` | Display text |
+| children | `Array<T>` | Child nodes |
+| extra | `React.ReactNode \| ((node: T) => React.ReactNode)` | Extra content rendered after the label (e.g. tags, badges, action buttons). When `labelRender` is provided, extra is NOT rendered automatically — access it via `node.extra` in your render function |
+| disabled | `boolean` | Whether disabled |
+| icon | `React.ReactNode \| (() => React.ReactNode)` | Custom icon |
+
+### Relationship between extra and labelRender
+
+- **`extra` only**: Automatically appended after the default label text. Ideal for simple tags, badges, etc.
+- **`labelRender` only**: Full custom rendering of the node label area.
+- **Both present**: `labelRender` takes priority; extra is NOT automatically appended. To use extra in your custom render, access it via the callback parameter `node.extra`.

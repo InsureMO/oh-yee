@@ -21,6 +21,7 @@ const Node = <T extends Record<string, unknown> = any>(
     disabled,
     depth,
     icon,
+    extra,
     original,
     lines,
   } = node;
@@ -35,6 +36,7 @@ const Node = <T extends Record<string, unknown> = any>(
     indeterminateUids,
     expandedUids,
     switcherIcon,
+    labelRender,
     draggable,
     draggingUid,
     dropState,
@@ -105,6 +107,14 @@ const Node = <T extends Record<string, unknown> = any>(
     const _icon =
       typeof mergedIcon === 'function' ? mergedIcon(original) : mergedIcon;
 
+    // labelRender takes full control of the label content when provided
+    const content = labelRender ? labelRender(node) : label;
+
+    // extra: appended after the label content (only when labelRender is NOT used)
+    const _extra = !labelRender && extra
+      ? (typeof extra === 'function' ? extra(original) : extra)
+      : null;
+
     return (
       <Button
         className={clsx(`${prefixCls}-node-label`, {
@@ -116,7 +126,10 @@ const Node = <T extends Record<string, unknown> = any>(
         icon={showIcon ? _icon : undefined}
         onClick={disabled ? undefined : () => onSelect(uid)}
       >
-        {label}
+        {content}
+        {_extra && (
+          <span className={`${prefixCls}-node-extra`}>{_extra}</span>
+        )}
       </Button>
     );
   };
@@ -139,7 +152,7 @@ const Node = <T extends Record<string, unknown> = any>(
       <span
         aria-hidden="true"
         className={`${prefixCls}-node-indent`}
-        key={index}
+        key={`node-empty-${index}`}
       ></span>
     ));
   };
