@@ -1,6 +1,6 @@
 {
   "name": "@rainbow-oh/yee-tools",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A modern, type-safe TypeScript utility library",
   "keywords": [
     "typescript",

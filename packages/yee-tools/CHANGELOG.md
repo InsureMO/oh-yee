@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-tools
 
+## 0.1.5
+
+### Patch Changes
+
+- d73ef43: feat(fetch): add comprehensive test suite and enhance core fetch utilities
+
 ## 0.1.4
 
 ### Patch Changes
