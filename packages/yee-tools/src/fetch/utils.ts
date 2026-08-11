@@ -7,12 +7,10 @@
  * Sets request headers on an XMLHttpRequest instance
  * @param xhr - XMLHttpRequest instance
  * @param headers - Headers object
- * @param config - Request configuration object
  */
 export function buildHeaders(
   xhr: XMLHttpRequest,
   headers: Record<string, string>,
-  config: { responseType?: string; async?: boolean },
 ): void {
   for (const key in headers) {
     if (Object.prototype.hasOwnProperty.call(headers, key)) {
@@ -22,10 +20,37 @@ export function buildHeaders(
       }
     }
   }
+}
 
-  if (config.responseType && config.async !== false) {
-    xhr.responseType = config.responseType as any;
-  }
+/**
+ * Parses raw XMLHttpRequest response headers into a normalized record.
+ * @param rawHeaders - Raw headers returned by getAllResponseHeaders
+ * @returns Response headers keyed by lowercase header name
+ */
+export function parseResponseHeaders(
+  rawHeaders: string,
+): Record<string, string> {
+  const headers: Record<string, string> = {};
+
+  rawHeaders
+    .trim()
+    .split(/[\r\n]+/)
+    .forEach((line) => {
+      const separatorIndex = line.indexOf(':');
+      if (separatorIndex === -1) {
+        return;
+      }
+
+      const key = line.slice(0, separatorIndex).trim().toLowerCase();
+      const value = line.slice(separatorIndex + 1).trim();
+      if (!key) {
+        return;
+      }
+
+      headers[key] = headers[key] ? `${headers[key]}, ${value}` : value;
+    });
+
+  return headers;
 }
 
 /**
@@ -35,6 +60,69 @@ export function buildHeaders(
  */
 export function getType(param: any): string {
   return Object.prototype.toString.call(param).slice(8, -1);
+}
+
+const NATIVE_REQUEST_BODY_TYPES = new Set([
+  'FormData',
+  'Blob',
+  'File',
+  'URLSearchParams',
+  'ArrayBuffer',
+]);
+
+/**
+ * Serializes plain request data while preserving native browser body types.
+ * @param data - Request data
+ * @param dataFormat - Whether plain data should be serialized as JSON
+ * @returns Data ready to be sent by Fetch or XMLHttpRequest
+ */
+export function serializeRequestData(data: any, dataFormat = true): any {
+  if (
+    data === null ||
+    data === undefined ||
+    !dataFormat ||
+    typeof data === 'string'
+  ) {
+    return data ?? null;
+  }
+
+  if (
+    NATIVE_REQUEST_BODY_TYPES.has(getType(data)) ||
+    (typeof ArrayBuffer !== 'undefined' && ArrayBuffer.isView(data))
+  ) {
+    return data;
+  }
+
+  return JSON.stringify(data);
+}
+
+/**
+ * Clones request headers and removes a manually supplied multipart Content-Type
+ * when the browser should generate the FormData boundary.
+ * @param headers - Request headers
+ * @param data - Request data
+ * @param formDataWithBoundary - Whether the browser should generate the boundary
+ * @returns Normalized request headers
+ */
+export function normalizeRequestHeaders(
+  headers: Record<string, string> | undefined,
+  data: any,
+  formDataWithBoundary = true,
+): Record<string, string> | undefined {
+  if (!headers) {
+    return undefined;
+  }
+
+  const normalizedHeaders = { ...headers };
+  if (formDataWithBoundary && getType(data) === 'FormData') {
+    Object.keys(normalizedHeaders).forEach((key) => {
+      if (key.toLowerCase() === 'content-type') {
+        delete normalizedHeaders[key];
+      }
+    });
+  }
+
+  return normalizedHeaders;
 }
 
 /**

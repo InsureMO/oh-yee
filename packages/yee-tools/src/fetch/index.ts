@@ -79,6 +79,30 @@ import type {
  */
 export const ax = new Ax();
 
+/** Merge header records case-insensitively, with later records taking precedence. */
+function mergeHeaders(
+  ...headerRecords: Array<Record<string, string> | undefined>
+): Record<string, string> {
+  const mergedHeaders: Record<string, string> = {};
+  const headerNames = new Map<string, string>();
+
+  headerRecords.forEach((headers) => {
+    Object.entries(headers || {}).forEach(([name, value]) => {
+      const normalizedName = name.toLowerCase();
+      const existingName = headerNames.get(normalizedName);
+
+      if (existingName !== undefined && existingName !== name) {
+        delete mergedHeaders[existingName];
+      }
+
+      mergedHeaders[name] = value;
+      headerNames.set(normalizedName, name);
+    });
+  });
+
+  return mergedHeaders;
+}
+
 /**
  * Create a new Ax instance
  * @param defaultConfig - Default configuration, applied to all requests
@@ -102,12 +126,22 @@ export function createAxInstance(defaultConfig?: DefaultAxConfig): Ax {
     // Wrap original request method to apply default config
     const originalRequest = instance.request.bind(instance);
     instance.request = function <T = any>(configOrUrl: AxConfig | string): Promise<T> {
-      let config: AxConfig;
+      const requestConfig = (
+        typeof configOrUrl === "string" ? { url: configOrUrl } : configOrUrl
+      ) as AxConfig;
+      const config = { ...defaultConfig, ...requestConfig } as AxConfig;
 
-      if (typeof configOrUrl === "string") {
-        config = { ...defaultConfig, url: configOrUrl } as AxConfig;
-      } else {
-        config = { ...defaultConfig, ...configOrUrl };
+      if (config.noDefaultHeaders) {
+        if (requestConfig.headers) {
+          config.headers = { ...requestConfig.headers };
+        } else {
+          delete config.headers;
+        }
+      } else if (defaultConfig.headers || requestConfig.headers) {
+        config.headers = mergeHeaders(
+          defaultConfig.headers,
+          requestConfig.headers
+        );
       }
 
       return originalRequest<T>(config);

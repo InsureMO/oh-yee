@@ -83,13 +83,15 @@ export async function runRequestInterceptors(
  * @param config - The request configuration
  * @param response - The response data to process
  * @param status - The HTTP status code
+ * @param headers - The response headers
  * @returns The modified response after all interceptors have been applied
  */
 export async function runResponseInterceptors(
   interceptors: InterceptorItem<ResponseInterceptor>[],
   config: AxConfig,
   response: any,
-  status: number
+  status: number,
+  headers: Record<string, string> = {}
 ): Promise<any> {
   let currentResponse = response;
 
@@ -98,6 +100,7 @@ export async function runResponseInterceptors(
       config,
       response: currentResponse,
       status,
+      headers,
     });
   }
 

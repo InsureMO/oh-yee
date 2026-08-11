@@ -1,4 +1,3 @@
-import * as Util from '../type/type-utils';
 import { quoteBigInts } from './bigint';
 import {
   createInterceptors,
@@ -6,7 +5,15 @@ import {
   runRequestInterceptors,
   runResponseInterceptors,
 } from './interceptor';
-import { buildHeaders, getType, merger, omit } from './utils';
+import {
+  buildHeaders,
+  getType,
+  merger,
+  normalizeRequestHeaders,
+  omit,
+  parseResponseHeaders,
+  serializeRequestData,
+} from './utils';
 
 import {
   AxConfig,
@@ -15,6 +22,13 @@ import {
   ErrorResponse,
 } from './interface';
 
+/** Internal dispatcher result; public request methods still return data only. */
+interface AxDispatchResponse<T = any> {
+  data: T;
+  status: number;
+  headers: Record<string, string>;
+}
+
 /**
  * Get default request configuration
  * @returns Default configuration object
@@ -22,7 +36,6 @@ import {
 const getDefaultConfig = (): Partial<AxConfig> => {
   return {
     method: 'GET',
-    responseType: 'json',
     withCredentials: false,
   };
 };
@@ -53,13 +66,25 @@ function buildUrl(config: AxConfig): string {
 }
 
 /**
- * Process error messages for display
+ * Notifies the configured error handler without replacing the request failure.
  * @param config - Request configuration
  * @param response - Error response
+ * @param xhr - XMLHttpRequest instance when using the XHR dispatcher
  */
-function postErrorMsg(config: AxConfig, response: any): void {
-  if (config.onError) {
-    config.onError(response, undefined);
+function notifyError(
+  config: AxConfig,
+  response: any,
+  xhr?: XMLHttpRequest,
+): void {
+  const handler = config.onError || config.error;
+  if (!handler) {
+    return;
+  }
+
+  try {
+    handler(response, xhr);
+  } catch {
+    // Error handlers must not prevent the original request from rejecting.
   }
 }
 
@@ -108,22 +133,21 @@ class Ax implements AxInstance {
       );
 
       // Send actual request
-      let response: any;
+      let dispatchResponse: AxDispatchResponse;
       if (config.dispatcher === 'fetch') {
-        response = await this._fetchRequest(config);
+        dispatchResponse = await this._fetchRequest(config);
       } else {
-        response = await this._xhrRequest(config);
+        dispatchResponse = await this._xhrRequest(config);
       }
 
-      // Execute response interceptors
-      response = await runResponseInterceptors(
+      // Execute response interceptors and keep the public return value as data.
+      return await runResponseInterceptors(
         this.interceptors.response.getItems(),
         config,
-        response,
-        200,
+        dispatchResponse.data,
+        dispatchResponse.status,
+        dispatchResponse.headers,
       );
-
-      return response;
     } catch (error: any) {
       // Execute error interceptors
       const result = await runErrorInterceptors(
@@ -146,57 +170,124 @@ class Ax implements AxInstance {
    * @param config - Request configuration
    * @returns Promise<any> request result
    */
-  private async _fetchRequest(config: AxConfig): Promise<any> {
-    const { dataFormat = true, data } = config;
+  private async _fetchRequest(config: AxConfig): Promise<AxDispatchResponse> {
+    const { dataFormat = true, data, formDataWithBoundary = true } = config;
     const method = config.method?.toUpperCase() || 'GET';
+    const requestHeaders = normalizeRequestHeaders(
+      config.headers,
+      data,
+      formDataWithBoundary,
+    );
+
+    const requestInit = omit(config as any, [
+      'data',
+      'url',
+      'baseUrl',
+      'params',
+      'query',
+      'noDefaultHeaders',
+      'dispatcher',
+      'dataFormat',
+      'formDataWithBoundary',
+      'parseBigIntAsString',
+      'timeout',
+      'withCredentials',
+    ]) as RequestInit;
+    const externalSignal = requestInit.signal;
+    const timeout = config.timeout;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let abortSource: 'external' | 'timeout' | undefined;
+    let externalAbortListener: (() => void) | undefined;
+
+    if (
+      typeof timeout === 'number' &&
+      Number.isFinite(timeout) &&
+      timeout > 0
+    ) {
+      const controller = new AbortController();
+      externalAbortListener = () => {
+        if (!abortSource) {
+          abortSource = 'external';
+          controller.abort();
+        }
+      };
+
+      if (externalSignal?.aborted) {
+        externalAbortListener();
+      } else {
+        externalSignal?.addEventListener('abort', externalAbortListener, {
+          once: true,
+        });
+        timeoutId = setTimeout(() => {
+          if (!abortSource) {
+            abortSource = 'timeout';
+            controller.abort();
+          }
+        }, timeout);
+      }
+
+      requestInit.signal = controller.signal;
+    }
 
     try {
       const response = await fetch(buildUrl(config), {
-        ...(omit(config as any, [
-          'data',
-          'url',
-          'baseUrl',
-          'params',
-          'query',
-          'noDefaultHeaders',
-          'dispatcher',
-          'dataFormat',
-          'parseBigIntAsString',
-        ]) as RequestInit),
+        ...requestInit,
+        ...(requestHeaders ? { headers: requestHeaders } : {}),
+        credentials: config.withCredentials ? 'include' : 'same-origin',
         method: method,
         body:
-          method === 'GET'
-            ? undefined
-            : !Util.isString(data) && dataFormat
-              ? JSON.stringify(data)
-              : data,
+          method === 'GET' ? undefined : serializeRequestData(data, dataFormat),
       });
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      // Lossless big-int parsing: read as text → quoteBigInts → JSON.parse (avoids response.json() precision loss).
+      let responseData: any;
+
+      // Lossless big-int parsing: read as text → quoteBigInts → JSON.parse.
       if (config.parseBigIntAsString) {
-        return JSON.parse(quoteBigInts(await response.text()));
+        responseData = JSON.parse(quoteBigInts(await response.text()));
+      } else {
+        // Parse data based on response type
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          responseData = await response.json();
+        } else if (config.responseType === 'blob') {
+          responseData = await response.blob();
+        } else if (config.responseType === 'arrayBuffer') {
+          responseData = await response.arrayBuffer();
+        } else if (config.responseType === 'formData') {
+          responseData = await response.formData();
+        } else {
+          responseData = await response.text();
+        }
       }
 
-      // Parse data based on response type
-      const contentType = response.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        return await response.json();
-      } else if (config.responseType === 'blob') {
-        return await response.blob();
-      } else if (config.responseType === 'arrayBuffer') {
-        return await response.arrayBuffer();
-      } else if (config.responseType === 'formData') {
-        return await response.formData();
-      } else {
-        return await response.text();
-      }
+      const responseHeaders: Record<string, string> = {};
+      response.headers.forEach((value, key) => {
+        responseHeaders[key] = value;
+      });
+
+      return {
+        data: responseData,
+        status: response.status,
+        headers: responseHeaders,
+      };
     } catch (error) {
-      postErrorMsg(config, error);
-      throw error;
+      const requestError =
+        abortSource === 'timeout'
+          ? ({ status: 'timeout', error } as ErrorResponse)
+          : error;
+      notifyError(config, requestError);
+      throw requestError;
+    } finally {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+      if (externalSignal && externalAbortListener) {
+        externalSignal.removeEventListener('abort', externalAbortListener);
+      }
     }
   }
 
@@ -206,7 +297,16 @@ class Ax implements AxInstance {
    * @param config - Request configuration
    * @returns Promise<any> request result
    */
-  private _xhrRequest(config: AxConfig): Promise<any> {
+  private _xhrRequest(config: AxConfig): Promise<AxDispatchResponse> {
+    const responseType = config.responseType;
+    if (responseType === 'formData') {
+      return Promise.reject(
+        new TypeError(
+          "XHR does not support responseType 'formData'; use the Fetch dispatcher instead.",
+        ),
+      );
+    }
+
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       const {
@@ -215,13 +315,13 @@ class Ax implements AxInstance {
         async = true,
         data,
         onSuccess = config.onSuccess || config.success,
-        onError = config.onError || config.error,
         onProgress,
         onUploadProgress,
         onTimeout,
         onLoaded,
         formDataWithBoundary = true,
         dataFormat = true,
+        withCredentials = false,
       } = config;
 
       // Unified cleanup function
@@ -235,20 +335,29 @@ class Ax implements AxInstance {
         }
       };
 
-      // Handle FormData Content-Type
-      if ((!data || getType(data) === 'FormData') && headers) {
-        if (formDataWithBoundary) {
-          delete headers['Content-Type'];
-        }
-      }
+      const requestHeaders = normalizeRequestHeaders(
+        headers,
+        data,
+        formDataWithBoundary,
+      );
 
       const method = config.method?.toUpperCase() || 'GET';
       const fullpath = buildUrl(config);
 
       xhr.open(method, fullpath, async);
+      xhr.withCredentials = withCredentials;
 
-      if (headers) {
-        buildHeaders(xhr, headers, config);
+      if (async) {
+        if (config.parseBigIntAsString) {
+          xhr.responseType = 'text';
+        } else if (responseType) {
+          xhr.responseType =
+            responseType === 'arrayBuffer' ? 'arraybuffer' : responseType;
+        }
+      }
+
+      if (requestHeaders) {
+        buildHeaders(xhr, requestHeaders);
       }
 
       if (timeout) {
@@ -270,17 +379,25 @@ class Ax implements AxInstance {
           const contentType =
             xhr.getResponseHeader('content-type') ||
             'application/json;charset=UTF-8';
-          let response = xhr.response;
+          const rawResponse = config.parseBigIntAsString
+            ? xhr.responseText
+            : xhr.response;
+          let response = rawResponse;
 
-          // Try to parse JSON response
-          if (contentType.indexOf('application/json') > -1) {
+          // Parse JSON from its original text so unsafe integers can be quoted
+          // before JSON.parse converts them to imprecise JavaScript numbers.
+          if (
+            contentType.includes('application/json') &&
+            typeof rawResponse === 'string'
+          ) {
             try {
-              // Lossless big-int parsing: quote large integers first, then JSON.parse.
-              response = config.parseBigIntAsString
-                ? JSON.parse(quoteBigInts(xhr.response))
-                : JSON.parse(xhr.response);
+              response = JSON.parse(
+                config.parseBigIntAsString
+                  ? quoteBigInts(rawResponse)
+                  : rawResponse,
+              );
             } catch (error) {
-              response = xhr.response;
+              response = rawResponse;
             }
           }
 
@@ -288,15 +405,16 @@ class Ax implements AxInstance {
             if (onSuccess) {
               onSuccess(response, xhr);
             }
-            resolve(response);
+            resolve({
+              data: response,
+              status: xhr.status,
+              headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
+            });
           } else if (xhr.status === 401) {
             const errorResult = this._handle401Error();
             reject(errorResult);
           } else {
-            if (onError) {
-              onError(response, xhr);
-            }
-            postErrorMsg(config, response);
+            notifyError(config, response, xhr);
             reject({ status: 'error', error: xhr.response } as ErrorResponse);
           }
         }
@@ -320,9 +438,7 @@ class Ax implements AxInstance {
       // Error listener
       xhr.onerror = function (err) {
         cleanup(); // Clean up event listeners
-        if (onError) {
-          onError(xhr.response, xhr);
-        }
+        notifyError(config, xhr.response, xhr);
         reject({ status: 'error', error: err } as ErrorResponse);
       };
 
@@ -345,13 +461,7 @@ class Ax implements AxInstance {
         };
       }
 
-      // Prepare request data
-      let param = data || null;
-      if (param != null && !Util.isString(param) && dataFormat) {
-        // eslint-disable-line eqeqeq
-        param = JSON.stringify(param);
-      }
-
+      const param = serializeRequestData(data, dataFormat);
       xhr.send(param);
     });
   }
