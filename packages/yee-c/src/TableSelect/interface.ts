@@ -132,6 +132,11 @@ export interface TableSelectProps
    */
   disabled?: boolean;
   /**
+   * Whether data is loading
+   * @default false
+   */
+  loading?: boolean;
+  /**
    * Input direction (for special scenarios)
    */
   io?: 'out';

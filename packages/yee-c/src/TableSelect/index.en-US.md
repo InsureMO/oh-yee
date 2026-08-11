@@ -43,6 +43,7 @@ A component for selecting one or more options from table data, combining feature
 | value | `SelectionKeyType \| SelectionKeyType[]` | Controlled value | - |
 | defaultValue | `SelectionKeyType \| SelectionKeyType[]` | Default value | - |
 | disabled | `boolean` | Whether disabled | - |
+| loading | `boolean` | Whether data is loading; displays a gray loading indicator | `false` |
 | placement | `'bottomLeft' \| 'topLeft'` | Popup placement | `'bottomLeft'` |
 | searchable | `boolean` | Whether searchable | `true` |
 | searchOnInput | `boolean` | Whether to search while typing | `true` |

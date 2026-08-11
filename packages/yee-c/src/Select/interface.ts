@@ -1,7 +1,6 @@
-import type { TriggerProps } from '../Trigger';
 import type { SelectorProps } from '../Selector';
+import type { TriggerProps } from '../Trigger';
 import type { DataAttributeProps } from '../utils/types';
-
 export type Option = {
   /**
    * Whether disabled
@@ -26,7 +25,10 @@ export type Option = {
 };
 
 export interface SelectProps
-  extends DataAttributeProps, Pick<SelectorProps, 'size'>, Omit<TriggerProps, 'popup' | 'children'> {
+  extends
+    DataAttributeProps,
+    Pick<SelectorProps, 'size'>,
+    Omit<TriggerProps, 'popup' | 'children'> {
   /**
    * Custom class name prefix
    * */
@@ -60,6 +62,11 @@ export interface SelectProps
    * Whether disabled
    */
   disabled?: boolean;
+  /**
+   * Whether data is loading
+   * @default false
+   */
+  loading?: boolean;
   /**
    * Placeholder text for the select box
    */

@@ -32,6 +32,7 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
     defaultValue,
     checkable = false,
     multiple = false, // eslint-disable-line @typescript-eslint/no-unused-vars
+    loading,
     optionLabelProp = 'label',
     onChange,
     onFilter,
@@ -242,6 +243,7 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
         mode={mode}
         value={searchValue}
         options={selectedOptions}
+        loading={loading}
         selectedKeys={mergedValue}
         onOpenChange={handleOpenChange}
         onClear={handleClear}

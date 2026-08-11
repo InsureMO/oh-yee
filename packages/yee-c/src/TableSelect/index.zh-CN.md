@@ -43,6 +43,7 @@ toc: 'content'
 | value | `SelectionKeyType \| SelectionKeyType[]` | 受控值 | - |
 | defaultValue | `SelectionKeyType \| SelectionKeyType[]` | 默认值 | - |
 | disabled | `boolean` | 是否禁用 | - |
+| loading | `boolean` | 是否处于加载状态，加载时显示灰色加载图标 | `false` |
 | placement | `'bottomLeft' \| 'topLeft'` | 弹出层位置 | `'bottomLeft'` |
 | searchable | `boolean` | 是否可搜索 | `true` |
 | searchOnInput | `boolean` | 是否边输入边搜索 | `true` |

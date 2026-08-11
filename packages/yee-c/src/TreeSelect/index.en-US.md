@@ -37,6 +37,7 @@ Tree selection control.
 | defaultValue | `string \| number \| Array<string \| number>` | Default selected value | - |
 | value | `string \| number \| Array<string \| number>` | Selected value (controlled) | - |
 | disabled | `boolean` | Disable the component | - |
+| loading | `boolean` | Whether data is loading; displays a gray loading indicator | `false` |
 | placeholder | `string` | Placeholder text | - |
 | placement | `'top' \| 'bottom' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'` | Dropdown placement | `'bottomLeft'` |
 | searchable | `boolean` | Enable search functionality | `true` |

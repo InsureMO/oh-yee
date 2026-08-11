@@ -51,6 +51,7 @@ const Select = (baseprops: SelectProps) => {
     defaultValue,
     optionFilterProp = 'label',
     disabled,
+    loading,
     onChange,
     onFilter,
     virtual,
@@ -233,6 +234,7 @@ const Select = (baseprops: SelectProps) => {
         value={searchValue}
         options={options}
         disabled={disabled}
+        loading={loading}
         selectedKeys={mergedValue}
         onOpenChange={handleOpenChange}
         onClear={handleClear}

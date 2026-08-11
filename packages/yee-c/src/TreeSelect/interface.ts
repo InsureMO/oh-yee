@@ -38,6 +38,11 @@ export interface TreeSelectProps<T = any>
    */
   disabled?: boolean;
   /**
+   * Whether data is loading
+   * @default false
+   */
+  loading?: boolean;
+  /**
    * Placeholder text for the select box
    */
   placeholder?: string;

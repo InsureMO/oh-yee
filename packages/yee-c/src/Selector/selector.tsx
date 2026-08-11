@@ -224,7 +224,16 @@ const Selector = React.forwardRef(
       return (
         <span className={`${prefixCls}-arrow`}>
           {loading ? (
-            <Spin size="small" />
+            <Spin
+              variant="ring"
+              size="small"
+              style={
+                {
+                  '--m-indicator-dot-bg-color':
+                    'var(--yee-text-color-secondary)',
+                } as React.CSSProperties
+              }
+            />
           ) : suffix ? (
             typeof suffix === 'function' ? (
               suffix()

@@ -17,6 +17,7 @@ Select component for choosing from a set of options.
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Select"></code>
 <code src="./demo/size.tsx" title="Size" description="Different sizes of Select"></code>
 <code src="./demo/disabled.tsx" title="Disabled" description="Disabled Select"></code>
+<code src="./demo/loading.tsx" title="Loading" description="Loading Select, optionally combined with disabled"></code>
 <code src="./demo/allowClear.tsx" title="Allow Clear" description="Allow clear selected value"></code>
 <code src="./demo/multiple.tsx" title="Multiple" description="Multiple selection mode"></code>
 <code src="./demo/search.tsx" title="Search" description="Searchable Select"></code>
@@ -39,6 +40,7 @@ Select component for choosing from a set of options.
 | defaultValue | `string \| number \| Array<string \| number>` | Default value | - |
 | value | `string \| number \| Array<string \| number>` | Controlled value | - |
 | disabled | `boolean` | Whether disabled | - |
+| loading | `boolean` | Whether data is loading; displays a spinner in the selector suffix | `false` |
 | placeholder | `string` | Placeholder text | - |
 | placement | `'top' \| 'bottom' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'` | Dropdown position | - |
 | searchable | `boolean` | Whether searchable | - |

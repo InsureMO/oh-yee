@@ -37,6 +37,7 @@ toc: 'content'
 | defaultValue | `string \| number \| Array<string \| number>` | 默认值 | - |
 | value | `string \| number \| Array<string \| number>` | 受控值 | - |
 | disabled | `boolean` | 是否禁用 | - |
+| loading | `boolean` | 是否处于加载状态，加载时显示灰色加载图标 | `false` |
 | placeholder | `string` | 选择框默认文本 | - |
 | placement | `'top' \| 'bottom' \| 'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'` | 下拉框弹出位置 | `'bottomLeft'` |
 | searchable | `boolean` | 是否可搜索 | `true` |
