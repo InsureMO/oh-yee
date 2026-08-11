@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.18
+
+### Patch Changes
+
+- afaedd5: feat(Select): add loading state support across select components
+
 ## 0.8.17
 
 ### Patch Changes
