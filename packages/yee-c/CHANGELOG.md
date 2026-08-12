@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.19
+
+### Patch Changes
+
+- 93d8bae: feat(Form): enhance validation and error styling for form fields
+
 ## 0.8.18
 
 ### Patch Changes
