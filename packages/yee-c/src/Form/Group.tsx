@@ -12,7 +12,7 @@ import Grid from '../Grid';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
 import type { FieldGroupProps, NamePath, ValidateMessage } from './interface';
-import { runValidator } from './utils/validate';
+import { isEmpty, runValidator } from './utils/validate';
 
 const Group: React.FC<FieldGroupProps> = (props) => {
   const { label, required, rules, cols, children, style, className } = props;
@@ -54,9 +54,7 @@ const Group: React.FC<FieldGroupProps> = (props) => {
 
     // Required validation: error if any child field is empty
     if (required) {
-      const hasEmpty = childNames.some(
-        (name) => !values[name] && values[name] !== 0,
-      );
+      const hasEmpty = childNames.some((name) => isEmpty(values[name]));
       if (hasEmpty) {
         errors.push({
           name: childNames,

@@ -76,7 +76,7 @@ const CheckboxGroup = (baseprops: CheckboxGroupProps) => {
           <Checkbox
             disabled={disabled}
             {...option}
-            checked={mergedValue.includes(option.value)}
+            checked={mergedValue?.includes(option.value)}
             key={option.value || index}
           >
             {option.label}

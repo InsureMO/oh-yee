@@ -1,7 +1,12 @@
 import type { Rule } from '../interface';
 
-function isEmpty(v: unknown) {
-  return v === undefined || v === null || v === '' ? true : false;
+export function isEmpty(value: unknown) {
+  return (
+    value === undefined ||
+    value === null ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0)
+  );
 }
 
 function verifyRuleOfMin(min: number, value: unknown) {
