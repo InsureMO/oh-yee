@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.8.20
+
+### Patch Changes
+
+- 5e4da15: style: format code and enhance component accessibility
+
 ## 0.8.19
 
 ### Patch Changes
