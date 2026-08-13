@@ -180,7 +180,12 @@ export interface TreeProps<T> extends DataAttributeProps {
   /**
    * Customize node key, title, children field names
    */
-  fieldNames?: { key?: keyof T; label?: keyof T; children?: keyof T; extra?: keyof T };
+  fieldNames?: {
+    key?: keyof T;
+    label?: keyof T;
+    children?: keyof T;
+    extra?: keyof T;
+  };
   /**
    * Asynchronous data loading
    */

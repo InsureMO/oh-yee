@@ -14,7 +14,7 @@ toc: 'content'
 
 ## 代码演示
 
-<code src="./demo/basic.tsx" title="基础用法" description="搜索框的基础用法"></code>
+<code src="./demo/basic.tsx" title="基础用法" description="输入关键词筛选结果，并从下拉列表中选择"></code>
 <code src="./demo/size.tsx" title="尺寸" description="不同尺寸的搜索框"></code>
 <code src="./demo/allowClear.tsx" title="可清空" description="带清空图标的搜索框"></code>
 <code src="./demo/borderless.tsx" title="无边框" description="无边框的搜索框"></code>

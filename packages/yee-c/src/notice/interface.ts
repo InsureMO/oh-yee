@@ -7,11 +7,7 @@ export type PlacementType =
   | 'bottom';
 
 export type NoticeConfig = {
-  [dataAttribute: `data-${string}`]:
-    | string
-    | number
-    | boolean
-    | undefined;
+  [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   /**
    * Custom prefix class name
    */

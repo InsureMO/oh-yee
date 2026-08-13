@@ -66,13 +66,13 @@ const TableCell: React.FC<BodyCellProps> = (props) => {
       className,
     );
 
-    const styles = { ...style, width, maxWidth: width, textAlign: align };
+    const _style = { ...style, width, maxWidth: width, textAlign: align };
     const _title = typeof title === 'string' ? title : undefined;
 
     return {
       ...cellProperty,
       className: cls,
-      style: styles,
+      style: _style,
       title: _title,
     };
   };

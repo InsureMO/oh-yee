@@ -1,16 +1,22 @@
 import clsx from 'clsx';
 import { CircleAlert, CircleCheck, CircleX, Info, X } from 'lucide-react';
 import React from 'react';
+import Button from '../Button';
 import Progress from '../Progress';
 import useCountdown from '../hooks/useCountdown';
 import { NoticeProps } from './interface';
-import Button from '../Button';
 
 const icons = {
-  info: <Info size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
-  success: <CircleCheck size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
-  warning: <CircleAlert size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
-  error: <CircleX size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
+  info: <Info size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />,
+  success: (
+    <CircleCheck size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />
+  ),
+  warning: (
+    <CircleAlert size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />
+  ),
+  error: (
+    <CircleX size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />
+  ),
 };
 
 const Notice: React.FC<NoticeProps & { id: string | number }> = (props) => {
@@ -102,7 +108,7 @@ const Notice: React.FC<NoticeProps & { id: string | number }> = (props) => {
 
     return (
       <Button
-        variant='text'
+        variant="text"
         size="small"
         className={`${prefixCls}-close`}
         onClick={handleClose}

@@ -78,9 +78,9 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
   const navigationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
-  const navigationSettleTimeoutRef = useRef<
-    ReturnType<typeof setTimeout> | null
-  >(null);
+  const navigationSettleTimeoutRef = useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
 
   useEffect(() => {
     activeKeyRef.current = mergedActiveKey;
@@ -361,7 +361,10 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
         'pointerdown',
         onUserInterrupt as EventListener,
       );
-      container.removeEventListener('keydown', onUserInterrupt as EventListener);
+      container.removeEventListener(
+        'keydown',
+        onUserInterrupt as EventListener,
+      );
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }
@@ -419,7 +422,8 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
 
       // Handles instant scrolling and targets that are already in position.
       handleScroll();
-    }, [
+    },
+    [
       startNavigationLock,
       commitActiveKey,
       scrollToAnchor,

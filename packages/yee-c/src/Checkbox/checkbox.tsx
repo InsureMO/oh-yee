@@ -81,6 +81,7 @@ const Checkbox = (baseprops: CheckboxProps) => {
         <span
           className={clsx(`${prefixCls}-label`, classNames?.label)}
           style={styles?.label}
+          title={typeof children === 'string' ? children : undefined}
         >
           {children}
         </span>

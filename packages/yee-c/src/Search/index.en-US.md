@@ -14,7 +14,7 @@ A search input component for querying data.
 
 ## Code Demo
 
-<code src="./demo/basic.tsx" title="Basic" description="Basic usage of Search"></code>
+<code src="./demo/basic.tsx" title="Basic" description="Filter results as you type and select from the dropdown"></code>
 <code src="./demo/size.tsx" title="Size" description="Different sizes of Search"></code>
 <code src="./demo/allowClear.tsx" title="Allow Clear" description="Search with clear icon"></code>
 <code src="./demo/borderless.tsx" title="Borderless" description="Search without border"></code>

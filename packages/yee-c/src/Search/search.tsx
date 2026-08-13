@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { X } from 'lucide-react';
+import { Search as SearchIcon, X } from 'lucide-react';
 import React, {
   startTransition,
   useContext,
@@ -86,25 +86,12 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
       }
     }, [open]);
 
-    const handleSearch = (
-      e?:
-        | React.ChangeEvent<HTMLInputElement>
-        | React.MouseEvent<HTMLSpanElement>
-        | React.KeyboardEvent<HTMLInputElement>,
-    ) => {
-      if (disabled) return;
-      onSearch?.(searchValue);
-      if (e?.type === 'click') {
-        (e.target as HTMLElement).blur?.();
-      }
-    };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = e.target.value;
       setSearchValue(newValue);
       startTransition(() => {
         if (searchOnAction === 'typing') {
-          handleSearch(e);
+          onSearch?.(newValue);
         }
       });
     };
@@ -116,10 +103,28 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
       onSearch?.('');
     };
 
+    const handleSearchClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+      e.stopPropagation();
+      if (searchOnAction === 'button') {
+        onSearch?.(searchValue);
+      }
+    };
+
+    const renderSearchIcon = () => {
+      if (suffix === false) return null;
+      return (
+        <span
+          className={`${prefixCls}-search-icon`}
+          onClick={handleSearchClick}
+        >
+          {suffix || <SearchIcon size={14} />}
+        </span>
+      );
+    };
+
     const renderSuffix = () => {
-      const hasValue = !!searchValue;
-      const showClearIcon = allowClear && hasValue && !disabled;
-      const showSuffix = suffix || showClearIcon;
+      const showClearIcon = allowClear && !disabled && !rest.readOnly;
+      const showSuffix = suffix !== false || suffix !== null || showClearIcon;
 
       if (!showSuffix) {
         return null;
@@ -138,14 +143,16 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  handleClear(e as unknown as React.MouseEvent<HTMLSpanElement>);
+                  handleClear(
+                    e as unknown as React.MouseEvent<HTMLSpanElement>,
+                  );
                 }
               }}
             >
               <X size={14} aria-hidden="true" />
             </span>
           )}
-          {suffix}
+          {renderSearchIcon()}
         </div>
       );
     };
@@ -177,6 +184,7 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
         prefixCls,
         {
           [`${prefixCls}-disabled`]: disabled,
+          [`${prefixCls}-with-clear`]: allowClear && searchValue,
           [`${prefixCls}-borderless`]: !bordered,
           [`${prefixCls}-small`]: size === 'small',
           [`${prefixCls}-large`]: size === 'large',
@@ -188,7 +196,12 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
     const hasPopup = Array.isArray(options) || Array.isArray(suggestions);
 
     const popup = (
-      <div className={`${prefixCls}-popup`} tabIndex={0} id={listboxId} role="listbox">
+      <div
+        className={`${prefixCls}-popup`}
+        tabIndex={0}
+        id={listboxId}
+        role="listbox"
+      >
         {Array.isArray(options) ? (
           <List
             focusedKey={focusedKey}
@@ -208,7 +221,7 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
     );
 
     return (
-      <Trigger popup={popup} open={open} onOpenChange={setOpen}>
+      <Trigger popup={popup} open={open} stretch="width" onOpenChange={setOpen}>
         <div
           className={getRootClassName()}
           style={style}
@@ -238,7 +251,11 @@ const Search = React.forwardRef<HTMLInputElement, SearchProps>(
                 : undefined
             }
           />
-          {loading ? <Spin variant="ring" size="small" aria-label="Loading" /> : renderSuffix()}
+          {loading ? (
+            <Spin variant="ring" size="small" aria-label="Loading" />
+          ) : (
+            renderSuffix()
+          )}
         </div>
       </Trigger>
     );

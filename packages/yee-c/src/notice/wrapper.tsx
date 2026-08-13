@@ -146,8 +146,7 @@ class NoticeWrapper {
 
     const placement = params.placement ?? 'topRight';
     const key = params.key ?? this.uuid();
-    const keyGeneration =
-      this.generationByKey.get(key) ?? this.generation++;
+    const keyGeneration = this.generationByKey.get(key) ?? this.generation++;
     this.generationByKey.set(key, keyGeneration);
 
     const affectedPlacements = new Set<PlacementType>([placement]);

@@ -1,6 +1,12 @@
 // @vitest-environment jsdom
 
-import { act, cleanup, render, renderHook, screen } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  render,
+  renderHook,
+  screen,
+} from '@testing-library/react';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -227,7 +233,11 @@ describe('message', () => {
 
     act(() => {
       currentApi.info({ content: 'first', duration: 0, onClose: firstOnClose });
-      currentApi.info({ content: 'second', duration: 0, onClose: secondOnClose });
+      currentApi.info({
+        content: 'second',
+        duration: 0,
+        onClose: secondOnClose,
+      });
       currentApi.clear();
     });
 
@@ -276,8 +286,8 @@ describe('message', () => {
     expect(element?.getAttribute('role')).toBe('alert');
     expect(element?.getAttribute('aria-live')).toBe('assertive');
     expect(element?.querySelector('.yee-message-content')?.tagName).toBe('DIV');
-    expect(element?.querySelector('.yee-message-icon')?.getAttribute('aria-hidden')).toBe(
-      'true',
-    );
+    expect(
+      element?.querySelector('.yee-message-icon')?.getAttribute('aria-hidden'),
+    ).toBe('true');
   });
 });

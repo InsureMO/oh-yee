@@ -199,6 +199,7 @@ const TransferList: React.FC<TransferListProps> = (props) => {
         {checkboxOptions.map((option, index) => (
           <li className={`${prefixCls}-list-item`} key={option.value || index}>
             <Checkbox
+              className={`${prefixCls}-list-item-checkbox`}
               value={option.value}
               disabled={option.disabled || disabled}
               checked={checkedKeys.includes(option.value)}

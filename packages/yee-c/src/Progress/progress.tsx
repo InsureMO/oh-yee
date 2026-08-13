@@ -107,7 +107,11 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuetext={`${percent}%`}
-        aria-label={status === 'error' ? `Progress: ${percent}%, error` : `Progress: ${percent}%`}
+        aria-label={
+          status === 'error'
+            ? `Progress: ${percent}%, error`
+            : `Progress: ${percent}%`
+        }
         ref={ref}
         {...dataAttrs}
       >

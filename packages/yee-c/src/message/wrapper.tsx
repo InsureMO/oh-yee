@@ -93,8 +93,7 @@ class MessageWrapper {
     }
 
     const key = params.key ?? this.uuid();
-    const keyGeneration =
-      this.generationByKey.get(key) ?? this.generation++;
+    const keyGeneration = this.generationByKey.get(key) ?? this.generation++;
     this.generationByKey.set(key, keyGeneration);
     const nextMessage = {
       ...params,

@@ -32,7 +32,8 @@ export type Point =
   | 'cl'
   | 'cr';
 
-export interface TriggerProps extends Omit<RcTriggerProps, 'children'>, DataAttributeProps {
+export interface TriggerProps
+  extends Omit<RcTriggerProps, 'children'>, DataAttributeProps {
   /**
    * Custom class name prefix
    */

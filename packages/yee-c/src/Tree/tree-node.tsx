@@ -111,9 +111,12 @@ const Node = <T extends Record<string, unknown> = any>(
     const content = labelRender ? labelRender(node) : label;
 
     // extra: appended after the label content (only when labelRender is NOT used)
-    const _extra = !labelRender && extra
-      ? (typeof extra === 'function' ? extra(original) : extra)
-      : null;
+    const _extra =
+      !labelRender && extra
+        ? typeof extra === 'function'
+          ? extra(original)
+          : extra
+        : null;
 
     return (
       <Button
@@ -127,9 +130,7 @@ const Node = <T extends Record<string, unknown> = any>(
         onClick={disabled ? undefined : () => onSelect(uid)}
       >
         {content}
-        {_extra && (
-          <span className={`${prefixCls}-node-extra`}>{_extra}</span>
-        )}
+        {_extra && <span className={`${prefixCls}-node-extra`}>{_extra}</span>}
       </Button>
     );
   };

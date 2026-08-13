@@ -68,7 +68,7 @@ export interface SearchProps
   /**
    * @description Suffix content
    */
-  suffix?: React.ReactNode;
+  suffix?: React.ReactNode | false;
 
   /**
    * @description Whether disabled
@@ -96,7 +96,7 @@ export interface SearchProps
    * @description trigger search event
    * @default 'typing'
    */
-  searchOnAction?: 'typing' | 'enter';
+  searchOnAction?: 'typing' | 'enter' | 'button';
 
   /**
    * @description suggest data

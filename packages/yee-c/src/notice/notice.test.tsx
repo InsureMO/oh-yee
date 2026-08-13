@@ -90,7 +90,11 @@ describe('notice', () => {
     render(<NoticeHarness />);
 
     act(() => {
-      currentApi.info({ content: 'first', duration: 300, onClose: firstOnClose });
+      currentApi.info({
+        content: 'first',
+        duration: 300,
+        onClose: firstOnClose,
+      });
     });
     act(() => vi.advanceTimersByTime(200));
     act(() => {
@@ -295,7 +299,9 @@ describe('notice', () => {
     expect(screen.queryByText('still paused')).not.toBeNull();
     expect(onClose).not.toHaveBeenCalled();
 
-    fireEvent.mouseLeave(screen.getByText('still paused').closest('.yee-notice')!);
+    fireEvent.mouseLeave(
+      screen.getByText('still paused').closest('.yee-notice')!,
+    );
     act(() => vi.advanceTimersByTime(300));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -365,7 +371,9 @@ describe('notice', () => {
     expect(screen.queryByText('pause enabled')).not.toBeNull();
     expect(onClose).not.toHaveBeenCalled();
 
-    fireEvent.mouseLeave(screen.getByText('pause enabled').closest('.yee-notice')!);
+    fireEvent.mouseLeave(
+      screen.getByText('pause enabled').closest('.yee-notice')!,
+    );
     act(() => vi.advanceTimersByTime(300));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -439,9 +447,9 @@ describe('notice', () => {
     expect(element.getAttribute('role')).toBe('button');
     expect(element.getAttribute('aria-live')).toBe('assertive');
     expect(element.getAttribute('tabindex')).toBe('0');
-    expect(element.querySelector('.yee-notice-icon')?.getAttribute('aria-hidden')).toBe(
-      'true',
-    );
+    expect(
+      element.querySelector('.yee-notice-icon')?.getAttribute('aria-hidden'),
+    ).toBe('true');
 
     fireEvent.keyDown(element, { key: 'Enter' });
     fireEvent.keyDown(element, { key: ' ' });

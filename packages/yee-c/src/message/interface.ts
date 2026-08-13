@@ -1,9 +1,5 @@
 export type MessageConfig = {
-  [dataAttribute: `data-${string}`]:
-    | string
-    | number
-    | boolean
-    | undefined;
+  [dataAttribute: `data-${string}`]: string | number | boolean | undefined;
   /**
    * Custom prefix class name
    */

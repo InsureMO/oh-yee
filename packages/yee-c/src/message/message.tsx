@@ -5,10 +5,16 @@ import Spin from '../Spin';
 import type { MessageProps } from './interface';
 
 const icons = {
-  info: <Info size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
-  success: <CircleCheck size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
-  warning: <CircleAlert size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
-  error: <CircleX size={22} fill='currentColor' stroke="#FFF" strokeWidth={2} />,
+  info: <Info size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />,
+  success: (
+    <CircleCheck size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />
+  ),
+  warning: (
+    <CircleAlert size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />
+  ),
+  error: (
+    <CircleX size={22} fill="currentColor" stroke="#FFF" strokeWidth={2} />
+  ),
   loading: <Spin className="loading" type="spin" size="small" height="auto" />,
 };
 

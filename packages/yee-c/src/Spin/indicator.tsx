@@ -60,7 +60,7 @@ const SpokesSpinner: React.FC<SpinProps> = (props) => {
     styles,
     width,
     height,
-    color
+    color,
   } = props;
 
   const containerSize = sizeMap[size];

@@ -1,8 +1,8 @@
 // @import '../../style/index.less';
 
-@search-prefix-cls: ~'yee-search';
+@cls: ~'yee-search';
 
-.@{search-prefix-cls} {
+.@{cls} {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -69,9 +69,10 @@
     border: none;
     outline: none;
     transition: all 0.2s;
+    line-height: var(--yee-input-line-height);
 
     &::placeholder {
-      color: var(--yee-text-color-placeholder);
+      color: var(--yee-placeholder-color);
     }
 
     &-disabled {
@@ -99,12 +100,28 @@
     color: var(--yee-input-fix-icon-color);
   }
 
+  &-search-icon {
+    display: inline-flex;
+  }
+
   &-clear-icon {
+    display: inline-flex;
+    padding: var(--yee-input-clear-padding);
+    color: var(--yee-input-clear-color);
+    background-color: var(--yee-input-clear-bg-color);
+    border-radius: 50%;
+    visibility: hidden;
     cursor: pointer;
     transition: color 0.2s;
 
     &:hover {
       color: var(--yee-input-fix-icon-click-hover-color);
+    }
+  }
+
+  &&-with-clear:not(.@{cls}-disabled):hover {
+    .@{cls}-clear-icon {
+      visibility: visible;
     }
   }
 

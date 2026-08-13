@@ -229,7 +229,10 @@ export function tree2array<T extends Record<string, unknown>>(
       key: rawKey,
       label: _label as string,
       title: node.title as string | undefined,
-      extra: _extra as React.ReactNode | ((node: T) => React.ReactNode) | undefined,
+      extra: _extra as
+        | React.ReactNode
+        | ((node: T) => React.ReactNode)
+        | undefined,
       path,
       pUid,
       depth,

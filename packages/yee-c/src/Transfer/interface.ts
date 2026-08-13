@@ -124,7 +124,6 @@ export interface TransferListProps {
   oneWay?: boolean;
   pagination?: Omit<PaginationProps, 'total'> & { total?: number };
   draggable?: boolean;
-  targetMinCountLimit?: number;
   onDrop?: (dropObj: Record<string, any>, dataSource: DataSource[]) => void;
   onDelete?: (key: string | number) => void;
   onItemSelect: (keys: Array<string | number>) => void;

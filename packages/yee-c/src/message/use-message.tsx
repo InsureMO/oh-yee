@@ -6,11 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import {
-  MessageApi,
-  MessageType,
-  WrapperedMessageConfig,
-} from './interface';
+import { MessageApi, MessageType, WrapperedMessageConfig } from './interface';
 import Message from './message';
 
 const useMessage = () => {
@@ -78,9 +74,7 @@ const useMessage = () => {
       updateMessages((current) => {
         const exists = current.some((item) => item.key === key);
         if (exists) {
-          return current.map((item) =>
-            item.key === key ? nextMessage : item,
-          );
+          return current.map((item) => (item.key === key ? nextMessage : item));
         }
         return [...current, nextMessage];
       });
