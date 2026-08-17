@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-tools
 
+## 0.2.0
+
+### Minor Changes
+
+- 95e0aa2: feat(fetch): enhance error handling with interceptor metadata preservation
+
 ## 0.1.5
 
 ### Patch Changes
