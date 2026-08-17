@@ -5,6 +5,8 @@ import type {
   InterceptorId,
   InterceptorItem,
   AxConfig,
+  ErrorResponse,
+  ErrorType,
   Interceptors,
 } from "./interface";
 
@@ -108,27 +110,76 @@ export async function runResponseInterceptors(
 }
 
 /**
+ * Copy the optional error metadata fields that are present on the error.
+ * @param error - The error value thrown or rejected by a dispatcher
+ * @returns An object with whichever metadata fields the error carries
+ */
+function pickErrorMetadata(error: unknown): {
+  httpStatus?: number;
+  statusText?: string;
+  headers?: Record<string, string>;
+  response?: any;
+} {
+  const source =
+    error !== null && typeof error === "object"
+      ? (error as Partial<ErrorResponse>)
+      : undefined;
+
+  return {
+    ...(source?.httpStatus !== undefined
+      ? { httpStatus: source.httpStatus }
+      : {}),
+    ...(source?.statusText !== undefined
+      ? { statusText: source.statusText }
+      : {}),
+    ...(source?.headers !== undefined ? { headers: source.headers } : {}),
+    ...(source?.response !== undefined ? { response: source.response } : {}),
+  };
+}
+
+export interface ErrorInterceptorMetadata {
+  type?: ErrorType;
+  httpStatus?: number;
+  statusText?: string;
+  headers?: Record<string, string>;
+  response?: any;
+}
+
+/**
  * Execute the error interceptor chain sequentially
  * @param interceptors - Array of error interceptor items to execute
  * @param config - The request configuration
  * @param error - The error that occurred
  * @param isTimeout - Whether the error was caused by a timeout
+ * @param metadata - Dispatcher metadata that should not alter the public error
  * @returns An object indicating whether the error was handled, with the response or error
  */
 export async function runErrorInterceptors(
   interceptors: InterceptorItem<ErrorInterceptor>[],
   config: AxConfig,
   error: any,
-  isTimeout: boolean
+  isTimeout: boolean,
+  metadata: ErrorInterceptorMetadata = {},
 ): Promise<{ handled: boolean; response?: any; error?: any }> {
   let lastError = error;
 
   for (const { fn } of interceptors) {
     try {
+      const errorResponse =
+        lastError && typeof lastError === "object"
+          ? (lastError as Partial<ErrorResponse>)
+          : undefined;
+
       // If the interceptor returns a value, the error has been handled
       const result = await fn({
         config,
         error: lastError,
+        type:
+          metadata.type ??
+          errorResponse?.type ??
+          ((isTimeout ? "timeout" : "unknown") as ErrorType),
+        ...pickErrorMetadata(lastError),
+        ...metadata,
         isTimeout,
       });
       return { handled: true, response: result };

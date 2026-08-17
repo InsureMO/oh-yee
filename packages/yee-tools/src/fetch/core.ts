@@ -19,7 +19,9 @@ import {
   AxConfig,
   AxInstance,
   DefaultAxConfig,
+  ErrorInterceptorContext,
   ErrorResponse,
+  ErrorType,
 } from './interface';
 
 /** Internal dispatcher result; public request methods still return data only. */
@@ -27,6 +29,38 @@ interface AxDispatchResponse<T = any> {
   data: T;
   status: number;
   headers: Record<string, string>;
+}
+
+type ErrorMetadata = Pick<
+  ErrorInterceptorContext,
+  'type' | 'httpStatus' | 'statusText' | 'headers' | 'response'
+>;
+
+const DISPATCH_FAILURE = Symbol('dispatchFailure');
+
+interface DispatchFailure {
+  [DISPATCH_FAILURE]: true;
+  publicError: any;
+  metadata: ErrorMetadata;
+}
+
+function createDispatchFailure(
+  publicError: any,
+  metadata: ErrorMetadata,
+): DispatchFailure {
+  return {
+    [DISPATCH_FAILURE]: true,
+    publicError,
+    metadata,
+  };
+}
+
+function isDispatchFailure(error: unknown): error is DispatchFailure {
+  return (
+    error !== null &&
+    typeof error === 'object' &&
+    DISPATCH_FAILURE in error
+  );
 }
 
 /**
@@ -63,6 +97,34 @@ function buildUrl(config: AxConfig): string {
   }
 
   return fullpath;
+}
+
+function getFetchResponseHeaders(response: Response): Record<string, string> {
+  const headers: Record<string, string> = {};
+  response.headers.forEach((value, key) => {
+    headers[key] = value;
+  });
+  return headers;
+}
+
+async function parseFetchErrorResponse(
+  response: Response,
+  parseBigIntAsString?: boolean,
+): Promise<any> {
+  const responseText = await response.text();
+  const contentType = response.headers.get('content-type') || '';
+
+  if (!contentType.includes('application/json') || !responseText) {
+    return responseText;
+  }
+
+  try {
+    return JSON.parse(
+      parseBigIntAsString ? quoteBigInts(responseText) : responseText,
+    );
+  } catch {
+    return responseText;
+  }
 }
 
 /**
@@ -149,12 +211,17 @@ class Ax implements AxInstance {
         dispatchResponse.headers,
       );
     } catch (error: any) {
-      // Execute error interceptors
+      const failure = isDispatchFailure(error) ? error : undefined;
+      const publicError = failure?.publicError ?? error;
+
+      // Execute error interceptors with dispatcher metadata kept separate from
+      // the public rejection value.
       const result = await runErrorInterceptors(
         this.interceptors.error.getItems(),
         config,
-        error,
-        error?.status === 'timeout',
+        publicError,
+        publicError?.status === 'timeout',
+        failure?.metadata,
       );
 
       if (result.handled) {
@@ -198,6 +265,7 @@ class Ax implements AxInstance {
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
     let abortSource: 'external' | 'timeout' | undefined;
     let externalAbortListener: (() => void) | undefined;
+    let responseReceived = false;
 
     if (
       typeof timeout === 'number' &&
@@ -238,9 +306,31 @@ class Ax implements AxInstance {
         body:
           method === 'GET' ? undefined : serializeRequestData(data, dataFormat),
       });
+      responseReceived = true;
+
+      const responseHeaders = getFetchResponseHeaders(response);
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        let errorResponse: any;
+        try {
+          errorResponse = await parseFetchErrorResponse(
+            response,
+            config.parseBigIntAsString,
+          );
+        } catch {
+          errorResponse = undefined;
+        }
+
+        const httpError = new Error(
+          `HTTP ${response.status}: ${response.statusText}`,
+        );
+        throw createDispatchFailure(httpError, {
+          type: 'http',
+          httpStatus: response.status,
+          statusText: response.statusText,
+          headers: responseHeaders,
+          response: errorResponse,
+        });
       }
 
       let responseData: any;
@@ -264,23 +354,38 @@ class Ax implements AxInstance {
         }
       }
 
-      const responseHeaders: Record<string, string> = {};
-      response.headers.forEach((value, key) => {
-        responseHeaders[key] = value;
-      });
-
       return {
         data: responseData,
         status: response.status,
         headers: responseHeaders,
       };
     } catch (error) {
-      const requestError =
+      if (isDispatchFailure(error)) {
+        notifyError(config, error.publicError);
+        throw error;
+      }
+
+      const errorName = error instanceof Error ? error.name : undefined;
+      const type: ErrorType =
         abortSource === 'timeout'
-          ? ({ status: 'timeout', error } as ErrorResponse)
-          : error;
-      notifyError(config, requestError);
-      throw requestError;
+          ? 'timeout'
+          : abortSource === 'external' || errorName === 'AbortError'
+            ? 'abort'
+            : responseReceived
+              ? 'parse'
+              : 'network';
+
+      if (abortSource === 'timeout') {
+        const timeoutError = {
+          status: 'timeout',
+          error,
+        } as ErrorResponse;
+        notifyError(config, timeoutError);
+        throw createDispatchFailure(timeoutError, { type });
+      }
+
+      notifyError(config, error);
+      throw createDispatchFailure(error, { type });
     } finally {
       if (timeoutId !== undefined) {
         clearTimeout(timeoutId);
@@ -401,6 +506,10 @@ class Ax implements AxInstance {
             }
           }
 
+          const responseHeaders = parseResponseHeaders(
+            xhr.getAllResponseHeaders(),
+          );
+
           if (xhr.status >= 200 && xhr.status <= 299) {
             if (onSuccess) {
               onSuccess(response, xhr);
@@ -408,14 +517,26 @@ class Ax implements AxInstance {
             resolve({
               data: response,
               status: xhr.status,
-              headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
+              headers: responseHeaders,
             });
           } else if (xhr.status === 401) {
             const errorResult = this._handle401Error();
             reject(errorResult);
           } else {
             notifyError(config, response, xhr);
-            reject({ status: 'error', error: xhr.response } as ErrorResponse);
+            const publicError = {
+              status: 'error',
+              error: xhr.response,
+            } as ErrorResponse;
+            reject(
+              createDispatchFailure(publicError, {
+                type: 'http',
+                httpStatus: xhr.status,
+                statusText: xhr.statusText,
+                headers: responseHeaders,
+                response,
+              }),
+            );
           }
         }
       };
@@ -439,7 +560,16 @@ class Ax implements AxInstance {
       xhr.onerror = function (err) {
         cleanup(); // Clean up event listeners
         notifyError(config, xhr.response, xhr);
-        reject({ status: 'error', error: err } as ErrorResponse);
+        const publicError = {
+          status: 'error',
+          error: err,
+        } as ErrorResponse;
+        reject(
+          createDispatchFailure(publicError, {
+            type: 'network',
+            response: xhr.response,
+          }),
+        );
       };
 
       // Timeout listener
@@ -447,17 +577,30 @@ class Ax implements AxInstance {
         xhr.ontimeout = function (event) {
           cleanup(); // Clean up event listeners
           onTimeout(event, xhr);
-          reject({ status: 'timeout', error: event } as ErrorResponse);
+          const publicError = {
+            status: 'timeout',
+            error: event,
+          } as ErrorResponse;
+          reject(
+            createDispatchFailure(publicError, {
+              type: 'timeout',
+            }),
+          );
         };
       } else {
         // If onTimeout is not provided, use default timeout handling
         xhr.ontimeout = function () {
           // eslint-disable-line @typescript-eslint/no-unused-vars
           cleanup();
-          reject({
+          const publicError = {
             status: 'timeout',
             error: 'Request timeout',
-          } as ErrorResponse);
+          } as ErrorResponse;
+          reject(
+            createDispatchFailure(publicError, {
+              type: 'timeout',
+            }),
+          );
         };
       }
 

@@ -46,13 +46,43 @@ export interface ProgressEvent {
 }
 
 /**
+ * Error type
+ */
+export type ErrorType =
+  | "http"
+  | "network"
+  | "timeout"
+  | "abort"
+  | "parse"
+  | "unknown";
+
+/**
  * Error response interface
+ *
+ * The optional metadata fields below (message / type / httpStatus /
+ * statusText / headers / response) are NOT populated by the library on
+ * rejected requests — dispatcher metadata reaches error interceptors via
+ * ErrorInterceptorContext instead. Set them only when constructing your own
+ * ErrorResponse (e.g. rethrowing a structured error from an error
+ * interceptor); they are then forwarded to subsequent interceptors.
  */
 export interface ErrorResponse {
   /** Error status */
   status: "error" | "timeout";
-  /** Error message */
+  /** Original error */
   error: any;
+  /** Reserved; not set by the library */
+  message?: string;
+  /** Error type */
+  type?: ErrorType;
+  /** HTTP status code; unavailable when no response was received */
+  httpStatus?: number;
+  /** HTTP status text */
+  statusText?: string;
+  /** Response headers */
+  headers?: Record<string, string>;
+  /** Parsed response body */
+  response?: any;
   /** Trace ID */
   traceId?: string;
   /** Trace info */
@@ -158,12 +188,26 @@ export interface ResponseInterceptorContext {
 
 /**
  * Error interceptor context
+ *
+ * The metadata fields (type / httpStatus / statusText / headers / response)
+ * are populated by the dispatcher for every failure; httpStatus and headers
+ * are absent when no HTTP response was received (e.g. network errors).
  */
 export interface ErrorInterceptorContext {
   /** Request config */
   config: AxConfig;
-  /** Error message */
+  /** Original error or error response */
   error: any;
+  /** Error type */
+  type: ErrorType;
+  /** HTTP status code; unavailable when no response was received */
+  httpStatus?: number;
+  /** HTTP status text */
+  statusText?: string;
+  /** Response headers */
+  headers?: Record<string, string>;
+  /** Parsed response body */
+  response?: any;
   /** Whether it is a timeout error */
   isTimeout: boolean;
 }

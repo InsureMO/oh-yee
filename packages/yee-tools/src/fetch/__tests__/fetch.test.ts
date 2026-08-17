@@ -246,9 +246,77 @@ describe('YeeTools fetch', () => {
           error: errorHandler,
         }),
       ).rejects.toBe(requestError);
-
       expect(errorHandler).toHaveBeenCalledTimes(1);
       expect(errorHandler).toHaveBeenCalledWith(requestError, undefined);
+    });
+
+    it('preserves the HTTP failure while exposing metadata to error interceptors', async () => {
+      fetchMock.mockResolvedValue(
+        createFetchResponse(
+          { message: 'server exploded' },
+          {
+            status: 500,
+            statusText: 'Internal Server Error',
+            headers: {
+              'content-type': 'application/json',
+              'x-trace-id': 'trace-1',
+            },
+          },
+        ),
+      );
+      const errorHandler = jest.fn();
+      const instance = new Ax();
+      const interceptor = jest.fn(({ error }) => {
+        throw error;
+      });
+      instance.interceptors.error.use(interceptor);
+
+      const rejection = await instance
+        .get('/broken', {
+          dispatcher: 'fetch',
+          error: errorHandler,
+        })
+        .catch((error) => error);
+
+      expect(rejection).toBeInstanceOf(Error);
+      expect(rejection).toHaveProperty(
+        'message',
+        'HTTP 500: Internal Server Error',
+      );
+      expect(errorHandler).toHaveBeenCalledWith(rejection, undefined);
+      expect(interceptor).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: rejection,
+          type: 'http',
+          httpStatus: 500,
+          statusText: 'Internal Server Error',
+          headers: expect.objectContaining({ 'x-trace-id': 'trace-1' }),
+          response: { message: 'server exploded' },
+          isTimeout: false,
+        }),
+      );
+    });
+
+    it('classifies malformed JSON without replacing the parse error', async () => {
+      const response = createFetchResponse(undefined);
+      const parseError = new SyntaxError('Unexpected token');
+      (response.json as unknown as jest.Mock).mockRejectedValueOnce(parseError);
+      fetchMock.mockResolvedValue(response);
+      const instance = new Ax();
+      const interceptor = jest.fn(({ error }) => {
+        throw error;
+      });
+      instance.interceptors.error.use(interceptor);
+
+      await expect(
+        instance.get('/invalid-json', { dispatcher: 'fetch' }),
+      ).rejects.toBe(parseError);
+      expect(interceptor).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: parseError,
+          type: 'parse',
+        }),
+      );
     });
 
     it('enforces timeout only when a positive timeout is provided', async () => {
@@ -269,8 +337,9 @@ describe('YeeTools fetch', () => {
         .catch((error) => error);
 
       await jest.advanceTimersByTimeAsync(25);
-      await expect(requestResult).resolves.toMatchObject({
+      await expect(requestResult).resolves.toEqual({
         status: 'timeout',
+        error: expect.any(DOMException),
       });
     });
   });
@@ -340,22 +409,36 @@ describe('YeeTools fetch', () => {
       expect(headers).toHaveProperty('Content-Type', 'multipart/form-data');
     });
 
-    it('calls onError once for an HTTP failure', async () => {
+    it('preserves the XHR HTTP failure while exposing interceptor metadata', async () => {
       FakeXMLHttpRequest.nextStatus = 500;
       FakeXMLHttpRequest.nextResponse = '{"message":"failed"}';
       const onError = jest.fn();
       const instance = new Ax();
+      const interceptor = jest.fn(({ error }) => {
+        throw error;
+      });
+      instance.interceptors.error.use(interceptor);
 
-      await expect(instance.get('/failure', { onError })).rejects.toMatchObject(
-        {
-          status: 'error',
-        },
-      );
+      await expect(instance.get('/failure', { onError })).rejects.toEqual({
+        status: 'error',
+        error: '{"message":"failed"}',
+      });
 
       expect(onError).toHaveBeenCalledTimes(1);
       expect(onError).toHaveBeenCalledWith(
         { message: 'failed' },
         FakeXMLHttpRequest.instances[0],
+      );
+      expect(interceptor).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: {
+            status: 'error',
+            error: '{"message":"failed"}',
+          },
+          type: 'http',
+          httpStatus: 500,
+          response: { message: 'failed' },
+        }),
       );
     });
   });

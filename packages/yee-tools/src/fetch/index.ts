@@ -40,10 +40,9 @@
  * });
  *
  * // Error handling
- * ax.interceptors.error.use(({ error }) => {
- *   if (error.status === 401) {
- *     window.location.href = '/login';
- *     return;
+ * ax.interceptors.error.use(({ error, type, httpStatus, response }) => {
+ *   if (type === 'http' && httpStatus && httpStatus >= 500) {
+ *     console.error('Server error:', response);
  *   }
  *   throw error;
  * });
@@ -61,6 +60,7 @@ import type {
   ResponseType,
   Dispatcher,
   ErrorResponse,
+  ErrorType,
   ProgressEvent,
   // Interceptor-related types
   Interceptors,
@@ -217,6 +217,7 @@ export type {
   ResponseType,
   Dispatcher,
   ErrorResponse,
+  ErrorType,
   ProgressEvent,
   // Interceptor-related types
   Interceptors,
