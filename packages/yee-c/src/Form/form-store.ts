@@ -9,6 +9,7 @@ import validate from './utils/validate';
 import type {
   Callbacks,
   FieldEntity,
+  FieldStatusData,
   FormInstance,
   FormListField,
   FormListOperation,
@@ -43,6 +44,7 @@ export class FormStore {
   private fieldEntities: FieldEntity[] = [];
   private fieldMap: Map<Name, FieldEntity> = new Map();
   private validateMessages: Map<Name, ValidateMessage[]> = new Map();
+  private fieldStatuses: Map<Name, FieldStatusData> = new Map();
   private initialized = false;
   private initialValues: Store = {};
   // List key manager
@@ -112,6 +114,76 @@ export class FormStore {
       return messages[0];
     }
     return null;
+  };
+
+  getFieldStatus = (name: NamePath): FieldStatusData | null => {
+    const normalizedName = stringifyPath(getNamePath(name));
+    const manualStatus = this.fieldStatuses.get(normalizedName);
+    const validateMessage = this.validateMessages.get(normalizedName)?.[0];
+
+    // Rule errors reflect the current value and auto-clear once validation
+    // passes, so they always take display precedence — a stale manually set
+    // status must never hide why submission failed.
+    if (validateMessage?.status === 'error') {
+      return {
+        status: 'error',
+        message: validateMessage.message,
+      };
+    }
+
+    if (manualStatus) {
+      return { ...manualStatus };
+    }
+
+    if (validateMessage) {
+      return {
+        status: validateMessage.status,
+        message: validateMessage.message,
+      };
+    }
+
+    return null;
+  };
+
+  setFieldStatus = (name: NamePath, status: FieldStatusData | null) => {
+    const normalizedName = stringifyPath(getNamePath(name));
+    if (!normalizedName) return;
+
+    if (status) {
+      this.fieldStatuses.set(normalizedName, { ...status });
+    } else {
+      this.fieldStatuses.delete(normalizedName);
+    }
+
+    this.fieldMap.get(normalizedName)?.onStoreChange();
+  };
+
+  // Delete entries whose key equals or nests under one of `names`
+  // (no names = delete all). Keeps rule messages and manual statuses in
+  // sync with the fields that reset/clear actually touched.
+  private deleteRelatedEntries = <T>(
+    entries: Map<Name, T>,
+    names?: NamePath[],
+  ): void => {
+    if (!names) {
+      entries.clear();
+      return;
+    }
+
+    const normalizedNames = names.map((name) =>
+      stringifyPath(getNamePath(name)),
+    );
+    Array.from(entries.keys()).forEach((fieldName) => {
+      if (
+        normalizedNames.some((name) => isRelatedNamePath(fieldName, name))
+      ) {
+        entries.delete(fieldName);
+      }
+    });
+  };
+
+  private clearFieldStatuses = (names?: NamePath[]) => {
+    this.deleteRelatedEntries(this.fieldStatuses, names);
   };
 
   setFieldsValue = (newStore: Store, trigger: TRIGGER = 'onChange') => {
@@ -196,7 +268,10 @@ export class FormStore {
       });
     }
     this.callbacks?.onReset?.();
-    this.validateMessages.clear();
+    // A named reset only clears rule messages of the fields it touched;
+    // unrelated fields keep their (still valid) validation state.
+    this.deleteRelatedEntries(this.validateMessages, name);
+    this.clearFieldStatuses(name);
     this.groupEntities.forEach((entity) => entity.reset());
     this.refreshField();
   };
@@ -208,6 +283,7 @@ export class FormStore {
       acc[name] = undefined;
       return acc;
     }, {} as Store);
+    this.clearFieldStatuses(name);
     this.setFieldsValue(clearStore, 'clear');
   };
 
@@ -567,7 +643,19 @@ export class FormStore {
     const { onFinish, onFinishFailed } = this.callbacks;
     const fieldErrors = await this.validateFields();
     const groupErrors = await this.validateGroups(true);
-    const allErrors = [...fieldErrors, ...groupErrors];
+    const statusErrors = Array.from(this.fieldStatuses.entries())
+      .filter(
+        ([, status]) => status.status === 'error' && status.blocking === true,
+      )
+      .map(
+        ([name, status]): ValidateMessage => ({
+          name,
+          message: status.message ?? '',
+          value: this.getFieldValue(name),
+          status: 'error',
+        }),
+      );
+    const allErrors = [...fieldErrors, ...groupErrors, ...statusErrors];
     if (allErrors.length === 0) {
       onFinish?.(this.getFieldsValue());
     } else {
@@ -580,6 +668,8 @@ export class FormStore {
   getForm(): FormInstance {
     return {
       getFieldValidate: this.getFieldValidate,
+      getFieldStatus: this.getFieldStatus,
+      setFieldStatus: this.setFieldStatus,
       getFieldsValue: this.getFieldsValue,
       getFieldValue: this.getFieldValue,
       setFieldsValue: this.setFieldsValue,

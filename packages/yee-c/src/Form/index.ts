@@ -29,6 +29,8 @@ Form.List = List;
 
 export type {
   FieldGroupProps,
+  FieldStatus,
+  FieldStatusData,
   FormInstance,
   FormListProps,
   FormProps,

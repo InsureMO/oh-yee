@@ -44,7 +44,7 @@ const Field: React.FC<FieldProps> = (props) => {
   } = props;
   const {
     getCallbacks,
-    getFieldValidate,
+    getFieldStatus,
     getFieldValue,
     getFieldsValue,
     setFieldsValue,
@@ -88,7 +88,7 @@ const Field: React.FC<FieldProps> = (props) => {
     );
   };
 
-  const validate = getFieldValidate?.(normalizedName);
+  const fieldStatus = getFieldStatus?.(normalizedName);
 
   // Normalize tooltip into { icon, ...tooltipProps }, or null when not provided.
   // Everything except `icon` is forwarded to <Tooltip>, so any Tooltip prop
@@ -152,8 +152,7 @@ const Field: React.FC<FieldProps> = (props) => {
         `${prefixCls}-item`,
         `${prefixCls}-item-${layout}`,
         {
-          [`${prefixCls}-item-${validate?.status}`]:
-            validate && validate.status,
+          [`${prefixCls}-item-${fieldStatus?.status}`]: fieldStatus?.status,
         },
         className,
       )}
@@ -200,18 +199,18 @@ const Field: React.FC<FieldProps> = (props) => {
         </div>
       </div>
       <AnimatePresence>
-        {validate && (
+        {fieldStatus?.message && (
           <motion.small
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.16 }}
             className={clsx(`${prefixCls}-item-additional`, {
-              [`${prefixCls}-item-additional-${validate.status}`]:
-                validate.status,
+              [`${prefixCls}-item-additional-${fieldStatus.status}`]:
+                fieldStatus.status,
             })}
           >
-            {validate.message}
+            {fieldStatus.message}
           </motion.small>
         )}
       </AnimatePresence>

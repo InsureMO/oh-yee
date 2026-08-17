@@ -107,6 +107,15 @@ export interface FormInstance<Values = any> {
    */
   getFieldValidate: (name: Name) => ValidateMessage | null;
   /**
+   * Get the displayed field status. Rule validation errors take display
+   * precedence; otherwise a manually set status overrides validation.
+   */
+  getFieldStatus: (name: NamePath) => FieldStatusData | null;
+  /**
+   * Set or clear a field's displayed status. Pass null to clear it.
+   */
+  setFieldStatus: (name: NamePath, status: FieldStatusData | null) => void;
+  /**
    * Get field value
    */
   getFieldValue: (name: Name) => StoreValue;
@@ -253,11 +262,20 @@ export type Rule = {
     | Array<'onBlur' | 'onChange' | 'onSubmit'>;
 };
 
+export type FieldStatus = 'error' | 'success' | 'warning' | 'info';
+
+export type FieldStatusData = {
+  status: FieldStatus;
+  message?: string;
+  /** Whether an error status should prevent form submission. */
+  blocking?: boolean;
+};
+
 export type ValidateMessage = {
   name: NamePath | NamePath[] | undefined;
   message: string;
   value: unknown;
-  status: 'error' | 'success' | 'warning' | 'info';
+  status: FieldStatus;
 };
 
 export type FieldConfigurableTooltip = Omit<TooltipProps, 'children'> & {

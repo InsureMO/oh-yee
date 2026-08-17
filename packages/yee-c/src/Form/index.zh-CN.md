@@ -23,6 +23,7 @@ toc: 'content'
 <code src="./demo/layout.tsx" title="表单布局" description="不同的表单布局"></code>
 <code src="./demo/validate.tsx" title="表单校验" description="表单校验功能"></code>
 <code src="./demo/async-validate.tsx" title="异步校验" description="async validator 实现服务端唯一性校验等异步场景"></code>
+<code src="./demo/field-status.tsx" title="动态字段状态" description="通过 setFieldStatus 动态设置 error、warning、success 和 info 状态及提示"></code>
 
 ## API
 
@@ -51,12 +52,14 @@ toc: 'content'
 | 属性名                | 类型                                                                                       | 描述                                       |
 | --------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------ |
 | getFieldValidate      | `(name: Name) => ValidateMessage \| null` | 获取字段验证（异步校验未完成时可能读到旧值，最终会随 onStoreChange 更新） |
+| getFieldStatus        | `(name: NamePath) => FieldStatusData \| null` | 获取字段当前展示状态；规则校验错误优先展示，其余情况手动设置的状态优先于校验结果 |
+| setFieldStatus        | `(name: NamePath, status: FieldStatusData \| null) => void` | 动态设置字段状态和提示，传入 `null` 清除；仅 `blocking: true` 的 error 会阻止提交 |
 | getFieldValue         | `(name: Name) => StoreValue`                                                               | 获取字段值                                 |
 | submit                | `() => Promise<ValidateMessage[]>`                                                          | 提交表单（异步，校验完成后才触发 onFinish） |
 | getFieldsValue        | `() => Values`                                                                             | 获取所有字段值                             |
 | setFieldsValue        | `(newStore: Store, trigger?: TRIGGER) => void`                                             | 设置字段值                                 |
 | setCallbacks          | `(callbacks: Callbacks) => void`                                                           | 设置回调                                   |
-| resetFields           | `(name?: Name[]) => void`                                                                  | 重置字段                                   |
+| resetFields           | `(name?: Name[]) => void`                                                                  | 重置字段（值与校验状态；指定 name 时只影响相关字段） |
 | clearFields           | `(name?: Name[]) => void`                                                                  | 清空字段                                   |
 | validateField         | `(name: Name, trigger?: 'onChange' \| 'onBlur') => Promise<ValidateMessage[]>`                      | 校验单个字段                               |
 | validateFields        | `(names?: Name[], trigger?: TRIGGER) => Promise<ValidateMessage[]>`                                 | 校验多个字段                               |
@@ -128,6 +131,8 @@ toc: 'content'
 | Store             | `Record<string, StoreValue>`                                                                                                                                                          |
 | Name              | `string`                                                                                                                                                                              |
 | NamePath          | `string \| string[] \| number \| (string \| number)[]`                                                                                                                                |
+| FieldStatus       | `'error' \| 'success' \| 'warning' \| 'info'`                                                                                                                                           |
+| FieldStatusData   | `{ status: FieldStatus; message?: string; blocking?: boolean }`                                                                                                                           |
 | ValidateMessage   | `{ name: NamePath \| NamePath[] \| undefined; message: string; value: unknown; status: 'error' \| 'success' \| 'warning' \| 'info' }`                                                 |
 | FieldEntity       | `{ props: fieldProps & { name?: NamePath }; onStoreChange: () => void }`                                                                                                              |
 | TRIGGER           | `'onChange' \| 'onBlur' \| 'onSubmit' \| 'reset' \| 'clear' \| 'update'`                                                                                                              |

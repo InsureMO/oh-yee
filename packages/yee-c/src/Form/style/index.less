@@ -79,6 +79,18 @@
       &-error {
         color: var(--yee-error-color);
       }
+
+      &-warning {
+        color: var(--yee-warning-color);
+      }
+
+      &-success {
+        color: var(--yee-success-color);
+      }
+
+      &-info {
+        color: var(--yee-info-color);
+      }
     }
 
     // 表单校验态：在此重定义控件读取的 border / box-shadow 变量，
@@ -96,6 +108,20 @@
       --yee-input-hover-border-color: var(--yee-warning-color-hover);
       --yee-input-focus-bs-color: var(--yee-warning-color-border);
       --yee-checkbox-border-color: var(--yee-warning-color);
+    }
+
+    &&-success {
+      --yee-input-border-color: var(--yee-success-color);
+      --yee-input-hover-border-color: var(--yee-success-color-hover);
+      --yee-input-focus-bs-color: var(--yee-success-color-border);
+      --yee-checkbox-border-color: var(--yee-success-color);
+    }
+
+    &&-info {
+      --yee-input-border-color: var(--yee-info-color);
+      --yee-input-hover-border-color: var(--yee-info-color-hover);
+      --yee-input-focus-bs-color: var(--yee-info-color-border);
+      --yee-checkbox-border-color: var(--yee-info-color);
     }
   }
 }

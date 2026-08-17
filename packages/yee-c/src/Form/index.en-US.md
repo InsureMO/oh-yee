@@ -21,6 +21,7 @@ High performance form component with data scope management.
 <code src="./demo/layout.tsx" title="Layout" description="Different form layouts"></code>
 <code src="./demo/validate.tsx" title="Validation" description="Form validation"></code>
 <code src="./demo/async-validate.tsx" title="Async Validation" description="async validator for server-side checks like uniqueness"></code>
+<code src="./demo/field-status.tsx" title="Dynamic Field Status" description="Set error, warning, success, and info feedback dynamically with setFieldStatus"></code>
 <code src="./demo/list.tsx" title="Form List" description="Form list field usage"></code>
 <code src="./demo/form-table.tsx" title="Form Table" description="Form table field usage"></code>
 <code src="./demo/dynamic.tsx" title="Dynamic Form" description="Dynamic form items"></code>
@@ -52,12 +53,14 @@ High performance form component with data scope management.
 | Property              | Type                                                                                       | Description               |
 | --------------------- | ------------------------------------------------------------------------------------------ | ------------------------- |
 | getFieldValidate      | `(name: Name) => ValidateMessage \| null` | Get field validation (may lag before async validation completes; updates via onStoreChange) |
+| getFieldStatus        | `(name: NamePath) => FieldStatusData \| null` | Get the displayed field status; rule validation errors take display precedence, otherwise a manually set status overrides validation |
+| setFieldStatus        | `(name: NamePath, status: FieldStatusData \| null) => void` | Set field status and message dynamically, or pass `null` to clear it; only blocking errors prevent submission |
 | getFieldValue         | `(name: Name) => StoreValue`                                                           | Get field value           |
 | submit                | `() => Promise<ValidateMessage[]>`                                                          | Submit form (async, triggers onFinish only after validation completes) |
 | getFieldsValue        | `() => Values`                                                                             | Get all field values      |
 | setFieldsValue        | `(newStore: Store, trigger?: TRIGGER) => void`                                            | Set field values          |
 | setCallbacks          | `(callbacks: Callbacks) => void`                                                           | Set callbacks             |
-| resetFields           | `(name?: Name[]) => void`                                                              | Reset fields              |
+| resetFields           | `(name?: Name[]) => void`                                                              | Reset fields (values and validation state; passing name only affects related fields) |
 | clearFields           | `(name?: Name[]) => void`                                                              | Clear fields              |
 | validateField         | `(name: Name, trigger?: 'onChange' \| 'onBlur') => Promise<ValidateMessage[]>`                 | Validate single field     |
 | validateFields        | `(names?: Name[], trigger?: TRIGGER) => Promise<ValidateMessage[]>`                              | Validate multiple fields  |
@@ -129,6 +132,8 @@ High performance form component with data scope management.
 | Store           | `Record<string, StoreValue>`                                  |
 | Name            | `string`                                                      |
 | NamePath        | `string \| string[] \| number \| (string \| number)[]`        |
+| FieldStatus     | `'error' \| 'success' \| 'warning' \| 'info'`                 |
+| FieldStatusData | `{ status: FieldStatus; message?: string; blocking?: boolean }`   |
 | ValidateMessage | `{ name: NamePath \| NamePath[] \| undefined; message: string; value: unknown; status: 'error' \| 'success' \| 'warning' \| 'info' }` |
 | FieldEntity     | `{ props: fieldProps & { name?: NamePath }; onStoreChange: () => void }` |
 | TRIGGER         | `'onChange' \| 'onBlur' \| 'onSubmit' \| 'reset' \| 'clear' \| 'update'` |
