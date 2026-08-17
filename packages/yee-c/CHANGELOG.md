@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.9.0
+
+### Minor Changes
+
+- 6407ea2: feat(Form): add field status management and enhanced validation display
+
 ## 0.8.20
 
 ### Patch Changes
