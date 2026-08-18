@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.9.1
+
+### Patch Changes
+
+- 9127753: feat: enhance form functionality and improve validation handling
+
 ## 0.9.0
 
 ### Minor Changes
