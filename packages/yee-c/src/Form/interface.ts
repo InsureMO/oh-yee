@@ -2,6 +2,11 @@ import type { TooltipProps } from '../Tooltip';
 import type { DataAttributeProps } from '../utils/types';
 
 export type StoreValue = any;
+/**
+ * Form values keyed by field name. Nested-path fields (e.g.
+ * name="user.name") hold their values in nested objects:
+ * `{ user: { name: 'tom' } }`
+ */
 export type Store = Record<string, StoreValue>;
 export type Name = string;
 export type NamePath = string | string[] | number | (string | number)[];
@@ -41,7 +46,9 @@ export interface FormProps<Values = any> extends DataAttributeProps {
    */
   disabled?: boolean;
   /**
-   * Initial values
+   * Initial values, keyed by field name. Nested-path fields (e.g.
+   * name="user.name") take their values from nested objects:
+   * `{ user: { name: 'tom' } }`
    */
   initialValues?: Store;
   /**
@@ -90,7 +97,7 @@ export interface Callbacks<Values = any> {
   /**
    * Triggered on failed form submit
    * */
-  onFinishFailed?: (err: Values) => void;
+  onFinishFailed?: (errors: ValidateMessage[]) => void;
   /**
    * Triggered on form reset
    * */

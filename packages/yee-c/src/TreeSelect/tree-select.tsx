@@ -78,6 +78,23 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
     [dataSource, mergedFieldNames],
   );
 
+  // itemMap 以 uid（Tree 内部的路径键）为键，仅根节点 uid === key。
+  // 选中项展示 / getNodes 需要按外部 value（raw key）查找，否则嵌套节点
+  // 查不到会走 Selector 的孤儿值回退，直接显示 value 本身
+  const keyItemMap = useMemo(() => {
+    const map = new Map<
+      string,
+      { key: string | number; label: string; original: T }
+    >();
+    itemMap.forEach((item) => {
+      const k = String(item.key);
+      if (!map.has(k)) {
+        map.set(k, item);
+      }
+    });
+    return map;
+  }, [itemMap]);
+
   // Filter data source for searching
   const filteredDataSource = useMemo(() => {
     const sourceArray = Array.isArray(dataSource) ? dataSource : [dataSource];
@@ -125,7 +142,7 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
   const selectedOptions = useMemo(() => {
     return mergedValue
       .map((key: string | number) => {
-        const item = itemMap.get(key as string);
+        const item = keyItemMap.get(String(key));
         if (!item) return null;
 
         const label =
@@ -140,7 +157,7 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
         };
       })
       .filter(Boolean);
-  }, [mergedValue, itemMap, optionLabelProp]);
+  }, [mergedValue, keyItemMap, optionLabelProp]);
 
   const getNodes = (keys: string | number | Array<string | number>) => {
     if (keys === '' || keys === null) {
@@ -151,10 +168,10 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
         return [];
       }
       return keys
-        .map((key) => itemMap.get(key as string)?.original)
+        .map((key) => keyItemMap.get(String(key))?.original)
         .filter((node): node is T => node !== undefined);
     }
-    return itemMap.get(keys as string)?.original;
+    return keyItemMap.get(String(keys))?.original;
   };
 
   const handleSelect = (selectedKeys: Array<string | number>) => {

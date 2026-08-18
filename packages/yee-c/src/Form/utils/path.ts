@@ -62,7 +62,8 @@ export function setValueByPath(
 
   for (let i = 0; i < path.length - 1; i++) {
     const key = String(path[i]);
-    if (!(key in current)) {
+    // eslint-disable-next-line eqeqeq
+    if (current[key] == null) {
       // 根据下一个键的类型创建容器
       current[key] = typeof path[i + 1] === 'number' ? [] : {};
     }

@@ -1,4 +1,5 @@
 import { Button, Form, Grid, Input, Space } from '@rainbow-oh/yee-c';
+import type { ValidateMessage } from '@rainbow-oh/yee-c';
 import React from 'react';
 
 export default () => {
@@ -8,8 +9,8 @@ export default () => {
     console.log('Received values:', values);
   };
 
-  const onFinishFailed = (errorInfo: unknown) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = (errors: ValidateMessage[]) => {
+    console.log('Failed:', errors);
   };
 
   return (

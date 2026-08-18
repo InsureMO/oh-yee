@@ -34,6 +34,7 @@ export type {
   FormInstance,
   FormListProps,
   FormProps,
+  ValidateMessage,
 } from './interface';
 
 export default Form;

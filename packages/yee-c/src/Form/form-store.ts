@@ -174,9 +174,7 @@ export class FormStore {
       stringifyPath(getNamePath(name)),
     );
     Array.from(entries.keys()).forEach((fieldName) => {
-      if (
-        normalizedNames.some((name) => isRelatedNamePath(fieldName, name))
-      ) {
+      if (normalizedNames.some((name) => isRelatedNamePath(fieldName, name))) {
         entries.delete(fieldName);
       }
     });
@@ -188,7 +186,11 @@ export class FormStore {
 
   setFieldsValue = (newStore: Store, trigger: TRIGGER = 'onChange') => {
     if (trigger === 'reset' || trigger === 'clear') {
-      this.store = newStore;
+      // 'reset' replaces the whole store; 'clear' merges the given keys
+      // (typically undefined) over the store so a partial clear never
+      // wipes values of unrelated fields.
+      this.store =
+        trigger === 'reset' ? newStore : { ...this.store, ...newStore };
       if (trigger === 'reset') {
         this.callbacks?.onReset?.();
       } else {
@@ -279,12 +281,29 @@ export class FormStore {
   clearFields = (name?: Name[]) => {
     const names = name || Object.keys(this.store);
 
-    const clearStore = names.reduce((acc, name) => {
-      acc[name] = undefined;
-      return acc;
-    }, {} as Store);
+    // Merge undefined over the current store (nested paths included) —
+    // unrelated fields keep their values.
+    let clearStore = { ...this.store };
+    names.forEach((n) => {
+      const parsedPath = parsePath(n);
+      if (parsedPath.length > 1) {
+        clearStore = setValueByPath(clearStore, parsedPath, undefined);
+      } else {
+        clearStore[n] = undefined;
+      }
+    });
+    this.deleteRelatedEntries(this.validateMessages, name);
     this.clearFieldStatuses(name);
-    this.setFieldsValue(clearStore, 'clear');
+    this.store = clearStore;
+    this.callbacks?.onClear?.();
+
+    // clearStore carries the whole store (nested paths must materialize
+    // it), so derive the refresh scope from `names` — only cleared
+    // fields re-render, not the entire form.
+    this.getRelatedFieldNames(names).forEach((fieldName) => {
+      this.fieldMap.get(fieldName)?.onStoreChange();
+    });
+    this.notifyWatchers(names);
   };
 
   validateField = async (
