@@ -198,6 +198,7 @@ const TableSelect = (baseprops: TableSelectProps) => {
 
   return (
     <Trigger
+      {...rest}
       trigger="click"
       popupClassName={`${prefixCls}-popup`}
       popup={renderPopup()}

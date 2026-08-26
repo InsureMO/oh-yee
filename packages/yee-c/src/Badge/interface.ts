@@ -28,6 +28,10 @@ export interface BadgeProps extends DataAttributeProps {
    */
   children?: React.ReactNode;
   /**
+   * Native Title
+  */
+  title?: string;
+  /**
    * Number to display or custom content
    */
   count?: number | React.ReactNode;

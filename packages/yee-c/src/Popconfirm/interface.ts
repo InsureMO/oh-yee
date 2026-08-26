@@ -48,10 +48,6 @@ export interface PopconfirmProps extends Omit<
    * */
   open?: boolean;
   /**
-   * placement
-   */
-  placement?: 'top' | 'bottom' | 'left' | 'right';
-  /**
    * 设置确认按钮文本
    * */
   confirmText?: string;

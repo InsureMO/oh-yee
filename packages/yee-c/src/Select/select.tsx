@@ -13,6 +13,7 @@ import mergeContextToProps from '../utils/mergeContextToProps';
 import useSelectKeyboard from './hooks/useSelectKeyboard';
 import { Option, SelectProps } from './interface';
 import Options from './options';
+import Omit from '../utils/omit';
 import './style/index.less';
 
 // ---------------------------------------------------------------------------
@@ -229,7 +230,7 @@ const Select = (baseprops: SelectProps) => {
       onOpenChange={handleOpenChange}
     >
       <Selector
-        {...rest}
+        {...Omit(rest, ['forceRender'])}
         mode={mode}
         value={searchValue}
         options={options}

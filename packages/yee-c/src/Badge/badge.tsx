@@ -27,6 +27,7 @@ const InternalBadge: React.FC<BadgeProps> = (baseprops) => {
     className,
     styles,
     classNames,
+    title,
     ...rest
   } = props;
 
@@ -43,7 +44,7 @@ const InternalBadge: React.FC<BadgeProps> = (baseprops) => {
     if (count === null || count === undefined) return null;
 
     if (typeof count === 'number') {
-      supTitle = String(count);
+      supTitle = title || String(count);
 
       // When count is 0 and showZero is false, return null
       if (count === 0 && !showZero) return null;

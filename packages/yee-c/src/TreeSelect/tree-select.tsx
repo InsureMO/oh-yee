@@ -255,7 +255,7 @@ const TreeSelect = <T extends Record<string, unknown> = any>(
       onOpenChange={handleOpenChange}
     >
       <Selector
-        {...omit(rest, ['showLine'])}
+        {...omit(rest, ['showLine', 'forceRender'])}
         className={`${prefixCls}-selector`}
         mode={mode}
         value={searchValue}

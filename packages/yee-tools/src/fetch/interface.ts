@@ -2,36 +2,36 @@
  * HTTP request method types
  */
 export type HttpMethod =
-  | "GET"
-  | "get"
-  | "POST"
-  | "post"
-  | "PUT"
-  | "put"
-  | "DELETE"
-  | "delete"
-  | "PATCH"
-  | "patch"
-  | "HEAD"
-  | "head"
-  | "OPTIONS"
-  | "options";
+  | 'GET'
+  | 'get'
+  | 'POST'
+  | 'post'
+  | 'PUT'
+  | 'put'
+  | 'DELETE'
+  | 'delete'
+  | 'PATCH'
+  | 'patch'
+  | 'HEAD'
+  | 'head'
+  | 'OPTIONS'
+  | 'options';
 
 /**
  * Response types
  */
 export type ResponseType =
-  | "json"
-  | "text"
-  | "blob"
-  | "arrayBuffer"
-  | "formData"
-  | "document";
+  | 'json'
+  | 'text'
+  | 'blob'
+  | 'arrayBuffer'
+  | 'formData'
+  | 'document';
 
 /**
  * Request dispatcher type
  */
-export type Dispatcher = "xhr" | "fetch";
+export type Dispatcher = 'xhr' | 'fetch';
 
 /**
  * Progress event handler
@@ -49,12 +49,12 @@ export interface ProgressEvent {
  * Error type
  */
 export type ErrorType =
-  | "http"
-  | "network"
-  | "timeout"
-  | "abort"
-  | "parse"
-  | "unknown";
+  | 'http'
+  | 'network'
+  | 'timeout'
+  | 'abort'
+  | 'parse'
+  | 'unknown';
 
 /**
  * Error response interface
@@ -68,7 +68,7 @@ export type ErrorType =
  */
 export interface ErrorResponse {
   /** Error status */
-  status: "error" | "timeout";
+  status: 'error' | 'timeout';
   /** Original error */
   error: any;
   /** Reserved; not set by the library */
@@ -123,15 +123,14 @@ export interface AxConfig {
   dispatcher?: Dispatcher;
   /** Whether to disable default headers */
   noDefaultHeaders?: boolean;
-  /** Whether to disable error notifications */
-  noErrorNotice?: boolean;
   /** Whether to format data as JSON */
   dataFormat?: boolean;
   /** Whether FormData includes boundary */
   formDataWithBoundary?: boolean;
   /** Whether to include credentials */
   withCredentials?: boolean;
-
+  // meta data
+  metadata?: Record<string, unknown>;
   // Data transformation functions
   /** Request data transformer */
   transformRequest?: (data: any, headers?: Record<string, string>) => any;
@@ -160,7 +159,7 @@ export interface AxConfig {
 /**
  * Default request config (url is optional)
  */
-export type DefaultAxConfig = Omit<AxConfig, "url"> & {
+export type DefaultAxConfig = Omit<AxConfig, 'url'> & {
   url?: string;
 };
 
@@ -219,7 +218,7 @@ export interface ErrorInterceptorContext {
  * - throw error will abort the request
  */
 export type RequestInterceptor = (
-  context: RequestInterceptorContext
+  context: RequestInterceptorContext,
 ) => AxConfig | void | Promise<AxConfig | void>;
 
 /**
@@ -228,7 +227,7 @@ export type RequestInterceptor = (
  * - throw error enters error handling
  */
 export type ResponseInterceptor = (
-  context: ResponseInterceptorContext
+  context: ResponseInterceptorContext,
 ) => any | Promise<any>;
 
 /**
@@ -237,7 +236,7 @@ export type ResponseInterceptor = (
  * - throw error continues to propagate
  */
 export type ErrorInterceptor = (
-  context: ErrorInterceptorContext
+  context: ErrorInterceptorContext,
 ) => any | Promise<any>;
 
 /**
