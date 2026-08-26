@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.9.2
+
+### Patch Changes
+
+- f63969f: feat(components): enhance component props and fix type definitions
+
 ## 0.9.1
 
 ### Patch Changes
