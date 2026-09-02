@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.10.0
+
+### Minor Changes
+
+- 04d6aa1: feat(components): enhance Tabs and Upload with alignment options and improve Input styling
+
 ## 0.9.2
 
 ### Patch Changes
