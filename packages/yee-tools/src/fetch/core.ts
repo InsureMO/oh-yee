@@ -57,9 +57,7 @@ function createDispatchFailure(
 
 function isDispatchFailure(error: unknown): error is DispatchFailure {
   return (
-    error !== null &&
-    typeof error === 'object' &&
-    DISPATCH_FAILURE in error
+    error !== null && typeof error === 'object' && DISPATCH_FAILURE in error
   );
 }
 
@@ -148,6 +146,20 @@ function notifyError(
   } catch {
     // Error handlers must not prevent the original request from rejecting.
   }
+}
+
+function createAbortError(signal?: AbortSignal): Error {
+  if (signal?.reason instanceof Error) {
+    return signal.reason;
+  }
+
+  if (typeof DOMException !== 'undefined') {
+    return new DOMException('The operation was aborted', 'AbortError');
+  }
+
+  const error = new Error('The operation was aborted');
+  error.name = 'AbortError';
+  return error;
 }
 
 /**
@@ -276,7 +288,7 @@ class Ax implements AxInstance {
       externalAbortListener = () => {
         if (!abortSource) {
           abortSource = 'external';
-          controller.abort();
+          controller.abort(externalSignal?.reason);
         }
       };
 
@@ -369,7 +381,9 @@ class Ax implements AxInstance {
       const type: ErrorType =
         abortSource === 'timeout'
           ? 'timeout'
-          : abortSource === 'external' || errorName === 'AbortError'
+          : abortSource === 'external' ||
+              externalSignal?.aborted ||
+              errorName === 'AbortError'
             ? 'abort'
             : responseReceived
               ? 'parse'
@@ -427,16 +441,56 @@ class Ax implements AxInstance {
         formDataWithBoundary = true,
         dataFormat = true,
         withCredentials = false,
+        signal,
       } = config;
+
+      let settled = false;
+      let handleSignalAbort = () => undefined;
 
       // Unified cleanup function
       const cleanup = () => {
+        signal?.removeEventListener('abort', handleSignalAbort);
         xhr.onreadystatechange = null;
         xhr.onerror = null;
+        xhr.onabort = null;
         xhr.ontimeout = null;
         xhr.onprogress = null;
         if (xhr.upload) {
           xhr.upload.onprogress = null;
+        }
+      };
+
+      const resolveOnce = (response: AxDispatchResponse) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        cleanup();
+        resolve(response);
+      };
+
+      const rejectOnce = (error: unknown) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        cleanup();
+        reject(error);
+      };
+
+      const rejectAbort = () => {
+        const abortError = createAbortError(signal);
+        notifyError(config, abortError, xhr);
+        rejectOnce(createDispatchFailure(abortError, { type: 'abort' }));
+      };
+
+      handleSignalAbort = () => {
+        if (!settled) {
+          xhr.abort();
+          // Some XHR mocks/environments do not dispatch an abort event.
+          if (!settled) {
+            rejectAbort();
+          }
         }
       };
 
@@ -478,9 +532,11 @@ class Ax implements AxInstance {
 
       // State change listener
       xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          cleanup(); // Clean up event listeners
-
+        if (
+          xhr.readyState === XMLHttpRequest.DONE &&
+          xhr.status !== 0 &&
+          !settled
+        ) {
           const contentType =
             xhr.getResponseHeader('content-type') ||
             'application/json;charset=UTF-8';
@@ -511,24 +567,24 @@ class Ax implements AxInstance {
           );
 
           if (xhr.status >= 200 && xhr.status <= 299) {
-            if (onSuccess) {
-              onSuccess(response, xhr);
-            }
-            resolve({
+            const dispatchResponse = {
               data: response,
               status: xhr.status,
               headers: responseHeaders,
-            });
+            };
+            // Settle and detach the abort listener before invoking user code so
+            // a synchronous abort from onSuccess cannot reverse the result.
+            resolveOnce(dispatchResponse);
+            onSuccess?.(response, xhr);
           } else if (xhr.status === 401) {
-            const errorResult = this._handle401Error();
-            reject(errorResult);
+            rejectOnce(this._handle401Error());
           } else {
             notifyError(config, response, xhr);
             const publicError = {
               status: 'error',
               error: xhr.response,
             } as ErrorResponse;
-            reject(
+            rejectOnce(
               createDispatchFailure(publicError, {
                 type: 'http',
                 httpStatus: xhr.status,
@@ -551,20 +607,19 @@ class Ax implements AxInstance {
       // Request complete listener
       if (onLoaded) {
         xhr.onloadend = function (event) {
-          cleanup(); // Ensure cleanup
           onLoaded(event, xhr);
+          xhr.onloadend = null;
         };
       }
 
       // Error listener
-      xhr.onerror = function (err) {
-        cleanup(); // Clean up event listeners
+      xhr.onerror = function (event) {
         notifyError(config, xhr.response, xhr);
         const publicError = {
           status: 'error',
-          error: err,
+          error: event,
         } as ErrorResponse;
-        reject(
+        rejectOnce(
           createDispatchFailure(publicError, {
             type: 'network',
             response: xhr.response,
@@ -572,40 +627,43 @@ class Ax implements AxInstance {
         );
       };
 
+      xhr.onabort = rejectAbort;
+
       // Timeout listener
-      if (onTimeout) {
-        xhr.ontimeout = function (event) {
-          cleanup(); // Clean up event listeners
-          onTimeout(event, xhr);
-          const publicError = {
-            status: 'timeout',
-            error: event,
-          } as ErrorResponse;
-          reject(
-            createDispatchFailure(publicError, {
-              type: 'timeout',
-            }),
-          );
-        };
-      } else {
-        // If onTimeout is not provided, use default timeout handling
-        xhr.ontimeout = function () {
-          // eslint-disable-line @typescript-eslint/no-unused-vars
-          cleanup();
-          const publicError = {
-            status: 'timeout',
-            error: 'Request timeout',
-          } as ErrorResponse;
-          reject(
-            createDispatchFailure(publicError, {
-              type: 'timeout',
-            }),
-          );
-        };
+      xhr.ontimeout = function (event) {
+        onTimeout?.(event, xhr);
+        const publicError = {
+          status: 'timeout',
+          error: onTimeout ? event : 'Request timeout',
+        } as ErrorResponse;
+        rejectOnce(
+          createDispatchFailure(publicError, {
+            type: 'timeout',
+          }),
+        );
+      };
+
+      if (signal?.aborted) {
+        rejectAbort();
+        return;
+      }
+      signal?.addEventListener('abort', handleSignalAbort, { once: true });
+
+      let param: XMLHttpRequestBodyInit | null;
+      try {
+        param = serializeRequestData(data, dataFormat);
+      } catch (error) {
+        notifyError(config, error, xhr);
+        rejectOnce(createDispatchFailure(error, { type: 'unknown' }));
+        return;
       }
 
-      const param = serializeRequestData(data, dataFormat);
-      xhr.send(param);
+      try {
+        xhr.send(param);
+      } catch (error) {
+        notifyError(config, error, xhr);
+        rejectOnce(createDispatchFailure(error, { type: 'network' }));
+      }
     });
   }
 

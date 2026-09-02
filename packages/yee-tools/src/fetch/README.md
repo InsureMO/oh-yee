@@ -27,38 +27,38 @@ pnpm add @rainbow-oh/yee-tools
 ### Basic Usage
 
 ```typescript
-import { ax, get, post } from "@rainbow-oh/yee-tools/fetch";
+import { ax, get, post } from '@rainbow-oh/yee-tools/fetch';
 
 // Use the default instance
-const users = await ax.get("/api/users");
+const users = await ax.get('/api/users');
 
 // Use convenience functions
-const response = await get("/api/users", {
+const response = await get('/api/users', {
   params: { page: 1, limit: 10 },
 });
 
 // POST request
-const newUser = await post("/api/users", {
-  name: "John Doe",
-  email: "john@example.com",
+const newUser = await post('/api/users', {
+  name: 'John Doe',
+  email: 'john@example.com',
 });
 ```
 
 ### Creating a Custom Instance
 
 ```typescript
-import { createAxInstance } from "@rainbow-oh/yee-tools/fetch";
+import { createAxInstance } from '@rainbow-oh/yee-tools/fetch';
 
 const api = createAxInstance({
-  baseUrl: "https://api.example.com",
+  baseUrl: 'https://api.example.com',
   timeout: 5000,
   headers: {
-    Authorization: "Bearer your-token",
-    "Content-Type": "application/json",
+    Authorization: 'Bearer your-token',
+    'Content-Type': 'application/json',
   },
 });
 
-const users = await api.get("/users");
+const users = await api.get('/users');
 ```
 
 ## API Documentation
@@ -71,10 +71,10 @@ The core method for making HTTP requests.
 
 ```typescript
 const response = await ax.request({
-  url: "/api/data",
-  method: "POST",
-  data: { message: "Hello" },
-  headers: { "Custom-Header": "value" },
+  url: '/api/data',
+  method: 'POST',
+  data: { message: 'Hello' },
+  headers: { 'Custom-Header': 'value' },
 });
 ```
 
@@ -99,8 +99,9 @@ interface AxConfig {
   headers?: Record<string, string>; // Request headers
   timeout?: number; // Timeout duration (ms)
   responseType?: ResponseType; // Response type
-  dispatcher?: "xhr" | "fetch"; // Request engine
+  dispatcher?: 'xhr' | 'fetch'; // Request engine
   withCredentials?: boolean; // Whether to include credentials
+  signal?: AbortSignal; // Cancels both XHR and Fetch requests
 
   // Event callbacks
   onSuccess?: (response: any, xhr?: XMLHttpRequest) => void;
@@ -118,22 +119,32 @@ interface AxConfig {
 
 ```typescript
 const formData = new FormData();
-formData.append("file", file);
-formData.append("description", "File description");
+formData.append('file', file);
+formData.append('description', 'File description');
 
-const response = await ax.post("/api/upload", formData, {
+const controller = new AbortController();
+const uploadRequest = ax.post('/api/upload', formData, {
+  signal: controller.signal,
   formDataWithBoundary: true,
   onUploadProgress: (event) => {
     const percent = Math.round((event.loaded * 100) / event.total);
     console.log(`Upload progress: ${percent}%`);
   },
 });
+
+// Cancel from a remove/retry/unmount handler when needed.
+// controller.abort();
+
+const response = await uploadRequest;
 ```
+
+`onUploadProgress` is available with the default XHR dispatcher. Both XHR and
+Fetch support `signal`, but native Fetch does not expose upload progress.
 
 ### Download Progress Monitoring
 
 ```typescript
-const response = await ax.get("/api/large-file", {
+const response = await ax.get('/api/large-file', {
   onProgress: (event) => {
     if (event.lengthComputable) {
       const percent = Math.round((event.loaded * 100) / event.total);
@@ -147,10 +158,10 @@ const response = await ax.get("/api/large-file", {
 
 ```typescript
 const response = await ax.request({
-  url: "/api/data",
-  method: "GET",
-  dispatcher: "fetch", // Use Fetch API
-  responseType: "json",
+  url: '/api/data',
+  method: 'GET',
+  dispatcher: 'fetch', // Use Fetch API
+  responseType: 'json',
 });
 ```
 
@@ -158,23 +169,54 @@ const response = await ax.request({
 
 ```typescript
 try {
-  const response = await ax.get("/api/data");
+  const response = await ax.get('/api/data');
 } catch (error) {
-  if (error.status === "timeout") {
-    console.log("Request timed out");
-  } else if (error.status === "error") {
-    console.log("Request error:", error.error);
+  if (error.status === 'timeout') {
+    console.log('Request timed out');
+  } else if (error.status === 'error') {
+    console.log('Request error:', error.error);
   }
 }
 ```
+
+### Cancellation
+
+```typescript
+const controller = new AbortController();
+const request = ax.get('/api/data', { signal: controller.signal });
+
+controller.abort();
+
+try {
+  await request;
+} catch (error) {
+  if (error instanceof Error && error.name === 'AbortError') {
+    console.log('Request cancelled');
+  }
+}
+```
+
+Cancellation without a custom reason rejects with an `AbortError`. If
+`controller.abort(reason)` receives an `Error` reason, that error is preserved.
+Error interceptors receive `type: "abort"` for both XHR and Fetch dispatchers.
+
+### XHR 401 Compatibility Behavior
+
+For backward compatibility, the default XHR dispatcher preserves its existing
+401 behavior: in a browser it clears `sessionStorage`, reloads the page, and
+rejects with `{ status: 'error', error: 'Unauthorized' }`. This branch does not
+call `onError`.
+
+The Fetch dispatcher continues to treat 401 like any other HTTP failure and
+passes it through the normal error path.
 
 ### Concurrent Requests
 
 ```typescript
 const [users, posts, comments] = await Promise.all([
-  ax.get("/api/users"),
-  ax.get("/api/posts"),
-  ax.get("/api/comments"),
+  ax.get('/api/users'),
+  ax.get('/api/posts'),
+  ax.get('/api/comments'),
 ]);
 ```
 
@@ -208,15 +250,15 @@ async function requestWithRetry(url: string, maxRetries = 3) {
 // Global default headers
 const api = createAxInstance({
   headers: {
-    Authorization: "Bearer token",
-    "X-API-Version": "v1",
+    Authorization: 'Bearer token',
+    'X-API-Version': 'v1',
   },
 });
 
 // Per-request custom headers
-const response = await ax.get("/api/data", {
+const response = await ax.get('/api/data', {
   headers: {
-    "Custom-Header": "value",
+    'Custom-Header': 'value',
   },
 });
 ```
@@ -225,9 +267,9 @@ const response = await ax.get("/api/data", {
 
 ```typescript
 const response = await ax.request({
-  url: "/api/data",
-  method: "POST",
-  data: { message: "Hello" },
+  url: '/api/data',
+  method: 'POST',
+  data: { message: 'Hello' },
   transformRequest: (data, headers) => {
     // Custom request data transformation
     return JSON.stringify(data);
@@ -242,10 +284,10 @@ const response = await ax.request({
 ### Timeout Handling
 
 ```typescript
-const response = await ax.get("/api/slow-endpoint", {
+const response = await ax.get('/api/slow-endpoint', {
   timeout: 5000, // 5-second timeout
   onTimeout: (event) => {
-    console.log("Request timed out");
+    console.log('Request timed out');
   },
 });
 ```
@@ -263,7 +305,7 @@ import type {
   ResponseType,
   ErrorResponse,
   ProgressEvent,
-} from "@rainbow-oh/yee-tools/fetch";
+} from '@rainbow-oh/yee-tools/fetch';
 ```
 
 ## Browser Compatibility

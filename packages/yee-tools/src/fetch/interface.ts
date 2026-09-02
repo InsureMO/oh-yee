@@ -129,6 +129,8 @@ export interface AxConfig {
   formDataWithBoundary?: boolean;
   /** Whether to include credentials */
   withCredentials?: boolean;
+  /** Abort signal supported by both XHR and Fetch dispatchers */
+  signal?: AbortSignal;
   // meta data
   metadata?: Record<string, unknown>;
   // Data transformation functions
