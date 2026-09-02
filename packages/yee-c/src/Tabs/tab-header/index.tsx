@@ -38,6 +38,7 @@ export interface TabHeaderProps {
   prefixCls: string;
   type?: 'card' | 'editable-card';
   position?: 'top' | 'bottom' | 'left' | 'right';
+  activeAlign?: 'auto' | 'center';
   headerExtra?: {
     prefix?: React.ReactNode | (() => React.ReactNode);
     suffix?: React.ReactNode | (() => React.ReactNode);
@@ -53,6 +54,7 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
     prefixCls,
     type,
     position = 'top',
+    activeAlign = 'auto',
     headerExtra,
     classNames,
     styles,
@@ -80,7 +82,7 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
   });
 
   // Scroll handling
-  const { refreshKey } = useTabScroll({
+  const { refreshKey, refresh: refreshNav } = useTabScroll({
     direction,
     navContainer,
     navList,
@@ -97,15 +99,22 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
     enabled: !type, // Only show active bar for non-card types
   });
 
+  // Recompute dropdown visibility, dropdown range and shadows after the list is moved
+  const handleNavMoved = useCallback(() => {
+    checkVisibility();
+    refreshNav();
+  }, [checkVisibility, refreshNav]);
+
   // Navigation list movement
   useNavListMove({
     direction,
     activeKey,
     enabled: moreOpen,
+    align: activeAlign,
     activetab,
     navList,
     navContainer,
-    onMoved: checkVisibility,
+    onMoved: handleNavMoved,
   });
 
   // Listen for container size changes
@@ -213,6 +222,7 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
           <DropDownTabs visible={moreOpen} items={items || []} range={range}>
             <Button
               className={`${prefixCls}-nav-more`}
+              size="small"
               icon={<Ellipsis size={14} strokeWidth={1.5} />}
               type="text"
               aria-label="More tabs"

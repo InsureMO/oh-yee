@@ -25,9 +25,6 @@ function buildUrl(config: Record<string, any>) {
 }
 
 class Ax {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  // constructor() {}
-
   request(configOrUrl: AxConfig | string) {
     let config = getDefaultConfig() as any;
     if (typeof configOrUrl === 'string') {
@@ -50,8 +47,9 @@ class Ax {
       });
     }
 
-    return new Promise((resolve, reject) => {
-      let xhr = new XMLHttpRequest() as any;
+    let xhr: any;
+    const request = new Promise((resolve, reject) => {
+      xhr = new XMLHttpRequest();
       const {
         headers,
         timeout,
@@ -63,11 +61,10 @@ class Ax {
         onUploadProgress,
         onTimeout,
         onLoaded,
-        formDataWithBoundary = true, // Set boundary for form-data upload type
+        formDataWithBoundary = true,
       } = config;
 
       if ((!data || getType(data) === 'FormData') && headers) {
-        // Delete to let browser auto-generate
         if (formDataWithBoundary) {
           delete headers['Content-Type'];
         }
@@ -82,73 +79,63 @@ class Ax {
       }
 
       xhr.upload.onprogress = function (event: any) {
-        if (onUploadProgress) {
-          onUploadProgress(event, xhr);
-        }
+        onUploadProgress?.(event, xhr);
       };
 
       xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr?.readyState === XMLHttpRequest.DONE) {
           if (xhr.status >= 200 && xhr.status <= 299) {
             const type = this.getResponseHeader('content-type') || '';
             const isJsonType = type.indexOf('application/json') > -1;
 
-            let data;
-
+            let responseData;
             if (isJsonType) {
               try {
-                data = JSON.parse(xhr.response);
-              } catch (err) {
-                data = xhr.response;
+                responseData = JSON.parse(xhr.response);
+              } catch (error) {
+                responseData = xhr.response;
               }
             } else {
-              data = xhr.response;
+              responseData = xhr.response;
             }
 
-            if (onSuccess) {
-              onSuccess(data, xhr);
-            }
-            resolve(data);
+            onSuccess?.(responseData, xhr);
+            resolve(responseData);
           } else {
-            if (onError) {
-              onError(xhr.response, xhr);
-            }
+            onError?.(xhr.response, xhr);
             reject({ status: 'error', error: xhr.response });
           }
         }
       };
 
       xhr.onprogress = function (event: any) {
-        if (onProgress) {
-          onProgress(event, xhr);
-        }
+        onProgress?.(event, xhr);
       };
 
       xhr.onloadend = function (event: any) {
-        if (onLoaded) {
-          onLoaded(event, xhr);
-        }
+        onLoaded?.(event, xhr);
         xhr = null;
       };
 
-      xhr.onerror = function (err: any) {
-        if (onError) {
-          onError(xhr.response, xhr);
-        }
-        reject({ status: 'error', error: err });
-        xhr = null;
+      xhr.onerror = function (error: any) {
+        onError?.(xhr.response, xhr);
+        reject({ status: 'error', error });
+      };
+
+      xhr.onabort = function (event: any) {
+        reject({ status: 'abort', error: event });
       };
 
       xhr.ontimeout = function (event: any) {
-        if (onTimeout) {
-          onTimeout(event, xhr);
-        }
+        onTimeout?.(event, xhr);
         reject({ status: 'timeout', error: event });
-        xhr = null;
       };
 
       xhr.send(data || null);
-    });
+    }) as Promise<any> & { abort: () => void };
+
+    request.abort = () => xhr?.abort();
+    return request;
   }
 }
 

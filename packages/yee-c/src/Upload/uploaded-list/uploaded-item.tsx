@@ -8,66 +8,65 @@ import {
   RotateCcw,
   Trash2,
 } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from '../../Button';
-import Dialog from '../../Dialog';
-import useEvent from '../../hooks/useEvent';
 import Space from '../../Space';
 import Spin from '../../Spin';
 import Tooltip from '../../Tooltip';
-import { UploadFile } from '../interface';
+import type { UploadFile } from '../interface';
 import UploadProgress from '../upload-progress';
 
-type FileStatus = 'uploading' | 'error' | 'success' | 'ready';
+type FileStatus = UploadFile['status'];
 
 const fileState: Record<FileStatus, React.ReactElement> = {
   uploading: <Spin type="spin" size="small" />,
-  error: <CircleX />,
-  success: <CircleCheck />,
-  ready: <Paperclip />,
+  error: <CircleX size={14}/>,
+  success: <CircleCheck size={14}/>,
+  ready: <Paperclip size={14}/>,
 };
 
-const fileStatusTitle = {
+const fileStatusTitle: Record<FileStatus, string> = {
   ready: 'Upload Ready',
   uploading: 'Uploading',
   error: 'Upload Error',
   success: 'Upload Success',
-} as const;
+};
 
 const fileIcon: Record<string, React.ReactNode> = {
-  image: <Image />,
-  xlsx: <Paperclip />,
-  docx: <Paperclip />,
-  pdf: <Paperclip />,
-  zip: <Paperclip />,
-  unknown: <Paperclip />,
+  image: <Image size={14} />,
+  xlsx: <Paperclip size={14} />,
+  docx: <Paperclip size={14} />,
+  pdf: <Paperclip size={14} />,
+  zip: <Paperclip size={14} />,
+  unknown: <Paperclip size={14} />,
 };
 
 const getFileType = (type: string) => {
   const lower = type?.toLowerCase() || '';
-  const images = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
-  if (images.includes(lower)) {
+  const images = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'];
+  if (lower.startsWith('image/') || images.includes(lower)) {
     return 'image';
   }
   if (lower === 'xlsx' || lower === 'xls') {
     return 'xlsx';
   }
-  if (lower === 'pdf') {
+  if (lower === 'pdf' || lower === 'application/pdf') {
     return 'pdf';
   }
   if (lower === 'docx' || lower === 'doc') {
     return 'docx';
   }
-  if (lower === 'zip') {
+  if (lower === 'zip' || lower.includes('zip')) {
     return 'zip';
   }
   return 'unknown';
 };
 
-function UploadedItem(props: {
+interface UploadedItemProps {
   prefixCls?: string;
   file: UploadFile;
+  fileList: UploadFile[];
   listType?: string;
   progress?: boolean | object;
   showUploadList?:
@@ -85,10 +84,14 @@ function UploadedItem(props: {
   onRemove?: (file: UploadFile) => void;
   onReUpload?: (file: UploadFile) => void;
   onPreview?: (file: UploadFile) => void;
-}) {
+  previewable?: boolean;
+}
+
+function UploadedItem(props: UploadedItemProps) {
   const {
-    prefixCls,
+    prefixCls = 'yee-upload',
     file,
+    fileList,
     listType,
     progress,
     showUploadList,
@@ -96,60 +99,50 @@ function UploadedItem(props: {
     onRemove,
     onReUpload,
     onPreview,
+    previewable = false,
   } = props;
 
-  const {
-    showTooltip = true,
-    showReload = true,
-    showRemoveIcon = true,
-    showPreviewIcon = true,
-    reloadIcon,
-    removeIcon,
-    previewIcon,
-  } = typeof showUploadList === 'object' ? showUploadList : ({} as any);
+  const uploadListConfig =
+    typeof showUploadList === 'object' ? showUploadList : undefined;
+  const showTooltip = uploadListConfig?.showTooltip ?? true;
+  const showReload = uploadListConfig?.showReload ?? true;
+  const showRemoveIcon = uploadListConfig?.showRemoveIcon ?? true;
+  const showPreviewIcon = uploadListConfig?.showPreviewIcon ?? true;
+  const reloadIcon = uploadListConfig?.reloadIcon;
+  const removeIcon = uploadListConfig?.removeIcon;
+  const previewIcon = uploadListConfig?.previewIcon;
 
-  const [objectUrl, setObjectUrl] = useState<string>('');
-  const [imagePreviewOpen, setImagePreviewOpen] = useState(false);
-  const previewImageSrc = useRef<string>('');
+  const [objectUrl, setObjectUrl] = useState('');
 
-  // Create and clean up object URL to prevent memory leaks
   useEffect(() => {
-    if (file.raw && file.raw instanceof File) {
+    if (file.raw instanceof File) {
       const url = URL.createObjectURL(file.raw);
       setObjectUrl(url);
-
-      return () => {
-        URL.revokeObjectURL(url);
-      };
+      return () => URL.revokeObjectURL(url);
     }
+    setObjectUrl('');
+    return undefined;
   }, [file.raw]);
 
-  const closeDialog = useEvent(() => {
-    setImagePreviewOpen(false);
-  });
-
-  const showImage = () => {
-    if (onPreview) {
-      onPreview(file);
-    } else if (objectUrl) {
-      previewImageSrc.current = objectUrl;
-      setImagePreviewOpen(true);
-    }
-  };
+  const previewSrc = file.url || objectUrl;
+  const inferredType = file.type || file.name.split('.').pop() || '';
+  const fileType = getFileType(inferredType);
+  const isImage = fileType === 'image';
 
   const renderReload = () => {
     if (!showReload) {
       return null;
     }
-    const icon = reloadIcon || <RotateCcw size={18} />;
     return (
       <Button
         size="small"
-        icon={icon}
+        icon={reloadIcon || <RotateCcw size={18} />}
         variant="text"
         color="danger"
-        onClick={(e) => {
-          e.stopPropagation();
+        aria-label={`Retry ${file.name}`}
+        title={`Retry ${file.name}`}
+        onClick={(event) => {
+          event.stopPropagation();
           onReUpload?.(file);
         }}
       />
@@ -160,15 +153,16 @@ function UploadedItem(props: {
     if (!showRemoveIcon) {
       return null;
     }
-    const icon = removeIcon || <Trash2 size={18} />;
     return (
       <Button
         size="small"
-        icon={icon}
+        icon={removeIcon || <Trash2 size={16} />}
         variant="text"
         color="danger"
-        onClick={(e) => {
-          e.stopPropagation();
+        aria-label={`Remove ${file.name}`}
+        title={`Remove ${file.name}`}
+        onClick={(event) => {
+          event.stopPropagation();
           onRemove?.(file);
         }}
       />
@@ -176,205 +170,182 @@ function UploadedItem(props: {
   };
 
   const renderPreview = () => {
-    if (!showPreviewIcon) {
+    if (!showPreviewIcon || !isImage || !previewable) {
       return null;
     }
-    const icon = previewIcon || <Eye size={18} />;
-    const fileType = getFileType(file.type || '');
+    return (
+      <Button
+        size="small"
+        icon={previewIcon || <Eye size={16} />}
+        variant="text"
+        aria-label={`Preview ${file.name}`}
+        title={`Preview ${file.name}`}
+        onClick={(event) => {
+          event.stopPropagation();
+          onPreview?.(file);
+        }}
+      />
+    );
+  };
 
-    if (fileType === 'image' || file.type?.startsWith('image/')) {
-      return (
-        <Button
-          size="small"
-          icon={icon}
-          variant="text"
-          onClick={(e) => {
-            e.stopPropagation();
-            showImage();
-          }}
-        />
-      );
+  const getShowCase = () => {
+    if (file.status === 'error' || !isImage) {
+      return fileIcon[fileType] || <Paperclip size={14} />;
     }
-
-    return null;
+    if (previewSrc) {
+      return <img src={previewSrc} alt={file.name} />;
+    }
+    return fileIcon[fileType] || <Paperclip size={14} />;
   };
 
   if (listType === 'picture-wall') {
-    const fileType = getFileType(file.type || '');
-
-    const getShowCase = () => {
-      if (file.status === 'error' || fileType !== 'image') {
-        return fileIcon[fileType] || <Paperclip size={18} />;
-      }
-
-      if (fileType === 'image' && objectUrl) {
-        return <img src={objectUrl} alt={file.name} />;
-      }
-
-      return fileIcon[fileType] || <Paperclip size={18} />;
-    };
-
     return (
-      <>
-        <div
-          className={clsx(`${prefixCls}-picture-wall-item`, {
-            [`${prefixCls}-state-` + file.status]: file.status,
-          })}
-          key={file.uid}
-        >
-          {file.status === 'uploading' ? (
-            <UploadProgress file={file} progress={progress} />
-          ) : (
-            <>
-              {file.status === 'error' ? (
-                <div className={`${prefixCls}-picture-wall-item-error`}>
-                  {getShowCase()}
+      <div
+        className={clsx(`${prefixCls}-picture-wall-item`, {
+          [`${prefixCls}-state-${file.status}`]: file.status,
+        })}
+        aria-label={`${file.name}: ${fileStatusTitle[file.status]}`}
+      >
+        {file.status === 'uploading' ? (
+          <UploadProgress
+            prefixCls={prefixCls}
+            file={file}
+            progress={progress}
+          />
+        ) : (
+          <>
+            {file.status === 'error' ? (
+              <div className={`${prefixCls}-picture-wall-item-error`}>
+                {getShowCase()}
+                <span className={`${prefixCls}-picture-wall-name`}>
+                  {file.name}
+                </span>
+              </div>
+            ) : (
+              <div className={`${prefixCls}-picture-wall-item-content`}>
+                {getShowCase()}
+                {!isImage && (
                   <span className={`${prefixCls}-picture-wall-name`}>
                     {file.name}
                   </span>
-                </div>
-              ) : (
-                <div className={`${prefixCls}-picture-wall-item-content`}>
-                  {getShowCase()}
-                  {fileType !== 'image' && (
-                    <span className={`${prefixCls}-picture-wall-name`}>
-                      {file.name}
-                    </span>
-                  )}
-                </div>
-              )}
-              <div className={`${prefixCls}-picture-wall-item-operate`}>
-                {file.status === 'error' ? (
-                  renderReload()
-                ) : (
-                  <>
-                    {renderPreview()}
-                    {renderTrash()}
-                  </>
                 )}
               </div>
-            </>
-          )}
-        </div>
-        <Dialog
-          className={`${prefixCls}-picture-dialog`}
-          open={imagePreviewOpen}
-          onCancel={closeDialog}
-          footer={false}
-        >
-          <img
-            src={previewImageSrc.current}
-            alt="preview"
-            style={{ maxWidth: '100%' }}
-          />
-        </Dialog>
-      </>
+            )}
+            <div className={`${prefixCls}-picture-wall-item-operate`}>
+              {file.status === 'error' ? (
+                renderReload()
+              ) : (
+                <>
+                  {renderPreview()}
+                  {renderTrash()}
+                </>
+              )}
+            </div>
+          </>
+        )}
+      </div>
     );
   }
 
   if (listType === 'picture-list') {
-    const fileType = getFileType(file.type || '');
-
     return (
-      <>
-        <div
-          className={clsx(`${prefixCls}-picture-list-item`, {
-            [`${prefixCls}-state-` + file.status]: file.status,
-          })}
-          key={file.uid}
-        >
-          {file.status === 'uploading' ? (
-            <div className={`${prefixCls}-uploading`}>
-              <Spin className={`${prefixCls}-uploading-spin`} type="spin" />
-              <div className={`${prefixCls}-uploading-content`}>
-                <div>{file.name ? file.name : 'Uploading...'}</div>
-                <UploadProgress file={file} progress={progress} />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className={`${prefixCls}-picture-list-item-content`}>
-                {file.status === 'error' ? (
-                  <Image />
-                ) : (
-                  <>
-                    {fileType === 'image' && objectUrl ? (
-                      <img
-                        className={`${prefixCls}-picture-list-header-img`}
-                        src={objectUrl}
-                        alt={file.name}
-                      />
-                    ) : (
-                      fileIcon[fileType] || <Image />
-                    )}
-                  </>
-                )}
-                <span>{file.name}</span>
-              </div>
-
-              <div className={`${prefixCls}-picture-list-item-operate`}>
-                {file.status === 'error' && renderReload()}
-                {renderPreview()}
-                {renderTrash()}
-              </div>
-            </>
-          )}
-        </div>
-      </>
-    );
-  }
-
-  const renderItem = () => {
-    const node = (
       <div
-        className={clsx(`${prefixCls}-list-item`, {
-          [`${prefixCls}-state-` + file.status]: file.status,
-          [`${prefixCls}-list-item-clickable`]: !!onPreview,
+        className={clsx(`${prefixCls}-picture-list-item`, {
+          [`${prefixCls}-state-${file.status}`]: file.status,
         })}
-        onClick={() => onPreview?.(file)}
-        key={file.uid}
+        aria-label={`${file.name}: ${fileStatusTitle[file.status]}`}
       >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div className={`${prefixCls}-item-icon`}>
-            {fileState[file.status as FileStatus] || <Paperclip size={18} />}
+        {file.status === 'uploading' ? (
+          <div className={`${prefixCls}-uploading`}>
+            <Spin className={`${prefixCls}-uploading-spin`} type="spin" />
+            <div className={`${prefixCls}-uploading-content`}>
+              <div>{file.name || 'Uploading...'}</div>
+              <UploadProgress
+                prefixCls={prefixCls}
+                file={file}
+                progress={progress}
+              />
+            </div>
           </div>
-          <span className={`${prefixCls}-item-name-content`}>{file.name}</span>
-        </div>
-        {file.status !== 'uploading' && (
-          <Space
-            className={`${prefixCls}-item-operate`}
-            gap={8}
-            onClick={(event) => event.stopPropagation()}
-          >
-            {itemRender?.(file, [])}
-            {file.status === 'error' ? renderReload() : renderPreview()}
-            {renderTrash()}
-          </Space>
+        ) : (
+          <>
+            <div className={`${prefixCls}-picture-list-item-content`}>
+              {file.status === 'error' ? (
+                <Image />
+              ) : isImage && previewSrc ? (
+                <img
+                  className={`${prefixCls}-picture-list-header-img`}
+                  src={previewSrc}
+                  alt={file.name}
+                />
+              ) : (
+                fileIcon[fileType] || <Image size={14} />
+              )}
+              <span>{file.name}</span>
+            </div>
+            <div className={`${prefixCls}-picture-list-item-operate`}>
+              {file.status === 'error' && renderReload()}
+              {renderPreview()}
+              {renderTrash()}
+            </div>
+          </>
         )}
       </div>
     );
+  }
 
-    if (showTooltip) {
-      return (
-        <Tooltip
-          title={
-            fileStatusTitle[file.status as FileStatus] || fileStatusTitle.ready
-          }
+  const itemNode = (
+    <div
+      className={clsx(`${prefixCls}-list-item`, {
+        [`${prefixCls}-state-${file.status}`]: file.status,
+        [`${prefixCls}-list-item-clickable`]: previewable,
+      })}
+      role={previewable ? 'button' : undefined}
+      tabIndex={previewable ? 0 : undefined}
+      aria-label={`${file.name}: ${fileStatusTitle[file.status]}`}
+      onClick={() => previewable && onPreview?.(file)}
+      onKeyDown={(event) => {
+        if (previewable && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          onPreview?.(file);
+        }
+      }}
+    >
+      <div className={`${prefixCls}-item-label`}>
+        <div className={`${prefixCls}-item-icon`} aria-hidden="true">
+          {fileState[file.status] || <Paperclip size={14} />}
+        </div>
+        <span className={`${prefixCls}-item-name-content`}>{file.name}</span>
+      </div>
+      {file.status !== 'uploading' && (
+        <Space
+          className={`${prefixCls}-item-operate`}
+          gap={8}
+          onClick={(event) => event.stopPropagation()}
         >
-          {node}
-        </Tooltip>
-      );
-    }
-
-    return node;
-  };
+          {itemRender?.(file, fileList)}
+          {file.status === 'error' ? renderReload() : renderPreview()}
+          {renderTrash()}
+        </Space>
+      )}
+    </div>
+  );
 
   return (
     <>
-      {renderItem()}
+      {showTooltip ? (
+        <Tooltip title={fileStatusTitle[file.status]}>{itemNode}</Tooltip>
+      ) : (
+        itemNode
+      )}
       {file.status === 'uploading' && (
         <div className={`${prefixCls}-item-progress`} title={file.name}>
-          <UploadProgress file={file} progress={progress} showInfo />
+          <UploadProgress
+            prefixCls={prefixCls}
+            file={file}
+            progress={progress}
+            showInfo
+          />
         </div>
       )}
     </>

@@ -124,4 +124,13 @@ export interface TabsProps extends DataAttributeProps {
    * @default false
    */
   fixedHeader?: boolean;
+  /**
+   * How the active tab is aligned when the tab list overflows
+   * - 'auto': scroll minimally so the active tab is visible at the edge;
+   *   no scrolling when it is already fully visible
+   * - 'center': always scroll so the active tab is centered in the header,
+   *   including tabs clicked directly on the header
+   * @default 'auto'
+   */
+  activeAlign?: 'auto' | 'center';
 }

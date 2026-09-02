@@ -1,33 +1,129 @@
 import clsx from 'clsx';
 import { Plus } from 'lucide-react';
-import React, { forwardRef, useContext, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Button from '../Button';
 import { GlobalContext } from '../Config-Provider';
-import mergeContextToProps from '../utils/mergeContextToProps';
-import UploadList from './uploaded-list/index';
-
 import useMergedState from '../hooks/useMergedState';
 import ax from '../utils/ax';
 import folderScanner from '../utils/folder-scanner';
-import type { UploadFile, UploadProps } from './interface';
+import mergeContextToProps from '../utils/mergeContextToProps';
+import type {
+  UploadFile,
+  UploadInstance,
+  UploadProps,
+  UploadRequestAbort,
+} from './interface';
 import './style/index.less';
+import UploadList from './uploaded-list/index';
+
+type ActiveRequest = {
+  token: symbol;
+  abort?: () => void;
+};
+
+const getFileExtension = (fileName: string) => {
+  const dotIndex = fileName.lastIndexOf('.');
+  return dotIndex > -1 ? fileName.slice(dotIndex + 1).toLowerCase() : '';
+};
 
 const wrapFile = (file: File): UploadFile => {
   return {
     uid: uuidv4(),
     name: file.name,
     size: file.size,
-    type: typeof file?.name === 'string' ? file.name.split('.')[1] : '',
+    type: file.type || getFileExtension(file.name),
     percent: 0,
     status: 'ready',
     raw: file,
   };
 };
 
-const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
-  const { upload } = useContext(GlobalContext);
-  const props = mergeContextToProps(baseprops, upload);
+const isSameFile = (left: UploadFile, right: UploadFile) => {
+  if (left.uid && right.uid) {
+    return left.uid === right.uid;
+  }
+  return left === right;
+};
+
+const matchesAccept = (file: File, accept?: string) => {
+  if (!accept) {
+    return true;
+  }
+
+  const fileName = file.name.toLowerCase();
+  const mimeType = file.type.toLowerCase();
+
+  return accept
+    .split(',')
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean)
+    .some((rule) => {
+      if (rule.startsWith('.')) {
+        return fileName.endsWith(rule);
+      }
+      if (rule.endsWith('/*')) {
+        return mimeType.startsWith(rule.slice(0, -1));
+      }
+      return mimeType === rule;
+    });
+};
+
+const describeErrorDetail = (detail: unknown) => {
+  if (typeof detail === 'string' && detail) {
+    return detail;
+  }
+  try {
+    const text = JSON.stringify(detail) ?? '';
+    return text.length > 200 ? `${text.slice(0, 200)}…` : text;
+  } catch {
+    return String(detail);
+  }
+};
+
+const toError = (error: unknown) => {
+  if (error instanceof Error) {
+    return error;
+  }
+  if (typeof error === 'object' && error !== null && 'error' in error) {
+    const detail = (error as { error: unknown }).error;
+    if (detail instanceof Error) {
+      return detail;
+    }
+    if (detail !== null && detail !== undefined) {
+      // e.g. ax rejects { status: 'error', error: xhr.response }
+      const message = describeErrorDetail(detail);
+      if (message) {
+        return new Error(message);
+      }
+    }
+  }
+  return new Error(typeof error === 'string' ? error : 'Upload failed');
+};
+
+// ax rejects aborts as { status: 'abort', error: event }
+const isAbortRejection = (error: unknown) =>
+  typeof error === 'object' &&
+  error !== null &&
+  (error as { status?: unknown }).status === 'abort';
+
+const getAbort = (request?: UploadRequestAbort | void) => {
+  if (typeof request === 'function') {
+    return request;
+  }
+  return request?.abort;
+};
+
+const Upload = forwardRef<UploadInstance, UploadProps>((baseprops, ref) => {
+  const { upload: uploadConfig } = useContext(GlobalContext);
+  const props = mergeContextToProps(baseprops, uploadConfig);
   const {
     prefixCls = 'yee-upload',
     name = 'file',
@@ -48,6 +144,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
     accept,
     showUploadList = true,
     progress = true,
+    autoUpload = true,
     maxFileSize,
     maxCount,
     customRequest,
@@ -60,289 +157,522 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
   } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const activeRequestsRef = useRef<Map<string, ActiveRequest>>(new Map());
+  const pendingPreparationsRef = useRef<Map<string, symbol>>(new Map());
+  const mountedRef = useRef(true);
   const [dragState, setDragState] = useState<'dragover' | 'drop' | null>(null);
 
-  const [mergedFileList, setMergedFileList] = useMergedState([], {
+  const [mergedFileList, setMergedFileList] = useMergedState<UploadFile[]>([], {
     value: propsFileList,
     defaultValue: defaultFileList,
   });
+  const fileListRef = useRef(mergedFileList);
+  fileListRef.current = mergedFileList;
 
-  let acceptDirectory = {};
-
-  if (directory) {
-    acceptDirectory = {
-      webkitdirectory: '',
-      directory: '',
-      multiple: '',
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+      pendingPreparationsRef.current.clear();
+      const activeRequests = Array.from(activeRequestsRef.current.values());
+      activeRequestsRef.current.clear();
+      activeRequests.forEach(({ abort }) => abort?.());
     };
-  }
+  }, []);
 
-  const updateFileList = (file: UploadFile) => {
-    setMergedFileList((state) => {
-      return state.map((item) => {
-        if (item.uid === file.uid) {
-          return file;
-        }
-        return item;
-      });
-    });
+  const setFileList = (nextFileList: UploadFile[]) => {
+    fileListRef.current = nextFileList;
+    setMergedFileList(nextFileList);
   };
 
-  const postFile = (file: UploadFile) => {
-    const formData = new FormData();
-    formData.append(name, file.raw);
+  const emitChange = (
+    file: UploadFile,
+    nextFileList: UploadFile[],
+    event?: any,
+  ) => {
+    setFileList(nextFileList);
+    onChange?.({ file, fileList: nextFileList, event });
+  };
 
-    if (data) {
-      const extraData = typeof data === 'function' ? data(file.raw) : data;
-      Object.keys(extraData).forEach((key) => {
-        formData.append(key, extraData[key]);
-      });
+  const appendFile = (file: UploadFile, event?: any) => {
+    const nextFileList = [...fileListRef.current, file];
+    emitChange(file, nextFileList, event);
+    return file;
+  };
+
+  const replaceFile = (
+    target: UploadFile,
+    replacement: UploadFile,
+    event?: any,
+  ) => {
+    const index = fileListRef.current.findIndex((item) =>
+      isSameFile(item, target),
+    );
+    if (index < 0) {
+      return undefined;
     }
 
-    const url = typeof action === 'function' ? action() : action;
+    const nextFileList = [...fileListRef.current];
+    nextFileList[index] = replacement;
+    emitChange(replacement, nextFileList, event);
+    return replacement;
+  };
 
-    // Use custom upload
-    if (customRequest) {
-      customRequest({
-        file: file.raw,
-        onProgress: (percent) => {
-          const current = { ...file, status: 'uploading' as const, percent };
-          updateFileList(current);
-          onChange?.({
-            file: current,
-            fileList: mergedFileList,
-            event: { percent },
-          });
-        },
-        onError: (error) => {
-          const current = { ...file, status: 'error' as const, error };
-          updateFileList(current);
-          onChange?.({
-            file: current,
-            fileList: mergedFileList,
-            event: error,
-          });
-        },
-        onSuccess: (response) => {
-          const current = { ...file, status: 'success' as const, response };
-          updateFileList(current);
-          onChange?.({
-            file: current,
-            fileList: mergedFileList,
-            event: response,
-          });
-        },
-      });
+  const updateFile = (
+    target: UploadFile,
+    patch: Partial<UploadFile>,
+    event?: any,
+  ) => {
+    const current = fileListRef.current.find((item) =>
+      isSameFile(item, target),
+    );
+    if (!current) {
+      return undefined;
+    }
+    return replaceFile(target, { ...current, ...patch }, event);
+  };
+
+  const abortRequest = (file: UploadFile) => {
+    if (!file.uid) {
+      return;
+    }
+    const activeRequest = activeRequestsRef.current.get(file.uid);
+    if (activeRequest) {
+      activeRequestsRef.current.delete(file.uid);
+      activeRequest.abort?.();
+    }
+  };
+
+  const postFile = (sourceFile: UploadFile) => {
+    let file = sourceFile;
+    if (!file.uid) {
+      const withUid = { ...file, uid: uuidv4() };
+      file = replaceFile(file, withUid) || withUid;
+    }
+
+    const requestKey = file.uid as string;
+    abortRequest(file);
+    const token = Symbol(requestKey);
+    activeRequestsRef.current.set(requestKey, { token });
+
+    const isActive = () =>
+      activeRequestsRef.current.get(requestKey)?.token === token;
+    const finish = () => {
+      if (isActive()) {
+        activeRequestsRef.current.delete(requestKey);
+      }
+    };
+    const updateIfActive = (patch: Partial<UploadFile>, event?: any) => {
+      if (!isActive()) {
+        return undefined;
+      }
+      return updateFile(file, patch, event);
+    };
+    const fail = (error: unknown) => {
+      // Requests aborted outside of remove/retry/unmount (e.g. by the browser)
+      // go back to 'ready' instead of showing an error
+      if (isAbortRejection(error)) {
+        updateIfActive({ status: 'ready', percent: 0 });
+        finish();
+        return;
+      }
+      const normalizedError = toError(error);
+      updateIfActive({ status: 'error', error: normalizedError }, error);
+      finish();
+    };
+
+    updateIfActive({ status: 'uploading', percent: 0, error: undefined });
+
+    if (!file.raw) {
+      fail(new Error(`File ${file.name} has no source file to upload`));
       return;
     }
 
-    // Default upload
-    // @ts-ignore
-    ax.post(url, formData, {
-      withCredentials,
-      headers: { ...headers },
-      onUploadProgress: (e: any) => {
-        const percentage = parseInt((e.loaded / e.total) * 100 + '');
-        let current: UploadFile;
-        if (percentage < 100) {
-          current = {
-            ...file,
-            status: 'uploading' as const,
-            percent: percentage,
-          };
-        } else {
-          current = { ...file, status: 'success' as const, percent: 100 };
+    if (customRequest) {
+      try {
+        const request = customRequest({
+          file: file.raw,
+          onProgress: (percent) => {
+            const normalizedPercent = Math.min(100, Math.max(0, percent));
+            updateIfActive(
+              { status: 'uploading', percent: normalizedPercent },
+              { percent: normalizedPercent },
+            );
+          },
+          onError: fail,
+          onSuccess: (response) => {
+            updateIfActive(
+              {
+                status: 'success',
+                percent: 100,
+                response,
+                error: undefined,
+              },
+              response,
+            );
+            finish();
+          },
+        });
+        const activeRequest = activeRequestsRef.current.get(requestKey);
+        if (activeRequest?.token === token) {
+          activeRequest.abort = getAbort(request);
         }
+      } catch (error) {
+        fail(error);
+      }
+      return;
+    }
 
-        updateFileList(current);
+    try {
+      const url = typeof action === 'function' ? action() : action;
+      if (!url) {
+        throw new Error(
+          'Upload action is required when customRequest is not set',
+        );
+      }
 
-        onChange?.({
-          file: current,
-          fileList: mergedFileList,
-          event: e,
+      const formData = new FormData();
+      formData.append(name, file.raw);
+      if (data) {
+        const extraData = typeof data === 'function' ? data(file.raw) : data;
+        Object.keys(extraData).forEach((key) => {
+          formData.append(key, extraData[key]);
         });
-      },
-    })
-      .then((res: any) => {
-        const current = { ...file, status: 'success' as const, response: res };
-        updateFileList(current);
-        onChange?.({
-          file: current,
-          fileList: mergedFileList,
-          event: res,
-        });
-      })
-      .catch((err: Error) => {
-        const current = { ...file, status: 'error' as const, error: err };
-        updateFileList(current);
+      }
 
-        onChange?.({
-          file: current,
-          fileList: mergedFileList,
-          event: err,
-        });
-      });
+      const request = (ax as any).post(url, formData, {
+        withCredentials,
+        headers: { ...headers },
+        onUploadProgress: (event: ProgressEvent) => {
+          const percentage = event.total
+            ? Math.round((event.loaded / event.total) * 100)
+            : 0;
+          updateIfActive({ status: 'uploading', percent: percentage }, event);
+        },
+      }) as Promise<any> & { abort?: () => void };
+
+      const activeRequest = activeRequestsRef.current.get(requestKey);
+      if (activeRequest?.token === token) {
+        activeRequest.abort = request.abort;
+      }
+
+      request
+        .then((response) => {
+          updateIfActive(
+            {
+              status: 'success',
+              percent: 100,
+              response,
+              error: undefined,
+            },
+            response,
+          );
+          finish();
+        })
+        .catch(fail);
+    } catch (error) {
+      fail(error);
+    }
   };
 
-  const post = (file: UploadFile) => {
-    setMergedFileList((state) => [...state, file]);
-    postFile(file);
-  };
-
-  const isValidFile = (file: File): boolean => {
-    // Check file size
+  const isValidFile = (file: File) => {
     if (maxFileSize && file.size > maxFileSize) {
       console.warn(`File ${file.name} exceeds maximum size limit`);
       return false;
     }
-
-    // Check file count
-    if (maxCount && mergedFileList.length >= maxCount) {
-      console.warn(`Maximum file count (${maxCount}) exceeded`);
+    if (!matchesAccept(file, accept)) {
+      console.warn(`File ${file.name} does not match accepted file types`);
       return false;
     }
-
     return true;
   };
 
-  const uploadFiles = (files: FileList | File[], e: any) => {
-    const postFiles = Array.from(files) as File[];
-    postFiles.forEach((file) => {
-      if (!isValidFile(file)) {
+  const prepareFile = async (
+    file: File,
+    wrapped: UploadFile,
+    postFiles: File[],
+    preparationToken: symbol,
+    event?: any,
+  ) => {
+    const preparationKey = wrapped.uid as string;
+    const isActive = () =>
+      mountedRef.current &&
+      pendingPreparationsRef.current.get(preparationKey) === preparationToken &&
+      fileListRef.current.some((item) => isSameFile(item, wrapped));
+    const finish = () => {
+      if (
+        pendingPreparationsRef.current.get(preparationKey) === preparationToken
+      ) {
+        pendingPreparationsRef.current.delete(preparationKey);
+      }
+    };
+
+    try {
+      const result = beforeUpload
+        ? await Promise.resolve(beforeUpload(file, postFiles))
+        : true;
+      if (!isActive()) {
+        finish();
+        return;
+      }
+      if (result === false) {
+        // beforeUpload rejected the file: drop it from the list
+        setFileList(
+          fileListRef.current.filter((item) => !isSameFile(item, wrapped)),
+        );
+        finish();
         return;
       }
 
-      const wrapped = wrapFile(file);
-      onChange?.({
-        file: wrapped,
-        fileList: mergedFileList,
-        event: e,
-      });
-
-      if (beforeUpload) {
-        const res = beforeUpload(file, postFiles);
-        if (res && res instanceof Promise) {
-          res.then((progress) => {
-            if (progress === false) {
-              return;
-            }
-            post(typeof progress === 'object' ? wrapFile(progress) : wrapped);
-          });
-        } else if (res !== false) {
-          post(wrapped);
+      let nextFile = wrapped;
+      if (result instanceof File) {
+        nextFile = { ...wrapFile(result), uid: wrapped.uid };
+        if (!replaceFile(wrapped, nextFile, event)) {
+          finish();
+          return;
         }
-      } else {
-        post(wrapped);
       }
+      finish();
+      postFile(nextFile);
+    } catch (error) {
+      if (isActive()) {
+        updateFile(wrapped, { status: 'error', error: toError(error) }, error);
+      }
+      finish();
+    }
+  };
+
+  const uploadFiles = (files: FileList | File[], event?: any) => {
+    const selectedFiles = Array.from(files);
+    const filesAllowedByMultiple =
+      multiple || directory ? selectedFiles : selectedFiles.slice(0, 1);
+    const validFiles = filesAllowedByMultiple.filter(isValidFile);
+    const remainingCount =
+      typeof maxCount === 'number'
+        ? Math.max(0, maxCount - fileListRef.current.length)
+        : validFiles.length;
+    const postFiles = validFiles.slice(0, remainingCount);
+
+    if (postFiles.length < validFiles.length) {
+      console.warn(`Maximum file count (${maxCount}) exceeded`);
+    }
+
+    postFiles.forEach((file) => {
+      const wrapped = appendFile(wrapFile(file), event);
+
+      // Manual mode: files only join the list and wait for upload()
+      if (!autoUpload) {
+        return;
+      }
+
+      const preparationToken = Symbol(wrapped.uid);
+      pendingPreparationsRef.current.set(
+        wrapped.uid as string,
+        preparationToken,
+      );
+      void prepareFile(file, wrapped, postFiles, preparationToken, event);
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    uploadFiles(files, e);
-    if (inputRef.current) {
-      inputRef.current.value = '';
-    }
+  // Instance method: upload files waiting in the list (status 'ready')
+  const upload = (file?: UploadFile | UploadFile[]) => {
+    const requested =
+      file === undefined
+        ? fileListRef.current
+        : Array.isArray(file)
+          ? file
+          : [file];
+    const readyFiles = requested.filter((item) => item.status === 'ready');
+
+    readyFiles.forEach((item) => {
+      let target = item;
+      if (!target.uid) {
+        target = replaceFile(item, { ...item, uid: uuidv4() }) ?? item;
+      }
+      if (!target.raw) {
+        updateFile(target, {
+          status: 'error',
+          error: new Error(`File ${target.name} has no source file to upload`),
+        });
+        return;
+      }
+
+      const preparationToken = Symbol(target.uid);
+      pendingPreparationsRef.current.set(
+        target.uid as string,
+        preparationToken,
+      );
+      void prepareFile(
+        target.raw,
+        target,
+        readyFiles
+          .map((ready) => ready.raw)
+          .filter((raw): raw is File => raw instanceof File),
+        preparationToken,
+      );
+    });
   };
 
-  const handleClick = () => {
+  // Expose the root element plus the upload() method on the ref
+  useImperativeHandle(
+    ref,
+    () =>
+      Object.assign(rootRef.current ?? document.createElement('div'), {
+        upload,
+      }),
+    [upload],
+  );
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) {
+      return;
+    }
+    uploadFiles(files, event);
+    event.target.value = '';
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
     if (!disabled) {
-      inputRef.current?.click();
+      setDragState('dragover');
     }
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (disabled) return;
-    setDragState('dragover');
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
     setDragState(null);
   };
 
-  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (disabled) return;
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (disabled) {
+      return;
+    }
     setDragState('drop');
 
-    const { files, items } = e.dataTransfer;
+    try {
+      const entries = Array.from(event.dataTransfer.items)
+        .map((item) => item.webkitGetAsEntry?.())
+        .filter(
+          (entry): entry is FileSystemEntry =>
+            entry !== null && entry !== undefined,
+        );
 
-    if (files.length === 1) {
-      const item = items[0].webkitGetAsEntry();
-      // Dropped item is a folder
-      if (item?.isDirectory) {
-        // @ts-ignore
-        const folderFiles = (await folderScanner(item, [])) as File[];
-        uploadFiles(folderFiles, e);
-      } else if (item?.isFile) {
-        uploadFiles(files, e);
+      if (entries.some((entry) => entry.isDirectory)) {
+        const nestedFiles = await Promise.all(
+          entries.map((entry) => folderScanner(entry, [])),
+        );
+        uploadFiles(nestedFiles.flat(), event);
+      } else {
+        uploadFiles(event.dataTransfer.files, event);
       }
-    } else if (files.length > 1) {
-      uploadFiles(files, e);
+    } catch (error) {
+      console.warn('Failed to scan dropped files', error);
+    } finally {
+      setDragState(null);
     }
   };
 
-  const renderUploadTrigger = () => {
-    return (
-      <span
-        className={clsx(`${prefixCls}-input`, {
-          [`${prefixCls}-input-disabled`]: disabled,
-        })}
-        onClick={handleClick}
-      >
-        <input
-          type="file"
-          disabled={disabled}
-          {...acceptDirectory}
-          multiple={multiple}
-          accept={accept}
-          onChange={handleChange}
-          style={{ display: 'none' }}
-          ref={inputRef}
-        />
-        {children ? (
-          children
-        ) : listType === 'picture-wall' ? (
-          <div className={`${prefixCls}-picture-wall-trigger`}>
-            <Plus />
-          </div>
-        ) : (
-          <Button disabled={disabled}>Upload</Button>
-        )}
-      </span>
-    );
-  };
-
   const handleRemove = async (file: UploadFile) => {
-    const promise = onRemove?.(file);
-    const shouldRemove =
-      promise instanceof Promise ? await promise : promise !== false;
-
-    if (shouldRemove !== false) {
-      setMergedFileList((state) =>
-        state.filter((item) => item.uid !== file.uid),
+    if (file.uid) {
+      pendingPreparationsRef.current.delete(file.uid);
+    }
+    try {
+      const shouldRemove = onRemove
+        ? await Promise.resolve(onRemove(file))
+        : true;
+      if (shouldRemove === false) {
+        return;
+      }
+      abortRequest(file);
+      setFileList(
+        fileListRef.current.filter((item) => !isSameFile(item, file)),
       );
+    } catch (error) {
+      console.warn(`Failed to remove file ${file.name}`, error);
     }
   };
 
   const handleReUpload = (file: UploadFile) => {
-    const newFile = { ...file, status: 'ready' as const, percent: 0 };
-    updateFileList(newFile);
-    postFile(newFile);
+    if (file.uid) {
+      pendingPreparationsRef.current.delete(file.uid);
+    }
+    abortRequest(file);
+    const nextFile = updateFile(file, {
+      uid: file.uid || uuidv4(),
+      status: 'ready',
+      percent: 0,
+      error: undefined,
+      response: undefined,
+    });
+    if (nextFile) {
+      postFile(nextFile);
+    }
   };
 
   const handlePreview = (file: UploadFile) => {
     if (onPreview) {
       onPreview(file);
-    } else if (file.raw) {
-      // Default preview behavior: open in new window
-      const url = URL.createObjectURL(file.raw);
-      window.open(url);
-      setTimeout(() => URL.revokeObjectURL(url), 100);
+      return;
     }
+    if (file.url) {
+      window.open(file.url, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    if (!file.raw) {
+      return;
+    }
+
+    const url = URL.createObjectURL(file.raw);
+    const previewWindow = window.open(url, '_blank');
+    if (!previewWindow) {
+      URL.revokeObjectURL(url);
+      return;
+    }
+    const cleanup = () => URL.revokeObjectURL(url);
+    previewWindow.addEventListener('load', cleanup, { once: true });
+    window.setTimeout(cleanup, 60_000);
+  };
+
+  const renderUploadTrigger = () => {
+    const acceptDirectory = directory
+      ? ({ webkitdirectory: '', directory: '' } as Record<string, string>)
+      : {};
+
+    return (
+      <span
+        className={clsx(`${prefixCls}-input`, {
+          [`${prefixCls}-input-disabled`]: disabled,
+        })}
+        onClick={(event) => {
+          if (!disabled && event.target !== inputRef.current) {
+            inputRef.current?.click();
+          }
+        }}
+      >
+        <input
+          type="file"
+          aria-label="Upload file"
+          className={`${prefixCls}-native-input`}
+          disabled={disabled}
+          {...acceptDirectory}
+          multiple={Boolean(multiple || directory)}
+          accept={accept}
+          onChange={handleChange}
+          ref={inputRef}
+        />
+        {children ? (
+          children
+        ) : listType === 'picture-wall' ? (
+          <span className={`${prefixCls}-picture-wall-trigger`}>
+            <Plus />
+          </span>
+        ) : (
+          <Button disabled={disabled}>Upload</Button>
+        )}
+      </span>
+    );
   };
 
   const renderUploadList = (extraProps?: object) => {
@@ -360,6 +690,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
         onRemove={handleRemove}
         onReUpload={handleReUpload}
         onPreview={handlePreview}
+        isPreviewable={(file) => Boolean(onPreview || file.url || file.raw)}
         {...extraProps}
       />
     );
@@ -368,7 +699,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
   if (type === 'drag') {
     return (
       <div
-        ref={ref}
+        ref={rootRef}
         {...rest}
         className={clsx(
           prefixCls,
@@ -382,7 +713,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
         style={style}
       >
         <div
-          className={clsx(`${prefixCls}-drag-container`)}
+          className={`${prefixCls}-drag-container`}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -403,7 +734,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
   if (listType === 'picture-wall') {
     return (
       <div
-        ref={ref}
+        ref={rootRef}
         {...rest}
         className={clsx(prefixCls, `${prefixCls}-picture-wall`, className)}
         style={style}
@@ -415,7 +746,7 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((baseprops, ref) => {
 
   return (
     <div
-      ref={ref}
+      ref={rootRef}
       {...rest}
       className={clsx(
         prefixCls,

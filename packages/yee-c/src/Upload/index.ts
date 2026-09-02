@@ -9,6 +9,13 @@ const Upload = InternalUpload as UploadType;
 
 Upload.Dragger = Dragger;
 
-export type { UploadProps } from './interface';
+export type {
+  UploadDraggerProps,
+  UploadFile,
+  UploadInstance,
+  UploadProps,
+  UploadRequestAbort,
+  UploadRequestOptions,
+} from './interface';
 
 export default Upload;

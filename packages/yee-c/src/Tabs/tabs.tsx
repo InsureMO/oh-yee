@@ -39,6 +39,7 @@ const Tabs: FC<TabsProps> = (baseprops) => {
     activeKey,
     defaultActiveKey,
     fixedHeader,
+    activeAlign,
     onChange,
     onEdit,
     onTabClick,
@@ -117,6 +118,7 @@ const Tabs: FC<TabsProps> = (baseprops) => {
         <TabHeader
           {...omit(props, ['children', 'className', 'style'])}
           prefixCls={prefixCls}
+          activeAlign={activeAlign}
         />
         <TabContent
           prefixCls={prefixCls}

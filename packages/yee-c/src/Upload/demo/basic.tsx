@@ -1,11 +1,10 @@
-import { Button, Upload } from '@rainbow-oh/yee-c';
+import { Button, Upload, type UploadProps } from '@rainbow-oh/yee-c';
 import React from 'react';
-import type { UploadFile } from '../interface';
 
 export default () => {
-  const props = {
+  const props: UploadProps = {
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    onChange({ file, fileList }: { file: UploadFile; fileList: UploadFile[] }) {
+    onChange({ file, fileList }) {
       if (file.status !== 'uploading') {
         console.log(file, fileList);
       }
@@ -14,26 +13,23 @@ export default () => {
       {
         uid: '1',
         name: 'xxx.png',
-        status: 'done',
-        raw: {} as File,
+        status: 'success',
         size: 123,
-        percent: 0,
+        percent: 100,
         type: 'image/png',
       },
       {
         uid: '2',
         name: 'yyy.png',
-        status: 'done',
-        raw: {} as File,
+        status: 'success',
         size: 123,
-        percent: 0,
+        percent: 100,
         type: 'image/png',
       },
     ],
   };
 
   return (
-    // @ts-ignore
     <Upload {...props}>
       <Button>Upload</Button>
     </Upload>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { UploadFile } from '../interface';
+import type { UploadFile } from '../interface';
 import UploadedItem from './uploaded-item';
 
 interface UploadListProps {
@@ -22,25 +22,29 @@ interface UploadListProps {
   onRemove?: (file: UploadFile) => void;
   onReUpload?: (file: UploadFile) => void;
   onPreview?: (file: UploadFile) => void;
+  isPreviewable?: (file: UploadFile) => boolean;
   renderUploadTrigger?: () => React.ReactNode;
 }
 
 const UploadList = (props: UploadListProps) => {
-  const { prefixCls, fileList, renderUploadTrigger, ...rest } = props;
+  const { prefixCls, fileList, isPreviewable, renderUploadTrigger, ...rest } =
+    props;
 
   if (!Array.isArray(fileList) || fileList.length === 0) {
     return renderUploadTrigger?.();
   }
 
   return (
-    <div className={`${prefixCls}-list`}>
-      {fileList.map((file) => {
+    <div className={`${prefixCls}-list`} aria-live="polite">
+      {fileList.map((file, index) => {
         return (
           <UploadedItem
             {...rest}
             prefixCls={prefixCls}
             file={file}
-            key={file.uid}
+            fileList={fileList}
+            previewable={isPreviewable?.(file) ?? false}
+            key={file.uid || `${file.name}-${index}`}
           />
         );
       })}

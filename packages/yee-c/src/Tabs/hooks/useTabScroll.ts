@@ -43,6 +43,12 @@ export function useTabScroll({
 
   const debouncedUpdateShadow = useDebounceFunction(updateShadow, 200);
 
+  // Refresh dropdown range and shadows after the nav list is moved programmatically
+  const refresh = useCallback(() => {
+    setRefreshKey((prev) => prev + 1);
+    debouncedUpdateShadow();
+  }, [debouncedUpdateShadow]);
+
   useEffect(() => {
     const container = navContainer.current;
     const list = navList.current;
@@ -99,5 +105,5 @@ export function useTabScroll({
     updateShadow,
   ]);
 
-  return { refreshKey, updateShadow: debouncedUpdateShadow };
+  return { refreshKey, refresh, updateShadow: debouncedUpdateShadow };
 }

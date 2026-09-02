@@ -2,123 +2,75 @@ import React from 'react';
 import type { DataAttributeProps } from '../utils/types';
 
 export type UploadFile = {
-  /**
-   * File upload status
-   */
+  /** File upload status */
   status: 'uploading' | 'error' | 'success' | 'ready';
-  /**
-   * Unique file id, auto-generated if not set
-   */
+  /** Unique file id. Files selected by Upload receive an id automatically. */
   uid?: string;
-  /**
-   * File name
-   */
+  /** File name */
   name: string;
-  /**
-   * File size
-   */
-  size: number;
-  /**
-   * Upload progress
-   */
+  /** File size in bytes */
+  size?: number;
+  /** Upload progress */
   percent?: number;
-  /**
-   * Source file
-   */
-  raw: File;
-  /**
-   * File type, determined by file extension
-   */
+  /** Source file. This can be omitted for files that already exist remotely. */
+  raw?: File;
+  /** MIME type or file extension */
   type?: string;
-  /**
-   * Upload response content
-   */
+  /** Remote file URL */
+  url?: string;
+  /** Upload response content */
   response?: any;
-  /**
-   * Upload error message
-   */
+  /** Upload error */
   error?: Error;
 };
 
+export type UploadRequestAbort = (() => void) | { abort: () => void };
+
+export interface UploadRequestOptions {
+  file: File;
+  onProgress: (percent: number) => void;
+  onError: (error: Error) => void;
+  onSuccess: (response: any) => void;
+}
+
 export interface UploadProps extends DataAttributeProps {
-  /**
-   * Custom prefix class name
-   */
+  /** Custom prefix class name */
   prefixCls?: string;
-  /**
-   * Child nodes
-   */
+  /** Child nodes */
   children?: React.ReactNode;
-  /**
-   * Custom class name
-   */
+  /** Custom class name */
   className?: string;
-  /**
-   * Custom inline style
-   */
+  /** Custom inline style */
   style?: React.CSSProperties;
-  /**
-   * Upload type
-   */
+  /** Upload type */
   type?: 'drag' | 'select';
-  /**
-   * File parameter name sent to the server
-   * @default 'file'
-   */
+  /** File parameter name sent to the server @default 'file' */
   name?: string;
-  /**
-   * Upload URL
-   */
+  /** Upload URL */
   action?: string | (() => string);
-  /**
-   * Additional parameters for upload
-   */
+  /** Additional parameters for upload */
   data?: Record<string, any> | ((file: File) => Record<string, any>);
-  /**
-   * Whether to send cookies with upload
-   */
+  /** Whether to send cookies with upload */
   withCredentials?: boolean;
-  /**
-   * Set upload request headers
-   */
+  /** Set upload request headers */
   headers?: Record<string, any>;
-  /**
-   * Accepted file types for upload
-   */
+  /** Accepted file types for upload */
   accept?: string;
-  /**
-   * Whether to support multiple file selection
-   */
+  /** Whether to support multiple file selection */
   multiple?: boolean;
-  /**
-   * Whether to support folder upload
-   */
+  /** Whether to support folder upload */
   directory?: boolean;
-  /**
-   * Whether disabled
-   */
+  /** Whether disabled */
   disabled?: boolean;
-  /**
-   * Maximum file size in bytes
-   */
+  /** Maximum file size in bytes */
   maxFileSize?: number;
-  /**
-   * Maximum number of files to upload
-   */
+  /** Maximum number of files to upload */
   maxCount?: number;
-  /**
-   * Set upload list type
-   */
+  /** Set upload list type */
   listType?: 'text' | 'picture-list' | 'picture-wall';
-  /**
-   * Whether to show upload progress
-   * @default true
-   */
+  /** Whether to show upload progress @default true */
   progress?: boolean;
-  /**
-   * Whether to show the uploaded file list
-   * @default true
-   */
+  /** Whether to show the uploaded file list @default true */
   showUploadList?:
     | boolean
     | {
@@ -130,55 +82,51 @@ export interface UploadProps extends DataAttributeProps {
         reloadIcon?: React.ReactNode;
         previewIcon?: React.ReactNode;
       };
-  /**
-   * Custom upload list item render
-   */
+  /** Custom upload list item render */
   itemRender?: (file: UploadFile, fileList: UploadFile[]) => React.ReactNode;
-  /**
-   * Default uploaded files
-   */
+  /** Default uploaded files */
   defaultFileList?: Array<UploadFile>;
-  /**
-   * Uploaded files in controlled mode
-   */
+  /** Uploaded files in controlled mode */
   fileList?: Array<UploadFile>;
   /**
-   * Callback before uploading a file
+   * Whether to upload automatically after files are selected.
+   * Set to false to only collect files into the list and trigger them
+   * later via the instance method `upload()`.
+   * @default true
    */
+  autoUpload?: boolean;
+  /** Callback before uploading a file */
   beforeUpload?: (
     file: File,
     fileList: Array<File>,
-  ) => boolean | Promise<File | boolean>;
+  ) => boolean | File | PromiseLike<File | boolean>;
   /**
-   * Custom upload implementation
+   * Custom upload implementation. Return an abort function or object to make
+   * remove, retry, and unmount cancel the active request.
    */
-  customRequest?: (options: {
-    file: File;
-    onProgress: (percent: number) => void;
-    onError: (error: Error) => void;
-    onSuccess: (response: any) => void;
-  }) => void;
-  /**
-   * Callback when upload status changes
-   */
+  customRequest?: (options: UploadRequestOptions) => void | UploadRequestAbort;
+  /** Callback when upload status changes */
   onChange?: (params: {
     file: UploadFile;
     fileList: Array<UploadFile>;
     event?: any;
   }) => void;
-  /**
-   * Callback when file link or preview icon is clicked
-   */
+  /** Callback when file link or preview icon is clicked */
   onPreview?: (file: UploadFile) => void;
-  /**
-   * Callback when a file is removed
-   */
-  onRemove?: (file: UploadFile) => boolean | Promise<boolean>;
+  /** Callback when a file is removed */
+  onRemove?: (file: UploadFile) => boolean | PromiseLike<boolean>;
 }
 
 export interface UploadDraggerProps extends UploadProps {
-  /**
-   * Upload hint
-   * */
+  /** Upload hint */
   hint?: React.ReactNode;
 }
+
+export type UploadInstance = HTMLDivElement & {
+  /**
+   * Upload files waiting in the list (status 'ready'). Without arguments
+   * uploads every ready file; accepts a single file or a list of files.
+   * Combine with `autoUpload={false}` to trigger uploads manually.
+   */
+  upload: (file?: UploadFile | UploadFile[]) => void;
+};

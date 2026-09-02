@@ -743,7 +743,7 @@
   --yee-tabs-operation-container-margin-top: -8px;
   --yee-tabs-operation-container-padding: 4px 0;
   --yee-tabs-operation-tab-height: 32px;
-  --yee-tabs-operation-tab-padding: 5px 12px;
+  --yee-tabs-operation-tab-padding: 0 12px;
   --yee-tabs-tab-group-margin-left: 4px;
   --yee-tabs-tab-group-container-padding: 8px;
   --yee-tabs-tab-group-container-line-height: 32px;

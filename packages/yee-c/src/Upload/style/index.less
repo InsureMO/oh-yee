@@ -4,12 +4,31 @@
   position: relative;
 
   &-input {
+    position: relative;
     display: flex;
+
+    &:focus-within {
+      outline: 2px solid var(--yee-primary-color);
+      outline-offset: 2px;
+      border-radius: var(--yee-radius);
+    }
 
     &-disabled {
       cursor: not-allowed;
       opacity: 0.5;
     }
+  }
+
+  &-native-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   &-disabled {
@@ -34,12 +53,12 @@
     }
 
     &:hover {
-      border-color: var(--yee-color-primary);
+      border-color: var(--yee-primary-color);
     }
 
     &-hover {
-      border-color: var(--yee-color-primary);
-      background-color: var(--yee-color-primary-bg);
+      border-color: var(--yee-primary-color);
+      background-color: var(--yee-primary-color-bg);
     }
   }
 
@@ -68,8 +87,8 @@
       background-color: var(--yee-color-bg-container);
 
       &:hover {
-        border-color: var(--yee-color-primary);
-        color: var(--yee-color-primary);
+        border-color: var(--yee-primary-color);
+        color: var(--yee-primary-color);
       }
     }
 
@@ -106,7 +125,7 @@
         align-items: center;
         justify-content: center;
         padding: 8px;
-        color: var(--yee-color-error);
+        color: var(--yee-error-color);
       }
 
       &-operate {
@@ -122,10 +141,11 @@
         gap: 8px;
         opacity: 0;
         transition: opacity 0.3s;
+      }
 
-        &:hover {
-          opacity: 1;
-        }
+      &:hover &-operate,
+      &:focus-within &-operate {
+        opacity: 1;
       }
     }
 
@@ -201,7 +221,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 0 12px;
       border-radius: var(--yee-radius);
       transition: all 0.3s;
 
@@ -216,6 +236,12 @@
   }
 
   &-item {
+
+    &-label {
+      display: flex;
+      align-items: center;
+    }
+
     &-icon {
       display: flex;
       align-items: center;
@@ -224,6 +250,7 @@
 
     &-name-content {
       flex: 1;
+      font-size: 14px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -243,15 +270,15 @@
   // 上传状态样式
   &-state {
     &-uploading {
-      color: var(--yee-color-primary);
+      color: var(--yee-primary-color);
     }
 
     &-error {
-      color: var(--yee-color-error);
+      color: var(--yee-error-color);
     }
 
     &-success {
-      color: var(--yee-color-success);
+      color: var(--yee-success-color);
     }
   }
 

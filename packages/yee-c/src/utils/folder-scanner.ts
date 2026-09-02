@@ -1,40 +1,54 @@
-export default async function folderScanner(
-  entry: FileSystemFileEntry | FileSystemDirectoryEntry,
-  filesList: any[],
-) {
+const readAllEntries = (
+  reader: FileSystemDirectoryReader,
+): Promise<FileSystemEntry[]> => {
   return new Promise((resolve, reject) => {
-    if (entry.isDirectory) {
-      const directoryReader = (
-        entry as FileSystemDirectoryEntry
-      ).createReader();
-      directoryReader.readEntries(
-        async (entries: any[]) => {
-          entries.forEach(async (entry: any, index: number) => {
-            await folderScanner(entry, filesList);
-            if (index === entries.length - 1) {
-              resolve(filesList);
-            }
-          });
-        },
-        (e: any) => {
-          reject(e);
-        },
-      );
-    } else if (entry.isFile) {
-      (entry as FileSystemFileEntry).file(
-        async (file: any) => {
-          const path = entry.fullPath.substring(1);
-          /** Modifying webkitRelativePath is the core operation, because in drag events webkitRelativePath is empty, and webkitRelativePath is read-only so normal assignment won't work. Currently the only way is to use this method to assign entry.fullPath to webkitRelativePath **/
-          const newFile = Object.defineProperty(file, 'webkitRelativePath', {
-            value: path,
-          });
-          filesList.push(newFile);
-          resolve(filesList);
-        },
-        (e: any) => {
-          reject(e);
-        },
-      );
-    }
+    const entries: FileSystemEntry[] = [];
+
+    const readNextBatch = () => {
+      reader.readEntries((batch) => {
+        if (batch.length === 0) {
+          resolve(entries);
+          return;
+        }
+        entries.push(...batch);
+        readNextBatch();
+      }, reject);
+    };
+
+    readNextBatch();
   });
+};
+
+const readFile = (entry: FileSystemFileEntry): Promise<File> => {
+  return new Promise((resolve, reject) => {
+    entry.file((file) => {
+      const path = entry.fullPath.replace(/^\//, '');
+      Object.defineProperty(file, 'webkitRelativePath', {
+        configurable: true,
+        value: path,
+      });
+      resolve(file);
+    }, reject);
+  });
+};
+
+export default async function folderScanner(
+  entry: FileSystemEntry,
+  filesList: File[] = [],
+): Promise<File[]> {
+  if (entry.isFile) {
+    filesList.push(await readFile(entry as FileSystemFileEntry));
+    return filesList;
+  }
+
+  if (entry.isDirectory) {
+    const reader = (entry as FileSystemDirectoryEntry).createReader();
+    const entries = await readAllEntries(reader);
+    const nestedFiles = await Promise.all(
+      entries.map((nestedEntry) => folderScanner(nestedEntry, [])),
+    );
+    filesList.push(...nestedFiles.flat());
+  }
+
+  return filesList;
 }
