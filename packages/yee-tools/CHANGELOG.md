@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-tools
 
+## 0.3.0
+
+### Minor Changes
+
+- 74a4dae: feat(fetch): add AbortSignal support and improve documentation
+
 ## 0.2.0
 
 ### Minor Changes
