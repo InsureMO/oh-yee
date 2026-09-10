@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.12.0
+
+### Minor Changes
+
+- f45f923: feat(tokens): standardize naming convention and add validation tooling
+
 ## 0.11.0
 
 ### Minor Changes
