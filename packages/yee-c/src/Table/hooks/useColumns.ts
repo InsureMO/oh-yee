@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import deepClone from '../../utils/deepClone';
-import { handleColumns } from '../util';
+import { applyColumnResize, handleColumns } from '../util';
 import {
   flattenLeafColumns,
   injectSelectionExpand,
@@ -32,6 +32,8 @@ export default function useColumns({
   rowSelection,
   expandable,
   measuredColumnWidths,
+  resizable,
+  resizedWidths,
 }: {
   children?:
     | React.ReactElement<ColumnProps>
@@ -40,6 +42,8 @@ export default function useColumns({
   rowSelection?: RowSelectionType;
   expandable?: ExpandableType;
   measuredColumnWidths?: number[];
+  resizable?: boolean;
+  resizedWidths?: Record<string, number>;
 }) {
   const childColumns: Array<ColumnProps> | null = useMemo(() => {
     return children
@@ -55,10 +59,21 @@ export default function useColumns({
       []) as WrapedColumnProps[];
     const tree = injectSelectionExpand(base, rowSelection, expandable);
     const leaves = flattenLeafColumns(tree);
-    const wraped = handleColumns(leaves, measuredColumnWidths);
+    // Resized widths are folded in before the fixed-column offsets are computed,
+    // so sticky positions follow a drag without any extra bookkeeping.
+    const resized = applyColumnResize(leaves, resizable, resizedWidths);
+    const wraped = handleColumns(resized, measuredColumnWidths);
     const rows = parseHeaderRows(tree, wraped);
     return { wrapedColumns: wraped, headerRows: rows };
-  }, [childColumns, columns, rowSelection, expandable, measuredColumnWidths]);
+  }, [
+    childColumns,
+    columns,
+    rowSelection,
+    expandable,
+    measuredColumnWidths,
+    resizable,
+    resizedWidths,
+  ]);
 
   return {
     wrapedColumns,

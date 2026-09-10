@@ -4,6 +4,7 @@ import Spin from '../Spin';
 import ColGroup from './col-group';
 import Footer from './footer';
 import Header from './header';
+import useColumnResize from './hooks/useColumnResize';
 import useColumns from './hooks/useColumns';
 import useExpand from './hooks/useExpand';
 import useSelection from './hooks/useSelection';
@@ -12,7 +13,6 @@ import TFooter from './tfooter';
 import THeader from './theader';
 
 import { GlobalContext } from '../Config-Provider';
-import useLatest from '../hooks/useLatest';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import omit from '../utils/omit';
 import { pickDataAttrs } from '../utils/types';
@@ -20,7 +20,11 @@ import { pickDataAttrs } from '../utils/types';
 import useFilter from './hooks/useFilter';
 import usePagination from './hooks/usePagination';
 import useSorter from './hooks/useSorter';
-import type { PaginationType, TableProps } from './interface';
+import type {
+  PaginationType,
+  TableProps,
+  WrapedColumnProps,
+} from './interface';
 import './style/index.less';
 
 export const TableCtx = React.createContext({} as any);
@@ -38,6 +42,9 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     rowKey = 'key',
     bordered,
     tableLayout,
+    resizable,
+    onColumnResize,
+    onColumnResizeEnd,
     loading = false,
     showHeader = true,
     pagination: propPagination = true,
@@ -64,6 +71,32 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
   const dataAttrs = pickDataAttrs(rest as Record<string, unknown>);
   const [measuredColumnWidths, setMeasuredColumnWidths] =
     React.useState<number[]>();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
+
+  // Filled in right after `useColumns` below. The resize hook needs the latest
+  // leaf columns, but `wrapedColumns` is itself derived from the resized widths,
+  // so depending on it directly would rebuild the drag handlers mid-drag.
+  const wrapedColumnsRef = useRef<WrapedColumnProps[]>([]);
+
+  const {
+    resizedWidths,
+    resizingKey,
+    onResizeStart,
+    onResizeStep,
+    resetResizedWidths,
+  } = useColumnResize({
+    tableRef,
+    columnsRef: wrapedColumnsRef,
+    onColumnResize,
+    onColumnResizeEnd,
+  });
+
+  // Once a snapshot exists, every column carries an explicit px width and the
+  // table switches to `table-layout: fixed`, which makes those declared widths
+  // authoritative. The measured widths lag one frame behind a drag, so they must
+  // stop feeding the fixed-column offsets while a snapshot is in play.
+  const hasResizeSnapshot = Object.keys(resizedWidths).length > 0;
 
   const getRowKey = React.useCallback(
     (record: Record<string, any>, key = rowKey) => {
@@ -83,8 +116,41 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     columns: propColumns,
     expandable,
     rowSelection,
-    measuredColumnWidths,
+    measuredColumnWidths: hasResizeSnapshot ? undefined : measuredColumnWidths,
+    resizable,
+    resizedWidths,
   });
+
+  wrapedColumnsRef.current = wrapedColumns;
+
+  // Total width of the px controlled layout. Deliberately `undefined` unless the
+  // snapshot covers every single column: a partial snapshot would leave a hole in
+  // the layout, so it is safer to fall back to the browser's own distribution.
+  const resizeTotalWidth = useMemo(() => {
+    if (!wrapedColumns.length) return undefined;
+    let total = 0;
+    for (const column of wrapedColumns) {
+      const width = column.resizeKey
+        ? resizedWidths[column.resizeKey]
+        : undefined;
+      if (!width || !Number.isFinite(width)) return undefined;
+      total += width;
+    }
+    return total;
+  }, [wrapedColumns, resizedWidths]);
+
+  const resizeActive = resizeTotalWidth !== undefined;
+
+  // Identity of the column set, ignoring widths. When it changes the snapshot is
+  // stale (a new column would have no width of its own), so it gets dropped.
+  const resizeKeysSignature = useMemo(
+    () => wrapedColumns.map((column) => column.resizeKey).join('|'),
+    [wrapedColumns],
+  );
+
+  useEffect(() => {
+    resetResizedWidths();
+  }, [resizeKeysSignature, resetResizedWidths]);
 
   // Filter
   const {
@@ -157,8 +223,6 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
 
   // Track filter changes to emit onChange after filtered data is recalculated
   const prevFilterRecordsRef = useRef(filterRecords);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const tableRef = useRef<HTMLTableElement>(null);
   const [horizontalScroll, setHorizontalScroll] = React.useState({
     left: false,
     right: false,
@@ -197,12 +261,10 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     [wrapedColumns],
   );
 
-  // Keep the latest columns in a ref so that the measure callback stays stable:
-  // `wrapedColumns` is derived from `measuredColumnWidths`, so depending on it
-  // directly would recreate the callback (and the ResizeObserver) on every
+  // `wrapedColumnsRef` (assigned during render, above) keeps the measure callback
+  // stable: `wrapedColumns` is derived from `measuredColumnWidths`, so depending
+  // on it directly would recreate the callback (and the ResizeObserver) on every
   // measurement.
-  const wrapedColumnsRef = useLatest(wrapedColumns);
-
   const updateMeasuredColumnWidths = React.useCallback(() => {
     const columns = wrapedColumnsRef.current;
     if (!columns.some((column) => column.fixed)) return;
@@ -319,6 +381,9 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
         onSort={handleSort}
         onCheckAll={onCheckAll}
         onInternalFilter={onFilterInternal}
+        resizingKey={resizingKey}
+        onResizeStart={onResizeStart}
+        onResizeStep={onResizeStep}
       />
     );
   };
@@ -349,8 +414,16 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     const tableProps = {
       style: {
         ...styles?.table,
-        minWidth: scroll?.x,
-        tableLayout: pageData?.length ? tableLayout : undefined,
+        // An explicit total width replaces both `width: 100%` and `scroll.x`:
+        // either of those would let the browser stretch the table and redistribute
+        // the extra space across the columns, undoing the drag.
+        minWidth: resizeActive ? undefined : scroll?.x,
+        width: resizeTotalWidth,
+        tableLayout: resizeActive
+          ? 'fixed'
+          : pageData?.length
+            ? tableLayout
+            : undefined,
       },
       className: clsx(
         { [`${prefixCls}-bordered`]: bordered },
@@ -414,7 +487,11 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
 
   return (
     <div
-      className={clsx(`${prefixCls}-box`, className)}
+      className={clsx(
+        `${prefixCls}-box`,
+        { [`${prefixCls}-resizing`]: !!resizingKey },
+        className,
+      )}
       style={style}
       ref={ref}
       {...dataAttrs}

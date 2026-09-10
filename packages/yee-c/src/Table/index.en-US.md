@@ -24,6 +24,7 @@ A table displays rows of data.
 <code src="./demo/column-filter.tsx" title="column filter" description="Table column filter"></code>
 <code src="./demo/grouping.tsx" title="Grouping" description="Multi-level header"></code>
 <code src="./demo/fixed.tsx" title="Fixed Columns" description="Fix columns on both sides and scroll horizontally to see the effect"></code>
+<code src="./demo/resizable.tsx" title="Resizable Columns" description="Drag the right edge of a header cell to resize it; arrow keys work too"></code>
 <code src="./demo/components-override.tsx" title="components override" description="tbody / row rendering that can be taken over by external libs (e.g. dnd-kit)"></code>
 ## API
 
@@ -58,6 +59,9 @@ A table displays rows of data.
 | rowKey | `string \| ((record: Record<string, any>) => string)` | Row key | `id` |
 | summary | `(pageData: Array<Record<string, any>>) => React.ReactNode` | Summary row | - |
 | tableLayout | `'auto' \| 'fixed'` | Table layout | - |
+| resizable | `boolean` | Allow resizing columns by dragging the right edge of the header cell; a single column can opt out via `column.resizable` | - |
+| onColumnResize | `(width: number, column: WrapedColumnProps) => void` | Fired on every width change while dragging | - |
+| onColumnResizeEnd | `(width: number, column: WrapedColumnProps) => void` | Fired once a resize interaction finishes | - |
 | virtual | `boolean` | Virtual list | - |
 | onChange | `({ pagination, filters, sorter, currentDataSource, action }) => void` | Change callback | - |
 | onRow | `(record: Record<string, any>, index: number) => Record<string, any>` | Custom row props | - |
@@ -78,6 +82,9 @@ A table displays rows of data.
 | dataIndex | `string` | Data index | - |
 | key | `string \| number` | Unique key | - |
 | width | `number \| string` | Column width | - |
+| resizable | `boolean` | Whether this column is resizable; inherits the table level `resizable` when unset | - |
+| minWidth | `number` | Lower bound (px) applied while resizing | `40` |
+| maxWidth | `number` | Upper bound (px) applied while resizing | - |
 | title | `React.ReactNode` | Column title | - |
 | helper | `string \| React.ReactNode` | Help icon for column header | - |
 | children | `ColumnProps[]` | Sub-columns for header grouping (multi-level header); use `render` for custom cell content | - |

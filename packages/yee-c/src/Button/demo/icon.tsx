@@ -1,11 +1,11 @@
-import { Button } from '@rainbow-oh/yee-c';
+import { Button, Tooltip } from '@rainbow-oh/yee-c';
 import { Download, Plus, Search } from 'lucide-react';
 import React from 'react';
 
 export default () => {
   return (
     <>
-      <Button type="primary" icon={<Search size={16} />}>
+      <Button type="primary" icon={<Search size={16} />} title="search">
         Search
       </Button>
       <span style={{ margin: '0 10px' }}></span>
@@ -14,7 +14,9 @@ export default () => {
       <br />
       <Button shape="circle" icon={<Plus size={16} />} />
       <span style={{ margin: '0 10px' }}></span>
-      <Button shape="circle" type="primary" icon={<Search size={16} />} />
+      <Tooltip title='Search'>
+        <Button shape="circle" type="primary" icon={<Search size={16} />} />
+      </Tooltip>
       <br />
       <br />
       <Button icon={<Search size={16} />} />

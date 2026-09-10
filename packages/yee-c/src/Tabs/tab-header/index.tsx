@@ -221,7 +221,8 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
         {moreOpen && (
           <DropDownTabs visible={moreOpen} items={items || []} range={range}>
             <Button
-              className={`${prefixCls}-nav-more`}
+              className={clsx(`${prefixCls}-nav-more`, classNames?.more)}
+              style={styles?.more}
               size="small"
               icon={<Ellipsis size={14} strokeWidth={1.5} />}
               type="text"

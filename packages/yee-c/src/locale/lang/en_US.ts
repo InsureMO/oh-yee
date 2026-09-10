@@ -105,6 +105,7 @@ const locale: Locale = {
     sortAscending: 'Click to sort ascending',
     sortDescending: 'Click to sort descending',
     sortCancel: 'Click to cancel sorting',
+    resizeColumn: 'Drag to resize column',
   },
 
   pagination: {

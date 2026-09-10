@@ -72,6 +72,21 @@ export interface HeadCellProps extends Omit<WrapedColumnProps, 'title'> {
   onSort?: (dataIndex: string, sorter: any) => void;
   onInternalFilter?: (dataIndex: string, value: string) => void;
   /**
+   * `resizeKey` of the column currently being dragged, if any
+   */
+  resizingKey?: string | null;
+  /**
+   * Begin a pointer driven column resize. Injected by Table when resizing is on.
+   */
+  onResizeStart?: (
+    event: React.PointerEvent<HTMLElement>,
+    resizeKey: string,
+  ) => void;
+  /**
+   * Nudge a column width by `delta` px, for keyboard driven resizing
+   */
+  onResizeStep?: (resizeKey: string, delta: number) => void;
+  /**
    * Horizontal span, used for grouped header cells
    */
   colSpan?: number;
@@ -257,6 +272,20 @@ export interface ColumnProps {
    */
   width?: number | string;
   /**
+   * Whether this column can be resized by dragging the right edge of its header
+   * cell. Falls back to the table level `resizable` when not set.
+   */
+  resizable?: boolean;
+  /**
+   * Lower bound (in px) applied while resizing this column
+   * @default 40
+   */
+  minWidth?: number;
+  /**
+   * Upper bound (in px) applied while resizing this column
+   */
+  maxWidth?: number;
+  /**
    * Set header display text
    */
   title?: React.ReactNode;
@@ -295,6 +324,12 @@ export interface WrapedColumnProps
    * Whether this is the first column fixed to the right
    */
   isFixedRightFirst?: boolean;
+  /**
+   * Stable identity of this leaf column, used as the key of the resized width
+   * map. Only assigned to leaf columns, so its presence also marks a column as
+   * a valid resize target (group header cells never carry one).
+   */
+  resizeKey?: string;
   /**
    * prefixCls
    */
@@ -640,6 +675,23 @@ export interface TableProps
    * Set table layout
    */
   tableLayout?: 'auto' | 'fixed'; // Table layout, act on table tag
+  /**
+   * Whether columns can be resized by dragging the right edge of their header
+   * cell. Individual columns can opt out with `column.resizable: false`.
+   *
+   * The first drag snapshots the rendered width of every column and switches the
+   * table to a px controlled `table-layout: fixed`, so column widths stay exactly
+   * where they are dragged instead of being redistributed by the browser.
+   */
+  resizable?: boolean;
+  /**
+   * Fired on every width change while a column is being dragged
+   */
+  onColumnResize?: (width: number, column: WrapedColumnProps) => void;
+  /**
+   * Fired once when a column resize interaction finishes
+   */
+  onColumnResizeEnd?: (width: number, column: WrapedColumnProps) => void;
   /**
    * Whether to enable virtual list
    */

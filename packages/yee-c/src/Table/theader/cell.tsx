@@ -29,9 +29,14 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     width,
     colSpan,
     rowSpan,
+    resizable,
+    resizeKey,
+    resizingKey,
     onHeaderCell,
     onSort,
     onInternalFilter,
+    onResizeStart,
+    onResizeStep,
     ...rest
   } = props;
 
@@ -148,6 +153,41 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     className,
   );
 
+  // `resizeKey` is only stamped onto leaf columns, so it doubles as the guard that
+  // keeps handles off group header cells (whose width is the sum of their leaves).
+  const showResizeHandle = !!(resizable && resizeKey && onResizeStart);
+  const isResizing = !!resizeKey && resizingKey === resizeKey;
+
+  const renderResizeHandle = () => {
+    if (!showResizeHandle) return null;
+    return (
+      <span
+        role="separator"
+        aria-orientation="vertical"
+        aria-label={tableLocale.resizeColumn || 'Drag to resize column'}
+        tabIndex={0}
+        className={clsx(`${prefixCls}-resize-handle`, {
+          [`${prefixCls}-resize-handle-active`]: isResizing,
+        })}
+        onPointerDown={(event) => onResizeStart?.(event, resizeKey as string)}
+        // The whole title area is a sort trigger, and a resize drag ends with a
+        // click on top of it; swallow it so dragging never toggles the sorter.
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+        }}
+        onKeyDown={(event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          onResizeStep?.(
+            resizeKey as string,
+            event.key === 'ArrowLeft' ? -1 : 1,
+          );
+        }}
+      />
+    );
+  };
+
   const getThProps = () => {
     const styles = { ...style, width, maxWidth: width, textAlign: align };
     const cellProps = onHeaderCell ? onHeaderCell(props) : {};
@@ -165,10 +205,20 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
 
   const renderCell = () => {
     if (!filter && !sorter) {
-      return <th {...thProps}>{title}</th>;
+      return (
+        <th {...thProps}>
+          {title}
+          {renderResizeHandle()}
+        </th>
+      );
     }
 
-    return <th {...thProps}>{renderCellWithAction()}</th>;
+    return (
+      <th {...thProps}>
+        {renderCellWithAction()}
+        {renderResizeHandle()}
+      </th>
+    );
   };
 
   const cell = renderCell();

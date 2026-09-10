@@ -1,4 +1,47 @@
-import { WrapedColumnProps } from '../interface';
+import { ColumnProps, WrapedColumnProps } from '../interface';
+
+/**
+ * Stable identity for a leaf column, used to key its resized width.
+ *
+ * `key`/`dataIndex` survive re-ordering and data changes, so they are preferred.
+ * Columns declaring neither fall back to their position, which is the best that
+ * can be done without asking the caller for an id.
+ */
+export function getColumnResizeKey(column: ColumnProps, index: number) {
+  const id = column.key ?? column.dataIndex;
+  return id === undefined || id === null || id === ''
+    ? `index:${index}`
+    : `id:${id}`;
+}
+
+/**
+ * Stamp every leaf column with its `resizeKey`, resolve whether it is resizable
+ * (column level setting wins over the table level one) and override `width` with
+ * the dragged value when there is one.
+ *
+ * This runs before `handleColumns` so that the colgroup, the header cells, the
+ * body cells and the sticky offsets of fixed columns all read the same width
+ * from a single place.
+ */
+export function applyColumnResize(
+  columns: Array<WrapedColumnProps>,
+  resizable?: boolean,
+  resizedWidths?: Record<string, number>,
+) {
+  return columns.map((column, index) => {
+    const resizeKey = getColumnResizeKey(column, index);
+    const resizedWidth = resizedWidths?.[resizeKey];
+    const next: WrapedColumnProps = {
+      ...column,
+      resizeKey,
+      resizable: column.resizable ?? resizable ?? false,
+    };
+    if (Number.isFinite(resizedWidth) && (resizedWidth as number) > 0) {
+      next.width = resizedWidth;
+    }
+    return next;
+  });
+}
 
 const getColumnWidth = (
   column: WrapedColumnProps,

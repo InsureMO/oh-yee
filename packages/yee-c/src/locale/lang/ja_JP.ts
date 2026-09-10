@@ -105,6 +105,7 @@ const locale: Locale = {
     sortAscending: 'クリックで昇順に並べ替え',
     sortDescending: 'クリックで降順に並べ替え',
     sortCancel: 'クリックで並べ替えを解除',
+    resizeColumn: 'ドラッグで列幅を変更',
   },
 
   pagination: {

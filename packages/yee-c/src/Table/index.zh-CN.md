@@ -25,6 +25,7 @@ toc: 'content'
 <code src="./demo/merge-cell.tsx" title="合并单元格" description="合并单元格的表格"></code>
 <code src="./demo/grouping.tsx" title="表头分组" description="多级表头"></code>
 <code src="./demo/fixed.tsx" title="固定列" description="固定表格左右列，横向滚动可查看效果"></code>
+<code src="./demo/resizable.tsx" title="列宽调整" description="拖动表头右边缘调整列宽，支持键盘左右方向键"></code>
 <code src="./demo/summary.tsx" title="统计" description="表格的统计行"></code>
 <code src="./demo/filter.tsx" title="筛选" description="表格的筛选功能"></code>
 <code src="./demo/column-filter.tsx" title="列筛选" description="表格的列筛选功能"></code>
@@ -63,6 +64,9 @@ toc: 'content'
 | rowKey            | `string \| ((record: Record<string, any>) => string)`                       | 设置行的唯一键                       | `id`   |
 | summary           | `(pageData: Array<Record<string, any>>) => React.ReactNode`                 | 总结栏                               | -      |
 | tableLayout       | `'auto' \| 'fixed'`                                                         | 设置Table布局                        | -      |
+| resizable         | `boolean`                                                                   | 是否允许拖动表头右边缘调整列宽，可用 `column.resizable` 单独关闭某列 | -      |
+| onColumnResize    | `(width: number, column: WrapedColumnProps) => void`                        | 拖动过程中每次宽度变化的回调         | -      |
+| onColumnResizeEnd | `(width: number, column: WrapedColumnProps) => void`                        | 一次拖动结束时的回调                 | -      |
 | virtual           | `boolean`                                                                   | 是否开启虚拟列表                     | -      |
 | onChange          | `({ pagination, filters, sorter, currentDataSource, action }) => void`      | 分页，排序，筛选发生变化时的回调函数 | -      |
 | onRow             | `(record: Record<string, any>, index: number) => Record<string, any>`       | 自定义行属性                         | -      |
@@ -83,6 +87,9 @@ toc: 'content'
 | dataIndex    | `string`                                                             | 行数据索引                     | -      |
 | key          | `string \| number`                                                   | 唯一key                        | -      |
 | width        | `number \| string`                                                   | 设置宽度                       | -      |
+| resizable    | `boolean`                                                            | 该列是否可拖动调整列宽，未设置时继承表格的 `resizable` | -      |
+| minWidth     | `number`                                                             | 调整列宽时的最小宽度（px）     | `40`   |
+| maxWidth     | `number`                                                             | 调整列宽时的最大宽度（px）     | -      |
 | title        | `React.ReactNode`                                                    | 设置列头显示文本               | -      |
 | helper       | `string \| React.ReactNode`                                          | 设置表头help 帮助图标          | -      |
 | children     | `ColumnProps[]`                                                     | 子列，用于表头分组（多级表头）；自定义单元格内容请用 `render` | -      |

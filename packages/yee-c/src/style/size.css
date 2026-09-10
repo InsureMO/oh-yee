@@ -674,6 +674,7 @@
   --yee-table-bordered-cell-border-width: 1px;
   --yee-table-bordered-thead-border-width: 1px;
   --yee-table-thead-action-gap: 8px;
+  --yee-table-resize-handle-width: 8px;
   --yee-table-filter-popup-padding: 8px;
   --yee-table-content-border-radius: 6px 6px 0 0;
   --yee-table-cell-padding: 13px 16px;

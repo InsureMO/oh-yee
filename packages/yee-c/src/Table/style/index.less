@@ -71,6 +71,48 @@
     }
   }
 
+  // Sits inside the header cell's right padding so it never overlaps the sorter
+  // or filter controls, which are laid out against the content edge.
+  &-resize-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    width: var(--yee-table-resize-handle-width);
+    height: 100%;
+    cursor: col-resize;
+    background-color: transparent;
+    touch-action: none;
+    user-select: none;
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 25%;
+      right: calc(var(--yee-table-resize-handle-width) / 2 - 1px);
+      width: 2px;
+      height: 50%;
+      background-color: transparent;
+    }
+
+    &:hover::after,
+    &:focus-visible::after,
+    &-active::after {
+      background-color: var(--yee-primary-color);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  // While dragging, the pointer leaves the handle constantly; keep the cursor and
+  // the selection lock consistent across the whole table.
+  &-resizing {
+    cursor: col-resize;
+    user-select: none;
+  }
+
   &-filter {
     max-height: var(--yee-table-filter-popup-height);
     background-color: var(--yee-table-filter-list-bg-color);

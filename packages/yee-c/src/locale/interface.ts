@@ -79,6 +79,7 @@ export interface LocaleTable {
   sortAscending?: string; // "Click to sort ascending"
   sortDescending?: string; // "Click to sort descending"
   sortCancel?: string; // "Click to cancel sorting"
+  resizeColumn?: string; // "Drag to resize column"
 }
 
 // Pagination component

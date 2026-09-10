@@ -1,6 +1,6 @@
 import type { DataAttributeProps } from '../utils/types';
 
-type SemanticDOM = 'header' | 'content' | 'track' | 'list' | 'activeBar';
+type SemanticDOM = 'header' | 'content' | 'track' | 'list' | 'activeBar' | 'more';
 
 export type TabItemType = {
   /**

@@ -96,6 +96,7 @@ const locale: Locale = {
     sortAscending: '点击升序排列',
     sortDescending: '点击降序排列',
     sortCancel: '点击取消排序',
+    resizeColumn: '拖动调整列宽',
   },
 
   pagination: {
