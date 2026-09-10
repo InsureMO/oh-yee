@@ -590,7 +590,7 @@
   --yee-selector-padding: 2px 6px;
   --yee-selector-border-width: 1px;
   --yee-selector-border-radius: 4px;
-  --yee-selector-height: 32px;
+  --yee-selector-height: var(--yee-input-height);
   --yee-selector-input-font-size: 14px;
   --yee-selector-input-line-height: 22px;
   --yee-selector-input-focus-opacity: 0.6;
