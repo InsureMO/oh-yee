@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.11.0
+
+### Minor Changes
+
+- 1f40651: feat(components): add table column resizing and improve accessibility
+
 ## 0.10.0
 
 ### Minor Changes
