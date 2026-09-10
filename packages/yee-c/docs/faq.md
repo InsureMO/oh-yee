@@ -53,11 +53,11 @@ import { Button } from 'yee-c';
 
 ```css
 :root {
-  --yee-primary-color: #1890ff;
-  --yee-success-color: #52c41a;
-  --yee-warning-color: #faad14;
-  --yee-error-color: #f5222d;
-  --yee-border-radius: 4px;
+  --yee-color-primary: #1890ff;
+  --yee-color-success: #52c41a;
+  --yee-color-warning: #faad14;
+  --yee-color-error: #f5222d;
+  --yee-radius: 4px;
 }
 ```
 
@@ -65,8 +65,8 @@ import { Button } from 'yee-c';
 
 ```css
 [data-theme='dark'] {
-  --yee-bg-color: #1f1f1f;
-  --yee-text-color: #ffffff;
+  --yee-color-bg-container: #1f1f1f;
+  --yee-color-text: #ffffff;
 }
 ```
 

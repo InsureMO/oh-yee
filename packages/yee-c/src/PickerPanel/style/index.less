@@ -374,9 +374,9 @@
       width: 100%;
       height: var(--yee-picker-range-hover-after-height);
       border-top: var(--yee-picker-range-hover-after-border-width) dashed
-        var(--yee-rangepicker-hover-border-color);
+        var(--yee-range-picker-hover-border-color);
       border-bottom: var(--yee-picker-range-hover-after-border-width) dashed
-        var(--yee-rangepicker-hover-border-color);
+        var(--yee-range-picker-hover-border-color);
       transform: translateY(-50%);
       content: '';
     }
@@ -401,7 +401,7 @@
     &::after {
       z-index: 2;
       border-right: var(--yee-picker-range-hover-after-border-width) dashed
-        var(--yee-rangepicker-hover-border-color);
+        var(--yee-range-picker-hover-border-color);
       border-top-right-radius: var(
         --yee-picker-range-hover-after-border-radius
       );
@@ -417,7 +417,7 @@
     &::after {
       z-index: 2;
       border-left: var(--yee-picker-range-hover-after-border-width) dashed
-        var(--yee-rangepicker-hover-border-color);
+        var(--yee-range-picker-hover-border-color);
       border-top-left-radius: var(--yee-picker-range-hover-after-border-radius);
       border-bottom-left-radius: var(
         --yee-picker-range-hover-after-border-radius
@@ -455,7 +455,7 @@
 
     &:not(@{cellPrefixCls}-not-in-view) {
       &::before {
-        background-color: var(--yee-rangepicker-checked-bg-color);
+        background-color: var(--yee-range-picker-checked-bg-color);
       }
     }
   }

@@ -230,7 +230,7 @@ const Selector = React.forwardRef(
               style={
                 {
                   '--m-indicator-dot-bg-color':
-                    'var(--yee-text-color-secondary)',
+                    'var(--yee-color-text-secondary)',
                 } as React.CSSProperties
               }
             />

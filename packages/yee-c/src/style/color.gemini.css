@@ -1,0 +1,134 @@
+/*!
+ * Gemini UI 预设主题 —— 依据 Gemini_UI_Spec_v98 / Spec v99 设计规范
+ *
+ * 说明:
+ * 1. 文件名沿用 `color.<name>.css` 约定,是为了复用 package.json 的 style 导出
+ *    与 scripts/merge-css.js 的 `color.*.css` glob(themes.css 自动合入);
+ *    因此本文件同时承载本主题的 **颜色 token 与尺寸 token**,不额外拆 size.gemini.css。
+ * 2. 全部使用新命名规范 `--yee-color-*`(旧 `--yee-{semantic}-color*` 已 deprecated,
+ *    兼容别名统一写在 color.css 末尾,var() 在使用处解析,别名会自动跟随本主题取值)。
+ * 3. 启用方式:
+ *      import '@rainbow-oh/yee-c/variables.css';
+ *      import '@rainbow-oh/yee-c/themes.css';   // 或 '@rainbow-oh/yee-c/color.gemini.css'
+ *      document.documentElement.dataset.theme = 'gemini';
+ *    只在 [data-theme='gemini'] 下生效,不影响其他使用方。
+ * 4. 仅覆写基础语义 token —— color.css 中派生 token 多为 var(--yee-color-*),
+ *    会自动跟随本主题;无需整份复制默认主题。
+ */
+
+[data-theme='gemini'] {
+  /* ================= 主色 primary ================= */
+  --yee-color-primary: #6d5dfc;
+  --yee-color-primary-hover: #5c4fff;
+  --yee-color-primary-active: #5147e0;
+  --yee-color-primary-border: #c9c6fd;
+  --yee-color-primary-bg: rgba(109, 93, 252, 10%);
+
+  /* ================= 链接 link ================= */
+  --yee-color-link: #6d5dfc;
+  --yee-color-link-hover: #5c4fff;
+  --yee-color-link-active: #5147e0;
+
+  /* ================= 错误 error ================= */
+  --yee-color-error: #d92d20;
+  --yee-color-error-hover: #b42318;
+  --yee-color-error-active: #b42318;
+  --yee-color-error-bg: #ffece8;
+  --yee-color-error-border: #f9cfc9;
+
+  /* ================= 成功 success ================= */
+  --yee-color-success: #00b42a;
+  --yee-color-success-hover: #009a29;
+  --yee-color-success-active: #008026;
+  --yee-color-success-bg: #e8ffea;
+  --yee-color-success-border: #aff0b5;
+
+  /* ================= 警告 warning ================= */
+  --yee-color-warning: #ff7d00;
+  --yee-color-warning-hover: #d25f00;
+  --yee-color-warning-active: #a64b00;
+  --yee-color-warning-bg: #fff7e8;
+  --yee-color-warning-border: #ffcf8b;
+
+  /* ================= 信息 info ================= */
+  --yee-color-info: #165dff;
+  --yee-color-info-hover: #0e42d2;
+  --yee-color-info-active: #072ca6;
+  --yee-color-info-bg: #e8f3ff;
+  --yee-color-info-border: #bedaff;
+
+  /* ================= 文字 text ================= */
+  --yee-color-text: #1d2129;
+  --yee-color-text-secondary: #4e5969;
+  --yee-color-text-description: #86909c;
+  --yee-color-text-disabled: #86909c;
+
+  /* ================= 边框 / 分隔线 ================= */
+  --yee-color-border: #e5e8ef;
+  /* 衍生:Gemini 表单 focus 只变边框色(不加光环),边框色用主色 */
+  --yee-color-border-hover-focus: #6d5dfc;
+  /* 衍生:规范 --line(分隔线 / 表格行线) */
+  --yee-color-split: #f0f2f5;
+
+  /* ================= 背景 ================= */
+  --yee-color-bg-layout: #f1f2f4;
+  --yee-color-bg-head: #fff;
+  --yee-color-bg-disabled: #f2f3f5;
+  /* 衍生:规范 --hover(极浅悬浮底) */
+  --yee-color-bg-hover: rgba(109, 93, 252, 3.5%);
+
+  /* ================= 衍生:placeholder / 选项态 ================= */
+  /* 规范 --muted 同时用于 placeholder */
+  --yee-color-placeholder: #86909c;
+  --yee-color-option-active: #6d5dfc;
+  --yee-color-option-active-bg: rgba(109, 93, 252, 10%);
+  --yee-color-option-hover: #1d2129;
+  --yee-color-option-hover-bg: rgba(109, 93, 252, 3.5%);
+  --yee-tab-active-border-color: #c9c6fd;
+
+  /* ================= 字体 ================= */
+  --global-font-family:
+    Roboto, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'PingFang SC', sans-serif;
+
+  /* =========================================================
+   * 尺寸 token(Gemini 规范:表单控件 40px / 12px,按钮 36px / 8px,
+   * 卡片与浮层 14px)
+   * ========================================================= */
+
+  /* --Input--(Input / InputNumber / DatePicker 触发器共用) */
+  --yee-input-height: 40px;
+  --yee-input-border-radius: 12px;
+  --yee-input-padding: 0 14px;
+
+  /* --Selector--(Select / TreeSelect / Cascader 触发器) */
+  --yee-selector-height: 40px;
+  --yee-selector-border-radius: 12px;
+
+  /* --RangePicker--(触发器默认继承 --yee-input-*,这里只覆写自有的横向内边距) */
+  --yee-range-picker-trigger-padding: 0 14px;
+  --yee-range-picker-trigger-large-padding: 0 14px;
+
+  /* --TextArea-- */
+  --yee-textarea-border-radius: 12px;
+
+  /* --Search--(line-height 22px + 上下 8px + 1px 边框 = 40px) */
+  --yee-search-border-radius: 12px;
+  --yee-search-padding: 8px 14px;
+
+  /* --Button-- */
+  --yee-btn-height: 36px;
+  --yee-btn-border-radius: 8px;
+
+  /* --Card-- */
+  --yee-card-border-radius: 14px;
+
+  /* --Dialog-- */
+  --yee-dialog-content-border-radius: 14px;
+
+  /* --Trigger/Popup--(Dropdown / Select 下拉 / Tooltip 等浮层) */
+  --yee-popup-border-radius: 14px;
+
+  /* --Form-- */
+  --yee-form-item-label-mb: 8px;
+}

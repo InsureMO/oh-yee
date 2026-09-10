@@ -35,11 +35,11 @@
 
 ```css
 /* 主色调 */
---yee-primary-color: #1890ff;
---yee-success-color: #52c41a;
---yee-warning-color: #faad14;
---yee-error-color: #f5222f;
---yee-info-color: #1890ff;
+--yee-color-primary: #1890ff;
+--yee-color-success: #52c41a;
+--yee-color-warning: #faad14;
+--yee-color-error: #f5222f;
+--yee-color-info: #1890ff;
 
 /* 中性色 */
 --yee-text-primary: rgba(0, 0, 0, 0.85);

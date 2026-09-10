@@ -37,8 +37,8 @@ export default () => {
                   borderRadius: '50%',
                   background:
                     i === current
-                      ? 'var(--yee-primary-color)'
-                      : 'var(--yee-border-color)',
+                      ? 'var(--yee-color-primary)'
+                      : 'var(--yee-color-border)',
                   transition: 'background 0.2s',
                 }}
               />

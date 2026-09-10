@@ -16,6 +16,9 @@
   --yee-popup-border-radius: 4px;
   --yee-popup-arrow-translate-y: 50%;
   --yee-popup-arrow-rotate: -135deg;
+  --yee-radius: 4px; /* 全局基础圆角 */
+  --yee-radius-lg: 8px; /* 全局大圆角 */
+  --yee-popup-arrow-border-radius: 2px;
 
   /* --Alert-- */
   --yee-alert-close-top: 7px;
@@ -24,6 +27,12 @@
   --yee-alert-title-font-size: 16px;
   --yee-alert-message-font-size: 14px;
   --yee-alert-banner-padding: 8px 12px;
+  --yee-alert-padding: 7px 11px;
+  --yee-alert-border-width: 1px;
+  --yee-alert-border-radius: 4px;
+  --yee-alert-loop-duration: 15s; /* 与 Cycle speed 默认值一致,组件内联样式优先 */
+  --yee-alert-loop-delay: 0s;
+  --yee-alert-loop-play: running;
 
   /* --Anchor-- */
   --yee-anchor-padding: 0 16px;
@@ -51,9 +60,19 @@
   --yee-anchor-item-dot-left: 2px;
   --yee-anchor-item-dot-size: 6px;
   --yee-anchor-item-active-border-width: 2px;
+  --yee-anchor-min-width: 160px;
+  --yee-anchor-max-width: 240px;
 
   /* --Avatar-- */
   --yee-avatar-square-border-radius: 4px;
+  --yee-avatar-width: 40px;
+  --yee-avatar-height: 40px;
+  --yee-avatar-small-size: 24px;
+  --yee-avatar-small-font-size: 14px;
+  --yee-avatar-default-size: 32px;
+  --yee-avatar-default-font-size: 18px;
+  --yee-avatar-large-size: 40px;
+  --yee-avatar-large-font-size: 24px;
 
   /* --Badge-- */
   --yee-badge-sup-z-index: 10;
@@ -78,6 +97,12 @@
   --yee-ribbon-anger-width: 8px;
   --yee-ribbon-anger-height: 8px;
   --yee-ribbon-anger-border-width: 4px;
+  --yee-badge-small-dot-size: 8px;
+  --yee-badge-small-count-size: 16px;
+  --yee-badge-small-count-font-size: 12px;
+  --yee-badge-large-dot-size: 12px;
+  --yee-badge-large-count-size: 30px;
+  --yee-badge-large-count-font-size: 18px;
 
   /* --Box-- */
   --yee-box-padding: 16px 24px;
@@ -89,6 +114,7 @@
   --yee-breadcrumb-item-split-padding: 0 8px;
   --yee-breadcrumb-item-prefix-icon-margin-right: 8px;
   --yee-breadcrumb-item-suffix-icon-margin-left: 8px;
+  --yee-breadcrumb-max-width: 400px;
 
   /* --Button-- */
   --yee-btn-height: 32px;
@@ -103,11 +129,35 @@
   --yee-btn-icon-gap: 4px;
   --yee-btn-disabled-opacity: 0.5;
 
+  /* 变体级比例:solid 用主色加深,filled 用主色透明化 */
+  --yee-btn-solid-hover-darken: 12%;
+  --yee-btn-solid-active-darken: 20%;
+  --yee-btn-filled-bg-alpha: 10%;
+  --yee-btn-filled-hover-bg-alpha: 16%;
+  --yee-btn-filled-active-bg-alpha: 22%;
+  --yee-btn-round-shape: 12px;
+  --yee-btn-icon-only-width: 32px;
+  --yee-btn-sm-height: 24px;
+  --yee-btn-sm-padding: 4px;
+  --yee-btn-sm-font-size: 14px;
+  --yee-btn-sm-icon-only-size: 24px;
+  --yee-btn-lg-height: 40px;
+  --yee-btn-lg-padding: 7px 15px;
+  --yee-btn-lg-font-size: 16px;
+
   /* --Card-- */
   --yee-card-header-padding: 0 12px;
   --yee-card-header-clickable-border-radius: 4px;
   --yee-card-content-margin: 16px;
   --yee-card-border-radius: 8px;
+  --yee-card-padding: 16px 24px 24px;
+  --yee-card-header-height: 32px;
+  --yee-card-header-bottom: 16px;
+  --yee-card-title-size: 16px;
+  --yee-card-title-weight: 500;
+  --yee-card-title-margin: 12px;
+  --yee-card-group-padding: 16px;
+  --yee-card-group-card-gap: 16px;
 
   /* --Carousel-- */
   --yee-carousel-vertical-prev-top: 10px;
@@ -143,6 +193,16 @@
   --yee-cascader-input-focus-z-index: 1;
   --yee-cascader-popup-z-index: var(--yee-z-index-popup);
   --yee-cascader-select-item-opacity: 0;
+  --yee-cascader-menu-height: 176px;
+  --yee-cascader-menu-max-height: 180px;
+  --yee-cascader-menu-max-width: 240px;
+  --yee-cascader-menu-item-width: 160px;
+  --yee-cascader-menu-item-height: 32px;
+  --yee-cascader-menu-item-padding: 0 12px;
+  --yee-cascader-menu-item-label-margin-right: 8px;
+  --yee-cascader-menu-item-label-loaded-left: 8px;
+  --yee-cascader-menu-item-label-loaded-size: 6px;
+  --yee-cascader-search-menu-item-padding: 0 10px;
 
   /* --Checkbox-- */
   --yee-checkbox-inner-width: 16px;
@@ -161,6 +221,9 @@
 
   /* --Collapse-- */
   --yee-collapse-border-width: 1px;
+  --yee-collapse-border-radius: 4px;
+  --yee-collapse-header-padding: 12px 15px;
+  --yee-collapse-content-padding: 4px 15px 16px;
 
   /* --PickerPanel-- */
   --yee-picker-popup-z-index: var(--yee-z-index-popup);
@@ -220,6 +283,7 @@
   --yee-picker-range-end-before-width: calc(100% - 18px);
   --yee-picker-in-range-before-height: 24px;
   --yee-picker-in-range-before-border-radius: 2px;
+  --yee-picker-footer-btn-gap: var(--yee-picker-footer-preset-gap);
 
   /* --Dialog-- */
   --yee-dialog-z-index: var(--yee-z-index-overlay);
@@ -236,6 +300,8 @@
   --yee-dialog-close-top: 12px;
   --yee-dialog-close-right: 12px;
   --yee-dialog-footer-gap: 16px;
+  --yee-dialog-close-z-index: 1;
+  --yee-dialog-footer-top: 16px;
 
   /* --Divider-- */
   --yee-divider-border-width: 1px;
@@ -243,6 +309,15 @@
   --yee-divider-vertical-margin: 0 8px;
   --yee-divider-inner-text-font-size: 16px;
   --yee-divider-inner-text-line-height: 24px;
+  --yee-divider-font-size: 14px;
+  --yee-divider-margin: 24px 0;
+  --yee-divider-text-padding: 0 16px;
+  --yee-divider-vertical-width: 1px;
+  --yee-divider-vertical-height: 12px;
+  --yee-divider-with-text-left-before-width: 5%;
+  --yee-divider-with-text-left-after-width: 95%;
+  --yee-divider-with-text-right-before-width: 95%;
+  --yee-divider-with-text-right-after-width: 5%;
 
   /* --Drawer-- */
   --yee-drawer-z-index: var(--yee-z-index-overlay);
@@ -252,6 +327,7 @@
   --yee-drawer-close-right: 20px;
   --yee-drawer-title-font-weight: 600;
   --yee-drawer-title-font-size: 18px;
+  --yee-drawer-footer-padding: 16px 24px;
 
   /* --Field-- */
   --yee-field-gap: 8px;
@@ -268,6 +344,7 @@
   --yee-float-btn-description-line-height: 22px;
   --yee-float-btn-square-border-radius: 4px;
   --yee-float-btn-group-gap: 8px;
+  --yee-float-btn-menu-container-max-height: 251px;
 
   /* --Form-- */
   --yee-form-item-padding-bottom: 24px;
@@ -276,6 +353,7 @@
   --yee-form-item-additional-bottom: 2px;
   --yee-form-item-horizontal-label-width: 120px;
   --yee-form-item-horizontal-label-gap: 12px;
+  --yee-form-item-label-mb: 4px;
 
   /* --Grid-- */
   --yee-grid-column-min-width: 50px;
@@ -294,6 +372,9 @@
   --yee-input-large-line-height: 24px;
   --yee-input-large-height: 40px;
   --yee-input-large-padding: 4px 12px;
+  --yee-input-height: 32px;
+  --yee-input-border-radius: 4px;
+  --yee-input-padding: 2px 8px;
 
   /* --JsonViewer-- */
   --yee-json-view-font-size: 14px;
@@ -309,6 +390,7 @@
   /* --List-- */
   --yee-list-item-padding: 8px 16px;
   --yee-list-bordered-border-width: 1px;
+  --yee-list-columns: 1;
 
   /* --Menu-- */
   --yee-menu-padding-short: 4px;
@@ -321,6 +403,14 @@
   --yee-menu-item-switch-margin-left: 8px;
   --yee-menu-vertical-width: 129px;
   --yee-menu-submenu-vertical-top: -4px;
+  --yee-menu-width: 256px;
+  --yee-menu-collapsed-width: 48px;
+  --yee-menu-padding: 4px 0;
+  --yee-menu-item-height: 40px;
+  --yee-menu-item-line-height: 40px;
+  --yee-menu-item-divider-margin: 4px 0;
+  --yee-menu-item-group-title-padding: 4px 12px;
+  --yee-menu-item-group-title-font-size: 12px;
 
   /* --Message-- */
   --yee-message-gap: 6px;
@@ -442,6 +532,24 @@
   --yee-radio-font-large-size: 16px;
   --yee-radio-large-padding: 6px;
 
+  /* --RangePicker--(触发器与 Input 共享高度/圆角/边框宽度,保证表单控件同高同圆角) */
+  --yee-range-picker-trigger-border-width: var(--yee-input-border-width);
+  --yee-range-picker-trigger-border-radius: var(--yee-input-border-radius);
+  --yee-range-picker-trigger-height: var(--yee-input-height);
+  --yee-range-picker-trigger-padding: 0 11px;
+  --yee-range-picker-trigger-font-size: var(--yee-input-font-size);
+  --yee-range-picker-trigger-small-height: var(--yee-input-small-height);
+  --yee-range-picker-trigger-small-padding: 0 7px;
+  --yee-range-picker-trigger-small-font-size: var(--yee-input-small-font-size);
+  --yee-range-picker-trigger-large-height: var(--yee-input-large-height);
+  --yee-range-picker-trigger-large-padding: 0 15px;
+  --yee-range-picker-trigger-large-font-size: var(--yee-input-large-font-size);
+  --yee-range-picker-clear-border-radius: 50%;
+  --yee-range-picker-panel-wrapper-border-radius: var(
+    --yee-popup-border-radius
+  );
+  --yee-range-picker-panel-footer-padding: 8px 12px;
+
   /* --Rate-- */
   --yee-rate-star-width: 24px;
   --yee-rate-star-height: 24px;
@@ -475,6 +583,8 @@
   --yee-select-popup-z-index: var(--yee-z-index-popup);
   --yee-select-popup-padding: 4px 0;
   --yee-select-option-padding: 4px 6px;
+  --yee-select-columns: 1;
+  --yee-select-popup-max-height: 200px;
 
   /* --Selector-- */
   --yee-selector-padding: 2px 6px;
@@ -519,6 +629,7 @@
   --yee-skeleton-active-animation-delay: 0.1s;
   --yee-skeleton-active-translate-start: -37.5%;
   --yee-skeleton-active-translate-end: 37.5%;
+  --yee-skeleton-avatar-square-radius: 4px;
 
   /* --Segmented-- */
   --yee-segmented-padding: 2px;
@@ -546,7 +657,7 @@
   --yee-slider-handler-margin-left: -6px;
   --yee-slider-handler-border-width: 2px;
   --yee-slider-handler-hover-scale: 1.2;
-  --yee-slider-handler-active-box-shadow: 0 0 5px var(--yee-primary-color);
+  --yee-slider-handler-active-box-shadow: 0 0 5px var(--yee-color-primary);
   --yee-slider-tooltip-margin-bottom: 10px;
   --yee-slider-tooltip-padding: 4px 8px;
   --yee-slider-tooltip-font-size: 12px;
@@ -578,6 +689,7 @@
   --yee-splitter-horizontal-expand-transform-y: calc(-50% - 4px);
   --yee-splitter-horizontal-expand-start-left: -19px;
   --yee-splitter-horizontal-expand-end-right: -19px;
+  --yee-splitter-handler-size: var(--yee-splitter-handler-line-size);
 
   /* --Steps-- */
   --yee-steps-line-width: 999px;
@@ -688,6 +800,8 @@
   --yee-table-summary-fixed-z-index: 5;
   --yee-table-small-size-height: 40px;
   --yee-table-small-size-padding: 0 4px;
+  --yee-table-small-height: var(--yee-table-small-size-height);
+  --yee-table-small-padding: var(--yee-table-small-size-padding);
 
   /* --Tabs-- */
   --yee-tabs-border-width: 1px;
@@ -782,6 +896,7 @@
   --yee-textarea-number-font-size: 14px;
   --yee-textarea-number-line-height: 22px;
   --yee-textarea-border-width: 1px;
+  --yee-textarea-resize: vertical;
 
   /* --Timeline-- */
   --yee-timeline-item-margin-bottom: 16px;
@@ -864,7 +979,7 @@
   --yee-trigger-opacity-end: 1;
 
   /* --ImageViewer-- */
-  --yee-image-preview-popup-zindex: var(--yee-z-index-overlay);
+  --yee-image-viewer-popup-zindex: var(--yee-z-index-overlay);
 
   /* --VerificationCode-- */
   --yee-verification-code-gap: 8px;
@@ -896,4 +1011,30 @@
   --yee-descriptions-large-label-padding: 16px 16px 16px 0;
   --yee-descriptions-large-content-padding: 16px 0;
   --yee-descriptions-large-padding: 16px 24px;
+  --yee-descriptions-title-font-weight: 600;
+  --yee-descriptions-extra-font-size: 14px;
+
+  /* --Space-- */
+  --yee-space-justify-content: normal;
+
+  /* --Transfer-- */
+  --yee-transfer-list-min-width: 260px;
+  --yee-transfer-list-border-radius: 4px;
+  --yee-transfer-list-header-height: 46px;
+  --yee-transfer-list-header-padding: 11px;
+  --yee-transfer-list-search-padding: 8px 11px;
+  --yee-transfer-list-item-height: 32px;
+  --yee-transfer-list-item-padding: 0 11px;
+
+  /* --TreeSelect-- */
+  --yee-tree-select-popup-height: 360px;
+
+  /* deprecated-aliases:start
+   * ------------------------------------------------------------------
+   * deprecated 兼容别名(组件级 token 前缀统一,完整映射表见 color.css 同名段)
+   * 旧命名自 v0.12 起 deprecated,保留一个版本周期(v0.12.x)后移除。
+   * ------------------------------------------------------------------ */
+  --yee-image-preview-popup-zindex: var(--yee-image-viewer-popup-zindex);
+
+  /* deprecated-aliases:end */
 }

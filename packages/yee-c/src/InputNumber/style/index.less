@@ -27,7 +27,7 @@
     display: inline-flex;
     align-items: center;
     margin-right: 4px;
-    color: var(--yee-text-color-description);
+    color: var(--yee-color-text-description);
   }
 
   &-suffix {
@@ -53,7 +53,7 @@
     outline: none;
 
     &::placeholder {
-      color: var(--yee-placeholder-color);
+      color: var(--yee-color-placeholder);
     }
   }
 
@@ -70,7 +70,7 @@
     transition: all 0.3s;
 
     &:hover {
-      color: var(--yee-text-color-secondary);
+      color: var(--yee-color-text-secondary);
     }
   }
 
@@ -87,7 +87,7 @@
     width: 22px;
     height: 100%;
     border-left: 1px solid var(--yee-input-border-color);
-    background-color: var(--yee-inputnumber-handler-wrap-bg-color);
+    background-color: var(--yee-input-number-handler-wrap-bg-color);
     border-radius: 0 4px 4px 0;
   }
 
@@ -103,15 +103,15 @@
 
     &:hover:not(&-disabled) {
       color: var(--yee-input-number-icon-hover-color);
-      background-color: var(--yee-inputnumber-handler-hover-bg-color);
+      background-color: var(--yee-input-number-handler-hover-bg-color);
     }
 
     &:active:not(&-disabled) {
-      background-color: var(--yee-inputnumber-handler-active-bg-color);
+      background-color: var(--yee-input-number-handler-active-bg-color);
     }
 
     &-disabled {
-      color: var(--yee-inputnumber-disabled-font-color);
+      color: var(--yee-input-number-disabled-font-color);
       cursor: not-allowed;
     }
 
@@ -126,7 +126,7 @@
   }
 
   &-disabled {
-    color: var(--yee-inputnumber-disabled-font-color);
+    color: var(--yee-input-number-disabled-font-color);
     background-color: var(--yee-input-disabled-bg-color);
     cursor: not-allowed;
 
@@ -139,7 +139,7 @@
     }
 
     @{pls}-handler {
-      color: var(--yee-inputnumber-disabled-font-color);
+      color: var(--yee-input-number-disabled-font-color);
       cursor: not-allowed;
     }
   }

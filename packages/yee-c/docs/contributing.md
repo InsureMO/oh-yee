@@ -142,7 +142,7 @@ export interface ButtonProps {
 
   &--primary {
     // Modifier
-    background: var(--yee-primary-color);
+    background: var(--yee-color-primary);
   }
 
   &__icon {
@@ -153,8 +153,8 @@ export interface ButtonProps {
 
 // 使用 CSS 变量
 .yee-button {
-  color: var(--yee-text-color);
-  background: var(--yee-bg-color);
+  color: var(--yee-color-text);
+  background: var(--yee-color-bg-container);
 }
 ```
 

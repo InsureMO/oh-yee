@@ -30,6 +30,11 @@ jobs:
         run: pnpm lint
         continue-on-error: true
 
+      # Token 命名规范是硬约束(组件级 token 前缀必须等于组件 CSS 类前缀),
+      # 单独成步且不允许失败,避免新的命名分歧混入。
+      - name: Check token naming
+        run: pnpm --filter @rainbow-oh/yee-c lint:tokens
+
       - name: Build
         run: pnpm build
 

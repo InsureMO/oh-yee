@@ -8,7 +8,7 @@
     display: flex;
 
     &:focus-within {
-      outline: 2px solid var(--yee-primary-color);
+      outline: 2px solid var(--yee-color-primary);
       outline-offset: 2px;
       border-radius: var(--yee-radius);
     }
@@ -53,12 +53,12 @@
     }
 
     &:hover {
-      border-color: var(--yee-primary-color);
+      border-color: var(--yee-color-primary);
     }
 
     &-hover {
-      border-color: var(--yee-primary-color);
-      background-color: var(--yee-primary-color-bg);
+      border-color: var(--yee-color-primary);
+      background-color: var(--yee-color-primary-bg);
     }
   }
 
@@ -77,7 +77,7 @@
     &-trigger {
       width: 100px;
       height: 100px;
-      border: 1px dashed var(--yee-border-color);
+      border: 1px dashed var(--yee-color-border);
       border-radius: var(--yee-radius-lg, 4px);
       display: flex;
       align-items: center;
@@ -87,8 +87,8 @@
       background-color: var(--yee-color-bg-container);
 
       &:hover {
-        border-color: var(--yee-primary-color);
-        color: var(--yee-primary-color);
+        border-color: var(--yee-color-primary);
+        color: var(--yee-color-primary);
       }
     }
 
@@ -125,7 +125,7 @@
         align-items: center;
         justify-content: center;
         padding: 8px;
-        color: var(--yee-error-color);
+        color: var(--yee-color-error);
       }
 
       &-operate {
@@ -236,7 +236,6 @@
   }
 
   &-item {
-
     &-label {
       display: flex;
       align-items: center;
@@ -270,15 +269,15 @@
   // 上传状态样式
   &-state {
     &-uploading {
-      color: var(--yee-primary-color);
+      color: var(--yee-color-primary);
     }
 
     &-error {
-      color: var(--yee-error-color);
+      color: var(--yee-color-error);
     }
 
     &-success {
-      color: var(--yee-success-color);
+      color: var(--yee-color-success);
     }
   }
 

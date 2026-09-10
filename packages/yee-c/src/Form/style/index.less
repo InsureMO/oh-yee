@@ -65,7 +65,7 @@
       margin-inline-start: 4px;
       color: var(
         --yee-form-item-tooltip-icon-color,
-        var(--yee-text-color-secondary, #999)
+        var(--yee-color-text-secondary, #999)
       );
       cursor: pointer;
     }
@@ -77,19 +77,19 @@
       position: absolute;
 
       &-error {
-        color: var(--yee-error-color);
+        color: var(--yee-color-error);
       }
 
       &-warning {
-        color: var(--yee-warning-color);
+        color: var(--yee-color-warning);
       }
 
       &-success {
-        color: var(--yee-success-color);
+        color: var(--yee-color-success);
       }
 
       &-info {
-        color: var(--yee-info-color);
+        color: var(--yee-color-info);
       }
     }
 
@@ -97,31 +97,31 @@
     // 后代里的 Input / Selector / InputNumber / TextArea 等通过 CSS 变量继承自动变色，
     // 无需在每个组件里重复 .yee-form-item-error 块，也不存在 specificity / !important 问题。
     &&-error {
-      --yee-input-border-color: var(--yee-error-color);
-      --yee-input-hover-border-color: var(--yee-error-color-hover);
-      --yee-input-focus-bs-color: var(--yee-error-color-border);
-      --yee-checkbox-border-color: var(--yee-error-color);
+      --yee-input-border-color: var(--yee-color-error);
+      --yee-input-hover-border-color: var(--yee-color-error-hover);
+      --yee-input-focus-bs-color: var(--yee-color-error-border);
+      --yee-checkbox-border-color: var(--yee-color-error);
     }
 
     &&-warning {
-      --yee-input-border-color: var(--yee-warning-color);
-      --yee-input-hover-border-color: var(--yee-warning-color-hover);
-      --yee-input-focus-bs-color: var(--yee-warning-color-border);
-      --yee-checkbox-border-color: var(--yee-warning-color);
+      --yee-input-border-color: var(--yee-color-warning);
+      --yee-input-hover-border-color: var(--yee-color-warning-hover);
+      --yee-input-focus-bs-color: var(--yee-color-warning-border);
+      --yee-checkbox-border-color: var(--yee-color-warning);
     }
 
     &&-success {
-      --yee-input-border-color: var(--yee-success-color);
-      --yee-input-hover-border-color: var(--yee-success-color-hover);
-      --yee-input-focus-bs-color: var(--yee-success-color-border);
-      --yee-checkbox-border-color: var(--yee-success-color);
+      --yee-input-border-color: var(--yee-color-success);
+      --yee-input-hover-border-color: var(--yee-color-success-hover);
+      --yee-input-focus-bs-color: var(--yee-color-success-border);
+      --yee-checkbox-border-color: var(--yee-color-success);
     }
 
     &&-info {
-      --yee-input-border-color: var(--yee-info-color);
-      --yee-input-hover-border-color: var(--yee-info-color-hover);
-      --yee-input-focus-bs-color: var(--yee-info-color-border);
-      --yee-checkbox-border-color: var(--yee-info-color);
+      --yee-input-border-color: var(--yee-color-info);
+      --yee-input-hover-border-color: var(--yee-color-info-hover);
+      --yee-input-focus-bs-color: var(--yee-color-info-border);
+      --yee-checkbox-border-color: var(--yee-color-info);
     }
   }
 }

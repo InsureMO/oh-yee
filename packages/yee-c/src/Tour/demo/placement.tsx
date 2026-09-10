@@ -31,7 +31,7 @@ export default () => {
         style={{
           display: 'inline-block',
           padding: '16px 24px',
-          border: '1px dashed var(--yee-border-color)',
+          border: '1px dashed var(--yee-color-border)',
           borderRadius: 6,
         }}
       >

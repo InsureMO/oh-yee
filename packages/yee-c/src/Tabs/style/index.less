@@ -169,7 +169,7 @@
   user-select: none;
 
   &.disabled {
-    color: var(--yee-tabitem-title-disabled-color);
+    color: var(--yee-tabs-tab-title-disabled-color);
     cursor: not-allowed;
 
     & > * {
@@ -178,7 +178,7 @@
   }
 
   &.active {
-    color: var(--yee-tabitem-title-active-hover-color);
+    color: var(--yee-tabs-tab-title-active-hover-color);
   }
 
   &:not(.disabled):not(.active):hover {
@@ -253,8 +253,8 @@
 
   @{pls}-tab.active {
     z-index: 2;
-    color: var(--yee-tabitem-active-hover-pills-color);
-    border-color: var(--yee-tabitem-active-pills-border-color);
+    color: var(--yee-tabs-tab-active-hover-pills-color);
+    border-color: var(--yee-tabs-tab-active-pills-border-color);
   }
 
   @{pls}-active {
@@ -461,16 +461,16 @@
     cursor: pointer;
 
     &:hover {
-      background-color: var(--yee-tabitem-dropdown-title-hover-bg-color);
+      background-color: var(--yee-tabs-tab-dropdown-title-hover-bg-color);
 
       @{pls}-tab-title {
-        color: var(--yee-tabitem-dropdown-title-hover-color);
+        color: var(--yee-tabs-tab-dropdown-title-hover-color);
       }
     }
 
     &:active {
-      color: var(--yee-tabitem-dropdown-title-active-color);
-      background-color: var(--yee-tabitem-dropdown-title-active-bg-color);
+      color: var(--yee-tabs-tab-dropdown-title-active-color);
+      background-color: var(--yee-tabs-tab-dropdown-title-active-bg-color);
     }
   }
 }
@@ -491,7 +491,7 @@
     user-select: none;
 
     &:hover {
-      color: var(--yee-tabitem-title-active-hover-color);
+      color: var(--yee-tabs-tab-title-active-hover-color);
     }
   }
 }

@@ -4,18 +4,18 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: var(--yee-image-preview-viewer-bg-color);
+  background: var(--yee-image-viewer-viewer-bg-color);
   overflow: hidden;
 
   &-popup {
     position: fixed;
     inset: 0;
-    z-index: var(--yee-image-preview-popup-zindex);
+    z-index: var(--yee-image-viewer-popup-zindex);
 
     &-mask {
       position: absolute;
       inset: 0;
-      background-color: var(--yee-image-preview-mask-bg-color);
+      background-color: var(--yee-image-viewer-mask-bg-color);
     }
 
     &-content {
@@ -34,19 +34,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--yee-image-preview-close-icon-color);
-      background-color: var(--yee-image-preview-close-icon-bg-color);
+      color: var(--yee-image-viewer-close-icon-color);
+      background-color: var(--yee-image-viewer-close-icon-bg-color);
       border: none;
       border-radius: 4px;
       cursor: pointer;
 
       &:hover {
-        color: var(--yee-image-preview-close-icon-hover-color);
+        color: var(--yee-image-viewer-close-icon-hover-color);
       }
 
       &:focus {
         outline-color: var(
-          --yee-image-preview-close-icon-focus-color,
+          --yee-image-viewer-close-icon-focus-color,
           var(--yee-tab-active-border-color)
         );
       }
@@ -69,29 +69,29 @@
     padding: 0 32px;
     border-radius: 24px;
     height: 48px;
-    background: var(--yee-image-preview-toolbar-bg-color);
+    background: var(--yee-image-viewer-toolbar-bg-color);
 
     .yee-btn {
       width: 20px;
       height: 20px;
-      color: var(--yee-image-preview-toolbar-color);
+      color: var(--yee-image-viewer-toolbar-color);
 
       &:not(.yee-btn-disabled):not(.yee-btn-loading):hover {
-        color: var(--yee-image-preview-toolbar-hover-color);
+        color: var(--yee-image-viewer-toolbar-hover-color);
       }
 
       &.yee-btn-disabled {
-        color: var(--yee-image-preview-toolbar-disabled-color);
+        color: var(--yee-image-viewer-toolbar-disabled-color);
       }
     }
 
     .yee-divider-vertical {
-      background-color: var(--yee-image-preview-toolbar-split-color);
+      background-color: var(--yee-image-viewer-toolbar-split-color);
     }
   }
 
   &-zoom {
-    color: var(--yee-image-preview-toolbar-zoom-color);
+    color: var(--yee-image-viewer-toolbar-zoom-color);
     display: inline-block;
     width: 48px;
     text-align: center;

@@ -153,6 +153,9 @@ const TabHeader: React.FC<TabHeaderProps> = (props) => {
   const cls = clsx(
     `${prefixCls}-nav-wrapper`,
     `${prefixCls}-nav-wrapper-${position}`,
+    {
+      [`${prefixCls}-nav-wrapper-with-more`]: moreOpen,
+    },
     classNames?.header,
   );
 

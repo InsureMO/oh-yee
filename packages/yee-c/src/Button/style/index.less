@@ -62,15 +62,23 @@
 
   // 背景颜色，字体白色
   &-solid {
-    color: var(--yee-btn-primary-color);
+    color: var(--yee-btn-solid-color);
     background-color: var(--m-btn-color);
 
     &:not(@{pls}-disabled):hover {
-      background-color: color-mix(in srgb, var(--m-btn-color), black 12%);
+      background-color: color-mix(
+        in srgb,
+        var(--m-btn-color),
+        black var(--yee-btn-solid-hover-darken)
+      );
     }
 
     &:not(@{pls}-disabled):active {
-      background-color: color-mix(in srgb, var(--m-btn-color), black 20%);
+      background-color: color-mix(
+        in srgb,
+        var(--m-btn-color),
+        black var(--yee-btn-solid-active-darken)
+      );
       box-shadow: var(--yee-btn-solid-active-box-shadow)
         var(--m-btn-active-shadow-color);
     }
@@ -79,14 +87,26 @@
   // 字体颜色，背景是字体颜色的浅色
   &-filled {
     color: var(--m-btn-color);
-    background-color: color-mix(in srgb, var(--m-btn-color) 10%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--m-btn-color) var(--yee-btn-filled-bg-alpha),
+      transparent
+    );
 
     &:not(@{pls}-disabled):hover {
-      background-color: color-mix(in srgb, var(--m-btn-color) 16%, transparent);
+      background-color: color-mix(
+        in srgb,
+        var(--m-btn-color) var(--yee-btn-filled-hover-bg-alpha),
+        transparent
+      );
     }
 
     &:not(@{pls}-disabled):active {
-      background-color: color-mix(in srgb, var(--m-btn-color) 22%, transparent);
+      background-color: color-mix(
+        in srgb,
+        var(--m-btn-color) var(--yee-btn-filled-active-bg-alpha),
+        transparent
+      );
     }
   }
 
@@ -153,67 +173,67 @@
   }
 
   // ---- color ------
+  // 颜色维度只负责把 token 映射到局部槽位，变体决定这些槽怎么用
   &-default {
-    --m-btn-color: var(--yee-text-color);
-    --m-btn-hover-color: var(--yee-primary-color);
-    --m-btn-border-color: var(--yee-border-color);
-    --m-btn-border-hover-color: var(--yee-primary-color);
+    --m-btn-color: var(--yee-btn-default-color);
+    --m-btn-hover-color: var(--yee-btn-default-hover-color);
+    --m-btn-active-color: var(--yee-btn-default-active-color);
     --m-btn-bg-color: var(--yee-btn-default-bg-color);
-    --m-btn-hover-bg-color: var(--yee-text-color-auxiliary);
-    --m-btn-border-active-color: var(--yee-primary-color-active);
-    --m-btn-active-color: var(--yee-primary-color-active);
-    --m-btn-active-bg-color: var(--yee-text-color-auxiliary);
-    --m-btn-active-shadow-color: var(--yee-primary-color-active);
+    --m-btn-hover-bg-color: var(--yee-btn-default-hover-bg-color);
+    --m-btn-active-bg-color: var(--yee-btn-default-active-bg-color);
+    --m-btn-border-color: var(--yee-btn-default-border-color);
+    --m-btn-border-hover-color: var(--yee-btn-default-hover-border-color);
+    --m-btn-border-active-color: var(--yee-btn-default-active-border-color);
+    --m-btn-active-shadow-color: var(--yee-btn-default-active-shadow-color);
   }
 
   &-primary {
-    --m-btn-color: var(--yee-primary-color);
-    --m-btn-hover-color: var(--yee-primary-color-hover);
-    --m-btn-active-color: var(--yee-primary-color-active);
+    --m-btn-color: var(--yee-btn-primary-color);
+    --m-btn-hover-color: var(--yee-btn-primary-hover-color);
+    --m-btn-active-color: var(--yee-btn-primary-active-color);
     --m-btn-bg-color: var(--yee-btn-primary-bg-color);
-    --m-btn-hover-bg-color: var(--yee-primary-color-border);
-    --m-btn-active-bg-color: var(--yee-primary-color-active);
-    --m-btn-border-color: var(--yee-primary-color);
-    --m-btn-border-hover-color: var(--yee-primary-color-hover);
-    --m-btn-border-active-color: var(--yee-primary-color-active);
-    --m-btn-active-shadow-color: var(--yee-primary-color-active);
+    --m-btn-hover-bg-color: var(--yee-btn-primary-hover-bg-color);
+    --m-btn-active-bg-color: var(--yee-btn-primary-active-bg-color);
+    --m-btn-border-color: var(--yee-btn-primary-border-color);
+    --m-btn-border-hover-color: var(--yee-btn-primary-hover-border-color);
+    --m-btn-border-active-color: var(--yee-btn-primary-active-border-color);
+    --m-btn-active-shadow-color: var(--yee-btn-primary-active-shadow-color);
   }
 
   &-success {
-    --m-btn-color: var(--yee-success-color);
-    --m-btn-hover-color: var(--yee-success-color-hover);
-    --m-btn-active-color: var(--yee-success-color-active);
-    --m-btn-border-color: var(--yee-success-color);
-    --m-btn-border-hover-color: var(--yee-success-color-hover);
-    --m-btn-border-active-color: var(--yee-success-color-active);
-    --m-btn-hover-bg-color: var(--yee-success-color-border);
-    --m-btn-active-bg-color: var(--yee-success-color-active);
-    --m-btn-active-shadow-color: var(--yee-success-color-active);
+    --m-btn-color: var(--yee-btn-success-color);
+    --m-btn-hover-color: var(--yee-btn-success-hover-color);
+    --m-btn-active-color: var(--yee-btn-success-active-color);
+    --m-btn-hover-bg-color: var(--yee-btn-success-hover-bg-color);
+    --m-btn-active-bg-color: var(--yee-btn-success-active-bg-color);
+    --m-btn-border-color: var(--yee-btn-success-border-color);
+    --m-btn-border-hover-color: var(--yee-btn-success-hover-border-color);
+    --m-btn-border-active-color: var(--yee-btn-success-active-border-color);
+    --m-btn-active-shadow-color: var(--yee-btn-success-active-shadow-color);
   }
 
   &-danger {
-    --m-btn-color: var(--yee-error-color);
-    --m-btn-hover-color: var(--yee-error-color-hover);
-    --m-btn-active-color: var(--yee-error-color-active);
-    --m-btn-border-color: var(--yee-error-color);
-    --m-btn-border-hover-color: var(--yee-error-color-hover);
-    --m-btn-border-active-color: var(--yee-error-color-active);
-    // --m-btn-hover-bg-color: var(--yee-error-color-hover);
-    --m-btn-hover-bg-color: var(--yee-error-color-border);
-    --m-btn-active-bg-color: var(--yee-error-color-active);
-    --m-btn-active-shadow-color: var(--yee-error-color-active);
+    --m-btn-color: var(--yee-btn-danger-color);
+    --m-btn-hover-color: var(--yee-btn-danger-hover-color);
+    --m-btn-active-color: var(--yee-btn-danger-active-color);
+    --m-btn-hover-bg-color: var(--yee-btn-danger-hover-bg-color);
+    --m-btn-active-bg-color: var(--yee-btn-danger-active-bg-color);
+    --m-btn-border-color: var(--yee-btn-danger-border-color);
+    --m-btn-border-hover-color: var(--yee-btn-danger-hover-border-color);
+    --m-btn-border-active-color: var(--yee-btn-danger-active-border-color);
+    --m-btn-active-shadow-color: var(--yee-btn-danger-active-shadow-color);
   }
 
   &-warning {
-    --m-btn-color: var(--yee-warning-color);
-    --m-btn-hover-color: var(--yee-warning-color-hover);
-    --m-btn-active-color: var(--yee-warning-color-active);
-    --m-btn-border-color: var(--yee-warning-color);
-    --m-btn-border-hover-color: var(--yee-warning-color-hover);
-    --m-btn-border-active-color: var(--yee-warning-color-active);
-    --m-btn-hover-bg-color: var(--yee-warning-color-border);
-    --m-btn-active-bg-color: var(--yee-warning-color-active);
-    --m-btn-active-shadow-color: var(--yee-warning-color-active);
+    --m-btn-color: var(--yee-btn-warning-color);
+    --m-btn-hover-color: var(--yee-btn-warning-hover-color);
+    --m-btn-active-color: var(--yee-btn-warning-active-color);
+    --m-btn-hover-bg-color: var(--yee-btn-warning-hover-bg-color);
+    --m-btn-active-bg-color: var(--yee-btn-warning-active-bg-color);
+    --m-btn-border-color: var(--yee-btn-warning-border-color);
+    --m-btn-border-hover-color: var(--yee-btn-warning-hover-border-color);
+    --m-btn-border-active-color: var(--yee-btn-warning-active-border-color);
+    --m-btn-active-shadow-color: var(--yee-btn-warning-active-shadow-color);
   }
 
   &-disabled {
