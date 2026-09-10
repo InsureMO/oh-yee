@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.12.1
+
+### Patch Changes
+
+- c86a683: style(components): fix Pagination disabled state and improve Selector sizing
+
 ## 0.12.0
 
 ### Minor Changes
