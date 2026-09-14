@@ -65,10 +65,16 @@
 
   /* ================= 边框 / 分隔线 ================= */
   --yee-color-border: #e5e8ef;
-  /* 衍生:Gemini 表单 focus 只变边框色(不加光环),边框色用主色 */
-  --yee-color-border-hover-focus: #6d5dfc;
+  /* 衍生:规范 fields.css —— 控件 hover 边框灰(--control),focus 边框主色、无光环 */
+  --yee-color-border-hover: #c9cdd4;
+  --yee-color-border-focus: #6d5dfc;
   /* 衍生:规范 --line(分隔线 / 表格行线) */
   --yee-color-split: #f0f2f5;
+
+  /* ================= 衍生:表单控件交互态 ================= */
+  /* hover/focus 边框已由 --yee-color-border-hover/focus 经 color.css 映射派生;
+     规范 focus 无光环,关闭默认的光环 box-shadow */
+  --yee-input-focus-bs-color: transparent;
 
   /* ================= 背景 ================= */
   --yee-color-bg-layout: #f1f2f4;

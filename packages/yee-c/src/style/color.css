@@ -34,7 +34,8 @@
   --yee-color-text-auxiliary: #d1d1d1;
   --yee-color-split: #e7e7e7;
   --yee-color-border: #cbd6e2;
-  --yee-color-border-hover-focus: #75b9f0;
+  --yee-color-border-hover: #75b9f0;
+  --yee-color-border-focus: #75b9f0;
   --yee-color-bg-highlight: rgba(245, 130, 32, 16%);
   --yee-color-bg-disabled: #f5f8fa;
   --yee-color-bg-head: #f8f8f8;
@@ -486,7 +487,7 @@
   /* --Checkbox-- */
   --yee-checkbox-bg-color: var(--yee-color-bg-container);
   --yee-checkbox-border-color: var(--yee-color-border);
-  --yee-checkbox-hover-border-color: var(--yee-color-border-hover-focus);
+  --yee-checkbox-hover-border-color: var(--yee-color-border-hover);
   --yee-checkbox-checked-bg-color: var(--yee-color-primary);
   --yee-checkbox-checked-border-color: var(--yee-color-primary);
   --yee-checkbox-checked-after-border-color: #fff;
@@ -529,9 +530,7 @@
   --yee-date-picker-time-disabled-color: var(--yee-color-text-disabled);
   --yee-date-picker-time-disabled-bg-color: transparent;
   --yee-range-picker-trigger-border-color: var(--yee-color-border);
-  --yee-range-picker-trigger-hover-border-color: var(
-    --yee-color-border-hover-focus
-  );
+  --yee-range-picker-trigger-hover-border-color: var(--yee-color-border-hover);
   --yee-range-picker-checked-bg-color: var(--yee-color-option-active-bg);
   --yee-range-picker-hover-border-color: var(--yee-color-primary);
   --yee-range-picker-panel-bg-color: #fff;
@@ -548,8 +547,8 @@
   );
 
   /* --Input-- */
-  --yee-input-hover-border-color: var(--yee-color-border-hover-focus);
-  --yee-input-content-focus-border-color: var(--yee-color-border-hover-focus);
+  --yee-input-hover-border-color: var(--yee-color-border-hover);
+  --yee-input-focus-border-color: var(--yee-color-border-focus);
   --yee-input-focus-bs-color: rgba(117, 185, 240, 24%);
   --yee-input-border-color: var(--yee-color-border);
   --yee-input-content-bg-color: var(--yee-color-bg-container);
@@ -601,7 +600,7 @@
   --yee-radio-inner-disabled-after-checked-bg-color: var(
     --yee-color-text-disabled
   );
-  --yee-radio-inner-hover-border-color: var(--yee-color-border-hover-focus);
+  --yee-radio-inner-hover-border-color: var(--yee-color-border-hover);
   --yee-radio-label-button-border-color: var(--yee-color-border);
   --yee-radio-label-button-bg-color: var(--yee-color-bg-container);
   --yee-radio-label-button-hover-color: var(--yee-color-primary);
@@ -1146,7 +1145,7 @@
 
   /* --Selector-- */
   --yee-selector-border-color: var(--yee-color-border);
-  --yee-selector-hover-border-color: var(--yee-color-border-hover-focus);
+  --yee-selector-hover-border-color: var(--yee-color-border-hover);
   --yee-selector-focus-border-color: var(--yee-color-primary);
   --yee-selector-disabled-bg-color: var(--yee-input-disabled-bg-color);
 
@@ -1221,9 +1220,13 @@
   --yee-text-color-highlight: var(--yee-color-text-highlight);
   --yee-text-color-secondary: var(--yee-color-text-secondary);
   --yee-border-color: var(--yee-color-border);
-  --yee-border-color-hover-focus: var(--yee-color-border-hover-focus);
+  --yee-border-color-hover-focus: var(--yee-color-border-focus);
   --yee-placeholder-color: var(--yee-color-placeholder);
 
+    /* deprecated:2026-09-11 hover/focus 拆分为 --yee-color-border-hover / --yee-color-border-focus */
+  --yee-color-border-hover-focus: var(--yee-color-border-focus);
+  /* deprecated:2026-09-11 更名 --yee-input-focus-border-color */
+  --yee-input-content-focus-border-color: var(--yee-input-focus-border-color);
   /* deprecated-aliases:end */
 
   /* deprecated-aliases:start
@@ -1336,5 +1339,5 @@
   --yee-timepicker-bg-color: var(--yee-time-picker-bg-color);
   --yee-treeselect-dropdown-bg-color: var(--yee-tree-select-dropdown-bg-color);
 
-  /* deprecated-aliases:end */
+    /* deprecated-aliases:end */
 }

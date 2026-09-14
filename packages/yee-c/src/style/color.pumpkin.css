@@ -33,7 +33,8 @@
   --yee-color-text-auxiliary: #bdbdbd;
   --yee-color-split: #d1d1d1;
   --yee-color-border: #bdbdbd;
-  --yee-color-border-hover-focus: #ea5404;
+  --yee-color-border-hover: #ea5404;
+  --yee-color-border-focus: #ea5404;
   --yee-color-bg-highlight: rgba(234, 84, 4, 0.16);
   --yee-color-bg-disabled: #f3f3f3;
   --yee-color-bg-head: #f3f3f3;
@@ -447,7 +448,7 @@
 
   --yee-checkbox-bg-color: var(--yee-color-bg-container);
   --yee-checkbox-border-color: var(--yee-color-border);
-  --yee-checkbox-hover-border-color: var(--yee-color-border-hover-focus);
+  --yee-checkbox-hover-border-color: var(--yee-color-border-hover);
   --yee-checkbox-checked-bg-color: var(--yee-color-primary);
   --yee-checkbox-checked-border-color: var(--yee-color-primary);
   --yee-checkbox-checked-after-border-color: #ffffff;
@@ -494,9 +495,7 @@
   --yee-date-picker-time-disabled-bg-color: transparent;
 
   --yee-range-picker-trigger-border-color: var(--yee-color-border);
-  --yee-range-picker-trigger-hover-border-color: var(
-    --yee-color-border-hover-focus
-  );
+  --yee-range-picker-trigger-hover-border-color: var(--yee-color-border-hover);
 
   --yee-range-picker-checked-bg-color: var(--yee-color-option-active-bg);
   --yee-range-picker-hover-border-color: var(--yee-color-primary);
@@ -517,8 +516,8 @@
 
   /* --Input-- */
 
-  --yee-input-hover-border-color: var(--yee-color-border-hover-focus);
-  --yee-input-content-focus-border-color: var(--yee-color-border-hover-focus);
+  --yee-input-hover-border-color: var(--yee-color-border-hover);
+  --yee-input-focus-border-color: var(--yee-color-border-focus);
   --yee-input-focus-bs-color: rgba(234, 84, 4, 0.24);
   --yee-input-border-color: var(--yee-color-border);
   --yee-input-content-bg-color: var(--yee-color-bg-container);
@@ -585,7 +584,7 @@
     --yee-color-text-disabled
   );
 
-  --yee-radio-inner-hover-border-color: var(--yee-color-border-hover-focus);
+  --yee-radio-inner-hover-border-color: var(--yee-color-border-hover);
   --yee-radio-label-button-border-color: var(--yee-color-border);
   --yee-radio-label-button-bg-color: var(--yee-color-bg-container);
   --yee-radio-label-button-hover-color: var(--yee-color-primary);
@@ -1183,7 +1182,7 @@
 
   --yee-selector-border-color: var(--yee-color-border);
 
-  --yee-selector-hover-border-color: var(--yee-color-border-hover-focus);
+  --yee-selector-hover-border-color: var(--yee-color-border-hover);
 
   --yee-selector-focus-border-color: var(--yee-color-primary);
 
