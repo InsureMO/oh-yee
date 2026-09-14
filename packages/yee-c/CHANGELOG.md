@@ -1,8 +1,8 @@
 # @rainbow-oh/yee-c
 
-## 0.13.0
+## 0.12.2
 
-### Minor Changes
+### Patch Changes
 
 - 0635449: feat: update input focus styles and color variables
 
