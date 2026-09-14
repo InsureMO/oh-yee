@@ -24,7 +24,6 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
     classNames,
     showSorterTooltip = true,
     tableActionBarShowOnHover,
-    internalFilters,
     style,
     width,
     colSpan,
@@ -122,7 +121,6 @@ const HeadCell: React.FC<HeadCellProps> = (props) => {
           {...rest}
           filter={filter}
           column={props}
-          internalFilters={internalFilters}
           onInternalFilter={onInternalFilter}
           dataIndex={dataIndex as string}
         />

@@ -5,6 +5,7 @@ import Head from './theader';
 
 export type {
   ColumnProps,
+  FilterValue,
   HeaderCell,
   PaginationType,
   RowSelectionType,

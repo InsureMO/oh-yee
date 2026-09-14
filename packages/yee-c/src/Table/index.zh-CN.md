@@ -29,6 +29,7 @@ toc: 'content'
 <code src="./demo/summary.tsx" title="统计" description="表格的统计行"></code>
 <code src="./demo/filter.tsx" title="筛选" description="表格的筛选功能"></code>
 <code src="./demo/column-filter.tsx" title="列筛选" description="表格的列筛选功能"></code>
+<code src="./demo/controlled-filter.tsx" title="受控筛选" description="filteredValue 受控筛选，支持服务端搜索与程序化重置"></code>
 <code src="./demo/components-override.tsx" title="自定义表格元素" description="可被外部（如 dnd-kit）接管的 tbody / 行渲染"></code>
 
 ## API
@@ -82,7 +83,7 @@ toc: 'content'
 | styles       | `Partial<Record<ColumnSemanticType, React.CSSProperties>>`           | 列结构化样式                   | -      |
 | align        | `'left' \| 'right' \| 'center'`                                      | 对齐方式                       | -      |
 | fixed        | `'left' \| 'right' \| true`                                          | 固定列                         | -      |
-| filter       | `object`                                                             | 过滤配置                       | -      |
+| filter       | `object`                                                             | 过滤配置，见下方 [ColumnFilter](#columnfilter) | -      |
 | sorter       | `boolean \| object`                                                  | 排序配置                       | -      |
 | dataIndex    | `string`                                                             | 行数据索引                     | -      |
 | key          | `string \| number`                                                   | 唯一key                        | -      |
@@ -96,6 +97,26 @@ toc: 'content'
 | onCell       | `(record: object, rowIndex: number) => object`                       | 设置单元格属性                 | -      |
 | onHeaderCell | `(column: ColumnProps) => object`                                    | 设置表头单元格属性             | -      |
 | render       | `(record: Record<string, any>, rowIndex: number) => React.ReactNode` | 自定义渲染函数                 | -      |
+
+### ColumnFilter
+
+`ColumnProps.filter` 的过滤配置。
+
+| 属性名        | 类型                                        | 描述                                                                                                  | 默认值 |
+| ------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
+| filterMode    | `'tree' \| 'menu'`                          | 筛选菜单模式（配置 `items` 时生效）                                                                   | `menu` |
+| items         | `Array<Record<string, any>>`                | 筛选菜单项，配置后渲染树形多选面板                                                                    | -      |
+| searchable    | `boolean`                                   | 是否可搜索；未配置 `items` 时渲染搜索输入框                                                           | `true` |
+| filterOnClose | `boolean`                                   | 关闭筛选面板时是否自动应用筛选                                                                        | `true` |
+| icon          | `(filtered: boolean) => React.ReactNode`    | 自定义筛选图标                                                                                        | -      |
+| render        | `() => React.ReactNode`                     | 自定义筛选面板内容                                                                                    | -      |
+| onFilter      | `(value: FilterValue, record: object) => boolean` | 本地过滤函数；不配置时使用默认的字符串包含匹配                                                  | -      |
+| filtered      | `boolean`                                   | 强制筛选图标高亮（优先级高于由 `filteredValue` 派生的高亮）                                          | -      |
+| filteredValue | `FilterValue \| FilterValue[]`              | （受控）筛选值。配置后该列筛选状态完全受控：面板回显、图标高亮、`onChange` 的 `filters` 均以其为准；重置传 `''` / `[]` | -      |
+
+> **受控 + 服务端过滤**：列配置 `filteredValue` 且不配置 `onFilter` 时，不做任何本地过滤，数据是否过滤由你在 `onChange` 里重新请求决定，适合后台搜索场景（见下方「受控筛选」示例）。
+>
+> `action === 'filter'` 时，本次操作的列的 key 必在 `filters` 中（清空时值为 `''` / `[]`），父组件可直接据此镜像筛选状态。
 
 ### RowSelectionType
 

@@ -21,6 +21,7 @@ import useFilter from './hooks/useFilter';
 import usePagination from './hooks/usePagination';
 import useSorter from './hooks/useSorter';
 import type {
+  FilterValue,
   PaginationType,
   TableProps,
   WrapedColumnProps,
@@ -207,6 +208,33 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     [onSortInternal, onChange, pagination, current, pageSize, filters],
   );
 
+  const handleFilter = React.useCallback(
+    (options: { dataIndex: string; value: FilterValue | FilterValue[] }) => {
+      const next = onFilterInternal(options);
+      // Remove-then-re-add: the committing column's entry must be reported
+      // even when the merged records hold no record for it (a controlled
+      // column whose prop value is still empty), so parents can mirror state
+      // from this payload alone. On clear the key is kept with its empty
+      // value, matching antd.
+      const emitted = next.filterRecords.filter(
+        (record) => record.dataIndex !== options.dataIndex,
+      );
+      emitted.push({ dataIndex: options.dataIndex, value: options.value });
+      onChange?.({
+        pagination: pagination === false ? undefined : { current, pageSize },
+        sorter: sorters,
+        filters: Object.fromEntries(
+          emitted.map(({ dataIndex, value }) => [dataIndex, value]),
+        ),
+        // Filtered but not yet re-sorted; symmetric with handleSort, whose
+        // payload is sorted but not re-paginated.
+        currentDataSource: next.data,
+        action: 'filter',
+      });
+    },
+    [onFilterInternal, onChange, pagination, current, pageSize, sorters],
+  );
+
   // Expanded row data
   const { expandedRowKeys, onExpand } = useExpand(
     expandable,
@@ -221,8 +249,6 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     onChange: onSelectionChange,
   } = useSelection({ pageData, dataSource, getRowKey, rowSelection, allKeys });
 
-  // Track filter changes to emit onChange after filtered data is recalculated
-  const prevFilterRecordsRef = useRef(filterRecords);
   const [horizontalScroll, setHorizontalScroll] = React.useState({
     left: false,
     right: false,
@@ -292,30 +318,6 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
     });
   }, [wrapedColumnsRef]);
 
-  useEffect(() => {
-    if (prevFilterRecordsRef.current === filterRecords) return;
-
-    prevFilterRecordsRef.current = filterRecords;
-    if (!onChange) return;
-
-    onChange({
-      pagination: pagination === false ? undefined : { current, pageSize },
-      sorter: sorters,
-      filters,
-      currentDataSource: sortedData,
-      action: 'filter',
-    });
-  }, [
-    filterRecords,
-    filters,
-    sortedData,
-    pagination,
-    current,
-    pageSize,
-    sorters,
-    onChange,
-  ]);
-
   // Observers are attached once: both callbacks are referentially stable.
   useEffect(() => {
     const content = contentRef.current;
@@ -380,7 +382,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
         sorters={sorters}
         onSort={handleSort}
         onCheckAll={onCheckAll}
-        onInternalFilter={onFilterInternal}
+        onInternalFilter={handleFilter}
         resizingKey={resizingKey}
         onResizeStart={onResizeStart}
         onResizeStep={onResizeStep}

@@ -59,6 +59,27 @@ const HeaderFilter = React.memo((props: any) => {
   const [selectNodes, setSelectNodes] = useState<Array<string | number>>([]);
   const [searchValue, setSearchValue] = useState('');
 
+  // Controlled columns echo `filteredValue` into the local display state.
+  // Only sync while the dropdown is closed so in-progress edits are kept; on
+  // close the committed ref is synced too, so `filterOnClose`'s value diff
+  // doesn't re-commit the echoed value as if the user had changed it.
+  const controlled = filter.filteredValue !== undefined;
+  useEffect(() => {
+    if (!controlled || open) return;
+
+    const value = filter.filteredValue as FilterInput;
+    if (Array.isArray(value)) {
+      setSelectNodes([...value]);
+      setSearchValue('');
+    } else {
+      setSearchValue(String(value));
+      setSelectNodes([]);
+    }
+    const committed: FilterInput = Array.isArray(value) ? [...value] : value;
+    committedValueRef.current = committed;
+    setCommittedValue(committed);
+  }, [controlled, filter.filteredValue, open]);
+
   useEffect(() => {
     if (!open) return;
 
@@ -204,7 +225,11 @@ const HeaderFilter = React.memo((props: any) => {
     setOpen(nextOpen);
   };
 
-  const isFiltered = filtered ?? hasFilterValue(committedValue);
+  const isFiltered =
+    filtered ??
+    (controlled
+      ? hasFilterValue((filter.filteredValue ?? '') as FilterInput)
+      : hasFilterValue(committedValue));
 
   const renderTrigger = () => {
     const trigger =

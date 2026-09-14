@@ -68,9 +68,13 @@ export interface HeadCellProps extends Omit<WrapedColumnProps, 'title'> {
   tableActionBarShowOnHover?: boolean;
   sorters?: { [prop: string]: number };
   showSorterTooltip?: boolean;
-  internalFilters?: { [dataIndex: string]: boolean }; // Whether this column is filtered
   onSort?: (dataIndex: string, sorter: any) => void;
-  onInternalFilter?: (dataIndex: string, value: string) => void;
+  onInternalFilter?: (options: {
+    dataIndex: string;
+    value: FilterValue | FilterValue[];
+    type?: 'filter' | 'search';
+    column: WrapedColumnProps;
+  }) => void;
   /**
    * `resizeKey` of the column currently being dragged, if any
    */
@@ -215,6 +219,14 @@ export interface ColumnProps {
      * Whether searchable, when items is undefined, it acts as a search component
      */
     searchable?: boolean;
+    /**
+     * Controlled filter state. When defined, this column's filter state is
+     * controlled: the dropdown echo, icon highlight and the `filters` in
+     * onChange all derive from it. With no `onFilter`, local matching is
+     * skipped entirely (server mode — filter in your onChange handler).
+     * Reset with `[]` / `''`.
+     */
+    filteredValue?: FilterValue | FilterValue[];
     /**
      * Filter icon
      */

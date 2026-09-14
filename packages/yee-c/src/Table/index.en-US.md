@@ -22,6 +22,7 @@ A table displays rows of data.
 <code src="./demo/expand.tsx" title="Expandable" description="Expandable rows"></code>
 <code src="./demo/pagination.tsx" title="Pagination" description="Table with pagination"></code>
 <code src="./demo/column-filter.tsx" title="column filter" description="Table column filter"></code>
+<code src="./demo/controlled-filter.tsx" title="controlled filter" description="Controlled filtering with filteredValue: server-side search and programmatic reset"></code>
 <code src="./demo/grouping.tsx" title="Grouping" description="Multi-level header"></code>
 <code src="./demo/fixed.tsx" title="Fixed Columns" description="Fix columns on both sides and scroll horizontally to see the effect"></code>
 <code src="./demo/resizable.tsx" title="Resizable Columns" description="Drag the right edge of a header cell to resize it; arrow keys work too"></code>
@@ -77,7 +78,7 @@ A table displays rows of data.
 | styles | `Partial<Record<ColumnSemanticType, React.CSSProperties>>` | Column semantic styles | - |
 | align | `'left' \| 'right' \| 'center'` | Alignment | - |
 | fixed | `'left' \| 'right' \| true` | Fixed column | - |
-| filter | `object` | Filter configuration | - |
+| filter | `object` | Filter configuration, see [ColumnFilter](#columnfilter) below | - |
 | sorter | `boolean \| object` | Sorter configuration | - |
 | dataIndex | `string` | Data index | - |
 | key | `string \| number` | Unique key | - |
@@ -91,6 +92,26 @@ A table displays rows of data.
 | onCell | `(record: object, rowIndex: number) => object` | Cell props | - |
 | onHeaderCell | `(column: ColumnProps) => object` | Header cell props | - |
 | render | `(record: object, rowIndex: number) => React.ReactNode` | Custom render | - |
+
+### ColumnFilter
+
+Filter configuration of `ColumnProps.filter`.
+
+| Property | Type | Description | Default |
+| --- | --- | --- | --- |
+| filterMode | `'tree' \| 'menu'` | Filter menu mode (effective when `items` is set) | `menu` |
+| items | `Array<Record<string, any>>` | Filter menu items; renders a checkable tree panel when set | - |
+| searchable | `boolean` | Whether searchable; renders a search input when `items` is unset | `true` |
+| filterOnClose | `boolean` | Whether to apply the filter when the panel closes | `true` |
+| icon | `(filtered: boolean) => React.ReactNode` | Custom filter icon | - |
+| render | `() => React.ReactNode` | Custom filter panel content | - |
+| onFilter | `(value: FilterValue, record: object) => boolean` | Local filter function; falls back to default string-includes matching when unset | - |
+| filtered | `boolean` | Force the filter icon highlight (takes precedence over `filteredValue`) | - |
+| filteredValue | `FilterValue \| FilterValue[]` | (Controlled) Filter value. When set, the column's filter state is fully controlled: panel echo, icon highlight and the `filters` in `onChange` all derive from it; reset with `''` / `[]` | - |
+
+> **Controlled + server-side filtering**: with `filteredValue` set and no `onFilter`, no local matching happens at all — whether the data is filtered is decided by refetching in your `onChange` handler (see the controlled filter demo below).
+>
+> When `action === 'filter'`, the key of the column that was just committed is always present in `filters` (with `''` / `[]` on clear), so parents can mirror filter state from the payload alone.
 
 ### RowSelectionType
 
