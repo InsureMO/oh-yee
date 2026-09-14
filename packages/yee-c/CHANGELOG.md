@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.13.0
+
+### Minor Changes
+
+- be49e2d: feat: implement controlled filtering with server-side support
+
 ## 0.12.2
 
 ### Patch Changes
