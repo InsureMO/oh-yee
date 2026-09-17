@@ -28,7 +28,7 @@ const Field: FC<FieldProps> = (props) => {
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
-  const { form } = useVirtualField(formName, name, {
+  const { form } = useVirtualField(formName ?? '', name ?? '', {
     props,
     onStoreChange: forceUpdate,
   });
@@ -49,20 +49,33 @@ const Field: FC<FieldProps> = (props) => {
   };
 
   const getControlled = (children: React.ReactElement) => {
-    const mergedDisabled =
-      disabled || (children as React.ReactElement<any>).props.disabled;
+    const childProps = (children as React.ReactElement<any>).props;
+
+    // Pure layout mode (no form): children keep their own value/onChange.
+    // Only a Field-level disabled is merged down.
+    // Pure layout mode (no form or no field name): children keep their own
+    // value/onChange. Only a Field-level disabled is merged down.
+    if (!form || name === undefined) {
+      if (disabled === undefined) return children;
+      return React.cloneElement(children as React.ReactElement<any>, {
+        disabled: disabled || childProps.disabled,
+      });
+    }
+
+    const mergedDisabled = disabled || childProps.disabled;
+    const fieldName = name;
 
     const attr = {
-      value: getFieldValue?.(name),
+      value: getFieldValue?.(fieldName),
       name: formName,
-      id: name,
+      id: fieldName,
       disabled: mergedDisabled,
       onChange: (value: unknown, ...rest: Array<unknown>) => {
         const callbacks = getCallbacks?.();
         let _value = value;
         const fieldsValue = getFieldsValue?.();
         const feedback = callbacks?.onValuesBeforeChange?.(
-          { [name]: _value },
+          { [fieldName]: _value },
           fieldsValue,
         );
 
@@ -70,20 +83,20 @@ const Field: FC<FieldProps> = (props) => {
           _value = feedback;
         }
 
-        setFieldsValue?.({ [name]: _value }, 'onChange');
+        setFieldsValue?.({ [fieldName]: _value }, 'onChange');
 
         // Call child component's onChange
         if ((children.props as any)?.onChange) {
           (children.props as any).onChange(_value, ...rest);
         }
 
-        callbacks?.['onValuesChange']?.({ [name]: _value }, fieldsValue);
+        callbacks?.['onValuesChange']?.({ [fieldName]: _value }, fieldsValue);
 
         forceUpdate();
       },
       onBlur: (event: unknown) => {
         // Fire-and-forget async validation; store notifies onStoreChange on completion.
-        void validateField?.(name, 'onBlur');
+        void validateField?.(fieldName, 'onBlur');
 
         // Call child component's onBlur
         if ((children.props as any).onBlur) {
@@ -95,7 +108,8 @@ const Field: FC<FieldProps> = (props) => {
     return React.cloneElement(children, attr);
   };
 
-  const validate = getFieldValidate?.(name);
+  const validate =
+    name !== undefined ? getFieldValidate?.(name) : undefined;
 
   return (
     <div
@@ -109,18 +123,20 @@ const Field: FC<FieldProps> = (props) => {
       )}
       style={style}
     >
-      <label
-        className={clsx(
-          `${prefixCls}-label`,
-          {
-            [`${prefixCls}-required`]: isRequired(),
-          },
-          classNames?.label,
-        )}
-        style={styles?.label}
-      >
-        {label}
-      </label>
+      {label ? (
+        <label
+          className={clsx(
+            `${prefixCls}-label`,
+            {
+              [`${prefixCls}-required`]: isRequired(),
+            },
+            classNames?.label,
+          )}
+          style={styles?.label}
+        >
+          {label}
+        </label>
+      ) : null}
       <div
         className={clsx(`${prefixCls}-content`, classNames?.content)}
         style={styles?.content}

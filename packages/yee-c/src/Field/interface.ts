@@ -28,13 +28,16 @@ export interface FieldProps {
    */
   label?: React.ReactNode;
   /**
-   * Field name
+   * Field name (required only when used with a registered virtual form)
    */
-  name: string;
+  name?: string;
   /**
-   * Name of the parent form
+   * Name of the parent form.
+   * When omitted (or no form is registered under this name), Field renders
+   * as a pure layout wrapper: the child keeps its own value/onChange and
+   * no validation runs.
    */
-  formName: string;
+  formName?: string;
   /**
    * Whether disabled
    */
