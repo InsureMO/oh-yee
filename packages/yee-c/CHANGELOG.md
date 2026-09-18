@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.1
+
+### Patch Changes
+
+- 156ac2b: feat: add inline collapse behavior to MenuWrapper and enhance Table filter list styles.
+
 ## 0.14.0
 
 ### Minor Changes
