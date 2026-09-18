@@ -74,6 +74,14 @@ const MenuWrapper = (baseprops: MenuProps) => {
     defaultValue: defaultSelectedKeys,
   });
 
+  // Reset `openKeys` when inline collapsed
+  useEffect(() => {
+    if (inlineCollapsed) {
+      setMergedOpenKeys([]);
+      onOpenChange?.([]);
+    }
+  }, [inlineCollapsed]);
+
   // -------- Keyboard control ------------------------------
   const [focusedKey, setFocusedKey] = useState<string | undefined>(undefined);
   const latestOpenKeys = useLatest(mergedOpenKeys);

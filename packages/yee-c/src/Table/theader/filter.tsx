@@ -176,13 +176,15 @@ const HeaderFilter = React.memo((props: any) => {
       <div className={clsx(`${prefixCls}-filter-popup`)}>
         {searchInputNode}
         <Divider style={{ margin: '8px 0' }} />
-        <Tree
-          dataSource={dataSource}
-          checkable
-          multiple
-          checkedKeys={selectNodes}
-          onCheck={(keys) => setSelectNodes(keys as Array<string | number>)}
-        />
+        <div className={`${prefixCls}-filter-list`}>
+          <Tree
+            dataSource={dataSource}
+            checkable
+            multiple
+            checkedKeys={selectNodes}
+            onCheck={(keys) => setSelectNodes(keys as Array<string | number>)}
+          />
+        </div>
         <Divider style={{ margin: '8px 0' }} />
         <Space block style={{ justifyContent: 'flex-end' }}>
           <Button size="small" onClick={reset}>

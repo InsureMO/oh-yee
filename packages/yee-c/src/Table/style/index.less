@@ -3,6 +3,10 @@
 @{pls} {
   position: relative;
 
+  &-spin {
+    z-index: 2;
+  }
+
   &-bordered {
     > @{pls}-thead,
     > @{pls}-tbody {
@@ -120,6 +124,19 @@
     &-trigger {
       display: inline-flex;
       cursor: pointer;
+    }
+
+    &-popup {
+      display: flex;
+      flex-direction: column;
+      max-height: calc(
+        var(--yee-table-filter-popup-height) - var(--yee-popover-padding) * 2
+      );
+    }
+
+    &-list {
+      min-height: 0;
+      overflow: auto;
     }
   }
 
