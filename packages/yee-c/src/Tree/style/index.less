@@ -67,6 +67,13 @@
       display: inline-flex;
       user-select: none;
       margin-left: var(--yee-tree-node-label-margin-left);
+
+      // label 是 Button type="text"，通过其槽位变量覆盖颜色/hover 背景
+      &-selected {
+        --m-btn-color: var(--yee-tree-node-text-active-color);
+        --m-btn-hover-bg-color: var(--yee-tree-node-text-active-bg-color);
+        --m-btn-active-bg-color: var(--yee-tree-node-text-active-bg-color);
+      }
     }
   }
 
