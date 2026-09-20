@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.2
+
+### Patch Changes
+
+- c23a8be: feat: add styles for selected label state in Tree node component
+
 ## 0.14.1
 
 ### Patch Changes
