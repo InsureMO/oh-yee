@@ -35,12 +35,15 @@ const getPanelSize = (
   },
 ) => {
   const panelsRect = [] as PanelRect[];
-  const count = React.Children.count(children);
+  // toArray 剔除 null/undefined/boolean（如 `{open ? <Item/> : null}` 条件面板）。
+  // Children.count 会把 null 也计为一面板，导致 auto 面板被平分出错误尺寸。
+  const items = React.Children.toArray(children);
+  const count = items.length;
 
   let remainingSize = totalSize;
   let remainingItem = count;
 
-  React.Children.forEach(children, (child) => {
+  items.forEach((child) => {
     if (React.isValidElement(child)) {
       const { style, size, defaultSize, min, max } = child.props || ({} as any);
 
@@ -111,6 +114,8 @@ const getPanelSize = (
 
   panelsRect.forEach((item) => {
     if (item.type === 'default') {
+      // currentSize 缺失会导致 Wrapper 注入的 flexBasis 为空，defaultSize 失效（宽度由内容撑开）
+      item.currentSize = item.size;
       remainingSize -= item.size || 0;
       remainingItem--;
     } else if (item.type === 'percent') {
@@ -124,7 +129,8 @@ const getPanelSize = (
   if (remainingItem > 0) {
     panelsRect.forEach((item) => {
       if (item.type === 'auto') {
-        item.size = remainingSize / remainingItem;
+        // 显式尺寸总和超出 totalSize 时 remainingSize 为负，负 flexBasis 会被浏览器丢弃导致面板回退内容尺寸
+        item.size = Math.max(0, remainingSize / remainingItem);
         item.currentSize = item.size;
       }
     });
@@ -145,9 +151,10 @@ const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
       }
     >
   >({});
+  // 与 getPanelSize 同口径：toArray 剔除 null，index/handler 判断不受条件渲染干扰
   const arr = React.Children.toArray(children);
 
-  React.Children.forEach(children, (child, index) => {
+  arr.forEach((child, index) => {
     if (React.isValidElement(child)) {
       const n = index + 1;
       const { style } = child.props || ({} as any);
@@ -178,6 +185,7 @@ const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
           },
         }),
       );
+
       const next = arr[index + 1];
 
       if (!next || !React.isValidElement(next)) {

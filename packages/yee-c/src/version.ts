@@ -4,7 +4,7 @@ declare global {
   }
 }
 
-export const version = "0.12.1";
+export const version = "0.14.2";
 
 if (typeof window !== 'undefined') {
   window.__yee_c_version__ = version;
