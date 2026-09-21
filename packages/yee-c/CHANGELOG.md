@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.3
+
+### Patch Changes
+
+- 8afeb36: fix: improve child handling in Splitter component
+
 ## 0.14.2
 
 ### Patch Changes
