@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.4
+
+### Patch Changes
+
+- 00f186e: feat: add animation support to Splitter and update documentation.
+
 ## 0.14.3
 
 ### Patch Changes
