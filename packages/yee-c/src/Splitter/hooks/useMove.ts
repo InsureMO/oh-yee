@@ -5,6 +5,7 @@ export default function useMove(
   handler: React.RefObject<HTMLDivElement | null>,
   direction: 'horizontal' | 'vertical',
   onMove: (dis: number) => void,
+  onMovingChange?: (moving: boolean) => void,
 ) {
   const [moving, setMoving] = React.useState(false);
 
@@ -20,6 +21,7 @@ export default function useMove(
       let x = e.pageX;
       let y = e.pageY;
       setMoving(true);
+      onMovingChange?.(true);
 
       const onMouseMove = debounce((e: MouseEvent) => {
         document.body.style.userSelect = 'none';
@@ -38,6 +40,7 @@ export default function useMove(
 
       const onMouseUp = () => {
         setMoving(false);
+        onMovingChange?.(false);
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('mouseup', onMouseUp);
         ele.removeEventListener('mouseup', onMouseUp);

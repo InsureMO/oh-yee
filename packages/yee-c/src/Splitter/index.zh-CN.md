@@ -21,6 +21,7 @@ toc: 'content'
 <code src="./demo/size.tsx" title="尺寸控制" description="控制面板尺寸"></code>
 <code src="./demo/nested.tsx" title="嵌套" description="嵌套分割面板"></code>
 <code src="./demo/bordered.tsx" title="边框" description="带边框的分割面板"></code>
+<code src="./demo/animation.tsx" title="过渡动画" description="开启 animation 后，条件渲染面板的挂载/卸载与受控尺寸变更有平滑过渡动画；拖拽缩放始终实时跟手"></code>
 
 ## API
 
@@ -36,6 +37,7 @@ toc: 'content'
 | bordered | `boolean` | 是否显示边框 | - |
 | itemPadding | `number \| string` | 项目内边距 | - |
 | onResize | `(sizes: number[]) => void` | 面板尺寸变化事件 | - |
+| animation | `boolean` | 受控尺寸变更、collapsible 收展及面板挂载/卸载时的 flex-basis 过渡动画；拖拽缩放始终实时跟手，不受影响 | `false` |
 | data-* | `string` | - | 支持所有 data-* 属性，透传到组件根 DOM 元素 |
 
 ### SplitterItemProps

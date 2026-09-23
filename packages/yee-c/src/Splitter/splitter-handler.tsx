@@ -18,6 +18,8 @@ interface SplitterHandlerProps {
     size: { startSize: number; endSize: number },
     eles: { start: HTMLDivElement; end: HTMLDivElement },
   ) => void;
+  /** 拖拽开始/结束回调（animation 模式下拖拽期间需关闭 flex-basis 过渡） */
+  onDraggingChange?: (dragging: boolean) => void;
 }
 
 const SplitterHandler = ({
@@ -28,6 +30,7 @@ const SplitterHandler = ({
   records,
   setRecords,
   onClick,
+  onDraggingChange,
 }: SplitterHandlerProps) => {
   // eslint-disable-line @typescript-eslint/no-unused-vars
   const { start, end } = collapsible
@@ -91,7 +94,7 @@ const SplitterHandler = ({
     });
   };
 
-  useMove(handler, layout, onMove);
+  useMove(handler, layout, onMove, onDraggingChange);
 
   const handleClick = (action: 'collapse' | 'expand') => {
     const eles = refs.current;

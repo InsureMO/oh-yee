@@ -21,6 +21,7 @@ Split panels for layout.
 <code src="./demo/size.tsx" title="Size Control" description="Control panel size"></code>
 <code src="./demo/nested.tsx" title="Nested" description="Nested splitters"></code>
 <code src="./demo/bordered.tsx" title="Bordered" description="Splitter with borders"></code>
+<code src="./demo/animation.tsx" title="Animation" description="With animation enabled, conditionally rendered panels mount/unmount and programmatic size changes transition smoothly; dragging stays real-time"></code>
 
 ## API
 
@@ -36,6 +37,7 @@ Split panels for layout.
 | bordered | `boolean` | Display border or not | - |
 | itemPadding | `number \| string` | Item padding | - |
 | onResize | `(sizes: number[]) => void` | Panel size change event | - |
+| animation | `boolean` | Animate programmatic size changes, collapsible expand/collapse and panel mount/unmount with a flex-basis transition; dragging always tracks the pointer in real time | `false` |
 | data-* | `string` | - | Supports all data-* attributes, forwarded to root DOM element |
 
 ### SplitterItemProps

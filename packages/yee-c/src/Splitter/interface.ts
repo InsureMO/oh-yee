@@ -82,4 +82,10 @@ export interface SplitterProps extends DataAttributeProps {
    * panel size change event
    * */
   onResize?: (sizes: PanelRect[]) => void;
+  /**
+   * animate programmatic size changes and panel mount/unmount with a
+   * flex-basis transition; dragging always tracks the pointer in real time
+   * @default false
+   */
+  animation?: boolean;
 }

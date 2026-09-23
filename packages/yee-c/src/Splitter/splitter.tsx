@@ -139,7 +139,15 @@ const getPanelSize = (
   return panelsRect;
 };
 
-const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
+const Wrapper = ({
+  children,
+  itemsSize,
+  itemTransition,
+  animation,
+  onDraggingChange,
+  onClick,
+  ...props
+}: any) => {
   const wrappered = [] as React.ReactElement[];
   const refs = useRef<
     Record<
@@ -171,6 +179,8 @@ const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
           style: {
             ...style, // If there is a border or other size-related design, it may cause calculation issues
             flexBasis: currentSize,
+            // animation 模式下受控尺寸变更走 flex-basis 过渡；拖拽期间为 undefined 保证跟手
+            transition: itemTransition,
           },
           min,
           max,
@@ -212,15 +222,55 @@ const Wrapper = ({ children, itemsSize, onClick, ...props }: any) => {
           flexable={flexable}
           expandable={_expandable}
           onClick={onClick}
+          onDraggingChange={onDraggingChange}
           key={`handler-${n}`}
         />,
       );
     }
   });
 
+  // ── 出场动画：children 数量减少（条件渲染的面板卸载）时，保留上一次渲染的
+  // 尾部面板克隆，flex-basis 过渡到 0 后再真正移除，避免右栏瞬间消失导致跳变。
+  const prevCountRef = React.useRef(arr.length);
+  const prevClonesRef = React.useRef<React.ReactElement[]>([]);
+  const [exiting, setExiting] = React.useState<React.ReactElement<any>[]>([]);
+
+  React.useEffect(() => {
+    const prevCount = prevCountRef.current;
+    prevCountRef.current = arr.length;
+    if (!animation || arr.length >= prevCount) {
+      return;
+    }
+    // 上一帧克隆里已带原 flex-basis（本帧 records 已不含被移除面板）
+    const removed = prevClonesRef.current.slice(arr.length);
+    if (!removed.length) {
+      return;
+    }
+    setExiting(removed);
+    // 第二阶段：下一帧 flex-basis 归 0，触发过渡
+    const raf = requestAnimationFrame(() => {
+      setExiting((list) =>
+        list.map((el) => React.cloneElement(el, { style: { ...el.props.style, flexBasis: 0 } })),
+      );
+    });
+    const timer = window.setTimeout(() => setExiting([]), 320);
+    return () => {
+      // 过渡期间面板重新打开：立即丢弃残留克隆
+      cancelAnimationFrame(raf);
+      window.clearTimeout(timer);
+      setExiting([]);
+    };
+  }, [arr.length, animation]);
+
+  // 记录本帧克隆，供下一次渲染的移除检测读取（声明在其后：上方 effect 读到的是旧值）
+  React.useEffect(() => {
+    prevClonesRef.current = wrappered;
+  });
+
   return (
     <SplitterWrapperCtx.Provider value={{ refs }}>
       {wrappered}
+      {exiting}
     </SplitterWrapperCtx.Provider>
   );
 };
@@ -236,6 +286,7 @@ const Splitter = React.forwardRef(
       children,
       bordered,
       onResize,
+      animation,
       ...rest
     } = props;
 
@@ -244,6 +295,15 @@ const Splitter = React.forwardRef(
     const componentRef = (ref as any) || internalRef;
 
     const [records, setRecords] = useState<PanelRect[]>([]);
+
+    // animation 模式：拖拽期间关掉面板的 flex-basis 过渡（onMove 直接写 DOM，过渡会导致跟不
+    // 上鼠标）；其余程序性尺寸变更（受控 size、collapsible 收展、面板增减）都走过渡。
+    const [dragging, setDragging] = React.useState(false);
+    const itemTransition = animation
+      ? dragging
+        ? undefined
+        : 'flex-basis 0.28s cubic-bezier(0.22, 0.61, 0.36, 1)'
+      : undefined;
 
     const handleClick = (index: number, action: 'expand' | 'collapse') => {
       const c = index - 1;
@@ -303,15 +363,31 @@ const Splitter = React.forwardRef(
       }
     }, [layout]);
 
+    const prevPanelCountRef = React.useRef(-1);
+
     React.useEffect(() => {
       if (totalSize) {
         const panelsSize = getPanelSize(children, {
           totalSize: totalSize,
           layout,
         });
+        // animation 模式下面板新增（条件渲染的面板挂载）时先以 0 尺寸入库，下一帧再落到
+        // 目标尺寸，配合 flex-basis 过渡播放入场动画；否则新面板瞬间撑开、旧面板瞬间收窄。
+        const prevCount = prevPanelCountRef.current;
+        prevPanelCountRef.current = panelsSize.length;
+        if (animation && prevCount >= 0 && panelsSize.length > prevCount) {
+          panelsSize.slice(prevCount).forEach((item) => {
+            item.currentSize = 0;
+          });
+          setRecords(panelsSize);
+          const raf = requestAnimationFrame(() => {
+            setRecords(getPanelSize(children, { totalSize: totalSize, layout }));
+          });
+          return () => cancelAnimationFrame(raf);
+        }
         setRecords(panelsSize);
       }
-    }, [children, totalSize, layout]);
+    }, [children, totalSize, layout, animation]);
 
     return (
       <div className={cls} {...rest} ref={componentRef}>
@@ -323,6 +399,9 @@ const Splitter = React.forwardRef(
             totalSize={totalSize}
             itemsSize={records}
             onClick={handleClick}
+            animation={animation}
+            itemTransition={itemTransition}
+            onDraggingChange={setDragging}
           >
             {children}
           </Wrapper>
