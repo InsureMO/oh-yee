@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.5
+
+### Patch Changes
+
+- 9187c09: feat: re-bind callbacks on FormStore initialization to ensure correct closure references.
+
 ## 0.14.4
 
 ### Patch Changes
