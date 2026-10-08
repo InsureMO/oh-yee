@@ -144,6 +144,25 @@ describe('FormStore.initialize initialValues', () => {
   });
 });
 
+describe('FormStore.initialize re-binds callbacks', () => {
+  it('re-registers callbacks on remount but applies initialValues once only', () => {
+    const store = new FormStore();
+    const first = vi.fn();
+    const second = vi.fn();
+
+    store.initialize({ initialValues: { a: 1 }, callbacks: { onValuesChange: first } });
+    // 模拟 <Form> 卸载后重挂载（form 实例由外层 useForm 持有而存活）：
+    // 新一次挂载传入新的 useEvent 闭包，store 必须改绑到它
+    store.initialize({ initialValues: { a: 999 }, callbacks: { onValuesChange: second } });
+
+    store.setFieldsValue({ a: 2 });
+    expect(first).not.toHaveBeenCalled();
+    expect(second).toHaveBeenCalledTimes(1);
+    // initialValues 仍只在首次初始化生效
+    expect(store.getFieldValue('a')).toBe(2);
+  });
+});
+
 describe('FormStore.setFieldsValue with clear trigger', () => {
   it('merges over the store instead of replacing it', () => {
     const store = new FormStore();

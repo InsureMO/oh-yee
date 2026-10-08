@@ -70,6 +70,13 @@ export class FormStore {
     initialValues?: Store;
     callbacks?: Callbacks;
   }) => {
+    // callbacks 每次挂载重绑：form 实例可由外层 useForm 持有、跨越 <Form> 卸载/重挂载存活，
+    // 若只在此处注册一次，重挂载后 store 仍持旧挂载的 useEvent 闭包，其 ref 已随旧实例
+    // 死亡（不再更新），onValuesChange 等会以过期闭包执行。
+    if (callbacks) {
+      this.setCallbacks(callbacks);
+    }
+
     if (!this.initialized) {
       this.initialized = true;
 
@@ -78,9 +85,6 @@ export class FormStore {
         this.initialValues = JSON.parse(JSON.stringify(initialValues));
       }
 
-      if (callbacks) {
-        this.setCallbacks(callbacks);
-      }
       // Only refresh field entities, do not notify watchers (no value changes to watch during initialization)
       this.fieldEntities.forEach((entity) => {
         entity?.onStoreChange();
