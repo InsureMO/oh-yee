@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.6
+
+### Patch Changes
+
+- f985393: feat: add subscription to List component for improved re-rendering on value changes.
+
 ## 0.14.5
 
 ### Patch Changes
