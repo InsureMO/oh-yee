@@ -28,7 +28,7 @@ const List: React.FC<FormListProps> = ({
   children,
   initialValue = [],
 }) => {
-  const { getFieldValue, setFieldsValue, validateFields } =
+  const { getFieldValue, setFieldsValue, validateFields, subscribe } =
     useContext(FieldContext);
 
   // Normalize list name path
@@ -49,6 +49,9 @@ const List: React.FC<FormListProps> = ({
   // State for triggering re-renders
   const [, forceUpdate] = useState(0);
 
+  // 上一次渲染的行数：订阅回调里跳过行内编辑（长度未变）触发的无效重渲染
+  const listLengthRef = useRef(0);
+
   // Initialize list value - Fix: use prefixName instead of listNamePath
   useLayoutEffect(() => {
     const pathStr = prefixName.join('.');
@@ -58,6 +61,24 @@ const List: React.FC<FormListProps> = ({
       forceUpdate((prev) => prev + 1);
     }
   }, [prefixName, initialValue, getFieldValue, setFieldsValue]);
+
+  // Subscribe to the list's own path: List re-reads the store only on its own render,
+  // so a whole-value replacement via form.setFieldsValue (row count changed) never
+  // re-rendered it and new rows never mounted. Field instances already refresh through
+  // registerFieldEntities, but the row count lives here. Aligned with rc-field-form.
+  useLayoutEffect(
+    () =>
+      subscribe?.(prefixName.join('.'), () => {
+        // isRelatedNamePath 双向前缀匹配，行内编辑（options.i.label）也命中本 watcher；
+        // 但 List 渲染输出只取决于行数，行内 Field 会经 registerFieldEntities 自行刷新，
+        // 长度未变则跳过，避免大列表逐键全列表重渲染
+        const next = getFieldValue?.(prefixName.join('.'));
+        const nextLen = Array.isArray(next) ? next.length : 0;
+        if (nextLen === listLengthRef.current) return;
+        forceUpdate((prev) => prev + 1);
+      }),
+    [prefixName, subscribe, getFieldValue],
+  );
 
   // Get current list value
   const getListValue = (): any[] => {
@@ -120,7 +141,6 @@ const List: React.FC<FormListProps> = ({
         setFieldsValue?.({ [pathStr]: newList }, 'update' as any);
       }
       keyManager.id += 1;
-      forceUpdate((prev) => prev + 1);
     };
 
     const remove = (index: number | number[]) => {
@@ -137,7 +157,6 @@ const List: React.FC<FormListProps> = ({
       // Update list values
       const newList = currentValue.filter((_, i) => !indexSet.has(i));
       setFieldsValue?.({ [pathStr]: newList }, 'update' as any);
-      forceUpdate((prev) => prev + 1);
     };
 
     const moveFunc = (from: number, to: number) => {
@@ -160,6 +179,7 @@ const List: React.FC<FormListProps> = ({
       // Move list values
       const newList = move(currentValue, from, to);
       setFieldsValue?.({ [pathStr]: newList }, 'update' as any);
+      // 同长度重排不会触发上方订阅回调（长度未变被跳过），须显式重渲染
       forceUpdate((prev) => prev + 1);
     };
 
@@ -168,6 +188,7 @@ const List: React.FC<FormListProps> = ({
 
   // Build field list - removed useMemo, compute directly
   const listValue = getListValue();
+  listLengthRef.current = listValue.length;
 
   // Ensure enough keys
   while (keyManager.keys.length < listValue.length) {
