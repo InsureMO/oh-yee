@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.14.7
+
+### Patch Changes
+
+- 459e305: feat: enhance validation handling in Field and Group components to support dynamic required state changes.
+
 ## 0.14.6
 
 ### Patch Changes
