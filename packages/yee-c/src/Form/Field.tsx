@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { HelpCircle } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import React, { useContext, useLayoutEffect, useMemo, useReducer } from 'react';
+import React, { useContext, useLayoutEffect, useMemo, useReducer, useRef } from 'react';
 import Tooltip from '../Tooltip';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
@@ -45,6 +45,7 @@ const Field: React.FC<FieldProps> = (props) => {
   const {
     getCallbacks,
     getFieldStatus,
+    getFieldValidate,
     getFieldValue,
     getFieldsValue,
     setFieldsValue,
@@ -74,13 +75,42 @@ const Field: React.FC<FieldProps> = (props) => {
     return stringifyPath(fullFieldNamePath);
   }, [fullFieldNamePath]);
 
+  // Registration happens once per field name, but the store (validateField)
+  // reads validation config off entity.props on every validation pass — the
+  // getter keeps those reads on the latest render's props so runtime changes
+  // to required/rules take effect.
+  const propsRef = useRef(props);
+  propsRef.current = props;
+
   useLayoutEffect(() => {
     const unregister = registerFieldEntities?.({
-      props: { ...props, name: normalizedName },
+      get props() {
+        return { ...propsRef.current, name: normalizedName };
+      },
       onStoreChange: forceUpdate,
     });
     return unregister;
   }, [normalizedName, registerFieldEntities]);
+
+  // JSON signature (not reference) because rules is typically an inline array
+  // literal; validator functions are dropped, but the getter above already
+  // makes the next natural validation use them.
+  const validateSignature = useMemo(
+    () => JSON.stringify({ required, rules }),
+    [required, rules],
+  );
+  const prevValidateSignatureRef = useRef(validateSignature);
+
+  useLayoutEffect(() => {
+    const prev = prevValidateSignatureRef.current;
+    prevValidateSignatureRef.current = validateSignature;
+    if (prev === validateSignature) return;
+    // Only re-check fields already showing a validation message — pristine
+    // fields must not start erroring just because rules changed.
+    if (getFieldValidate?.(normalizedName)) {
+      void validateField?.(normalizedName);
+    }
+  }, [validateSignature, normalizedName]);
 
   const isRequired = () => {
     return (

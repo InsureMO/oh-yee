@@ -107,11 +107,16 @@ const Group: React.FC<FieldGroupProps> = (props) => {
     return () => unsubscribes.forEach((fn) => fn());
   }, [childNames, formInstance]);
 
-  // Register group validator to FormStore
+  // Register group validator to FormStore. The closure is registered once, so
+  // it reads the latest validate (and its required/rules/childNames captures)
+  // through a ref — otherwise runtime prop changes never take effect.
+  const validateRef = useRef(validate);
+  validateRef.current = validate;
+
   useEffect(() => {
     const unregister = formInstance.registerGroupEntity(groupId, {
       validate: async (force) => {
-        const result = await validate(force);
+        const result = await validateRef.current(force);
         setErrors(result);
         forceUpdate();
         return result;
