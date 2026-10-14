@@ -79,7 +79,7 @@
   /* ================= 背景 ================= */
   --yee-color-bg-layout: #f1f2f4;
   --yee-color-bg-head: #fff;
-  --yee-color-bg-disabled: #f2f3f5;
+  --yee-color-bg-disabled: #f5f5f5;
   /* 衍生:规范 --hover(极浅悬浮底) */
   --yee-color-bg-hover: rgba(109, 93, 252, 3.5%);
 

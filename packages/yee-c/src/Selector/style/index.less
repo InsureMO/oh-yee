@@ -54,8 +54,8 @@
       height: var(--yee-selector-large-height);
     }
 
-    &:focus-within,
-    &:focus {
+    &:not(@{pls}-disabled):focus-within,
+    &:not(@{pls}-disabled):focus {
       @{pls}-input-wrapper {
         z-index: 1;
         opacity: var(--yee-selector-input-focus-opacity);
