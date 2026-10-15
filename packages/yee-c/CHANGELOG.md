@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.0
+
+### Minor Changes
+
+- 115f9d4: feat: implement keyboard navigation for TableSelect component and enhance related styles.
+
 ## 0.14.7
 
 ### Patch Changes
