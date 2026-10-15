@@ -261,8 +261,13 @@ export default function useSelectKeyboard({
         handleEnter();
         break;
       case 'Escape':
-        event.preventDefault();
-        handleEscape();
+        // Only swallow Escape while open so outer layers (e.g. a Dialog's
+        // useEsc listening on document) still receive it when closed.
+        if (open) {
+          event.preventDefault();
+          event.stopPropagation();
+          handleEscape();
+        }
         break;
       default:
     }

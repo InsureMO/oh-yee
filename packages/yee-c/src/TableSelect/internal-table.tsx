@@ -7,7 +7,7 @@ import { InternalTableProps } from './interface';
 
 type SelectedKeyType = string | number;
 
-type InDataType = {
+type TableSelectDataType = {
   [propName: string]: any;
 };
 
@@ -22,12 +22,13 @@ const InternalTable: React.FC<InternalTableProps> = (props) => {
     isShowFilter = true,
     rowSelection = {},
     visible,
+    popupRef: externalPopupRef,
     ...rest
   } = props;
 
-  const [internalDataSource, setInternalDataSource] = useState<InDataType[]>(
-    [],
-  );
+  const [internalDataSource, setInternalDataSource] = useState<
+    TableSelectDataType[]
+  >([]);
   const renderRowSelection = { type, selectedRowKeys: value, ...rowSelection };
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const InternalTable: React.FC<InternalTableProps> = (props) => {
         setInternalDataSource(dataSource);
       } else {
         setInternalDataSource(
-          dataSource.filter((data: InDataType) =>
+          dataSource.filter((data: TableSelectDataType) =>
             (selectedRowKeys as SelectedKeyType[])?.includes(
               typeof rowKey === 'function' ? rowKey(data) : data[rowKey],
             ),
@@ -76,7 +77,14 @@ const InternalTable: React.FC<InternalTableProps> = (props) => {
     return null;
   };
   return (
-    <div className={`${prefixCls}-popup`} tabIndex={0} ref={popupRef}>
+    <div
+      className={`${prefixCls}-popup`}
+      tabIndex={0}
+      ref={(node) => {
+        popupRef.current = node;
+        if (externalPopupRef) externalPopupRef.current = node;
+      }}
+    >
       {renderRadio()}
       <Table
         {...rest}

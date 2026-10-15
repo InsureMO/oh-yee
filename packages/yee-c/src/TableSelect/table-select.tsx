@@ -9,6 +9,7 @@ import Trigger from '../Trigger';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import omit from '../utils/omit';
 import pick from '../utils/pick';
+import useTableSelectKeyboard from './hooks/useTableSelectKeyboard';
 import type { InternalTableProps, TableSelectProps } from './interface';
 import InternalTable from './internal-table';
 import './style/index.less';
@@ -16,7 +17,10 @@ import './style/index.less';
 const handleState = (
   value: SelectionKeyType | SelectionKeyType[] | undefined,
 ) => {
-  if (typeof value === 'string' || typeof value === 'number') {
+  // '' is the empty-value convention for radio; it must not become a key.
+  if (value === '') {
+    return [];
+  } else if (typeof value === 'string' || typeof value === 'number') {
     return [value];
   } else if (Array.isArray(value)) {
     return value;
@@ -144,10 +148,35 @@ const TableSelect = (baseprops: TableSelectProps) => {
     onChange?.(renderKeys, undefined);
   };
 
+  const {
+    popupRef,
+    activeRow,
+    handleKeyDown: handleSelectorKeyDown,
+  } = useTableSelectKeyboard({
+    open,
+    disabled,
+    dataSource,
+    rowKey,
+    selectionType,
+    selectedRowKeys: mergedValue as SelectionKeyType[],
+    searchValue,
+    onSelect: onSelectChange,
+    onClose: () => onVisibleChange(false),
+  });
+
+  const userHighlight = (rest as { highlight?: 'odd' | 'even' | Array<number> })
+    .highlight;
+
   const tableProps = omit(
     {
       ...rest,
       prefixCls,
+      // Keyboard navigation reuses the row highlight; it takes precedence over
+      // a user-supplied index list while active.
+      highlight:
+        activeRow > 0
+          ? [activeRow, ...(Array.isArray(userHighlight) ? userHighlight : [])]
+          : userHighlight,
       rowSelection: {
         ...props.rowSelection,
         onChange: onSelectChange,
@@ -181,8 +210,15 @@ const TableSelect = (baseprops: TableSelectProps) => {
     selectedKeys: mergedValue,
     onSearch: handleSearch,
     onRemove: onTagRemove,
+    onClear: () => {
+      setMergedValue([]);
+      onChange?.(selectionType === 'radio' ? '' : [], undefined);
+    },
+    onKeyDown: handleSelectorKeyDown,
     onOpenChange: (open: boolean) => {
-      if (!open) {
+      if (open) {
+        onVisibleChange(true);
+      } else {
         clearSearchValue();
       }
     },
@@ -193,13 +229,19 @@ const TableSelect = (baseprops: TableSelectProps) => {
   };
 
   const renderPopup = () => (
-    <InternalTable {...tableProps} value={value} rowKey={rowKey} />
+    <InternalTable
+      {...tableProps}
+      value={value}
+      rowKey={rowKey}
+      popupRef={popupRef}
+    />
   );
 
   return (
     <Trigger
       {...rest}
       trigger="click"
+      open={open}
       popupClassName={`${prefixCls}-popup`}
       popup={renderPopup()}
       placement={placement}

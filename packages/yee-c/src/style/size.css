@@ -587,7 +587,7 @@
   --yee-select-popup-max-height: 200px;
 
   /* --Selector-- */
-  --yee-selector-padding: 2px 6px;
+  --yee-selector-padding: 3px 6px;
   --yee-selector-border-width: 1px;
   --yee-selector-border-radius: 4px;
   --yee-selector-height: var(--yee-input-height);

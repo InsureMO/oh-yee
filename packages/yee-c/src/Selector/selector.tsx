@@ -284,12 +284,17 @@ const Selector = React.forwardRef(
         aria-disabled={disabled || undefined}
         onKeyDown={(event) => {
           if (disabled) return;
-          // For non-searchable single select, handle Enter to open dropdown
-          if (!searchable && event.key === 'Enter' && !open) {
-            onOpenChange?.(true);
+          // Enter opens the dropdown while it is closed
+          if (event.key === 'Enter' && !open && onOpenChange) {
+            event.preventDefault();
+            onOpenChange(true);
           }
-          // Also call external onKeyDown if provided
-          externalOnKeyDown?.(event as React.KeyboardEvent<HTMLInputElement>);
+          // Input forwards this handler for its own keydowns; handling them
+          // here too would fire the handler twice per keypress. Only handle
+          // events that originate on the container (non-searchable focus).
+          if (event.target !== inputRef.current) {
+            externalOnKeyDown?.(event as React.KeyboardEvent<HTMLInputElement>);
+          }
         }}
         ref={ref}
       >

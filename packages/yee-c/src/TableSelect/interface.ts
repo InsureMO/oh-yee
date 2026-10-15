@@ -10,7 +10,7 @@ type SelectedKeyType = string | number;
 /**
  * Data item type
  */
-type InDataType = {
+export type TableSelectDataType = {
   [propName: string]: any;
 };
 
@@ -42,7 +42,7 @@ export interface InternalTableProps {
   /**
    * Data source
    */
-  dataSource: Array<InDataType>;
+  dataSource: Array<TableSelectDataType>;
   /**
    * Custom class name
    */
@@ -67,6 +67,11 @@ export interface InternalTableProps {
    * Whether popup is visible (for focus trap)
    */
   visible?: boolean;
+  /**
+   * Ref to the popup root element, used by TableSelect for keyboard navigation
+   * @internal
+   */
+  popupRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 /**
@@ -96,7 +101,7 @@ export interface TableSelectProps
   /**
    * Data source
    */
-  dataSource: Array<InDataType>;
+  dataSource: Array<TableSelectDataType>;
   /**
    * Single or multiple selection
    * @default: 'radio'
@@ -180,7 +185,7 @@ export interface TableSelectProps
    * Option label property (text field for displaying labels)
    * @default 'name'
    */
-  optionLabelProp?: string | ((option: InDataType) => string);
+  optionLabelProp?: string | ((option: TableSelectDataType) => string);
   /**
    * Selection change callback
    * @param keys Selected keys

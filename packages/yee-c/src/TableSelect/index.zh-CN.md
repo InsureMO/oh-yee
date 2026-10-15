@@ -31,45 +31,45 @@ toc: 'content'
 
 ### TableSelectProps
 
-| 属性名 | 类型 | 描述 | 默认值 |
-| --- | --- | --- | --- |
-| prefixCls | `string` | 自定义类名前缀 | `'yee-table-select'` |
-| className | `string` | 根元素类名 | - |
-| style | `React.CSSProperties` | 根元素行内样式 | - |
-| rowKey | `string \| ((record: any) => string)` | 数据的唯一标识字段名 | `'id'` |
-| columns | `Array<any>` | 表格列的配置信息 | - |
-| dataSource | `Array<InDataType>` | 数据源 | - |
-| rowSelection | `RowSelectionType` | 行选择配置 | - |
-| value | `SelectionKeyType \| SelectionKeyType[]` | 受控值 | - |
-| defaultValue | `SelectionKeyType \| SelectionKeyType[]` | 默认值 | - |
-| disabled | `boolean` | 是否禁用 | - |
-| loading | `boolean` | 是否处于加载状态，加载时显示灰色加载图标 | `false` |
-| placement | `'bottomLeft' \| 'topLeft'` | 弹出层位置 | `'bottomLeft'` |
-| searchable | `boolean` | 是否可搜索 | `true` |
-| searchOnInput | `boolean` | 是否边输入边搜索 | `true` |
-| allowClear | `boolean` | 是否允许清除 | `true` |
-| closable | `boolean` | 标签是否可关闭 | `true` |
-| placeholder | `string` | 占位符文本 | - |
-| optionLabelProp | `string \| ((option: InDataType) => string)` | 选项标签属性 | `'name'` |
-| type | `'radio' \| 'checkbox'` | 选择类型 | `'radio'` |
-| options | `TagType[]` | 预设选项 | - |
-| isShowFilter | `boolean` | 是否显示过滤器(多选时 All/Selected) | `true` |
-| containerId | `string` | 容器 ID(用于弹出层挂载) | - |
-| io | `'out'` | 输入方向 | - |
-| onChange | `(keys, data, checked, changeData) => void` | 选中变更回调 | - |
-| onSearch | `(value: string, e?) => void` | 搜索回调 | - |
-| onOpenChange | `(open: boolean) => void` | 弹出层状态变更回调 | - |
+| 属性名          | 类型                                                  | 描述                                     | 默认值               |
+| --------------- | ----------------------------------------------------- | ---------------------------------------- | -------------------- |
+| prefixCls       | `string`                                              | 自定义类名前缀                           | `'yee-table-select'` |
+| className       | `string`                                              | 根元素类名                               | -                    |
+| style           | `React.CSSProperties`                                 | 根元素行内样式                           | -                    |
+| rowKey          | `string \| ((record: any) => string)`                 | 数据的唯一标识字段名                     | `'id'`               |
+| columns         | `Array<any>`                                          | 表格列的配置信息                         | -                    |
+| dataSource      | `Array<TableSelectDataType>`                          | 数据源                                   | -                    |
+| rowSelection    | `RowSelectionType`                                    | 行选择配置                               | -                    |
+| value           | `SelectionKeyType \| SelectionKeyType[]`              | 受控值                                   | -                    |
+| defaultValue    | `SelectionKeyType \| SelectionKeyType[]`              | 默认值                                   | -                    |
+| disabled        | `boolean`                                             | 是否禁用                                 | -                    |
+| loading         | `boolean`                                             | 是否处于加载状态，加载时显示灰色加载图标 | `false`              |
+| placement       | `'bottomLeft' \| 'topLeft'`                           | 弹出层位置                               | `'bottomLeft'`       |
+| searchable      | `boolean`                                             | 是否可搜索                               | `true`               |
+| searchOnInput   | `boolean`                                             | 是否边输入边搜索                         | `true`               |
+| allowClear      | `boolean`                                             | 是否允许清除                             | `true`               |
+| closable        | `boolean`                                             | 标签是否可关闭                           | `true`               |
+| placeholder     | `string`                                              | 占位符文本                               | -                    |
+| optionLabelProp | `string \| ((option: TableSelectDataType) => string)` | 选项标签属性                             | `'name'`             |
+| type            | `'radio' \| 'checkbox'`                               | 选择类型                                 | `'radio'`            |
+| options         | `TagType[]`                                           | 预设选项                                 | -                    |
+| isShowFilter    | `boolean`                                             | 是否显示过滤器(多选时 All/Selected)      | `true`               |
+| containerId     | `string`                                              | 容器 ID(用于弹出层挂载)                  | -                    |
+| io              | `'out'`                                               | 输入方向                                 | -                    |
+| onChange        | `(keys, data, checked, changeData) => void`           | 选中变更回调                             | -                    |
+| onSearch        | `(value: string, e?) => void`                         | 搜索回调                                 | -                    |
+| onOpenChange    | `(open: boolean) => void`                             | 弹出层状态变更回调                       | -                    |
 
 ### RowSelectionType
 
 表格行选择配置，继承自 Table 组件的 RowSelectionType。
 
-| 属性名 | 类型 | 描述 | 默认值 |
-| --- | --- | --- | --- |
-| type | `'radio' \| 'checkbox'` | 单选/多选 | - |
-| selectedRowKeys | `Array<SelectionKeyType> \| SelectionKeyType` | (受控)选中的行keys | - |
-| defaultSelectedRowKeys | `Array<SelectionKeyType> \| SelectionKeyType` | 默认选中的行keys | - |
-| onChange | `(selectedRowKeys, selectedRows) => void` | 选中项发生变化时的回调 | - |
+| 属性名                 | 类型                                          | 描述                   | 默认值 |
+| ---------------------- | --------------------------------------------- | ---------------------- | ------ |
+| type                   | `'radio' \| 'checkbox'`                       | 单选/多选              | -      |
+| selectedRowKeys        | `Array<SelectionKeyType> \| SelectionKeyType` | (受控)选中的行keys     | -      |
+| defaultSelectedRowKeys | `Array<SelectionKeyType> \| SelectionKeyType` | 默认选中的行keys       | -      |
+| onChange               | `(selectedRowKeys, selectedRows) => void`     | 选中项发生变化时的回调 | -      |
 
 ## 方法
 
@@ -77,17 +77,20 @@ toc: 'content'
 
 InternalTable 组件是 TableSelect 的内部组件，通常不需要直接使用。
 
-| 属性名 | 类型 | 描述 | 默认值 |
-| --- | --- | --- | --- |
-| rowKey | `string` | 数据的唯一标识字段名 | - |
-| columns | `Array<any>` | 表格列的配置信息 | - |
-| dataSource | `Array<InDataType>` | 数据源 | - |
-| rowSelection | `RowSelectionType` | 行选择配置 | - |
-| type | `'radio' \| 'checkbox'` | 选择类型 | - |
-| value | `SelectedKeyType \| Array<SelectedKeyType>` | 选中的值 | - |
-| isShowFilter | `boolean` | 是否显示过滤器 | `true` |
-| visible | `boolean` | 弹出层是否可见 | - |
+| 属性名       | 类型                                        | 描述                               | 默认值 |
+| ------------ | ------------------------------------------- | ---------------------------------- | ------ |
+| rowKey       | `string`                                    | 数据的唯一标识字段名               | -      |
+| columns      | `Array<any>`                                | 表格列的配置信息                   | -      |
+| dataSource   | `Array<TableSelectDataType>`                | 数据源                             | -      |
+| rowSelection | `RowSelectionType`                          | 行选择配置                         | -      |
+| type         | `'radio' \| 'checkbox'`                     | 选择类型                           | -      |
+| value        | `SelectedKeyType \| Array<SelectedKeyType>` | 选中的值                           | -      |
+| isShowFilter | `boolean`                                   | 是否显示过滤器                     | `true` |
+| visible      | `boolean`                                   | 弹出层是否可见                     | -      |
+| popupRef     | `React.RefObject<HTMLDivElement \| null>`   | 弹层根元素 ref，供键盘导航内部使用 | -      |
 
 ## 注意事项
+
+- 下拉展开后支持键盘操作：`↑`/`↓` 在行间移动高亮，`空格` 选中/取消勾选高亮行，`Esc` 关闭下拉；输入光标始终保留在输入框内；收起时按 `回车` 可展开下拉
 
 - 已适配移动端（弹窗限制最大宽高并支持滚动）
