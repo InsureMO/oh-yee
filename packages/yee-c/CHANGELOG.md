@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.1
+
+### Patch Changes
+
+- 155a5a0: feat: enhance formatValue function to handle empty string as a valid input.
+
 ## 0.15.0
 
 ### Minor Changes
