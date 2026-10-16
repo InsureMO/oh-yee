@@ -63,8 +63,8 @@ Enter a number within certain range with the mouse or keyboard.
 | Property | Type | Description | Default |
 | --- | --- | --- | --- |
 | prefixCls | `string` | Custom class name prefix | - |
-| value | `number \| null` | Current value | - |
-| defaultValue | `number \| null` | Default value | - |
+| value | `number \| string \| null` | Current value (`''` is treated as empty and never renders as 0 with a formatter) | - |
+| defaultValue | `number \| string \| null` | Default value | - |
 | min | `number` | Minimum value | -Infinity |
 | max | `number` | Maximum value | Infinity |
 | step | `number` | Step value | `1` |

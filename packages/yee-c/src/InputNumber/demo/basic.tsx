@@ -8,7 +8,7 @@ import React from 'react';
 export default () => {
   return (
     <InputNumber
-      defaultValue={0}
+      defaultValue={123}
       placeholder="Enter a number"
       onChange={(value) => console.log('value:', value)}
     />

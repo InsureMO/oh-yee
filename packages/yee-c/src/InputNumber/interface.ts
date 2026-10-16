@@ -34,13 +34,13 @@ export interface InputNumberProps extends Omit<
    */
   size?: 'small' | 'default' | 'large';
   /**
-   * Controlled value
+   * Controlled value（'' 视为空值，配合 formatter 不会渲染成 0）
    */
-  value?: number | null;
+  value?: number | string | null;
   /**
    * Default value
    */
-  defaultValue?: number | null;
+  defaultValue?: number | string | null;
   /**
    * Minimum value
    */

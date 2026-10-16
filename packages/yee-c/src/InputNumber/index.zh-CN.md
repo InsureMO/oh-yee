@@ -67,8 +67,8 @@ toc: 'content'
 | 属性名 | 类型 | 描述 | 默认值 |
 | --- | --- | --- | --- |
 | prefixCls | `string` | 自定义类名前缀 | - |
-| value | `number \| null` | 受控的值 | - |
-| defaultValue | `number \| null` | 默认值 | - |
+| value | `number \| string \| null` | 受控的值（`''` 视为空值，配 formatter 也不会渲染成 0） | - |
+| defaultValue | `number \| string \| null` | 默认值 | - |
 | min | `number` | 最小值 | -Infinity |
 | max | `number` | 最大值 | Infinity |
 | step | `number` | 步长 | `1` |

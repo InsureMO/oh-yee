@@ -49,7 +49,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       ...rest
     } = props;
 
-    const [mergedValue, setMergedValue] = useMergedState<number | null>(null, {
+    const [mergedValue, setMergedValue] = useMergedState<number | string | null>(null, {
       value,
       defaultValue,
     });
@@ -57,9 +57,24 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     const [focused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    /** 字符串值（表单 store 常见）参与算术/比较前转数字；不可解析返回 null */
+    function toNumber(val: number | string | null | undefined): number | null {
+      if (val === null || val === undefined || val === '') return null;
+      const n = Number(val);
+      return Number.isNaN(n) ? null : n;
+    }
+
     // Format value
-    function formatValue(val: number | null | undefined): string {
-      if (val === null || val === undefined || isNaN(val)) return '';
+    function formatValue(val: number | string | null | undefined): string {
+      // '' 与 null/undefined 同为空值：Number('') === 0，若不拦截会被
+      // formatter/precision 格式化成 '0'（如全局千分位 formatter 场景）
+      if (
+        val === null ||
+        val === undefined ||
+        val === '' ||
+        isNaN(val as number)
+      )
+        return '';
 
       let formattedVal =
         precision !== undefined ? Number(val).toFixed(precision) : val;
@@ -149,7 +164,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       if (disabled || readOnly) return;
 
       const offset = type === 'up' ? step : -step;
-      const currentValue = mergedValue ?? 0;
+      const currentValue = toNumber(mergedValue) ?? 0;
       const newValue = currentValue + offset;
 
       updateValue(newValue);
@@ -259,7 +274,10 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
                     {
                       [`${prefixCls}-handler-disabled`]:
                         disabled ||
-                        (mergedValue !== null && mergedValue >= max),
+                        (() => {
+                          const n = toNumber(mergedValue);
+                          return n !== null && n >= max;
+                        })(),
                     },
                   )}
                   onClick={() => handleStep('up')}
@@ -273,7 +291,10 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
                     {
                       [`${prefixCls}-handler-disabled`]:
                         disabled ||
-                        (mergedValue !== null && mergedValue <= min),
+                        (() => {
+                          const n = toNumber(mergedValue);
+                          return n !== null && n <= min;
+                        })(),
                     },
                   )}
                   onClick={() => handleStep('down')}
