@@ -48,8 +48,10 @@ const Popup: React.ForwardRefRenderFunction<
   const internalRef = useRef<HTMLDivElement>(null);
   const componentRef = (ref as React.RefObject<HTMLDivElement>) || internalRef;
 
+  // gated on open so a mounted-but-closed viewer does not occupy the esc
+  // layer stack and swallow the top layer
   useEsc({
-    enabled: keyboard,
+    enabled: keyboard && open,
     onEsc: () => {
       onClose?.();
     },

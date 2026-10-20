@@ -87,8 +87,10 @@ const Drawer = (baseprops: DrawerProps) => {
 
   useLockFocus(contentRef.current, delayOpen);
 
+  // gated on open so a mounted-but-closed drawer does not occupy the esc
+  // layer stack and swallow the top layer
   useEsc({
-    enabled: keyboard,
+    enabled: keyboard && open,
     onEsc: () => {
       onClose?.();
     },

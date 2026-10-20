@@ -90,9 +90,10 @@ const Dialog = (baseprops: DialogProps) => {
   // lock focus in the dialog
   useLockFocus(contentElement, delayOpen);
 
-  // enable esc to close dialog
+  // enable esc to close dialog; gated on open so a mounted-but-closed
+  // dialog does not occupy the esc layer stack and swallow the top layer
   useEsc({
-    enabled: keyboard,
+    enabled: keyboard && open,
     onEsc: () => {
       onCancel?.();
     },
