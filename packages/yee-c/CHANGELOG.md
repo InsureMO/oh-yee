@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.2
+
+### Patch Changes
+
+- 33584d5: feat: update render function in ColumnProps and filter components to accept context for closing filter popover.
+
 ## 0.15.1
 
 ### Patch Changes
