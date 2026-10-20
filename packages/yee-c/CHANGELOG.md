@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.3
+
+### Patch Changes
+
+- 7f4c323: feat: enhance useEsc hook to manage layered closing behavior and add tests for Esc key functionality.
+
 ## 0.15.2
 
 ### Patch Changes
