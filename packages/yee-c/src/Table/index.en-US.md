@@ -104,7 +104,7 @@ Filter configuration of `ColumnProps.filter`.
 | searchable | `boolean` | Whether searchable; renders a search input when `items` is unset | `true` |
 | filterOnClose | `boolean` | Whether to apply the filter when the panel closes | `true` |
 | icon | `(filtered: boolean) => React.ReactNode` | Custom filter icon | - |
-| render | `() => React.ReactNode` | Custom filter panel content | - |
+| render | `(ctx: { close: () => void }) => React.ReactNode` | Custom filter panel content; `ctx.close()` closes the filter popover | - |
 | onFilter | `(value: FilterValue, record: object) => boolean` | Local filter function; falls back to default string-includes matching when unset | - |
 | filtered | `boolean` | Force the filter icon highlight (takes precedence over `filteredValue`) | - |
 | filteredValue | `FilterValue \| FilterValue[]` | (Controlled) Filter value. When set, the column's filter state is fully controlled: panel echo, icon highlight and the `filters` in `onChange` all derive from it; reset with `''` / `[]` | - |

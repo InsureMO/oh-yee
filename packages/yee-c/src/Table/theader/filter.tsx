@@ -149,7 +149,7 @@ const HeaderFilter = React.memo((props: any) => {
   ) : null;
 
   if (render) {
-    popup = render();
+    popup = render({ close: () => setOpen(false) });
   } else if (items) {
     let dataSource = [];
     const inputValue = getStrLower(searchValue);

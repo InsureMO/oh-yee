@@ -109,7 +109,7 @@ toc: 'content'
 | searchable    | `boolean`                                   | 是否可搜索；未配置 `items` 时渲染搜索输入框                                                           | `true` |
 | filterOnClose | `boolean`                                   | 关闭筛选面板时是否自动应用筛选                                                                        | `true` |
 | icon          | `(filtered: boolean) => React.ReactNode`    | 自定义筛选图标                                                                                        | -      |
-| render        | `() => React.ReactNode`                     | 自定义筛选面板内容                                                                                    | -      |
+| render        | `(ctx: { close: () => void }) => React.ReactNode` | 自定义筛选面板内容；`ctx.close()` 关闭筛选弹层        | -      |
 | onFilter      | `(value: FilterValue, record: object) => boolean` | 本地过滤函数；不配置时使用默认的字符串包含匹配                                                  | -      |
 | filtered      | `boolean`                                   | 强制筛选图标高亮（优先级高于由 `filteredValue` 派生的高亮）                                          | -      |
 | filteredValue | `FilterValue \| FilterValue[]`              | （受控）筛选值。配置后该列筛选状态完全受控：面板回显、图标高亮、`onChange` 的 `filters` 均以其为准；重置传 `''` / `[]` | -      |

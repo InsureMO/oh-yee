@@ -234,7 +234,7 @@ export interface ColumnProps {
     /**
      * Custom filter function, e.g. custom search
      */
-    render?: () => React.ReactNode;
+    render?: (ctx: { close: () => void }) => React.ReactNode;
     /**
      * Filter callback function
      */
