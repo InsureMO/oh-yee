@@ -44,13 +44,18 @@ A panel component for selecting dates or times.
 | pickerView | `Dayjs` | Controlled panel value | - |
 | value | `Dayjs` | Selected value of the date panel | - |
 | showTime | `boolean` | Whether to show time | - |
+| timeFormat | `string` | Time columns format, e.g. `HH:mm`, `HH:mm:ss` | `HH:mm:ss` |
+| hourStep | `number` | Interval between hour options | `1` |
+| minuteStep | `number` | Interval between minute options | `1` |
+| secondStep | `number` | Interval between second options | `1` |
 | offset | `{ year?: number; month?: number; day?: number }` | Date offset relative to a certain date | - |
-| onPanelChange | `(date: Dayjs) => void` | Callback function when panel switches | - |
+| onPanelChange | `(date: Dayjs, panel?: PickerType) => void` | Callback when the panel view switches or the view date changes; `panel` is the new view type (undefined for pure view-date navigation) | - |
 | onChange | `(date: Dayjs \| undefined, panel: PickerType) => void` | Callback when date changes | - |
 | onCellMouse | `(date: Dayjs) => void` | Callback event when mouse enters date cell | - |
 | hoverRange | `Array<Dayjs \| null>` | Hover range dates [start date, end date] | - |
 | selectedRange | `Array<Dayjs \| null>` | Selected range dates [start date, end date] | - |
 | disabledDate | `(current: Dayjs) => boolean` | Disabled date function | - |
+| disabledTime | `(current: Dayjs) => { disabledHours?: () => number[]; disabledMinutes?: (hour) => number[]; disabledSeconds?: (hour, minute) => number[] }` | Disabled time values; minutes/seconds cascade on the selected hour/minute | - |
 
 ### PickerType
 

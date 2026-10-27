@@ -36,9 +36,10 @@ function TimePanel(props: TimePanelProps) {
 
   return (
     <div className={`${prefixCls}-time-panel`}>
-      {showHeader && <TimeHeader />}
+      {showHeader && <TimeHeader prefixCls={prefixCls} />}
       <TimeBody
         {...reset}
+        prefixCls={prefixCls}
         showTitle={showTitle}
         value={selectedDate}
         showHour={h ? true : false}

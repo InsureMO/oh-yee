@@ -67,7 +67,7 @@
     }
 
     thead {
-      display: block;
+      display: flex;
       height: var(--yee-picker-content-thead-height);
       padding: var(--yee-picker-content-thead-padding);
       color: var(--yee-date-picker-thead-color);
@@ -255,6 +255,9 @@
       align-items: center;
       justify-content: space-around;
       width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
 
       &-cell {
         width: var(--yee-picker-time-panel-title-cell-width);
@@ -262,6 +265,7 @@
         line-height: var(--yee-picker-time-panel-title-cell-line-height);
         text-align: center;
         background-color: var(--yee-date-picker-thead-bg-color);
+        padding: var(--yee-picker-time-thead-padding);
 
         &:not(:last-child) {
           box-sizing: content-box;
@@ -274,10 +278,9 @@
     &-column {
       position: relative;
       width: var(--yee-picker-time-panel-column-width);
-      // padding: 4px 0 170px 0;
-      padding-bottom: var(
-        --yee-picker-time-panel-column-padding-bottom
-      ) !important;
+      margin: 0;
+      padding: 0 0 var(--yee-picker-time-panel-column-padding-bottom) !important;
+      list-style: none;
       overflow-y: auto;
 
       &:not(:last-child) {

@@ -7,10 +7,11 @@ import TimePanel from '../TimePanel';
 interface DateTimePanelProps extends Omit<PanelSharedProps, 'onSelect'> {
   onSelect?: (panel: PickerType, date: Dayjs) => void;
   showTime?: boolean;
+  timeFormat?: string;
 }
 
 function DateTimePanel(props: DateTimePanelProps) {
-  const { onSelect, showTime, ...rest } = props;
+  const { onSelect, showTime, timeFormat, ...rest } = props;
   const prefixCls = rest.prefixCls ?? 'yee-picker';
 
   const handleSelect = (type: string, date: Dayjs) => {
@@ -26,6 +27,7 @@ function DateTimePanel(props: DateTimePanelProps) {
       {showTime ? (
         <TimePanel
           {...rest}
+          format={timeFormat}
           onSelect={(date: Dayjs) => handleSelect('datetimetime', date)}
           showHeader
         />

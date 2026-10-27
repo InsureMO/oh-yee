@@ -1,0 +1,34 @@
+@pls: .yee-picker;
+
+// Status variants — the visual box is the Input inside the trigger wrapper
+@{pls}-trigger {
+  &-error {
+    .yee-input {
+      border-color: var(--yee-color-error);
+
+      &:hover,
+      &:focus-within {
+        border-color: var(--yee-color-error);
+      }
+
+      &:focus-within {
+        box-shadow: 0 0 0 2px var(--yee-input-content-error-focus-bs-color);
+      }
+    }
+  }
+
+  &-warning {
+    .yee-input {
+      border-color: var(--yee-color-warning);
+
+      &:hover,
+      &:focus-within {
+        border-color: var(--yee-color-warning);
+      }
+
+      &:focus-within {
+        box-shadow: 0 0 0 2px var(--yee-input-content-warning-focus-bs-color);
+      }
+    }
+  }
+}

@@ -44,13 +44,18 @@ toc: 'content'
 | pickerView | `Dayjs` | 受控面板值 | - |
 | value | `Dayjs` | 日期面板选中的值 | - |
 | showTime | `boolean` | 是否显示时间 | - |
+| timeFormat | `string` | 时间列格式，如 `HH:mm`、`HH:mm:ss` | `HH:mm:ss` |
+| hourStep | `number` | 小时选项间隔 | `1` |
+| minuteStep | `number` | 分钟选项间隔 | `1` |
+| secondStep | `number` | 秒选项间隔 | `1` |
 | offset | `{ year?: number; month?: number; day?: number }` | 日期相较于某个日期的偏移量 | - |
-| onPanelChange | `(date: Dayjs) => void` | 面板切换时的回调函数 | - |
+| onPanelChange | `(date: Dayjs, panel?: PickerType) => void` | 面板视图切换或视图日期变化时的回调；panel 为切换后的视图类型，纯视图日期变化时为空 | - |
 | onChange | `(date: Dayjs \| undefined, panel: PickerType) => void` | 日期发生变化时的回调 | - |
 | onCellMouse | `(date: Dayjs) => void` | 鼠标移入日期单元格的回调事件 | - |
 | hoverRange | `Array<Dayjs \| null>` | 悬停范围日期 [开始日期, 结束日期] | - |
 | selectedRange | `Array<Dayjs \| null>` | 选中范围日期 [开始日期, 结束日期] | - |
 | disabledDate | `(current: Dayjs) => boolean` | 禁用日期函数 | - |
+| disabledTime | `(current: Dayjs) => { disabledHours?: () => number[]; disabledMinutes?: (hour) => number[]; disabledSeconds?: (hour, minute) => number[] }` | 禁用时间值，分钟/秒级联依赖已选时/分 | - |
 
 ### PickerType
 

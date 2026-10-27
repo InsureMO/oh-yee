@@ -19,6 +19,24 @@ export type SemanticType =
 
 export type UnitType = 'day' | 'hour' | 'minute' | 'second';
 
+/**
+ * Antd-compatible config returned by `disabledTime`
+ */
+export interface DisabledTimeConfig {
+  /**
+   * Disabled hour values
+   */
+  disabledHours?: () => number[];
+  /**
+   * Disabled minute values for the given selected hour
+   */
+  disabledMinutes?: (hour: number) => number[];
+  /**
+   * Disabled second values for the given selected hour and minute
+   */
+  disabledSeconds?: (hour: number, minute: number) => number[];
+}
+
 /** Hour/minute/second granularity used by the time sub-panels. */
 export type TimeUnit = 'hour' | 'minute' | 'second';
 
@@ -101,13 +119,34 @@ export interface PickerPanelProps extends HeaderProps {
    */
   showTime?: boolean;
   /**
+   * Time columns format, e.g. `HH:mm`, `HH:mm:ss`
+   * @default HH:mm:ss
+   */
+  timeFormat?: string;
+  /**
+   * Interval between hour options
+   * @default 1
+   */
+  hourStep?: number;
+  /**
+   * Interval between minute options
+   * @default 1
+   */
+  minuteStep?: number;
+  /**
+   * Interval between second options
+   * @default 1
+   */
+  secondStep?: number;
+  /**
    * Date offset relative to a given date
    */
   offset?: { year?: number; month?: number; day?: number };
   /**
-   * Callback when panel switches
+   * Callback when the panel view switches or the view date changes;
+   * `panel` is the new view type (undefined for pure view-date navigation)
    */
-  onPanelChange?: (date: Dayjs) => void;
+  onPanelChange?: (date: Dayjs, panel?: PickerType) => void;
   /**
    * Callback when date changes
    */
@@ -128,6 +167,10 @@ export interface PickerPanelProps extends HeaderProps {
    * Disabled date function
    */
   disabledDate?: (current: Dayjs) => boolean;
+  /**
+   * Disabled time values for the current panel date
+   */
+  disabledTime?: (current: Dayjs) => DisabledTimeConfig;
 }
 
 /**

@@ -230,7 +230,8 @@
   --yee-picker-cell-inner-height: 24px;
   --yee-picker-cell-inner-line-height: 24px;
   --yee-picker-header-height: 40px;
-  --yee-picker-header-padding: 8px 4px;
+  --yee-picker-header-padding: 8px 16px;
+  --yee-picker-time-thead-padding: 4px 0;
   --yee-picker-header-prev-next-margin: 8px;
   --yee-picker-content-tr-padding: 4px 0;
   --yee-picker-content-thead-height: 32px;

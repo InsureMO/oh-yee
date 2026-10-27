@@ -10,6 +10,7 @@ interface TimeColumnProps {
   value?: Dayjs;
   cells: Dayjs[];
   disabled?: boolean;
+  disabledValues?: number[];
   onSelect?: (date: Dayjs) => void;
   viewDate?: Dayjs;
   maxDate?: Dayjs;
@@ -24,6 +25,7 @@ function TimeColumn(props: TimeColumnProps) {
     onSelect,
     cells,
     disabled,
+    disabledValues,
     maxDate,
     minDate,
   } = props;
@@ -46,7 +48,7 @@ function TimeColumn(props: TimeColumnProps) {
   });
 
   const handleInternalSelect = (cell: Dayjs, value: number) => {
-    if (disabled) return;
+    if (disabled || disabledValues?.includes(value)) return;
     let newDate: Dayjs;
     if (type === 'hour') {
       newDate = pickerUtils.setHour(cell, value);
@@ -88,8 +90,13 @@ function TimeColumn(props: TimeColumnProps) {
           minDateDisabled = pickerUtils.isBefore(cell, dayjs(minDate), type);
         }
 
+        const cellDisabled =
+          maxDateDisabled ||
+          minDateDisabled ||
+          !!disabledValues?.includes(cellValue);
+
         const cls = clsx(`${prefixCls}-time-panel-cell`, {
-          [`${prefixCls}-cell-disabled`]: maxDateDisabled || minDateDisabled,
+          [`${prefixCls}-cell-disabled`]: cellDisabled,
           [`${prefixCls}-time-panel-cell-selected`]: isSelected,
         });
         return (

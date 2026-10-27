@@ -43,6 +43,7 @@ const PickerPanel = React.forwardRef<HTMLDivElement, PickerPanelProps>(
       onChange,
       onCellMouse,
       onPanelChange,
+      timeFormat,
       // showTime,
     } = props;
 
@@ -79,6 +80,7 @@ const PickerPanel = React.forwardRef<HTMLDivElement, PickerPanelProps>(
     const handlePanelChange = (newView: PickerType) => {
       prevPanelView.current = panelView;
       setPanelView(newView);
+      onPanelChange?.(mergedPickerView, newView);
     };
 
     // Handle view date change
@@ -104,7 +106,7 @@ const PickerPanel = React.forwardRef<HTMLDivElement, PickerPanelProps>(
     };
 
     const handleConfirmClick = () => {
-      onChange?.(undefined, picker);
+      onChange?.(value, picker);
     };
 
     const renderPanel = () => {
@@ -177,6 +179,7 @@ const PickerPanel = React.forwardRef<HTMLDivElement, PickerPanelProps>(
           panelNode = (
             <TimePanel
               {...panelProps}
+              format={timeFormat}
               onSelect={(date: Dayjs) => handleSelect('time', date)}
             />
           );

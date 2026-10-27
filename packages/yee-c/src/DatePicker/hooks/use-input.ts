@@ -7,6 +7,11 @@ interface UseInputParams {
   setInputValue: (value: string) => void;
   format: string;
   onEscape?: () => void;
+  /**
+   * Called on blur/Enter with the parse result: a valid Dayjs, or
+   * `undefined` (empty or unparseable text, check `raw` to distinguish)
+   */
+  onSync?: (date: Dayjs | undefined, raw: string) => void;
 }
 
 export default function useInput({
@@ -14,6 +19,7 @@ export default function useInput({
   setPickerValue,
   format,
   onEscape,
+  onSync,
 }: UseInputParams) {
   const changed = useRef(false);
 
@@ -24,6 +30,7 @@ export default function useInput({
     } else {
       setPickerValue(undefined);
     }
+    onSync?.(pickerUtils.isValid(date) ? date : undefined, value);
     changed.current = false;
   };
 

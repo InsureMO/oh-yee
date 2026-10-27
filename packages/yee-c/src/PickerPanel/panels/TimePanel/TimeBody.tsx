@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs';
 import * as React from 'react';
 import panelConfig from '../../configs';
-import type { PanelSharedProps, TimeUnit } from '../../interface';
+import type { DisabledTimeConfig, PanelSharedProps, TimeUnit } from '../../interface';
 import pickerUtils from '../../utils/pickerUtils';
 import TimeColumn from './TimeColumn';
 
@@ -32,13 +32,11 @@ interface TimeBodyProps extends PanelSharedProps {
   showHour?: boolean;
   showMinute?: boolean;
   showSecond?: boolean;
-  disabledHours?: boolean;
-  disabledMinutes?: boolean;
-  disabledSeconds?: boolean;
   is12hour?: boolean;
   hourStep?: number;
   minuteStep?: number;
   secondStep?: number;
+  disabledTime?: (current: Dayjs) => DisabledTimeConfig;
 }
 
 function TimeBody(props: TimeBodyProps) {
@@ -49,13 +47,11 @@ function TimeBody(props: TimeBodyProps) {
     showHour,
     showMinute,
     showSecond,
-    disabledHours,
-    disabledMinutes,
-    disabledSeconds,
     is12hour,
     hourStep = 1,
     minuteStep = 1,
     secondStep = 1,
+    disabledTime,
     onSelect,
     viewDate,
     ...reset
@@ -63,20 +59,33 @@ function TimeBody(props: TimeBodyProps) {
 
   const columns: React.ReactNode[] = [];
 
+  // Cascading context: minute disabling sees the selected hour, second
+  // disabling sees the selected hour and minute (viewDate when nothing
+  // is selected yet)
+  const disabledConfig = disabledTime?.(value ?? viewDate);
+  const selectedHour = pickerUtils.getHour(value ?? viewDate);
+  const selectedMinute = pickerUtils.getMinute(value ?? viewDate);
+  const disabledHourValues = disabledConfig?.disabledHours?.() ?? [];
+  const disabledMinuteValues =
+    disabledConfig?.disabledMinutes?.(selectedHour) ?? [];
+  const disabledSecondValues =
+    disabledConfig?.disabledSeconds?.(selectedHour, selectedMinute) ?? [];
+
   function addColumnNode(
     type: TimeUnit,
     selectedValue: Dayjs | undefined,
     cells: Array<Dayjs>,
-    disabled?: boolean,
+    disabledValues?: number[],
   ): React.ReactNode {
     return (
       <TimeColumn
         {...reset}
+        prefixCls={prefixCls}
         key={type}
         type={type}
         value={selectedValue}
         cells={cells}
-        disabled={disabled}
+        disabledValues={disabledValues}
         viewDate={viewDate}
         onSelect={onSelect}
       />
@@ -86,17 +95,17 @@ function TimeBody(props: TimeBodyProps) {
   if (showHour) {
     const hours = getTimeArray(is12hour ? 12 : 24, hourStep, viewDate, 'hour');
 
-    columns.push(addColumnNode('hour', value, hours, disabledHours));
+    columns.push(addColumnNode('hour', value, hours, disabledHourValues));
   }
 
   if (showMinute) {
     const minutes = getTimeArray(60, minuteStep, viewDate, 'minute');
 
-    columns.push(addColumnNode('minute', value, minutes, disabledMinutes));
+    columns.push(addColumnNode('minute', value, minutes, disabledMinuteValues));
   }
   if (showSecond) {
     const seconds = getTimeArray(60, secondStep, viewDate, 'second');
-    columns.push(addColumnNode('second', value, seconds, disabledSeconds));
+    columns.push(addColumnNode('second', value, seconds, disabledSecondValues));
   }
 
   return (

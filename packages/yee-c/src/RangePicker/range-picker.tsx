@@ -230,7 +230,9 @@ const RangePicker: FC<RangePickerProps> = (props) => {
 
     if (picking === 'start') {
       onStartChange?.(pickerUtils.format(date, saveFormat), date);
-      if (panel === picker) {
+      // Date-cell clicks advance to the end side in both date and datetime
+      // modes ('time'-cell clicks fire a different panel type and don't)
+      if (panel === picker || panel === 'date') {
         setPicking('end');
         endInputRef.current?.focus();
       }
@@ -327,7 +329,8 @@ const RangePicker: FC<RangePickerProps> = (props) => {
   };
 
   const renderPopup = () => {
-    const mode = format.includes('hh') ? 'datetime' : 'date';
+    // Same rule as inferPicker: an hour token in the format means datetime
+    const mode = picker === 'datetime' ? 'datetime' : 'date';
 
     return (
       <div className={`${prefixCls}-panel`}>
@@ -338,6 +341,7 @@ const RangePicker: FC<RangePickerProps> = (props) => {
           panel={picking}
           format={format}
           mode={mode}
+          picker={picker}
           saveFormat={saveFormat}
           onChange={handleChange}
           onPanelChange={handlePanelChange}

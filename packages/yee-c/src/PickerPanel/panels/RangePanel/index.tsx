@@ -27,11 +27,12 @@ function RangePanel(props: RangePanelProps) {
       <div className={`${prefixCls}-panels`}>
         <PickerPanel
           prefixCls={prefixCls}
-          picker={picker}
+          picker={picker ?? 'datetime'}
+          showTime
           value={panel === 'start' ? value[0] : value[1]}
           pickerView={pickerUtils.init(pickerView[panel === 'start' ? 0 : 1])}
           onChange={onChange as PickerPanelProps['onChange']}
-          onPanelChange={onPanelChange}
+          onPanelChange={(date: Dayjs) => onPanelChange?.(date)}
           onCellMouse={onCellMouse}
           hoverRange={hoverRange}
           selectedRange={selectedRange}
