@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.4
+
+### Patch Changes
+
+- d6822be: feat(DatePicker): enhance time selection features and add disabled time functionality
+
 ## 0.15.3
 
 ### Patch Changes
