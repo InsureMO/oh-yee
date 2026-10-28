@@ -1,5 +1,12 @@
 # @rainbow-oh/yee-c
 
+## 0.15.5
+
+### Patch Changes
+
+- bcd810d: feat(Anchor): add `indicator` prop (`'static' | 'slide'`); `slide` renders a shared active indicator that slides between items (vertical direction only)
+- bcd810d: feat(Anchor): add `indicator` prop for sliding active indicator; implement slide functionality and update documentation
+
 ## 0.15.4
 
 ### Patch Changes
