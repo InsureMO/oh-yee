@@ -60,6 +60,36 @@
     }
   }
 
+  &-slide {
+    @{pls}-content-wrapper {
+      position: relative;
+    }
+
+    // Center the 2px nav line (--yee-anchor-content-line-width) inside the
+    // 4px thumb so the thumb straddles it
+    @{pls}-content {
+      &::before {
+        margin-left: 1px;
+      }
+    }
+
+    // The shared thumb replaces the per-item active indicator
+    @{pls}-item-active::before {
+      display: none;
+    }
+
+    @{pls}-thumb {
+      position: absolute;
+      // Straddles the 2px nav line (--yee-anchor-content-line-width)
+      left: 0;
+      width: 4px;
+      border-radius: 4px;
+      background-color: var(--yee-anchor-item-active-font-color);
+      z-index: 1;
+      will-change: top, height;
+    }
+  }
+
   &-vertical {
     @{pls}-content {
       &::before {

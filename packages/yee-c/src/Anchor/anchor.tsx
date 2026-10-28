@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
@@ -57,11 +58,17 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     activeKey,
     affix = true,
     direction = 'vertical',
+    indicator = 'static',
     offsetTop = 0,
     getContainer,
     onChange,
     ...rest
   } = props;
+
+  // Sliding indicator (indicator="slide", vertical only): one shared bar is
+  // placed at the active item's position and slides across items on change.
+  // The native item-active::before is hidden via the -slide styles.
+  const slideIndicator = indicator === 'slide' && direction === 'vertical';
 
   const [mergedActiveKey, setMergedActiveKey] = useMergedState(undefined, {
     value: activeKey,
@@ -438,11 +445,95 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
       [`${prefixCls}-${direction}`]: direction,
       [`${prefixCls}-affix`]: affix,
       [`${prefixCls}-static`]: !affix,
+      [`${prefixCls}-slide`]: slideIndicator,
     },
     className,
   );
 
   const currentItems = auto ? anchorList : items;
+
+  const contentWrapperRef = useRef<HTMLDivElement | null>(null);
+  const thumbRef = useRef<HTMLDivElement | null>(null);
+  const prevActiveKeyRef = useRef<string | undefined>(undefined);
+  const lastGeometryRef = useRef<{ top: number; height: number } | null>(
+    null,
+  );
+  const placeThumbRef = useRef<() => void>(() => {});
+
+  const placeThumb = useCallback(() => {
+    if (!slideIndicator) return;
+    const wrapper = contentWrapperRef.current;
+    const thumb = thumbRef.current;
+    if (!wrapper || !thumb) return;
+
+    const item = wrapper.querySelector(`.${prefixCls}-item-active`);
+    if (!(item instanceof HTMLElement)) {
+      // Empty / not-yet-rendered list: hide the bar until an active item exists
+      thumb.style.display = 'none';
+      prevActiveKeyRef.current = undefined;
+      lastGeometryRef.current = null;
+      return;
+    }
+    thumb.style.display = '';
+
+    const itemRect = item.getBoundingClientRect();
+    const wrapperRect = wrapper.getBoundingClientRect();
+    // The bar covers the active item's text box, inset by one inter-item
+    // margin (collapsed gap between siblings) wherever it meets a neighbour:
+    // non-first items start `gap` below the text top, non-last items end
+    // `gap` above the text bottom; first/last keep the outer edge flush.
+    // Read from the rendered item so geometry follows the margin token.
+    const first = item.matches(':first-child');
+    const last = item.matches(':last-child');
+    const gap = parseFloat(getComputedStyle(item).marginTop) || 0;
+    const top = itemRect.top - wrapperRect.top + (first ? 0 : gap);
+    const height = itemRect.height - (first ? 0 : gap) - (last ? 0 : gap);
+    // Slide only when the active key moves within the same list; jump into
+    // place on first render, list rebuilds and resize re-places. Items are
+    // often inline literals, so key — not reference — identity decides.
+    const prevKey = prevActiveKeyRef.current;
+    const animate =
+      lastGeometryRef.current !== null &&
+      prevKey !== undefined &&
+      prevKey !== mergedActiveKey &&
+      currentItems.some((i) => i.key === prevKey);
+    prevActiveKeyRef.current = mergedActiveKey;
+    // Skip writes when the target hasn't moved: rewriting the same values
+    // would set transition: 'none' and cut a slide that is still in flight
+    // (placeThumb re-runs on every parent render for inline item literals).
+    if (
+      lastGeometryRef.current?.top === top &&
+      lastGeometryRef.current?.height === height
+    ) {
+      return;
+    }
+    lastGeometryRef.current = { top, height };
+    const slideTransition =
+      'top 0.28s cubic-bezier(0.22, 0.61, 0.36, 1), height 0.28s cubic-bezier(0.22, 0.61, 0.36, 1)';
+    thumb.style.transition = animate ? slideTransition : 'none';
+    thumb.style.top = `${top}px`;
+    thumb.style.height = `${height}px`;
+  }, [slideIndicator, prefixCls, currentItems, mergedActiveKey]);
+
+  // Latest ref so the ResizeObserver below stays subscribed for the
+  // component's lifetime. Re-observing on every render fires an initial
+  // ResizeObserver callback in the same frame as an animated placement —
+  // after the layout effect but before paint — overwriting the slide
+  // transition with a jump (the bar would teleport instead of sliding).
+  useLayoutEffect(() => {
+    placeThumbRef.current = placeThumb;
+    placeThumb();
+  }, [placeThumb]);
+
+  // Re-position when the wrapper resizes (e.g. titles rewrapping)
+  useEffect(() => {
+    if (!slideIndicator || typeof ResizeObserver === 'undefined') return;
+    const wrapper = contentWrapperRef.current;
+    if (!wrapper) return;
+    const observer = new ResizeObserver(() => placeThumbRef.current());
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, [slideIndicator]);
 
   const contextValue: AnchorContextType = {
     prefixCls,
@@ -468,7 +559,10 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
     <div {...rest} className={cls} style={style} ref={setAnchorRootRef}>
       {renderNavArrow()}
       <AnchorContext.Provider value={contextValue}>
-        <div className={`${prefixCls}-content-wrapper`}>
+        <div
+          className={`${prefixCls}-content-wrapper`}
+          ref={contentWrapperRef}
+        >
           <ul
             className={clsx(`${prefixCls}-content`, classNames?.content)}
             style={styles?.content}
@@ -485,6 +579,13 @@ const Anchor = forwardRef<HTMLDivElement, AnchorProps>((baseprops, ref) => {
             ))}
             {children}
           </ul>
+          {slideIndicator && (
+            <div
+              className={`${prefixCls}-thumb`}
+              ref={thumbRef}
+              aria-hidden="true"
+            />
+          )}
         </div>
       </AnchorContext.Provider>
     </div>

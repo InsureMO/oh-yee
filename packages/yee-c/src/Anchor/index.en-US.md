@@ -17,6 +17,7 @@ Anchor component for linking to specific sections within a page.
 <code src="./demo/basic.tsx" title="Basic" description="Basic usage of Anchor"></code>
 <code src="./demo/direction.tsx" title="Direction" description="Vertical and horizontal directions"></code>
 <code src="./demo/controlled.tsx" title="Controlled" description="Controlled mode with activeKey"></code>
+<code src="./demo/indicator.tsx" title="Slide Indicator" description="With indicator set to slide, the active indicator slides between items"></code>
 <code src="./demo/auto.tsx" title="Auto" description="Generate the anchor list from the DOM"></code>
 
 ## API
@@ -38,6 +39,7 @@ Anchor component for linking to specific sections within a page.
 | activeKey | `string` | Active anchor key (controlled; update it in `onChange`) | - |
 | affix | `boolean` | Whether to fix position | `true` |
 | direction | `'vertical' \| 'horizontal'` | Navigation direction | `'vertical'` |
+| indicator | `'static' \| 'slide'` | Active indicator style. `slide` renders a shared indicator that slides between items (vertical direction only; horizontal falls back to `static`) | `'static'` |
 | offsetTop | `number` | Offset top to trigger anchor change | `0` |
 | getContainer | `() => HTMLElement \| Window` | Get scroll container | - |
 | onChange | `(key: string) => void` | Callback when anchor changes | - |

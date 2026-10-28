@@ -17,6 +17,7 @@ toc: 'content'
 <code src="./demo/basic.tsx" title="基础用法" description="Anchor的基础用法"></code>
 <code src="./demo/direction.tsx" title="方向" description="垂直和水平方向"></code>
 <code src="./demo/controlled.tsx" title="受控模式" description="通过activeKey控制激活项"></code>
+<code src="./demo/indicator.tsx" title="滑动指示条" description="indicator 为 slide 时，激活指示条在各项之间滑动"></code>
 <code src="./demo/auto.tsx" title="自动生成" description="从 DOM 自动生成锚点列表"></code>
 
 ## API
@@ -38,6 +39,7 @@ toc: 'content'
 | activeKey | `string` | 锚点位置（受控，需在 `onChange` 中同步回写） | - |
 | affix | `boolean` | 是否固定 | `true` |
 | direction | `'vertical' \| 'horizontal'` | 设置导航方向 | `'vertical'` |
+| indicator | `'static' \| 'slide'` | 激活指示条样式；`slide` 渲染一条在各项之间滑动的共享指示条（仅垂直方向生效，水平方向回落 `static`） | `'static'` |
 | offsetTop | `number` | 距离顶部距离为多少时，触发锚点改变 | `0` |
 | getContainer | `() => HTMLElement \| Window` | 获取滚动的元素 | - |
 | onChange | `(key: string) => void` | 锚点改变回调 | - |

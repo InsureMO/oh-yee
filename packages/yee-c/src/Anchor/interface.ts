@@ -105,6 +105,13 @@ export interface AnchorProps extends DataAttributeProps {
    */
   direction?: 'vertical' | 'horizontal';
   /**
+   * Active indicator style. `static` keeps the default indicator on each
+   * active item; `slide` renders a shared indicator that slides between
+   * items (vertical direction only; horizontal falls back to `static`)
+   * @default static
+   */
+  indicator?: 'static' | 'slide';
+  /**
    * Distance from top to trigger anchor change
    * @default 0
    */
