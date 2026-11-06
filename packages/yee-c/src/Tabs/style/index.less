@@ -211,7 +211,12 @@
 
 @{pls}-active-bar {
   background-color: var(--yee-tabs-active-border-color);
-  transition: transform 0.2s ease-in;
+  // Ink bar slides between tabs (antd-style motion curve). Width/height are
+  // included so the bar resizes smoothly when the active tab changes.
+  transition:
+    transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+    width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),
+    height 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 @{pls}-pills {
@@ -539,6 +544,30 @@
 
 @{pls}-tab-content {
   height: 100%;
+  // Fade in on activation. Toggling display restarts CSS animations, so the
+  // panel fades each time it becomes active. `backwards` keeps the end state
+  // from persisting (a retained transform would break sticky/fixed children).
+  animation: yee-tabs-content-fade-in 0.2s ease backwards;
+}
+
+@keyframes yee-tabs-content-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yee-tabs-tab-content {
+    animation: none;
+  }
+
+  .yee-tabs-active-bar {
+    transition: none;
+  }
 }
 
 @{pls}-active {

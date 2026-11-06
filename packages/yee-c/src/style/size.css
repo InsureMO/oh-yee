@@ -125,6 +125,10 @@
   --yee-btn-loading-margin-inline-end: 6px;
   --yee-btn-border-width: 1px;
   --yee-btn-solid-active-box-shadow: 0 0 4px 0;
+  --yee-btn-transition-duration: 0.2s;
+  --yee-btn-transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --yee-btn-focus-outline-width: 2px;
+  --yee-btn-focus-outline-offset: 1px;
   --yee-btn-circle-min-width: 32px;
   --yee-btn-icon-gap: 4px;
   --yee-btn-disabled-opacity: 0.5;
@@ -365,6 +369,7 @@
   --yee-input-border-width: 1px;
   --yee-input-suffix-gap: 4px;
   --yee-input-clear-padding: 1px;
+  --yee-input-transition-duration: 0.2s;
   --yee-input-small-font-size: 12px;
   --yee-input-small-line-height: 20px;
   --yee-input-small-height: 24px;
@@ -973,10 +978,29 @@
   --yee-trigger-box-shadow: 0 8px 24px 0 var(--yee-box-shadow-color);
   --yee-trigger-arrow-margin-left: -4px;
   --yee-trigger-animation-duration: 0.2s;
+  --yee-trigger-animation-fast-duration: 0.1s;
   --yee-trigger-animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  --yee-trigger-animation-leave-timing-function: cubic-bezier(
+    0.755,
+    0.05,
+    0.855,
+    0.06
+  );
+  --yee-trigger-zoom-animation-timing-function: cubic-bezier(
+    0.08,
+    0.82,
+    0.17,
+    1
+  );
+  --yee-trigger-zoom-animation-leave-timing-function: cubic-bezier(
+    0.78,
+    0.14,
+    0.15,
+    0.86
+  );
   --yee-trigger-scale-start: 0.8;
   --yee-trigger-scale-end: 1;
-  --yee-trigger-opacity-start: 0.8;
+  --yee-trigger-opacity-start: 0;
   --yee-trigger-opacity-end: 1;
 
   /* --ImageViewer-- */

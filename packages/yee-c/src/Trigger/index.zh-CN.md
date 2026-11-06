@@ -29,6 +29,7 @@ demo:
 | popup | `ReactNode \| (() => ReactNode)` | 弹出层内容 | - |
 | popupClassName | `string` | 弹出层类名 | - |
 | popupStyle | `React.CSSProperties` | 弹出层行内样式 | - |
+| popupMotion | `CSSMotionProps` | 弹出层显隐动画配置，默认根据 `placement` 使用方向性 slide 动画，可覆盖 `motionName` 等任意字段；内置动画类：`yee-slide-up` / `yee-slide-down` / `yee-slide-left` / `yee-slide-right` / `yee-zoom-big` / `yee-zoom-big-fast` | 按 placement 计算 |
 | popupAlign | `{ points?: [Point, Point]; offset?: [number, number] }` | 弹出层对齐方式 | - |
 | children | `React.ReactNode` | 触发元素 | - |
 | trigger | `Array<'hover' \| 'click' \| 'focus'> \| 'hover' \| 'click' \| 'focus'` | 触发弹出层显示的动作 | `'click'` |

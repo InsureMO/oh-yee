@@ -21,6 +21,7 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
     placement = 'top',
     popupAlign,
     popup,
+    popupMotion,
     hideOnClick = true,
     mouseEnterDelay = 0,
     mouseLeaveDelay = 0.2,
@@ -152,11 +153,14 @@ const Trigger: FC<TriggerProps> = (baseprops) => {
         ...innerPopupAlign,
         ...popupAlign,
       }}
+      // Default to the placement-based slide motion; callers (e.g. Tooltip,
+      // Popover, Popconfirm) or users may override any field of it.
       popupMotion={{
         motionName: animateName,
         leavedClassName: `${prefixCls}-hidden`,
         motionAppear: true,
         motionEnter: true,
+        ...popupMotion,
       }}
       popupStyle={{ pointerEvents: 'auto', ...popupStyle }}
       {...(zIndex !== undefined ? { zIndex } : {})}

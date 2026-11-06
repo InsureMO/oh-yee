@@ -30,6 +30,7 @@ const Popover = (baseprops: PopoverProps) => {
     open,
     defaultOpen,
     onOpenChange,
+    popupMotion,
     ...rest
   } = props;
 
@@ -105,6 +106,8 @@ const Popover = (baseprops: PopoverProps) => {
       popup={popup}
       open={mergedOpen}
       popupClassName={clsx(`${prefixCls}`, popupClassName)}
+      // Center-zoom like antd's zoom-big for arrowed overlay popups
+      popupMotion={{ motionName: 'yee-zoom-big', ...popupMotion }}
       onOpenChange={handleOpenChange}
     >
       {children}

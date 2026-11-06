@@ -19,6 +19,7 @@ const Tooltip = (baseprops: TooltipProps) => {
     mouseEnterDelay = 0.1,
     color,
     popupStyle,
+    popupMotion,
     hideOnClick = false,
     ...rest
   } = props;
@@ -45,6 +46,8 @@ const Tooltip = (baseprops: TooltipProps) => {
       hideOnClick={hideOnClick}
       popupStyle={mergedPopupStyle}
       mouseEnterDelay={mouseEnterDelay}
+      // Quick center-zoom like antd's zoom-big-fast for small arrowed popups
+      popupMotion={{ motionName: 'yee-zoom-big-fast', ...popupMotion }}
     >
       {children}
     </Trigger>

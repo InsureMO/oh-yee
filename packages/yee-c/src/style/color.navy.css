@@ -518,7 +518,6 @@
 
   --yee-input-hover-border-color: var(--yee-color-border-hover);
   --yee-input-focus-border-color: var(--yee-color-border-focus);
-  --yee-input-focus-bs-color: rgba(56, 115, 153, 0.24);
   --yee-input-border-color: var(--yee-color-border);
   --yee-input-content-bg-color: var(--yee-color-bg-container);
   --yee-input-disabled-bg-color: var(--yee-color-bg-disabled);

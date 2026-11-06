@@ -39,6 +39,11 @@
     border-radius: 50%;
     visibility: hidden;
     cursor: pointer;
+    transition: background-color var(--yee-input-transition-duration) ease;
+
+    &:hover {
+      background-color: var(--yee-input-clear-bg-hover-color);
+    }
   }
 
   @{pls}-number {
@@ -70,9 +75,15 @@
   border-radius: var(--yee-textarea-border-radius, 4px);
   font-family: var(--yee-font-family);
   width: 100%;
+  // Smooth hover/focus transitions, as mainstream input implementations do.
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 
   &-borderless {
     border: none;
+    box-shadow: none;
   }
 
   &-with-clear {

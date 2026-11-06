@@ -87,6 +87,9 @@
   /* --Button-- 变体级(variant):solid / filled 的文字色 */
   --yee-btn-solid-color: #fff;
 
+  /* 键盘聚焦(:focus-visible)焦点环颜色,取主色边框色(antd genFocusStyle 同款) */
+  --yee-btn-focus-outline-color: var(--yee-color-primary-border);
+
   /* ------------------------------------------------------------------
    * 颜色级(color):default / primary / success / danger / warning
    * 每色 10 个槽位,与 Button 的 color × variant 架构一一对应,
@@ -549,7 +552,14 @@
   /* --Input-- */
   --yee-input-hover-border-color: var(--yee-color-border-hover);
   --yee-input-focus-border-color: var(--yee-color-border-focus);
-  --yee-input-focus-bs-color: rgba(117, 185, 240, 24%);
+
+  /* 焦点环跟随主题的焦点色(antd colorPrimaryOutline 的做法)，
+     换主题 / 主题改 --yee-color-border-focus 时自动跟随 */
+  --yee-input-focus-bs-color: color-mix(
+    in srgb,
+    var(--yee-color-border-focus) 24%,
+    transparent
+  );
   --yee-input-border-color: var(--yee-color-border);
   --yee-input-content-bg-color: var(--yee-color-bg-container);
   --yee-input-disabled-bg-color: var(--yee-color-bg-disabled);
@@ -565,6 +575,7 @@
   --yee-input-error-border-color: var(--yee-color-error);
   --yee-input-clear-color: #fff;
   --yee-input-clear-bg-color: #bfbfbf;
+  --yee-input-clear-bg-hover-color: #8c8c8c;
   --yee-input-disabled-color: var(--yee-color-text-disabled);
   --yee-input-content-disabled-bg-color: var(--yee-input-disabled-bg-color);
 
@@ -1225,8 +1236,10 @@
 
   /* deprecated:2026-09-11 hover/focus 拆分为 --yee-color-border-hover / --yee-color-border-focus */
   --yee-color-border-hover-focus: var(--yee-color-border-focus);
+
   /* deprecated:2026-09-11 更名 --yee-input-focus-border-color */
   --yee-input-content-focus-border-color: var(--yee-input-focus-border-color);
+
   /* deprecated-aliases:end */
 
   /* deprecated-aliases:start

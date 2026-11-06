@@ -18,6 +18,12 @@ class MessageWrapper {
   generationByKey: Map<string | number, number>;
   generation: number;
   timerGeneration: number;
+  // Keeps the root mounted briefly after the last message leaves so the
+  // exit animation can finish before the React tree is torn down.
+  cleanupTimer: ReturnType<typeof setTimeout> | null;
+
+  // Exit animation duration plus a small buffer (ms).
+  static readonly CLEANUP_DELAY = 300;
 
   constructor() {
     this.root = null;
@@ -26,6 +32,7 @@ class MessageWrapper {
     this.generationByKey = new Map();
     this.generation = 0;
     this.timerGeneration = 0;
+    this.cleanupTimer = null;
     this.destroy = this.destroy.bind(this);
   }
 
@@ -56,6 +63,10 @@ class MessageWrapper {
   }
 
   unmount() {
+    if (this.cleanupTimer) {
+      clearTimeout(this.cleanupTimer);
+      this.cleanupTimer = null;
+    }
     this.root?.unmount();
     this.root = null;
     this.cleanupContainer();
@@ -70,11 +81,28 @@ class MessageWrapper {
 
     if (this.messages.length === 0) {
       if (this.root) {
-        this.root.unmount();
-        this.root = null;
-        this.cleanupContainer();
+        // Render the empty list first so AnimatePresence can play exit
+        // animations, then keep the root mounted briefly before teardown.
+        // The deferred unmount is cancelled if a new message arrives.
+        this.root.render(
+          <MessageList items={[]} onDestroy={this.destroy} />,
+        );
+        if (this.cleanupTimer) {
+          clearTimeout(this.cleanupTimer);
+        }
+        this.cleanupTimer = setTimeout(() => {
+          this.cleanupTimer = null;
+          if (this.messages.length === 0) {
+            this.unmount();
+          }
+        }, MessageWrapper.CLEANUP_DELAY);
       }
       return;
+    }
+
+    if (this.cleanupTimer) {
+      clearTimeout(this.cleanupTimer);
+      this.cleanupTimer = null;
     }
 
     const container = this.createContainer();

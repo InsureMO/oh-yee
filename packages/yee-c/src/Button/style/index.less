@@ -14,9 +14,20 @@
   border: none;
   border-radius: var(--yee-btn-border-radius);
   cursor: pointer;
+  // 主流做法（antd）：全属性参与过渡，统一 easeInOut 曲线，
+  // 让 hover/active 的颜色、边框、阴影变化保持一致的手感
   transition:
-    background-color 0.2s linear,
-    color 0.2s linear;
+    all var(--yee-btn-transition-duration)
+      var(--yee-btn-transition-timing-function),
+    outline 0s,
+    outline-offset 0s;
+
+  // 键盘可达性：仅在键盘聚焦时显示焦点环，鼠标点击不出现（antd genFocusStyle）
+  &:not(@{pls}-disabled):focus-visible {
+    outline: var(--yee-btn-focus-outline-width) solid
+      var(--yee-btn-focus-outline-color);
+    outline-offset: var(--yee-btn-focus-outline-offset);
+  }
 
   &-loading {
     display: inline-flex;
@@ -128,8 +139,18 @@
     }
   }
 
+  // 幽灵按钮：背景透明（文档语义），hover/active 用色板槽位的浅色填充反馈
   &-ghost {
     border-style: none;
+    background-color: transparent;
+
+    &:not(@{pls}-disabled):hover {
+      background-color: var(--m-btn-hover-bg-color);
+    }
+
+    &:not(@{pls}-disabled):active {
+      background-color: var(--m-btn-active-bg-color);
+    }
   }
 
   // --------- 形状  -----------

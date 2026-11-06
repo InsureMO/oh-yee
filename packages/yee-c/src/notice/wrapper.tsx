@@ -43,6 +43,12 @@ class NoticeWrapper {
   generationByKey: Map<string | number, number>;
   generation: number;
   timerGeneration: number;
+  // Keeps a placement's root mounted briefly after its last notice leaves so
+  // the exit animation can finish before the React tree is torn down.
+  cleanupTimers: Map<PlacementType, ReturnType<typeof setTimeout>>;
+
+  // Exit animation duration plus a small buffer (ms).
+  static readonly CLEANUP_DELAY = 300;
 
   constructor() {
     this.roots = new Map();
@@ -51,6 +57,7 @@ class NoticeWrapper {
     this.generationByKey = new Map();
     this.generation = 0;
     this.timerGeneration = 0;
+    this.cleanupTimers = new Map();
     this.destroy = this.destroy.bind(this);
   }
 
@@ -92,6 +99,11 @@ class NoticeWrapper {
     const removed = placements.flatMap((item) => this.notices.get(item) || []);
 
     placements.forEach((item) => {
+      const cleanupTimer = this.cleanupTimers.get(item);
+      if (cleanupTimer) {
+        clearTimeout(cleanupTimer);
+        this.cleanupTimers.delete(item);
+      }
       this.roots.get(item)?.unmount();
       this.roots.delete(item);
       this.cleanupContainer(item);
@@ -116,11 +128,38 @@ class NoticeWrapper {
 
     const notices = this.notices.get(placement) || [];
     if (notices.length === 0) {
-      this.roots.get(placement)?.unmount();
-      this.roots.delete(placement);
-      this.cleanupContainer(placement);
-      this.notices.delete(placement);
+      const root = this.roots.get(placement);
+      if (!root) {
+        this.notices.delete(placement);
+        return;
+      }
+
+      // Render the empty list first so AnimatePresence can play exit
+      // animations, then keep the root mounted briefly before teardown.
+      // The deferred unmount is cancelled if a new notice arrives.
+      root.render(<NoticeList items={[]} placement={placement} onDestroy={this.destroy} />);
+      if (this.cleanupTimers.has(placement)) {
+        clearTimeout(this.cleanupTimers.get(placement));
+      }
+      this.cleanupTimers.set(
+        placement,
+        setTimeout(() => {
+          this.cleanupTimers.delete(placement);
+          if ((this.notices.get(placement) || []).length === 0) {
+            this.roots.get(placement)?.unmount();
+            this.roots.delete(placement);
+            this.cleanupContainer(placement);
+            this.notices.delete(placement);
+          }
+        }, NoticeWrapper.CLEANUP_DELAY),
+      );
       return;
+    }
+
+    const pendingCleanup = this.cleanupTimers.get(placement);
+    if (pendingCleanup) {
+      clearTimeout(pendingCleanup);
+      this.cleanupTimers.delete(placement);
     }
 
     const container = this.createContainer(placement);

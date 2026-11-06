@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { MessageApi, MessageType, WrapperedMessageConfig } from './interface';
-import Message from './message';
+import MessageList from './message-list';
 
 const useMessage = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -142,16 +142,7 @@ const useMessage = () => {
 
   const messageHolder = portalContainer
     ? createPortal(
-        <div className="yee-message-list">
-          {messages.map((msg) => (
-            <Message
-              {...msg}
-              onDestroy={onDestroy}
-              id={msg.key}
-              key={msg.key}
-            />
-          ))}
-        </div>,
+        <MessageList items={messages} onDestroy={onDestroy} />,
         portalContainer,
       )
     : null;

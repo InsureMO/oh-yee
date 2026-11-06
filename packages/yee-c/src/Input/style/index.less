@@ -14,6 +14,11 @@
   border-radius: var(--yee-input-border-radius, 4px);
   font-family: var(--yee-font-family);
   outline: inherit;
+  // Smooth hover/focus transitions, as mainstream input implementations do.
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 
   &:not(@{pls}-disabled):hover {
     border-color: var(--yee-input-hover-border-color);
@@ -66,6 +71,11 @@
     border-radius: 50%;
     visibility: hidden;
     cursor: pointer;
+    transition: background-color var(--yee-input-transition-duration) ease;
+
+    &:hover {
+      background-color: var(--yee-input-clear-bg-hover-color);
+    }
   }
 
   &&-with-clear:not(@{pls}-disabled):hover {

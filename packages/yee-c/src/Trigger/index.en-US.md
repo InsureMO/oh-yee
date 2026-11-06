@@ -29,6 +29,7 @@ A trigger component for showing popups on hover, click, or focus events. Serves 
 | popup | `ReactNode \| (() => ReactNode)` | Popup content | - |
 | popupClassName | `string` | Popup class name | - |
 | popupStyle | `React.CSSProperties` | Popup inline style | - |
+| popupMotion | `CSSMotionProps` | Popup show/hide motion config. Defaults to a placement-based slide motion; any field (e.g. `motionName`) can be overridden. Built-in motion classes: `yee-slide-up` / `yee-slide-down` / `yee-slide-left` / `yee-slide-right` / `yee-zoom-big` / `yee-zoom-big-fast` | Computed from placement |
 | popupAlign | `{ points?: [Point, Point]; offset?: [number, number] }` | Popup alignment | - |
 | children | `React.ReactNode` | Trigger element | - |
 | trigger | `Array<'hover' \| 'click' \| 'focus'> \| 'hover' \| 'click' \| 'focus'` | Actions that trigger the popup | `'click'` |

@@ -168,17 +168,28 @@ const Dialog = (baseprops: DialogProps) => {
         className={`${prefixCls}-content-wrapper`}
         onClick={maskClosable ? onCancel : undefined}
       >
-        <div
-          className={clsx(`${prefixCls}-content`, classNames?.content)}
-          style={{ width: fullscreen ? '100%' : width, ...styles?.content }}
-          tabIndex={0}
-          onClick={(e) => e.stopPropagation()}
-          ref={setContentRef}
-          role="dialog"
-          aria-modal={showMask ? true : undefined}
-          aria-labelledby={title ? titleId : undefined}
-          aria-describedby={bodyId}
+        {/* Zoom wrapper mirrors the panel zoom of mainstream dialog
+            implementations. It sits outside the content element so it never
+            fights with the drag transform written directly on the content. */}
+        <motion.div
+          initial={false}
+          animate={{ scale: delayOpen ? 1 : 0.9 }}
+          transition={{
+            duration: ANIMATION_DURATION,
+            ease: open ? 'easeOut' : 'easeIn',
+          }}
         >
+          <div
+            className={clsx(`${prefixCls}-content`, classNames?.content)}
+            style={{ width: fullscreen ? '100%' : width, ...styles?.content }}
+            tabIndex={0}
+            onClick={(e) => e.stopPropagation()}
+            ref={setContentRef}
+            role="dialog"
+            aria-modal={showMask ? true : undefined}
+            aria-labelledby={title ? titleId : undefined}
+            aria-describedby={bodyId}
+          >
           {closable ? (
             <Button
               type="text"
@@ -215,7 +226,8 @@ const Dialog = (baseprops: DialogProps) => {
             {children}
           </div>
           {renderFooter()}
-        </div>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );
