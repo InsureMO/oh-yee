@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.6
+
+### Patch Changes
+
+- 68c535d: chore: Optimize the pop-up component animation
+
 ## 0.15.5
 
 ### Patch Changes
