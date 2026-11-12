@@ -24,6 +24,20 @@ const Tooltip = (baseprops: TooltipProps) => {
     ...rest
   } = props;
 
+  // An empty title (undefined / null / blank string) renders no popup at all:
+  // pass children through untouched instead of wrapping them in a Trigger
+  // that would pop an empty bubble on hover/focus (aligns with antd).
+  // Numbers (incl. 0), non-empty strings, elements and functions are valid
+  // titles and keep the Trigger wrapper.
+  const isEmptyTitle =
+    title === undefined ||
+    title === null ||
+    (typeof title === 'string' && title.trim() === '');
+
+  if (isEmptyTitle) {
+    return <>{children}</>;
+  }
+
   const mergedPopupStyle = {
     ...(color ? { ['--yee-tooltip-bg-color']: color } : null),
     ...popupStyle,
