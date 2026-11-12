@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.7
+
+### Patch Changes
+
+- 8743aff: fix(Tooltip): 空 title（undefined / null / 空串及纯空白串）不再弹出空气泡，直接透传 children，对齐 antd 行为；数字 0、非空字符串、ReactNode、函数等合法 title 不受影响。
+
 ## 0.15.6
 
 ### Patch Changes
