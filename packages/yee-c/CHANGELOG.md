@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.8
+
+### Patch Changes
+
+- Form: add `scrollToFirstError` prop and `form.scrollToField` instance API — a failed submit scrolls the first error field into view with smooth scrolling, aligned with antd semantics
+
 ## 0.15.7
 
 ### Patch Changes
