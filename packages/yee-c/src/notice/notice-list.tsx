@@ -8,7 +8,7 @@ import './style/index.less';
 const MOTION_TRANSITION = { duration: 0.25, ease: 'easeOut' } as const;
 
 // Slide the notice in from the edge of the screen it is docked to, the way
-// mainstream notification stacks do (fade + slide, e.g. antd notification).
+// mainstream notification stacks do.
 const getPlacementMotion = (placement: PlacementType) => {
   const fromRight = placement.toLowerCase().includes('right');
   const fromBottom = placement.toLowerCase().includes('bottom');
@@ -16,9 +16,17 @@ const getPlacementMotion = (placement: PlacementType) => {
   const y = fromBottom ? 100 : -100;
 
   return {
-    initial: { opacity: 0, x, y: placement === 'top' || placement === 'bottom' ? y : 0 },
+    initial: {
+      opacity: 0,
+      x,
+      y: placement === 'top' || placement === 'bottom' ? y : 0,
+    },
     animate: { opacity: 1, x: 0, y: 0 },
-    exit: { opacity: 0, x, y: placement === 'top' || placement === 'bottom' ? y : 0 },
+    exit: {
+      opacity: 0,
+      x,
+      y: placement === 'top' || placement === 'bottom' ? y : 0,
+    },
   };
 };
 

@@ -33,15 +33,16 @@ const Tag = forwardRef(
       ...rest
     } = props;
 
-    // Close flow mirrors mainstream tag implementations (e.g. antd): the tag
+    // Close flow mirrors mainstream tag implementations: the tag
     // plays a zoom-out animation first, then reports onClose and hides
     // itself. Fully controlled for the parent, animated on its own.
     const [closing, setClosing] = useState(false);
     const [closed, setClosed] = useState(false);
     // The original click event is reported to onClose when the animation
     // finishes, matching the close-event semantics of mainstream libraries.
-    const closeEventRef =
-      useRef<React.MouseEvent<HTMLSpanElement> | null>(null);
+    const closeEventRef = useRef<React.MouseEvent<HTMLSpanElement> | null>(
+      null,
+    );
 
     const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       // Closing a tag must not toggle a checkable tag.

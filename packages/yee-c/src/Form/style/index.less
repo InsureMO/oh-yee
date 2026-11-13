@@ -39,6 +39,10 @@
 
   &-item {
     position: relative;
+    // scrollIntoView (scrollToFirstError / form.scrollToField) respects this
+    // margin; apps with a sticky header set the variable to the header height
+    // so the errored field is not scrolled underneath it.
+    scroll-margin-top: var(--yee-form-item-scroll-margin-top, 8px);
     // padding-bottom: var(--yee-form-item-padding-bottom);
 
     &-label {

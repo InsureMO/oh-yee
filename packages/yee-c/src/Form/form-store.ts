@@ -5,6 +5,7 @@ import {
   stringifyPath,
 } from './utils/path';
 import validate from './utils/validate';
+import { scrollToFieldByName } from './utils/scroll';
 
 import type {
   Callbacks,
@@ -17,6 +18,7 @@ import type {
   InternalNamePath,
   Name,
   NamePath,
+  ScrollOptions,
   Store,
   TRIGGER,
   ValidateMessage,
@@ -688,6 +690,10 @@ export class FormStore {
     return allErrors;
   };
 
+  scrollToField = (name: NamePath, options?: ScrollOptions) => {
+    scrollToFieldByName(null, name, options);
+  };
+
   getForm(): FormInstance {
     return {
       getFieldValidate: this.getFieldValidate,
@@ -700,6 +706,7 @@ export class FormStore {
       clearFields: this.clearFields,
       validateField: this.validateField,
       submit: this.submit,
+      scrollToField: this.scrollToField,
       setCallbacks: this.setCallbacks,
       getCallbacks: this.getCallbacks,
       registerFieldEntities: this.registerFieldEntities,
