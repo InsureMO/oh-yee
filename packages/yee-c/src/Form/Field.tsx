@@ -187,6 +187,7 @@ const Field: React.FC<FieldProps> = (props) => {
         className,
       )}
       style={style}
+      data-form-item={normalizedName}
     >
       <div className={clsx(`${prefixCls}-item-row`)}>
         {label || tooltipConfig ? (

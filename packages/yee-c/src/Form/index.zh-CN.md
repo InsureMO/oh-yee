@@ -22,6 +22,7 @@ toc: 'content'
 <code src="./demo/form-table.tsx" title="表单列表" description="Form的列表字段用法"></code>
 <code src="./demo/layout.tsx" title="表单布局" description="不同的表单布局"></code>
 <code src="./demo/validate.tsx" title="表单校验" description="表单校验功能"></code>
+<code src="./demo/scroll-to-error.tsx" title="提交失败滚动定位" description="scrollToFirstError 在提交失败时滚动到第一个错误字段，form.scrollToField 手动滚动到指定字段"></code>
 <code src="./demo/async-validate.tsx" title="异步校验" description="async validator 实现服务端唯一性校验等异步场景"></code>
 <code src="./demo/field-status.tsx" title="动态字段状态" description="通过 setFieldStatus 动态设置 error、warning、success 和 info 状态及提示"></code>
 
@@ -42,10 +43,13 @@ toc: 'content'
 | layout               | `'vertical' \| 'horizontal'`                                          | 布局                     | -                                            |
 | onFinish             | `(values: Values) => void`                                            | submit提交时触发事件     | -                                            |
 | onFinishFailed       | `(errors: ValidateMessage[]) => void`                                | submit提交报错时触发事件 | -                                            |
+| scrollToFirstError   | `boolean \| ScrollOptions`                                            | 提交失败时平滑滚动定位到第一个错误字段；传对象可自定义 scrollIntoView 选项 | `false`                                       |
 | onValuesChange       | `(changedValues: Record<string, any>, values: Values) => void`        | 表单字段值改变时触发事件 | -                                            |
 | onValuesBeforeChange | `(changedValues: Record<string, any>, values: Values) => void \| any` | 表单字段值改变前触发事件 | -                                            |
 | onReset              | `() => void`                                                          | 表单重置时触发的事件     | -                                            |
 | data-\*              | `string`                                                              | -                        | 支持所有 data-\* 属性，透传到组件根 DOM 元素 |
+
+> `scrollToFirstError` 说明：默认平滑滚动（`behavior: 'smooth'`），可通过选项覆盖（如 `behavior: 'instant'` 关闭动画）。页面有吸顶头部时设置 `--yee-form-item-scroll-margin-top`（默认 `8px`），避免滚到的字段被头部遮挡。
 
 ### FormInstance
 
@@ -56,6 +60,7 @@ toc: 'content'
 | setFieldStatus        | `(name: NamePath, status: FieldStatusData \| null) => void`                                | 动态设置字段状态和提示，传入 `null` 清除；仅 `blocking: true` 的 error 会阻止提交 |
 | getFieldValue         | `(name: Name) => StoreValue`                                                               | 获取字段值                                                                        |
 | submit                | `() => Promise<ValidateMessage[]>`                                                         | 提交表单（异步，校验完成后才触发 onFinish）                                       |
+| scrollToField         | `(name: NamePath, options?: ScrollOptions) => void`                                        | 滚动到指定字段使其进入可视区域；组级错误传入子字段名数组时定位到第一个找到的字段，找不到则静默跳过                                 |
 | getFieldsValue        | `() => Values`                                                                             | 获取所有字段值                                                                    |
 | setFieldsValue        | `(newStore: Store, trigger?: TRIGGER) => void`                                             | 设置字段值                                                                        |
 | setCallbacks          | `(callbacks: Callbacks) => void`                                                           | 设置回调                                                                          |
@@ -69,6 +74,8 @@ toc: 'content'
 | getListFields         | `(name: NamePath) => FormListField[]`                                                      | 获取列表字段                                                                      |
 | getListOperations     | `(name: NamePath) => FormListOperation`                                                    | 获取列表操作                                                                      |
 | subscribe             | `(namePath?: NamePath, callback?: () => void) => () => void`                               | 订阅字段值变化，不传 namePath 监听所有字段                                        |
+
+> `scrollToField` 注意：实例 API 为 document 级查找，页面同时存在多个含同名字段的表单时会滚到 DOM 顺序第一个表单的字段（`scrollToFirstError` 走表单根作用域，不受影响）。
 
 ### Form 静态方法
 

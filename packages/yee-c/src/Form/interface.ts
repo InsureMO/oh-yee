@@ -13,6 +13,13 @@ export type NamePath = string | string[] | number | (string | number)[];
 
 export type FieldSemanticDOM = 'label' | 'control';
 
+/**
+ * Options for scrolling a field into view. Forwarded to
+ * `Element.scrollIntoView`; defaults to smooth minimal scrolling
+ * (`behavior: 'smooth'`, `nearest`).
+ */
+export type ScrollOptions = ScrollIntoViewOptions;
+
 // Internal name path type, always a string array
 export type InternalNamePath = (string | number)[];
 
@@ -63,6 +70,11 @@ export interface FormProps<Values = any> extends DataAttributeProps {
    * Triggered on form submit failure
    */
   onFinishFailed?: Callbacks<Values>['onFinishFailed'];
+  /**
+   * Whether to scroll to the first errored field when a submit fails.
+   * Pass an object to customize the scrollIntoView options.
+   */
+  scrollToFirstError?: boolean | ScrollOptions;
   /**
    * Triggered when form field values change
    */
@@ -130,6 +142,12 @@ export interface FormInstance<Values = any> {
    * Submit form
    */
   submit: () => Promise<ValidateMessage[]>;
+  /**
+   * Scroll a field into view . Accepts a field
+   * name or name path; group errors carry a list of child field names and
+   * scroll to the first field found. No-op when no rendered field matches.
+   */
+  scrollToField: (name: NamePath, options?: ScrollOptions) => void;
   /**
    * Get all field values
    */

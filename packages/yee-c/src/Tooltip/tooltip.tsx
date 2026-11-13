@@ -26,7 +26,7 @@ const Tooltip = (baseprops: TooltipProps) => {
 
   // An empty title (undefined / null / blank string) renders no popup at all:
   // pass children through untouched instead of wrapping them in a Trigger
-  // that would pop an empty bubble on hover/focus (aligns with antd).
+  // that would pop an empty bubble on hover/focus.
   // Numbers (incl. 0), non-empty strings, elements and functions are valid
   // titles and keep the Trigger wrapper.
   const isEmptyTitle =
@@ -60,7 +60,6 @@ const Tooltip = (baseprops: TooltipProps) => {
       hideOnClick={hideOnClick}
       popupStyle={mergedPopupStyle}
       mouseEnterDelay={mouseEnterDelay}
-      // Quick center-zoom like antd's zoom-big-fast for small arrowed popups
       popupMotion={{ motionName: 'yee-zoom-big-fast', ...popupMotion }}
     >
       {children}

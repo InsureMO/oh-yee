@@ -214,8 +214,7 @@ const Table = React.forwardRef<HTMLDivElement, TableProps>((baseprops, ref) => {
       // Remove-then-re-add: the committing column's entry must be reported
       // even when the merged records hold no record for it (a controlled
       // column whose prop value is still empty), so parents can mirror state
-      // from this payload alone. On clear the key is kept with its empty
-      // value, matching antd.
+      // from this payload alone. On clear the key is kept with its empty value
       const emitted = next.filterRecords.filter(
         (record) => record.dataIndex !== options.dataIndex,
       );

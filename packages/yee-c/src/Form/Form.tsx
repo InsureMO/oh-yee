@@ -1,12 +1,13 @@
 import clsx from 'clsx';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { GlobalContext } from '../Config-Provider';
 import useEvent from '../hooks/useEvent';
 import mergeContextToProps from '../utils/mergeContextToProps';
 import FieldContext from './FieldContext';
 import FormContext from './FormContext';
 import useForm from './hooks/useForm';
-import type { FormProps } from './interface';
+import type { FormProps, ValidateMessage } from './interface';
+import { scrollToFieldByName } from './utils/scroll';
 
 import './style/index.less';
 
@@ -27,6 +28,7 @@ const Form: React.FC<FormProps> = (baseprops) => {
     onValuesChange,
     onValuesBeforeChange,
     onReset,
+    scrollToFirstError,
     ...rest
   } = props;
 
@@ -34,18 +36,33 @@ const Form: React.FC<FormProps> = (baseprops) => {
 
   const [formInstance] = useForm(form);
 
+  const rootRef = useRef<HTMLFormElement | null>(null);
+
   const _onFinish = useEvent(onFinish);
   const _onFinishFailed = useEvent(onFinishFailed);
   const _onValuesChange = useEvent(onValuesChange);
   const _onValuesBeforeChange = useEvent(onValuesBeforeChange);
   const _onReset = useEvent(onReset);
 
+  // user's onFinishFailed runs first, then the first error
+  // field is scrolled into view.
+  const onInternalFinishFailed = useEvent((errors: ValidateMessage[]) => {
+    _onFinishFailed?.(errors);
+    if (scrollToFirstError && errors.length > 0) {
+      scrollToFieldByName(
+        rootRef.current,
+        errors[0].name,
+        typeof scrollToFirstError === 'object' ? scrollToFirstError : undefined,
+      );
+    }
+  });
+
   useEffect(() => {
     formInstance.initialize({
       initialValues,
       callbacks: {
         onFinish: _onFinish,
-        onFinishFailed: _onFinishFailed,
+        onFinishFailed: onInternalFinishFailed,
         onValuesChange: _onValuesChange,
         onValuesBeforeChange: _onValuesBeforeChange,
         onReset: _onReset,
@@ -56,6 +73,7 @@ const Form: React.FC<FormProps> = (baseprops) => {
   return (
     <form
       {...rest}
+      ref={rootRef}
       className={cls}
       onSubmit={(e) => {
         e.preventDefault();

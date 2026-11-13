@@ -39,6 +39,7 @@ export type {
   FormListProps,
   FormProps,
   Rule as FormRule,
+  ScrollOptions,
   ValidateMessage,
 } from './interface';
 

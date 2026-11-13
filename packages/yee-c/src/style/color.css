@@ -51,7 +51,7 @@
   --yee-color-option-hover: #39364e;
   --yee-color-option-hover-bg: #f8f8f8;
 
-  /* antd 风格别名:主色浅底 / 通用 hover 底 / 四级填充,映射到现有 bg token */
+  /* 主色浅底 / 通用 hover 底 / 四级填充,映射到现有 bg token */
   --yee-color-primary-bg: var(--yee-color-option-active-bg);
   --yee-color-bg-hover: var(--yee-color-bg-rail);
   --yee-color-fill-quaternary: var(--yee-color-bg-rail);
@@ -87,7 +87,7 @@
   /* --Button-- 变体级(variant):solid / filled 的文字色 */
   --yee-btn-solid-color: #fff;
 
-  /* 键盘聚焦(:focus-visible)焦点环颜色,取主色边框色(antd genFocusStyle 同款) */
+  /* 键盘聚焦(:focus-visible)焦点环颜色,取主色边框色 */
   --yee-btn-focus-outline-color: var(--yee-color-primary-border);
 
   /* ------------------------------------------------------------------
@@ -553,7 +553,7 @@
   --yee-input-hover-border-color: var(--yee-color-border-hover);
   --yee-input-focus-border-color: var(--yee-color-border-focus);
 
-  /* 焦点环跟随主题的焦点色(antd colorPrimaryOutline 的做法)，
+  /* 焦点环跟随主题的焦点色，
      换主题 / 主题改 --yee-color-border-focus 时自动跟随 */
   --yee-input-focus-bs-color: color-mix(
     in srgb,

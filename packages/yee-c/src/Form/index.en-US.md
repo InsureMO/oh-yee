@@ -20,6 +20,7 @@ High performance form component with data scope management.
 <code src="./demo/watch.tsx" title="Field Watch" description="useWatch monitors field value changes for conditional rendering"></code>
 <code src="./demo/layout.tsx" title="Layout" description="Different form layouts"></code>
 <code src="./demo/validate.tsx" title="Validation" description="Form validation"></code>
+<code src="./demo/scroll-to-error.tsx" title="Scroll to error" description="scrollToFirstError scrolls to the first errored field on failed submit; form.scrollToField scrolls to a field manually"></code>
 <code src="./demo/async-validate.tsx" title="Async Validation" description="async validator for server-side checks like uniqueness"></code>
 <code src="./demo/field-status.tsx" title="Dynamic Field Status" description="Set error, warning, success, and info feedback dynamically with setFieldStatus"></code>
 <code src="./demo/list.tsx" title="Form List" description="Form list field usage"></code>
@@ -43,10 +44,13 @@ High performance form component with data scope management.
 | layout               | `'vertical' \| 'horizontal'`                                          | Layout                                   | -                                                              |
 | onFinish             | `(values: Values) => void`                                            | Submit event callback                    | -                                                              |
 | onFinishFailed       | `(errors: ValidateMessage[]) => void`                                | Submit error event callback              | -                                                              |
+| scrollToFirstError   | `boolean \| ScrollOptions`                                            | Scroll to the first errored field on failed submit with smooth scrolling; pass an object to customize scrollIntoView options | `false`                                                         |
 | onValuesChange       | `(changedValues: Record<string, any>, values: Values) => void`        | Field value change event callback        | -                                                              |
 | onValuesBeforeChange | `(changedValues: Record<string, any>, values: Values) => void \| any` | Field value change before event callback | -                                                              |
 | onReset              | `() => void`                                                          | Reset event callback                     | -                                                              |
 | data-\*              | `string`                                                              | -                                        | Supports all data-\* attributes, forwarded to root DOM element |
+
+> `scrollToFirstError` notes: smooth scrolling by default (`behavior: 'smooth'`), overridable via options (e.g. `behavior: 'instant'` to disable the animation). With a sticky page header, set `--yee-form-item-scroll-margin-top` (default `8px`) so the field is not hidden underneath it.
 
 ### FormInstance
 
@@ -57,6 +61,7 @@ High performance form component with data scope management.
 | setFieldStatus        | `(name: NamePath, status: FieldStatusData \| null) => void`                                | Set field status and message dynamically, or pass `null` to clear it; only blocking errors prevent submission                        |
 | getFieldValue         | `(name: Name) => StoreValue`                                                               | Get field value                                                                                                                      |
 | submit                | `() => Promise<ValidateMessage[]>`                                                         | Submit form (async, triggers onFinish only after validation completes)                                                               |
+| scrollToField         | `(name: NamePath, options?: ScrollOptions) => void`                                        | Scroll a field into view; group errors carry a list of child field names and scroll to the first field found, silently skipped when no rendered field matches |
 | getFieldsValue        | `() => Values`                                                                             | Get all field values                                                                                                                 |
 | setFieldsValue        | `(newStore: Store, trigger?: TRIGGER) => void`                                             | Set field values                                                                                                                     |
 | setCallbacks          | `(callbacks: Callbacks) => void`                                                           | Set callbacks                                                                                                                        |
@@ -70,6 +75,8 @@ High performance form component with data scope management.
 | getListFields         | `(name: NamePath) => FormListField[]`                                                      | Get list fields                                                                                                                      |
 | getListOperations     | `(name: NamePath) => FormListOperation`                                                    | Get list operations                                                                                                                  |
 | subscribe             | `(namePath?: NamePath, callback?: () => void) => () => void`                               | Subscribe to field value changes, omit namePath to watch all fields                                                                  |
+
+> `scrollToField` notes: the instance API resolves document-wide — with multiple forms sharing a field name, it scrolls to the first in DOM order (`scrollToFirstError` is scoped to the form root and unaffected).
 
 ### Form Static Methods
 

@@ -126,7 +126,6 @@ const Popconfirm: React.FC<PopconfirmProps> = (baseprops) => {
       placement={placement}
       popup={popup}
       open={mergedOpen}
-      // Center-zoom like antd's zoom-big (Popconfirm builds on Popover there)
       popupMotion={{ motionName: 'yee-zoom-big', ...popupMotion }}
       onOpenChange={handleOpenChange}
     >
