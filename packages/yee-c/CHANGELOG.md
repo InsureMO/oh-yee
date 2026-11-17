@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.9
+
+### Patch Changes
+
+- Breadcrumb: item link span now carries the native `title` attribute for string titles, so truncated full text shows in the browser tooltip on hover
+
 ## 0.15.8
 
 ### Patch Changes
