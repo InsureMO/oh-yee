@@ -25,11 +25,9 @@ const BreadcrumbItem: React.FC<InternalBreadcrumbItemProps> = (props) => {
 
   const isLast = index === total - 1;
 
-  const linkContent = (
-    <span className={`${prefixCls}-link`}>
-      {typeof title === 'function' ? title() : title}
-    </span>
-  );
+  const merged = typeof title === 'function' ? title() : title;
+
+  const linkContent = <span className={`${prefixCls}-link`}>{merged}</span>;
 
   return (
     <>
@@ -44,6 +42,7 @@ const BreadcrumbItem: React.FC<InternalBreadcrumbItemProps> = (props) => {
           className,
         )}
         style={style}
+        title={typeof merged === 'string' ? merged : undefined}
         role="listitem"
       >
         {href && !isLast ? (
@@ -66,7 +65,7 @@ const BreadcrumbItem: React.FC<InternalBreadcrumbItemProps> = (props) => {
             aria-current={isLast ? 'page' : undefined}
             role={onClick && !isLast ? 'button' : undefined}
           >
-            {typeof title === 'function' ? title() : title}
+            {merged}
           </span>
         )}
       </li>
