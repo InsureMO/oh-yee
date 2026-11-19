@@ -421,8 +421,11 @@
 // yee-trigger-{top|bottom|left|right} 类）。enter/appear 与 leave 都要换。
 // ---------------------------------------------------------------------------
 
-// 预期在下面（yee-slide-down），实际在上面（yee-trigger-top）→ 从底边展开
-.yee-trigger-top {
+// 预期在下面（yee-slide-down），实际在上面 → 从底边展开
+// 注意类名是完整 placement（topLeft/top/topRight），CSS 类必须精确匹配
+.yee-trigger-top,
+.yee-trigger-topLeft,
+.yee-trigger-topRight {
   &.yee-slide-down-enter-active,
   &.yee-slide-down-appear-active {
     animation-name: yeeSlideUpIn;
@@ -433,8 +436,10 @@
   }
 }
 
-// 预期在上面（yee-slide-up），实际在下面（yee-trigger-bottom）→ 从顶边展开
-.yee-trigger-bottom {
+// 预期在上面（yee-slide-up），实际在下面 → 从顶边展开
+.yee-trigger-bottom,
+.yee-trigger-bottomLeft,
+.yee-trigger-bottomRight {
   &.yee-slide-up-enter-active,
   &.yee-slide-up-appear-active {
     animation-name: yeeSlideDownIn;
@@ -445,8 +450,10 @@
   }
 }
 
-// 预期在右边（yee-slide-right），实际在左边（yee-trigger-left）→ 从右边展开
-.yee-trigger-left {
+// 预期在右边（yee-slide-right），实际在左边 → 从右边展开
+.yee-trigger-left,
+.yee-trigger-leftTop,
+.yee-trigger-leftBottom {
   &.yee-slide-right-enter-active,
   &.yee-slide-right-appear-active {
     animation-name: yeeSlideLeftIn;
@@ -457,8 +464,10 @@
   }
 }
 
-// 预期在左边（yee-slide-left），实际在右边（yee-trigger-right）→ 从左边展开
-.yee-trigger-right {
+// 预期在左边（yee-slide-left），实际在右边 → 从左边展开
+.yee-trigger-right,
+.yee-trigger-rightTop,
+.yee-trigger-rightBottom {
   &.yee-slide-left-enter-active,
   &.yee-slide-left-appear-active {
     animation-name: yeeSlideRightIn;
