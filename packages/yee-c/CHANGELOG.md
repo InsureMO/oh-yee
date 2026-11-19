@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.10
+
+### Patch Changes
+
+- feat(styles): add border-radius to PickerPanel, Select, and update Trigger positioning comments
+
 ## 0.15.9
 
 ### Patch Changes
