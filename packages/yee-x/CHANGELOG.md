@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-x
 
+## 0.5.0
+
+### Minor Changes
+
+- 734d894: feat(yee-x): add AgentTasks, AgentTimeline, ApprovalCard, Citations, InlineDiff, MessageActions components; export PlanCard, Thinking, ToolCall
+
 ## 0.4.0
 
 ### Minor Changes
