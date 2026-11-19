@@ -1,0 +1,202 @@
+@pls: .yee-approval-card;
+@risk-high: #ff4d4f;
+
+@{pls} {
+  border: 1px solid var(--yee-approval-card-border, rgba(5, 5, 5, 10%));
+  border-radius: 8px;
+  background: var(--yee-approval-card-bg, rgba(0, 0, 0, 2%));
+  overflow: hidden;
+
+  &-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px 0;
+  }
+
+  &-agent {
+    flex: none;
+    font-size: 12px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    background: var(--yee-approval-card-agent-bg, rgba(22, 119, 255, 10%));
+    color: var(--yee-approval-card-primary, #1677ff);
+  }
+
+  &-title {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--yee-approval-card-color, rgba(0, 0, 0, 88%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-risk {
+    flex: none;
+    font-size: 12px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    background: var(--yee-approval-card-risk-medium-bg, rgba(250, 173, 20, 15%));
+    color: var(--yee-approval-card-risk-medium, #faad14);
+  }
+
+  &-risk-low {
+    background: var(--yee-approval-card-risk-low-bg, rgba(82, 196, 26, 15%));
+    color: var(--yee-approval-card-risk-low, #52c41a);
+  }
+
+  &-risk-high {
+    background: var(--yee-approval-card-risk-high-bg, rgba(255, 77, 79, 12%));
+    color: @risk-high;
+  }
+
+  &-countdown-row {
+    padding: 6px 12px 0;
+  }
+
+  &-countdown {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--yee-approval-card-muted, rgba(0, 0, 0, 45%));
+
+    &.urgent {
+      color: var(--yee-approval-card-risk-medium, #faad14);
+      font-weight: 500;
+    }
+  }
+
+  &-description {
+    padding: 6px 12px 0;
+    font-size: 13px;
+    line-height: 19px;
+    color: var(--yee-approval-card-muted, rgba(0, 0, 0, 65%));
+    word-break: break-word;
+  }
+
+  &-preview {
+    margin: 8px 12px 0;
+    padding: 8px;
+    border: 1px solid var(--yee-approval-card-divider, rgba(5, 5, 5, 6%));
+    border-radius: 6px;
+    background: var(--yee-approval-card-preview-bg, #fff);
+    font-size: 12px;
+    line-height: 18px;
+    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    color: var(--yee-approval-card-color, rgba(0, 0, 0, 88%));
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 180px;
+    overflow: auto;
+  }
+
+  &-scopes {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px 0;
+  }
+
+  &-scope {
+    padding: 2px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--yee-approval-card-border, rgba(5, 5, 5, 15%));
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--yee-approval-card-muted, rgba(0, 0, 0, 65%));
+
+    &.active {
+      border-color: var(--yee-approval-card-primary, #1677ff);
+      color: var(--yee-approval-card-primary, #1677ff);
+      background: var(--yee-approval-card-primary-bg, rgba(22, 119, 255, 8%));
+    }
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  &-btn {
+    padding: 3px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--yee-approval-card-border, rgba(5, 5, 5, 15%));
+    background: var(--yee-approval-card-bg, #fff);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--yee-approval-card-color, rgba(0, 0, 0, 88%));
+  }
+
+  &-btn-approve {
+    background: var(--yee-approval-card-primary, #1677ff);
+    border-color: var(--yee-approval-card-primary, #1677ff);
+    color: #fff;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &-btn-deny {
+    &:hover {
+      border-color: @risk-high;
+      color: @risk-high;
+    }
+  }
+
+  &-resolved {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--yee-approval-card-muted, rgba(0, 0, 0, 65%));
+
+    .yee-approval-card-approved & {
+      color: var(--yee-approval-card-success, #52c41a);
+    }
+
+    .yee-approval-card-denied & {
+      color: @risk-high;
+    }
+  }
+
+  &-resolved-title {
+    font-weight: 500;
+    color: var(--yee-approval-card-color, rgba(0, 0, 0, 88%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-resolved-text {
+    font-size: 12px;
+  }
+
+  &-resolved-amber {
+    color: var(--yee-approval-card-risk-medium, #faad14);
+  }
+
+  &-undo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    margin-inline-start: auto;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-approval-card-muted, rgba(0, 0, 0, 45%));
+
+    &:hover {
+      background: var(--yee-approval-card-hover-bg, rgba(0, 0, 0, 6%));
+    }
+  }
+}

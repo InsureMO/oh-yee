@@ -1,0 +1,63 @@
+@pls: .yee-inline-diff;
+
+@{pls} {
+  &-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  &-toolbar button {
+    padding: 2px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--yee-inline-diff-border, rgba(5, 5, 5, 15%));
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--yee-inline-diff-muted, rgba(0, 0, 0, 65%));
+
+    &:hover {
+      border-color: var(--yee-inline-diff-primary, #1677ff);
+      color: var(--yee-inline-diff-primary, #1677ff);
+    }
+  }
+
+  &-text {
+    font-size: 14px;
+    line-height: 24px;
+    color: var(--yee-inline-diff-color, rgba(0, 0, 0, 88%));
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &-pending,
+  &-resolved {
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  &-del {
+    text-decoration: line-through;
+    text-decoration-color: var(--yee-inline-diff-del-line, rgba(255, 77, 79, 70%));
+    background: var(--yee-inline-diff-del-bg, rgba(255, 77, 79, 10%));
+    color: var(--yee-inline-diff-del-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-ins {
+    text-decoration: none;
+    background: var(--yee-inline-diff-ins-bg, rgba(82, 196, 26, 15%));
+    color: var(--yee-inline-diff-ins-color, rgba(0, 0, 0, 88%));
+  }
+
+  &-pending:hover {
+    outline: 1px dashed var(--yee-inline-diff-primary, #1677ff);
+  }
+
+  &-accepted {
+    box-shadow: inset 0 -2px 0 var(--yee-inline-diff-ins-underline, rgba(82, 196, 26, 45%));
+  }
+
+  &-rejected {
+    box-shadow: inset 0 -2px 0 var(--yee-inline-diff-del-underline, rgba(255, 77, 79, 40%));
+  }
+}

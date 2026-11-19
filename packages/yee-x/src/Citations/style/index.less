@@ -1,0 +1,175 @@
+@pls: .yee-citations;
+@chip-pls: .yee-citation-chip;
+
+@{pls} {
+  &-label {
+    font-size: 12px;
+    color: var(--yee-citations-label-color, rgba(0, 0, 0, 45%));
+    margin-bottom: 6px;
+  }
+
+  &-list {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  &-source {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 150px;
+    max-width: 220px;
+    padding: 6px 10px;
+    border: 1px solid var(--yee-citations-border, rgba(5, 5, 5, 12%));
+    border-radius: 8px;
+    background: var(--yee-citations-bg, #fff);
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      border-color: var(--yee-citations-border-hover, rgba(5, 5, 5, 30%));
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 8%);
+    }
+  }
+
+  &-source-icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-citations-icon-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-source-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &-source-title {
+    font-size: 12px;
+    line-height: 17px;
+    color: var(--yee-citations-title-color, rgba(0, 0, 0, 88%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-source-meta {
+    font-size: 11px;
+    line-height: 15px;
+    color: var(--yee-citations-label-color, rgba(0, 0, 0, 45%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-source-index {
+    flex: none;
+    font-size: 11px;
+    color: var(--yee-citations-label-color, rgba(0, 0, 0, 45%));
+    font-variant-numeric: tabular-nums;
+  }
+
+  &-chip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border: 1px solid var(--yee-citations-border, rgba(5, 5, 5, 12%));
+    border-radius: 9px;
+    background: var(--yee-citations-bg, #fff);
+    font-size: 11px;
+    line-height: 1;
+    color: var(--yee-citations-title-color, rgba(0, 0, 0, 65%));
+    text-decoration: none;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.2s, background-color 0.2s;
+
+    &:hover {
+      border-color: var(--yee-citations-border-hover, rgba(5, 5, 5, 30%));
+      background: var(--yee-citations-chip-hover-bg, rgba(0, 0, 0, 4%));
+    }
+  }
+
+  &-overflow {
+    flex: none;
+    padding: 0 8px;
+    height: 18px;
+    border: none;
+    border-radius: 9px;
+    background: var(--yee-citations-chip-hover-bg, rgba(0, 0, 0, 4%));
+    font-size: 11px;
+    color: var(--yee-citations-label-color, rgba(0, 0, 0, 45%));
+    cursor: pointer;
+
+    &:hover {
+      color: var(--yee-citations-title-color, rgba(0, 0, 0, 65%));
+    }
+  }
+
+  &-preview {
+    max-width: 320px;
+    font-size: 12px;
+  }
+
+  &-preview-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: var(--yee-citations-title-color, rgba(0, 0, 0, 88%));
+  }
+
+  &-preview-meta {
+    margin-top: 2px;
+    color: var(--yee-citations-label-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-preview-snippet {
+    margin-top: 6px;
+    line-height: 18px;
+    color: var(--yee-citations-preview-color, rgba(0, 0, 0, 65%));
+  }
+
+  &-preview-quote {
+    margin: 6px 0 0;
+    padding: 6px 10px;
+    border-inline-start: 3px solid var(--yee-citations-quote-bar, #1677ff);
+    background: var(--yee-citations-quote-bg, rgba(22, 119, 255, 6%));
+    border-radius: 4px;
+    line-height: 18px;
+    color: var(--yee-citations-preview-color, rgba(0, 0, 0, 65%));
+  }
+}
+
+@{chip-pls} {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  margin: 0 1px;
+  border: 1px solid var(--yee-citations-border, rgba(5, 5, 5, 12%));
+  border-radius: 8px;
+  background: var(--yee-citations-bg, #fff);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--yee-citations-title-color, rgba(0, 0, 0, 65%));
+  text-decoration: none;
+  cursor: pointer;
+  vertical-align: text-top;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.2s, background-color 0.2s;
+
+  &:hover {
+    border-color: var(--yee-citations-border-hover, rgba(5, 5, 5, 30%));
+    background: var(--yee-citations-chip-hover-bg, rgba(0, 0, 0, 4%));
+  }
+}

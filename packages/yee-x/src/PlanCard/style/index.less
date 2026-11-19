@@ -1,0 +1,240 @@
+@pls: .yee-plan-card;
+@spin-kf: yee-plan-card-spin;
+
+@{pls} {
+  border: 1px solid var(--yee-plan-card-border, rgba(5, 5, 5, 10%));
+  border-radius: 8px;
+  background: var(--yee-plan-card-bg, rgba(0, 0, 0, 2%));
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  &-title {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--yee-plan-card-color, rgba(0, 0, 0, 88%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-collapse {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+    transition: transform 0.2s;
+
+    &.folded {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &-body {
+    padding: 4px 6px;
+  }
+
+  &-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 20px;
+
+    &:hover {
+      background: var(--yee-plan-card-hover-bg, rgba(0, 0, 0, 4%));
+    }
+
+    &.drag-over {
+      box-shadow: inset 0 2px 0 var(--yee-plan-card-primary, #1677ff);
+    }
+  }
+
+  &-step-index {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    margin-top: 0;
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+    background: var(--yee-plan-card-index-bg, rgba(0, 0, 0, 6%));
+  }
+
+  &-step-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-step-title {
+    color: var(--yee-plan-card-color, rgba(0, 0, 0, 88%));
+    word-break: break-word;
+  }
+
+  &-step-input {
+    border: 1px solid var(--yee-plan-card-primary, #1677ff);
+    border-radius: 4px;
+    padding: 0 6px;
+    height: 24px;
+    font-size: 13px;
+    background: var(--yee-plan-card-bg, #fff);
+    color: var(--yee-plan-card-color, rgba(0, 0, 0, 88%));
+    outline: none;
+    width: 100%;
+  }
+
+  &-step-desc {
+    font-size: 12px;
+    line-height: 17px;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+    word-break: break-word;
+  }
+
+  &-step-duration {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+  }
+
+  &-step-retry,
+  &-step-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+
+    &:hover:not(:disabled) {
+      background: var(--yee-plan-card-hover-bg, rgba(0, 0, 0, 6%));
+      color: var(--yee-plan-card-color, rgba(0, 0, 0, 88%));
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  &-step-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  &-step:hover &-step-actions {
+    opacity: 1;
+  }
+
+  &-drag {
+    display: inline-flex;
+    align-items: center;
+    cursor: grab;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+    font-size: 12px;
+    user-select: none;
+  }
+
+  &-step-success &-step-index {
+    color: var(--yee-plan-card-success, #52c41a);
+    background: var(--yee-plan-card-success-bg, rgba(82, 196, 26, 12%));
+  }
+
+  &-step-error &-step-index {
+    color: var(--yee-plan-card-error, #ff4d4f);
+    background: var(--yee-plan-card-error-bg, rgba(255, 77, 79, 12%));
+  }
+
+  &-step-running &-step-index {
+    color: var(--yee-plan-card-primary, #1677ff);
+    background: var(--yee-plan-card-primary-bg, rgba(22, 119, 255, 12%));
+  }
+
+  &-spin {
+    display: inline-flex;
+    align-items: center;
+    animation: @spin-kf 1s linear infinite;
+  }
+
+  &-add-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--yee-plan-card-muted, rgba(0, 0, 0, 45%));
+
+    &:hover {
+      background: var(--yee-plan-card-hover-bg, rgba(0, 0, 0, 4%));
+      color: var(--yee-plan-card-color, rgba(0, 0, 0, 88%));
+    }
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px 12px;
+    border-top: 1px solid var(--yee-plan-card-divider, rgba(5, 5, 5, 6%));
+  }
+
+  &-btn {
+    padding: 3px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--yee-plan-card-border, rgba(5, 5, 5, 15%));
+    background: var(--yee-plan-card-bg, #fff);
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--yee-plan-card-color, rgba(0, 0, 0, 88%));
+
+    &:hover {
+      border-color: var(--yee-plan-card-primary, #1677ff);
+      color: var(--yee-plan-card-primary, #1677ff);
+    }
+  }
+
+  &-btn-primary {
+    background: var(--yee-plan-card-primary, #1677ff);
+    border-color: var(--yee-plan-card-primary, #1677ff);
+    color: #fff;
+
+    &:hover {
+      color: #fff;
+      opacity: 0.9;
+    }
+  }
+}
+
+@keyframes @spin-kf {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

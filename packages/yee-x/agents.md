@@ -1,13 +1,13 @@
 # yee-x Component Library AI Navigation
 
-> Last updated: 2026-08-05T03:59:06.407Z
+> Last updated: 2026-11-19T04:22:14.309Z
 
 ## Overview
 
 This file is a component index for the yee-x library, helping AI Agents quickly discover all available components and their documentation.
 
-- **Components**: 16
-- **Groups**: 10
+- **Components**: 25
+- **Groups**: 12
 - **Doc format**: Markdown
 
 ### Doc URL Format
@@ -30,6 +30,25 @@ https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Markdown/index.e
 | Component | Subtitle | Description | Docs |
 |-----------|----------|-------------|------|
 | Markdown | markdown | Used to render Markdown text. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Markdown/index.en-US.md) |
+
+### 编排
+
+| Component | Subtitle | Description | Docs |
+|-----------|----------|-------------|------|
+| AgentTasks | AgentTasks | All your background agent tasks in one calm list: filter tabs with counts, status tags, live clocks for queued/running/waiting tasks, static durations for finished ones, rows that unfold to recent steps, and Approve / Reject / Retry / Open actions mounted per status. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/AgentTasks/index.en-US.md) |
+| AgentTimeline | AgentTimeline | A vertical timeline for one agent run: every event carries a kind icon (agent / tool / approval / handoff / note), an agent chip, a status badge, duration and clock time; nested runs (e.g. a sub-agent's own run) fold and unfold. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/AgentTimeline/index.en-US.md) |
+
+### 对话
+
+| Component | Subtitle | Description | Docs |
+|-----------|----------|-------------|------|
+| ApprovalCard | ApprovalCard | An agent asks before it acts: risk badge, payload preview, a countdown that pauses on hover (expiring resolves as denied and fires `onExpire`), approval scopes (once / session / always), then a smooth morph into a one-line resolved summary with optional undo. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/ApprovalCard/index.en-US.md) |
+| Citations | Citations | Source display for RAG answers: source cards / numbered chips with a hover preview of snippet and quote, click to open. The inline `Citations.Chip` links to sources through `CitationsProvider` and can be wired into a Markdown renderer. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Citations/index.en-US.md) |
+| InlineDiff | InlineDiff | AI edits to prose shown inline: deletions struck through and additions highlighted, each change click-cycled through accept → reject → reset, with the resolved text emitted through `onResolve` after every decision; a toolbar accepts all, rejects all or resets. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/InlineDiff/index.en-US.md) |
+| MessageActions | MessageActions | The quiet action bar under an AI message: copy (turns into a check), regenerate, version switcher, like/dislike, read aloud, plus a slot for custom actions. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/MessageActions/index.en-US.md) |
+| PlanCard | PlanCard | An agent's step-by-step plan. Review mode: rename, reorder (buttons or drag), remove and add steps, then confirm. Run mode: steps advance with a `current` cursor, the running step ticks live, and a failed step can be retried. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/PlanCard/index.en-US.md) |
+| Thinking | Thinking | A collapsible panel for the AI's reasoning process: status icon (spinning / success / error), a live timer, steps that appear one by one, and a foldable body. Fits reasoning models and agent runs. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Thinking/index.en-US.md) |
+| ToolCall | ToolCall | An agent's tool call in one line: status, timer and summary, folding open to arguments and result with copy, retry on errors. `ToolCall.Group` sums multiple calls into one collapsible group. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/ToolCall/index.en-US.md) |
 
 ### Input
 

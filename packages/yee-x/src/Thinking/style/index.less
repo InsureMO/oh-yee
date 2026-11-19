@@ -1,0 +1,142 @@
+@pls: .yee-thinking;
+@spin-kf: yee-thinking-spin;
+@blink-kf: yee-thinking-blink;
+
+@{pls} {
+  border: 1px solid var(--yee-thinking-border, rgba(5, 5, 5, 10%));
+  border-radius: 8px;
+  background: var(--yee-thinking-bg, rgba(0, 0, 0, 2%));
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--yee-thinking-label-color, rgba(0, 0, 0, 65%));
+
+    &.clickable {
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+
+  &-status {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-thinking-status-color, rgba(0, 0, 0, 45%));
+
+    .yee-thinking-success & {
+      color: var(--yee-thinking-success-color, #52c41a);
+    }
+
+    .yee-thinking-error & {
+      color: var(--yee-thinking-error-color, #ff4d4f);
+    }
+  }
+
+  &-status-spin {
+    animation: @spin-kf 1s linear infinite;
+  }
+
+  &-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-timer {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--yee-thinking-timer-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-collapse {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-thinking-timer-color, rgba(0, 0, 0, 45%));
+    transition: transform 0.2s;
+
+    &.folded {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &-body {
+    overflow: hidden;
+    border-top: 1px solid var(--yee-thinking-divider, rgba(5, 5, 5, 6%));
+    padding: 0 12px;
+  }
+
+  &-steps {
+    padding: 8px 0;
+  }
+
+  &-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 3px 0;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  &-step-marker {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    margin-top: 7px;
+    border-radius: 50%;
+    background: var(--yee-thinking-marker-color, rgba(0, 0, 0, 25%));
+
+    &.blinking {
+      animation: @blink-kf 1.2s ease-in-out infinite;
+    }
+  }
+
+  &-step-title {
+    color: var(--yee-thinking-step-color, rgba(0, 0, 0, 65%));
+  }
+
+  &-step-content {
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--yee-thinking-content-color, rgba(0, 0, 0, 45%));
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &-content {
+    padding: 8px 0 12px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--yee-thinking-content-color, rgba(0, 0, 0, 45%));
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}
+
+@keyframes @spin-kf {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes @blink-kf {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}

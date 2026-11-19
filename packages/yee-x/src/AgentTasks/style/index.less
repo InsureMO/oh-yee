@@ -1,0 +1,244 @@
+@pls: .yee-agent-tasks;
+
+@{pls} {
+  border: 1px solid var(--yee-agent-tasks-border, rgba(5, 5, 5, 10%));
+  border-radius: 8px;
+  background: var(--yee-agent-tasks-bg, rgba(0, 0, 0, 2%));
+  overflow: hidden;
+
+  &-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--yee-agent-tasks-divider, rgba(5, 5, 5, 6%));
+    overflow-x: auto;
+  }
+
+  &-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 10px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--yee-agent-tasks-hover-bg, rgba(0, 0, 0, 4%));
+    }
+
+    &.active {
+      background: var(--yee-agent-tasks-tab-active-bg, rgba(22, 119, 255, 10%));
+      color: var(--yee-agent-tasks-primary, #1677ff);
+    }
+  }
+
+  &-tab-count {
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.75;
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-item {
+    padding: 0 10px;
+    border-bottom: 1px solid var(--yee-agent-tasks-divider, rgba(5, 5, 5, 6%));
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &-item-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 13px;
+    line-height: 18px;
+    min-width: 0;
+  }
+
+  &-item-status {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+
+    // the status modifier lands on the SAME element, so these must be compound selectors
+    &.yee-agent-tasks-item-status-running {
+      color: var(--yee-agent-tasks-primary, #1677ff);
+    }
+
+    &.yee-agent-tasks-item-status-waiting {
+      color: var(--yee-agent-tasks-warning, #faad14);
+    }
+
+    &.yee-agent-tasks-item-status-success {
+      color: var(--yee-agent-tasks-success, #52c41a);
+    }
+
+    &.yee-agent-tasks-item-status-failed {
+      color: var(--yee-agent-tasks-error, #ff4d4f);
+    }
+  }
+
+  &-item-title {
+    flex: 1;
+    min-width: 0;
+    color: var(--yee-agent-tasks-color, rgba(0, 0, 0, 88%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-item-meta {
+    flex: none;
+    font-size: 12px;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+  }
+
+  &-item-time {
+    flex: none;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+  }
+
+  &-item-actions {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &-action {
+    padding: 1px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--yee-agent-tasks-border, rgba(5, 5, 5, 15%));
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--yee-agent-tasks-color, rgba(0, 0, 0, 65%));
+
+    &:hover {
+      border-color: var(--yee-agent-tasks-primary, #1677ff);
+      color: var(--yee-agent-tasks-primary, #1677ff);
+    }
+  }
+
+  &-action-approve {
+    &:hover {
+      border-color: var(--yee-agent-tasks-success, #52c41a);
+      color: var(--yee-agent-tasks-success, #52c41a);
+    }
+  }
+
+  &-action-reject {
+    &:hover {
+      border-color: var(--yee-agent-tasks-error, #ff4d4f);
+      color: var(--yee-agent-tasks-error, #ff4d4f);
+    }
+  }
+
+  &-action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+
+    &:hover {
+      background: var(--yee-agent-tasks-hover-bg, rgba(0, 0, 0, 6%));
+      color: var(--yee-agent-tasks-color, rgba(0, 0, 0, 88%));
+    }
+  }
+
+  &-item-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+    transition: transform 0.2s;
+
+    &:hover {
+      background: var(--yee-agent-tasks-hover-bg, rgba(0, 0, 0, 6%));
+    }
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 0 8px 6px;
+    margin-left: 8px;
+    border-left: 2px solid var(--yee-agent-tasks-divider, rgba(5, 5, 5, 8%));
+  }
+
+  &-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 65%));
+  }
+
+  &-step-dot {
+    flex: none;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--yee-agent-tasks-dot, rgba(0, 0, 0, 25%));
+  }
+
+  &-step-running &-step-dot {
+    background: var(--yee-agent-tasks-primary, #1677ff);
+  }
+
+  &-step-success &-step-dot {
+    background: var(--yee-agent-tasks-success, #52c41a);
+  }
+
+  &-step-error &-step-dot {
+    background: var(--yee-agent-tasks-error, #ff4d4f);
+  }
+
+  &-empty {
+    padding: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--yee-agent-tasks-muted, rgba(0, 0, 0, 45%));
+  }
+}

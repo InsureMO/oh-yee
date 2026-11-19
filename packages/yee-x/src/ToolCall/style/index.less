@@ -1,0 +1,196 @@
+@pls: .yee-toolcall;
+@spin-kf: yee-toolcall-spin;
+
+@{pls} {
+  border: 1px solid var(--yee-toolcall-border, rgba(5, 5, 5, 10%));
+  border-radius: 8px;
+  background: var(--yee-toolcall-bg, rgba(0, 0, 0, 2%));
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--yee-toolcall-color, rgba(0, 0, 0, 65%));
+
+    &.clickable {
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+
+  &-icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-toolcall-icon-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-spin {
+    display: inline-flex;
+    align-items: center;
+    animation: @spin-kf 1s linear infinite;
+  }
+
+  &-name {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-status {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    color: var(--yee-toolcall-status-color, rgba(0, 0, 0, 45%));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-duration {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--yee-toolcall-status-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-retry {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-toolcall-status-color, rgba(0, 0, 0, 45%));
+
+    &:hover {
+      background: var(--yee-toolcall-hover-bg, rgba(0, 0, 0, 6%));
+    }
+  }
+
+  &-collapse {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-toolcall-status-color, rgba(0, 0, 0, 45%));
+    transition: transform 0.2s;
+
+    &.folded {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &-body {
+    padding: 0 10px 8px;
+  }
+
+  &-section {
+    margin-top: 8px;
+  }
+
+  &-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  &-section-label {
+    font-size: 12px;
+    color: var(--yee-toolcall-label-color, rgba(0, 0, 0, 45%));
+  }
+
+  &-section-copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-toolcall-label-color, rgba(0, 0, 0, 45%));
+
+    &:hover {
+      background: var(--yee-toolcall-hover-bg, rgba(0, 0, 0, 6%));
+    }
+  }
+
+  &-pre {
+    margin: 0;
+    padding: 8px;
+    border-radius: 6px;
+    background: var(--yee-toolcall-pre-bg, #fff);
+    border: 1px solid var(--yee-toolcall-divider, rgba(5, 5, 5, 6%));
+    font-size: 12px;
+    line-height: 18px;
+    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    color: var(--yee-toolcall-pre-color, rgba(0, 0, 0, 88%));
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 240px;
+    overflow: auto;
+  }
+
+  &.yee-toolcall-success .yee-toolcall-icon {
+    color: var(--yee-toolcall-success-color, #52c41a);
+  }
+
+  &.yee-toolcall-error .yee-toolcall-icon {
+    color: var(--yee-toolcall-error-color, #ff4d4f);
+  }
+}
+
+.yee-toolcall-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &-summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--yee-toolcall-label-color, rgba(0, 0, 0, 45%));
+
+    &.clickable {
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+
+  &-collapse {
+    display: inline-flex;
+    align-items: center;
+    color: var(--yee-toolcall-label-color, rgba(0, 0, 0, 45%));
+    transition: transform 0.2s;
+
+    &.folded {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@keyframes @spin-kf {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

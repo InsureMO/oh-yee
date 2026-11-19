@@ -1,0 +1,81 @@
+@pls: .yee-message-actions;
+@spin-kf: yee-message-actions-spin;
+
+@{pls} {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--yee-message-actions-color, rgba(0, 0, 0, 45%));
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover:not(:disabled) {
+      background: var(--yee-message-actions-hover-bg, rgba(0, 0, 0, 6%));
+      color: var(--yee-message-actions-hover-color, rgba(0, 0, 0, 88%));
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    &.active {
+      color: var(--yee-message-actions-active-color, #1677ff);
+    }
+  }
+
+  &-item-wrap {
+    display: inline-flex;
+    align-items: center;
+    cursor: not-allowed;
+  }
+
+  &-item-icon {
+    display: inline-flex;
+    align-items: center;
+
+    &.spin {
+      animation: @spin-kf 1s linear infinite;
+    }
+  }
+
+  &-version {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &-version-text {
+    min-width: 30px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--yee-message-actions-color, rgba(0, 0, 0, 45%));
+    font-variant-numeric: tabular-nums;
+  }
+
+  &-extra {
+    display: inline-flex;
+    align-items: center;
+    margin-inline-start: 4px;
+  }
+}
+
+@keyframes @spin-kf {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
