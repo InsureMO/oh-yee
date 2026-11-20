@@ -1,12 +1,12 @@
 # yee-x Component Library AI Navigation
 
-> Last updated: 2026-11-19T04:22:14.309Z
+> Last updated: 2026-11-20T06:35:08.304Z
 
 ## Overview
 
 This file is a component index for the yee-x library, helping AI Agents quickly discover all available components and their documentation.
 
-- **Components**: 25
+- **Components**: 27
 - **Groups**: 12
 - **Doc format**: Markdown
 
@@ -56,6 +56,8 @@ https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Markdown/index.e
 |-----------|----------|-------------|------|
 | Attachments | Attachments | <code src="./demo/basic.tsx" title="Basic Usage" description="Control upload icon position via `prefix` or `actions`"></code> | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Attachments/index.en-US.md) |
 | Commands | Commands | A component for providing users with shortcut command input | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Commands/index.en-US.md) |
+| ModelPicker | ModelPicker | The model menu of an AI chat: the trigger shows the current model, the dropdown lists models in groups with quality/speed/cost bars that fill on hover; an extended-thinking toggle unfolds effort levels, and first-token latency plus price show at the bottom. Drop it into a `Sender` `header` panel. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/ModelPicker/index.en-US.md) |
+| PromptLibrary | PromptLibrary | Saved prompt templates with variables: the template list sits on top, the selected template's body renders inline with `{{variable}}` placeholders turned into type-in inputs, and the assembled prompt updates live below — the use button unlocks once every variable is filled. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/PromptLibrary/index.en-US.md) |
 | Sender | Sender | A chat input box component with built-in send functionality | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/Sender/index.en-US.md) |
 | History | History | Chat input box with built-in send button. | [Docs](https://github.com/insureMO/oh-yee/blob/main/packages/yee-x/src/History/index.en-US.md) |
 
