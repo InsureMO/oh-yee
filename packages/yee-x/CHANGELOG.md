@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-x
 
+## 0.6.0
+
+### Minor Changes
+
+- c9084d1: feat(yee-x): add ModelPicker and PromptLibrary components
+
 ## 0.5.0
 
 ### Minor Changes
