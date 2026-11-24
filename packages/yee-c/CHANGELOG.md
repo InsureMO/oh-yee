@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.12
+
+### Patch Changes
+
+- feat(drawer): add support for mask visibility in Drawer component
+
 ## 0.15.11
 
 ### Patch Changes
