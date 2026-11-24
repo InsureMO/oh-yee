@@ -11,6 +11,10 @@
     pointer-events: initial;
   }
 
+  &-without-mask {
+    pointer-events: none;
+  }
+
   &-mask {
     position: absolute;
     top: 0;
@@ -23,6 +27,7 @@
   &-content-wrapper {
     position: absolute;
     background-color: var(--yee-drawer-content-bg-color);
+    pointer-events: initial;
   }
 
   &-content {

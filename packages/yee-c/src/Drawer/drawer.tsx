@@ -103,6 +103,7 @@ const Drawer = (baseprops: DrawerProps) => {
     `${prefixCls}-${placement}`,
     {
       [`${prefixCls}-open`]: delayOpen,
+      [`${prefixCls}-without-mask`]: !showMask,
     },
     className,
   );
