@@ -20,6 +20,15 @@ import type { RangePickerProps } from './interface';
 
 import './style/index.less';
 
+// The two panels must never show the same month: when the end view is not
+// after the start view, push it to the month following the start view.
+const normalizePickerView = (start: Dayjs, end: Dayjs): [Dayjs, Dayjs] => {
+  if (end.isSame(start, 'month') || end.isBefore(start, 'month')) {
+    return [start, pickerUtils.addMonth(start, 1)];
+  }
+  return [start, end];
+};
+
 const RangePicker: FC<RangePickerProps> = (props) => {
   const mobile = useBreakpoint();
   const { locale } = useLocale();
@@ -147,10 +156,10 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     }
 
     setPickerValue([pickerStart, pickerEnd]);
-    const startView = pickerUtils.getNow();
-    const endView = pickerUtils.getNow().add(1, 'month');
+    const startView = pickerStart || pickerUtils.getNow();
+    const endView = pickerEnd || pickerUtils.getNow().add(1, 'month');
 
-    setPickerView([pickerStart || startView, pickerEnd || endView]);
+    setPickerView(normalizePickerView(startView, endView));
   }, [mergedValue]);
 
   // Calculate hover range and selected range for styling
@@ -207,25 +216,18 @@ const RangePicker: FC<RangePickerProps> = (props) => {
 
   const handleChange = (date: Dayjs, panel: string) => {
     const [start, end] = pickerValue;
-    let newValue: Array<Dayjs | undefined>;
-
-    if (picking === 'start') {
-      // Selecting start date: if it's after end, clear end to keep start <= end
-      if (end && pickerUtils.isAfter(date, end)) {
-        newValue = [date, undefined];
-      } else {
-        newValue = [date, end];
-      }
-    } else {
-      // Selecting end date
-      newValue = [start, date];
-    }
+    // Inverted picks (start after end) are allowed while selecting;
+    // swapIfNeeded sorts the pair when the panel closes or confirms
+    const newValue: Array<Dayjs | undefined> =
+      picking === 'start' ? [date, end] : [start, date];
 
     setPickerValue(newValue as Dayjs[]);
 
     // Update pickerView when user selects a date
     setPickerView((state) =>
-      picking === 'start' ? [date, state[1]] : [state[0], date],
+      picking === 'start'
+        ? normalizePickerView(date, state[1])
+        : normalizePickerView(state[0], date),
     );
 
     if (picking === 'start') {
@@ -259,10 +261,23 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     }
   };
 
+  // Sort an inverted selection (end picked before start) so the final
+  // value is always start <= end
+  const swapIfNeeded = (val: Array<Dayjs | undefined>) => {
+    const [start, end] = val;
+    if (start && end && pickerUtils.isAfter(start, end)) {
+      setPickerValue([end, start]);
+      setStartInputValue(pickerUtils.format(end, format));
+      setEndInputValue(pickerUtils.format(start, format));
+      return [end, start];
+    }
+    return val;
+  };
+
   const onConfirm = () => {
     setOpen(false);
 
-    const [start, end] = pickerValue;
+    const [start, end] = swapIfNeeded(pickerValue);
     onChange?.(
       [
         start ? pickerUtils.format(start, saveFormat) : '',
@@ -412,6 +427,7 @@ const RangePicker: FC<RangePickerProps> = (props) => {
     setOpen(isOpen);
     if (!isOpen) {
       setHoverDate(null);
+      swapIfNeeded(pickerValue);
     }
     onOpenChange?.(isOpen);
   };

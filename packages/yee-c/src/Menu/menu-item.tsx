@@ -16,7 +16,8 @@ const MenuItem = (props: MenuItemProps) => {
     return null;
   }
 
-  const { children, label, icon, key, disabled } = item as MenuItemType;
+  const { children, label, icon, key, disabled, style, className } =
+    item as MenuItemType;
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const menuWrapperCtx = React.useContext(MenuWrapperCtx);
@@ -65,8 +66,13 @@ const MenuItem = (props: MenuItemProps) => {
             [`${prefixCls}-item-focused`]: focusedKey === key,
           },
           classNames?.item,
+          className as string | undefined,
         )}
-        style={{ paddingLeft, ...styles?.item }}
+        style={{
+          paddingLeft,
+          ...styles?.item,
+          ...(style as React.CSSProperties | undefined),
+        }}
         onClick={handleClick}
         title={isCollapsed && typeof label === 'string' ? label : undefined}
         role="menuitem"
