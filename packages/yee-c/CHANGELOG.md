@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-c
 
+## 0.15.11
+
+### Patch Changes
+
+- feat(range-picker): enhance date selection logic and add normalization for panel views
+
 ## 0.15.10
 
 ### Patch Changes
