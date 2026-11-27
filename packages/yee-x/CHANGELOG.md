@@ -1,5 +1,11 @@
 # @rainbow-oh/yee-x
 
+## 0.7.0
+
+### Minor Changes
+
+- feat(artifact-card): add ArtifactCard component with group support, demo, and documentation
+
 ## 0.6.0
 
 ### Minor Changes
