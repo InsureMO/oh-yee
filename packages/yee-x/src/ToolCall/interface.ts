@@ -33,7 +33,10 @@ export interface ToolCallLocale {
 }
 
 export interface ToolCallProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'children'> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'children' | 'id'> {
+  /** Stable React key; ToolCall.Group uses it (falling back to `name`). Unlike
+   *  the DOM `id` attribute this also accepts numbers. */
+  id?: React.Key;
   /** Custom class name prefix @default 'yee-toolcall' */
   prefixCls?: string;
   /** Class names for semantic sections */

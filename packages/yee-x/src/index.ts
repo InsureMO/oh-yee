@@ -8,6 +8,8 @@ export * from './AgentTasks';
 export { default as AgentTasks } from './AgentTasks';
 export * from './AgentTimeline';
 export { default as AgentTimeline } from './AgentTimeline';
+export * from './ArtifactCard';
+export { default as ArtifactCard } from './ArtifactCard';
 export * from './ApprovalCard';
 export { default as ApprovalCard } from './ApprovalCard';
 export * from './Attachments';
